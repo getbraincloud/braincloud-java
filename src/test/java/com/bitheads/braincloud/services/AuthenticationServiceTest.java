@@ -5,7 +5,6 @@ import com.bitheads.braincloud.client.StatusCodes;
 import com.bitheads.braincloud.client.AuthenticationType;
 import com.bitheads.braincloud.client.AuthenticationIds;
 import com.bitheads.braincloud.client.BrainCloudClient;
-import com.bitheads.braincloud.client.BrainCloudWrapper;
 
 import java.util.Dictionary;
 import java.util.HashMap;

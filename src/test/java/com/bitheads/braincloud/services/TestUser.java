@@ -1,7 +1,7 @@
 package com.bitheads.braincloud.services;
 
 import com.bitheads.braincloud.client.BrainCloudClient;
-import com.bitheads.braincloud.client.BrainCloudWrapper;
+import com.bitheads.braincloud.client.IBrainCloudWrapper;
 
 import org.json.JSONException;
 
@@ -19,10 +19,10 @@ public class TestUser
     public String profileId = "";
     public String email = "";
 
-    BrainCloudWrapper _wrapper;
+    IBrainCloudWrapper _wrapper;
 
 
-    public TestUser(BrainCloudWrapper wrapper, String idPrefix, int suffix, boolean authWithEmail)
+    public TestUser(IBrainCloudWrapper wrapper, String idPrefix, int suffix, boolean authWithEmail)
     {
         _wrapper = wrapper;
         id = idPrefix + suffix;

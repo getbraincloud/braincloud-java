@@ -3,6 +3,7 @@ package com.bitheads.braincloud.services;
 import com.bitheads.braincloud.client.AuthenticationType;
 import com.bitheads.braincloud.client.BrainCloudClient;
 import com.bitheads.braincloud.client.BrainCloudWrapper;
+import com.bitheads.braincloud.client.IBrainCloudWrapper;
 
 import org.junit.After;
 import org.junit.Before;
