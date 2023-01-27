@@ -2,7 +2,7 @@ package com.bitheads.braincloud.services;
 
 import com.bitheads.braincloud.client.AuthenticationType;
 import com.bitheads.braincloud.client.BrainCloudClient;
-import com.bitheads.braincloud.client.BrainCloudWrapper;
+import com.bitheads.braincloud.client.IBrainCloudWrapper;
 import com.bitheads.braincloud.client.IRTTCallback;
 import com.bitheads.braincloud.client.IRTTConnectCallback;
 import com.bitheads.braincloud.client.ReasonCodes;
@@ -97,9 +97,9 @@ public class RTTTest extends TestFixtureBase
         private boolean m_result = false;
         private boolean m_done = false;
         
-        BrainCloudWrapper _wrapper;
+        IBrainCloudWrapper _wrapper;
 
-        public RTTConnectionTestResult(BrainCloudWrapper wrapper) {
+        public RTTConnectionTestResult(IBrainCloudWrapper wrapper) {
             _wrapper = wrapper;
             _wrapper.getClient().enableLogging(true);
         }

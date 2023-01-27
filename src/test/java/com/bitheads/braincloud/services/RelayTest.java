@@ -2,7 +2,7 @@ package com.bitheads.braincloud.services;
 
 import com.bitheads.braincloud.client.AuthenticationType;
 import com.bitheads.braincloud.client.BrainCloudClient;
-import com.bitheads.braincloud.client.BrainCloudWrapper;
+import com.bitheads.braincloud.client.IBrainCloudWrapper;
 import com.bitheads.braincloud.client.IRelayCallback;
 import com.bitheads.braincloud.client.IRelayConnectCallback;
 import com.bitheads.braincloud.client.IRelaySystemCallback;
@@ -160,9 +160,9 @@ public class RelayTest extends TestFixtureBase
     public class RelayConnectSystemCheck implements IRelaySystemCallback {
         public boolean _received = false;
 
-        BrainCloudWrapper _wrapper;
+        IBrainCloudWrapper _wrapper;
 
-        public RelayConnectSystemCheck(BrainCloudWrapper wrapper) {
+        public RelayConnectSystemCheck(IBrainCloudWrapper wrapper) {
             _wrapper = wrapper;
             _wrapper.getClient().enableLogging(true);
         }
@@ -196,9 +196,9 @@ public class RelayTest extends TestFixtureBase
     public class RelayCheck implements IRelayCallback {
         public boolean _received = false;
 
-        BrainCloudWrapper _wrapper;
+        IBrainCloudWrapper _wrapper;
 
-        public RelayCheck(BrainCloudWrapper wrapper) {
+        public RelayCheck(IBrainCloudWrapper wrapper) {
             _wrapper = wrapper;
             _wrapper.getClient().enableLogging(true);
         }
@@ -233,9 +233,9 @@ public class RelayTest extends TestFixtureBase
         private JSONObject m_server = null;
         public String ownerCxId = null;
 
-        BrainCloudWrapper _wrapper;
+        IBrainCloudWrapper _wrapper;
 
-        public RTTLobbyResults(BrainCloudWrapper wrapper) {
+        public RTTLobbyResults(IBrainCloudWrapper wrapper) {
             _wrapper = wrapper;
             _wrapper.getClient().enableLogging(true);
         }
@@ -298,9 +298,9 @@ public class RelayTest extends TestFixtureBase
         private boolean m_result = false;
         private boolean m_done = false;
         
-        BrainCloudWrapper _wrapper;
+        IBrainCloudWrapper _wrapper;
 
-        public RelayConnectionTestResult(BrainCloudWrapper wrapper) {
+        public RelayConnectionTestResult(IBrainCloudWrapper wrapper) {
             _wrapper = wrapper;
             _wrapper.getClient().enableLogging(true);
         }
@@ -352,9 +352,9 @@ public class RelayTest extends TestFixtureBase
         private boolean m_result = false;
         private boolean m_done = false;
         
-        BrainCloudWrapper _wrapper;
+        IBrainCloudWrapper _wrapper;
 
-        public RTTConnectionTestResult(BrainCloudWrapper wrapper) {
+        public RTTConnectionTestResult(IBrainCloudWrapper wrapper) {
             _wrapper = wrapper;
             _wrapper.getClient().enableLogging(true);
         }

@@ -9,10 +9,10 @@ import java.util.List;
 
 public class IdentityCallback implements IServerCallback 
 {
-    private BrainCloudWrapper _wrapper;
+    private IBrainCloudWrapper _wrapper;
     private IServerCallback _callback;
 
-    public IdentityCallback(BrainCloudWrapper in_wrapper, IServerCallback in_callback) 
+    public IdentityCallback(IBrainCloudWrapper in_wrapper, IServerCallback in_callback) 
     {
         _wrapper = in_wrapper;
         _callback = in_callback;
