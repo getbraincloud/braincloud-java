@@ -1,18 +1,11 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.AuthenticationType;
-import com.bitheads.braincloud.client.BrainCloudClient;
-import com.bitheads.braincloud.client.IBrainCloudWrapper;
-import com.bitheads.braincloud.client.IRTTCallback;
-import com.bitheads.braincloud.client.IRTTConnectCallback;
-import com.bitheads.braincloud.client.ReasonCodes;
-import com.bitheads.braincloud.client.StatusCodes;
-
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
+import com.bitheads.braincloud.client.IBrainCloudWrapper;
+import com.bitheads.braincloud.client.IRTTConnectCallback;
+
 
 /**
  * Created by David St-Louis on 18-07-03.

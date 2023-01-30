@@ -1,11 +1,10 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.BrainCloudClient;
-import com.bitheads.braincloud.client.ReasonCodes;
-
 import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Test;
+
+import com.bitheads.braincloud.client.ReasonCodes;
 
 /**
  * Created by bradleyh on 5/6/2016.

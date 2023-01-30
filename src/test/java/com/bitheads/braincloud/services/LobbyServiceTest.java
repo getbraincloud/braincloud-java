@@ -1,20 +1,16 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.ReasonCodes;
-import com.bitheads.braincloud.client.StatusCodes;
-
+import org.json.JSONObject;
 import org.junit.Test;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.bitheads.braincloud.client.ReasonCodes;
+import com.bitheads.braincloud.client.StatusCodes;
 
 /**
  * Created by David St-Louis on 18-07-17.
  */
 public class LobbyServiceTest extends TestFixtureBase
 {
-    static private String _lobbyId = "";
-
     @Test
     public void testGetLobbyInstances() throws Exception {
         TestResult tr = new TestResult(_wrapper);

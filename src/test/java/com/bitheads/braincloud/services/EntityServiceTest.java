@@ -1,14 +1,13 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.BrainCloudClient;
-import com.bitheads.braincloud.client.ReasonCodes;
+import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
 
-import java.util.ArrayList;
+import com.bitheads.braincloud.client.ReasonCodes;
 
 /**
  * Created by prestonjennings on 15-09-01.
@@ -343,14 +342,14 @@ public class EntityServiceTest extends TestFixtureBase {
     /// </summary>
     /// <param name="json"> Json to parse for ID </param>
     /// <returns> entityId from data </returns>
-    private String getProfileId(JSONObject json) {
-        try {
-            return json.getJSONObject("data").getString("profileId");
-        } catch (JSONException je) {
-            je.printStackTrace();
-        }
-        return "";
-    }
+   //  private String getProfileId(JSONObject json) {
+   //      try {
+   //          return json.getJSONObject("data").getString("profileId");
+   //      } catch (JSONException je) {
+   //          je.printStackTrace();
+   //      }
+   //      return "";
+   //  }
 
     /// <summary>
     /// Creates a default entity on the server

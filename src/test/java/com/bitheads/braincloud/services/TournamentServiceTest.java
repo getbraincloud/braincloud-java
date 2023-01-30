@@ -1,12 +1,11 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.BrainCloudClient;
-import com.bitheads.braincloud.client.ReasonCodes;
+import java.util.Date;
 
 import org.junit.After;
 import org.junit.Test;
 
-import java.util.Date;
+import com.bitheads.braincloud.client.ReasonCodes;
 
 /**
  * Created by bradleyh on 1/9/2017.
@@ -16,7 +15,6 @@ public class TournamentServiceTest extends TestFixtureBase {
 
     private String _tournamentCode = "testTournament";
     private String _leaderboardId = "testTournamentLeaderboard";
-    private String _divSetId = "testDivSetId";
     private boolean _didJoin;
 
     @After
@@ -106,6 +104,7 @@ public class TournamentServiceTest extends TestFixtureBase {
     }
 
     @Test
+	 @SuppressWarnings("deprecation")
     public void postTournamentScore() throws Exception {
         joinTestTournament();
         TestResult tr = new TestResult(_wrapper);
@@ -121,6 +120,7 @@ public class TournamentServiceTest extends TestFixtureBase {
     }
 
     @Test
+	 @SuppressWarnings("deprecation")
     public void postTournamentScoreWithResults() throws Exception {
         joinTestTournament();
         TestResult tr = new TestResult(_wrapper);

@@ -1,10 +1,6 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.BrainCloudClient;
-
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by prestonjennings on 15-09-02.
@@ -14,7 +10,6 @@ public class GamificationServiceTest extends TestFixtureBase
     private final String _achievementId01 = "testAchievement01";
     private final String _achievementId02 = "testAchievement02";
     private final String _milestoneCategory = "Experience";
-    private final String _milestoneId = "2";
     private final String _questsCategory = "Experience";
     
     @Test

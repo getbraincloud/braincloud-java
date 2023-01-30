@@ -1,14 +1,8 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.BrainCloudClient;
-import com.bitheads.braincloud.client.ReasonCodes;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 /**
  * Created by prestonjennings on 15-09-01.
@@ -88,8 +82,7 @@ public class CustomEntityServiceTest extends TestFixtureBase {
                 tr);
         tr.Run();
 
-         int page = 0;
-        page = tr.m_response.getJSONObject("data").getJSONObject("results").getInt("page");
+        tr.m_response.getJSONObject("data").getJSONObject("results").getInt("page");
 
         String context = tr.m_response.getJSONObject("data").getString("context");
 
@@ -160,7 +153,7 @@ public class CustomEntityServiceTest extends TestFixtureBase {
     @Test
     public void testDeleteEntities() throws Exception {
         TestResult tr = new TestResult(_wrapper);
-        String entityId = createDefaultEntity(ACL.Access.None);
+        createDefaultEntity(ACL.Access.None);
         _wrapper.getCustomEntityService().deleteEntities(
                 _defaultEntityType,
                 "{\"entityId\": \"Testing\"}",
@@ -171,7 +164,7 @@ public class CustomEntityServiceTest extends TestFixtureBase {
     @Test
     public void testReadSingleton() throws Exception {
         TestResult tr = new TestResult(_wrapper);
-        String entityId = createDefaultEntity(ACL.Access.None);
+        createDefaultEntity(ACL.Access.None);
         _wrapper.getCustomEntityService().readSingleton(
                 _defaultEntityType,
                 tr);
@@ -181,7 +174,7 @@ public class CustomEntityServiceTest extends TestFixtureBase {
     @Test
     public void testIncrementSingletonData() throws Exception{
         TestResult tr = new TestResult(_wrapper);
-        String entityId = createDefaultEntity(ACL.Access.None);
+        createDefaultEntity(ACL.Access.None);
         _wrapper.getCustomEntityService().incrementSingletonData(
                 "athletes",
                 "{ \"goals\": 3, \"assists\": 5 }",
@@ -192,7 +185,7 @@ public class CustomEntityServiceTest extends TestFixtureBase {
     @Test
     public void testDeleteSingleton() throws Exception {
         TestResult tr = new TestResult(_wrapper);
-        String entityId = createDefaultEntity(ACL.Access.None);
+        createDefaultEntity(ACL.Access.None);
         _wrapper.getCustomEntityService().deleteSingleton(
                 _defaultEntityType,
                 -1,
@@ -203,7 +196,7 @@ public class CustomEntityServiceTest extends TestFixtureBase {
     @Test
     public void testUpdateSingleton() throws Exception {
         TestResult tr = new TestResult(_wrapper);
-        String entityId = createDefaultEntity(ACL.Access.None);
+        createDefaultEntity(ACL.Access.None);
         _wrapper.getCustomEntityService().updateSingleton(
                 _defaultEntityType,
                 -1,
@@ -217,7 +210,7 @@ public class CustomEntityServiceTest extends TestFixtureBase {
     @Test
     public void testUpdateSingletonFields() throws Exception {
         TestResult tr = new TestResult(_wrapper);
-        String entityId = createDefaultEntity(ACL.Access.None);
+        createDefaultEntity(ACL.Access.None);
         _wrapper.getCustomEntityService().updateSingletonFields(
                 _defaultEntityType,
                 1,

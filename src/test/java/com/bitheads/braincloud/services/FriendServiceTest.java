@@ -1,10 +1,9 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.AuthenticationType;
-import com.bitheads.braincloud.client.BrainCloudClient;
-import com.bitheads.braincloud.client.ReasonCodes;
-
 import org.junit.Test;
+
+import com.bitheads.braincloud.client.AuthenticationType;
+import com.bitheads.braincloud.client.ReasonCodes;
 
 /**
  * Created by prestonjennings on 15-09-02.

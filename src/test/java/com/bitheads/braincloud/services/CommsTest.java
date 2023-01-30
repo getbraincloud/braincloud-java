@@ -5,8 +5,7 @@ import com.bitheads.braincloud.client.BrainCloudClient;
 import com.bitheads.braincloud.client.ReasonCodes;
 import com.bitheads.braincloud.client.StatusCodes;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -239,10 +238,10 @@ public class CommsTest extends TestFixtureNoAuth
     {
         TestResult tr = new TestResult(_wrapper);
         tr.setMaxWait(600);
-        BrainCloudClient bcc = _wrapper.getClient();
 
-        //bcc.initialize(m_appId, m_secret, m_appVersion, m_serverUrl);
-        //bcc.enableLogging(true);
+        // BrainCloudClient bcc = _wrapper.getClient();
+        // bcc.initialize(m_appId, m_secret, m_appVersion, m_serverUrl);
+        // bcc.enableLogging(true);
         _wrapper.getClient().getAuthenticationService().authenticateUniversal("abc", "abc", true, tr);
         _wrapper.getClient().insertEndOfMessageBundleMarker();
         _wrapper.getPlayerStatisticsService().readAllUserStats(tr);

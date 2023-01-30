@@ -1,28 +1,28 @@
 package com.bitheads.braincloud.client;
 
-import com.bitheads.braincloud.client.BrainCloudClient;
-import com.bitheads.braincloud.client.IServerCallback;
-import com.bitheads.braincloud.client.ServiceName;
-import com.bitheads.braincloud.client.ServiceOperation;
-import com.bitheads.braincloud.client.SmartSwitchCallback;
+import java.util.Map;
+import java.util.prefs.Preferences;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.bitheads.braincloud.client.SmartSwitchCallback.SmartSwitchAdvanced;
+import com.bitheads.braincloud.client.SmartSwitchCallback.SmartSwitchApple;
 import com.bitheads.braincloud.client.SmartSwitchCallback.SmartSwitchEmail;
 import com.bitheads.braincloud.client.SmartSwitchCallback.SmartSwitchExternal;
 import com.bitheads.braincloud.client.SmartSwitchCallback.SmartSwitchFacebook;
-import com.bitheads.braincloud.client.SmartSwitchCallback.SmartSwitchOculus;
 import com.bitheads.braincloud.client.SmartSwitchCallback.SmartSwitchGoogle;
 import com.bitheads.braincloud.client.SmartSwitchCallback.SmartSwitchGoogleOpenId;
-import com.bitheads.braincloud.client.SmartSwitchCallback.SmartSwitchApple;
+import com.bitheads.braincloud.client.SmartSwitchCallback.SmartSwitchOculus;
 import com.bitheads.braincloud.client.SmartSwitchCallback.SmartSwitchSteam;
 import com.bitheads.braincloud.client.SmartSwitchCallback.SmartSwitchTwitter;
-import com.bitheads.braincloud.client.SmartSwitchCallback.SmartSwitchUniversal;
 import com.bitheads.braincloud.client.SmartSwitchCallback.SmartSwitchUltra;
-import com.bitheads.braincloud.client.SmartSwitchCallback.SmartSwitchAdvanced;
-import com.bitheads.braincloud.client.IdentityCallback;
-
+import com.bitheads.braincloud.client.SmartSwitchCallback.SmartSwitchUniversal;
 import com.bitheads.braincloud.services.AppStoreService;
 import com.bitheads.braincloud.services.AsyncMatchService;
 import com.bitheads.braincloud.services.AuthenticationService;
 import com.bitheads.braincloud.services.ChatService;
+import com.bitheads.braincloud.services.CustomEntityService;
 import com.bitheads.braincloud.services.DataStreamService;
 import com.bitheads.braincloud.services.EntityService;
 import com.bitheads.braincloud.services.EventService;
@@ -31,13 +31,15 @@ import com.bitheads.braincloud.services.FriendService;
 import com.bitheads.braincloud.services.GamificationService;
 import com.bitheads.braincloud.services.GlobalAppService;
 import com.bitheads.braincloud.services.GlobalEntityService;
+import com.bitheads.braincloud.services.GlobalFileService;
 import com.bitheads.braincloud.services.GlobalStatisticsService;
 import com.bitheads.braincloud.services.GroupService;
 import com.bitheads.braincloud.services.IdentityService;
+import com.bitheads.braincloud.services.ItemCatalogService;
 import com.bitheads.braincloud.services.LobbyService;
 import com.bitheads.braincloud.services.MailService;
-import com.bitheads.braincloud.services.MessagingService;
 import com.bitheads.braincloud.services.MatchMakingService;
+import com.bitheads.braincloud.services.MessagingService;
 import com.bitheads.braincloud.services.OneWayMatchService;
 import com.bitheads.braincloud.services.PlaybackStreamService;
 import com.bitheads.braincloud.services.PlayerStateService;
@@ -46,26 +48,16 @@ import com.bitheads.braincloud.services.PlayerStatisticsService;
 import com.bitheads.braincloud.services.PresenceService;
 import com.bitheads.braincloud.services.ProfanityService;
 import com.bitheads.braincloud.services.PushNotificationService;
+import com.bitheads.braincloud.services.RTTService;
 import com.bitheads.braincloud.services.RedemptionCodeService;
 import com.bitheads.braincloud.services.RelayService;
-import com.bitheads.braincloud.services.RTTService;
 import com.bitheads.braincloud.services.S3HandlingService;
 import com.bitheads.braincloud.services.ScriptService;
 import com.bitheads.braincloud.services.SocialLeaderboardService;
 import com.bitheads.braincloud.services.TimeService;
 import com.bitheads.braincloud.services.TournamentService;
-import com.bitheads.braincloud.services.GlobalFileService;
-import com.bitheads.braincloud.services.CustomEntityService;
-import com.bitheads.braincloud.services.VirtualCurrencyService;
-import com.bitheads.braincloud.services.ItemCatalogService;
 import com.bitheads.braincloud.services.UserItemsService;
-
-import java.util.prefs.Preferences;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-import java.util.Map;
-import java.lang.System;
+import com.bitheads.braincloud.services.VirtualCurrencyService;
 
 /**
  * The BrainCloudWrapper provides some convenience functionality to developers when they are
@@ -128,7 +120,7 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
     private void detectPlatform()
     {
         //detect os being used
-        setReleasePlatform(getReleasePlatform().detectGenericPlatform(System.getProperty("os.name").toLowerCase()));
+        setReleasePlatform(Platform.detectGenericPlatform(System.getProperty("os.name").toLowerCase()));
     }
 
     private class InitializeParams
@@ -206,6 +198,7 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
      * @param compantName 
      * @param appName
      */
+	@SuppressWarnings("unused")
     private void initializeWithApps(String url, String defaultAppId, Map<String, String> secretMap, String version, String companyName, String appName)
     {
         m_initializeParams.appId = defaultAppId;
@@ -233,6 +226,7 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
      * @param appVersion The app version
      * @param serverUrl  The url to the brainCloud server
      */
+	@SuppressWarnings("unused")
     private void initializeWithApps(String url, String defaultAppId, Map<String, String> secretMap, String version)
     {
         m_initializeParams.appId = defaultAppId;

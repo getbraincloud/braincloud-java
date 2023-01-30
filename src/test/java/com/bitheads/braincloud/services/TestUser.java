@@ -1,9 +1,8 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.BrainCloudClient;
-import com.bitheads.braincloud.client.IBrainCloudWrapper;
-
 import org.json.JSONException;
+
+import com.bitheads.braincloud.client.IBrainCloudWrapper;
 
 /**
  * Created by prestonjennings on 15-09-01.
@@ -31,6 +30,7 @@ public class TestUser
         Authenticate(authWithEmail);
     }
 
+	 @SuppressWarnings("deprecation")
     private void Authenticate(boolean withEmail)
     {
         TestResult tr = new TestResult(_wrapper);

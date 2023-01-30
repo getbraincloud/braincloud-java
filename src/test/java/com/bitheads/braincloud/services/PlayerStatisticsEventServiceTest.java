@@ -1,16 +1,13 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.BrainCloudClient;
-import com.bitheads.braincloud.client.IRewardCallback;
-
-import junit.framework.Assert;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import com.bitheads.braincloud.client.IRewardCallback;
+
 
 /**
  * Created by prestonjennings on 15-09-02.

@@ -1,5 +1,16 @@
 package com.bitheads.braincloud.services;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.bitheads.braincloud.client.BrainCloudClient;
 import com.bitheads.braincloud.client.IServerCallback;
 import com.bitheads.braincloud.client.ReasonCodes;
@@ -7,24 +18,6 @@ import com.bitheads.braincloud.client.ServiceName;
 import com.bitheads.braincloud.client.ServiceOperation;
 import com.bitheads.braincloud.client.StatusCodes;
 import com.bitheads.braincloud.comms.ServerCall;
-import com.bitheads.braincloud.comms.ServerResponse;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.HashMap;
-
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import javax.net.ssl.HttpsURLConnection;
-
-import java.net.URL;
 
 /**
  * Created by David St-Louis on 2018-07-04
