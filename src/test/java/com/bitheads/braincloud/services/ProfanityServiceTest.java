@@ -1,10 +1,6 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.BrainCloudClient;
-
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by prestonjennings on 15-12-14.

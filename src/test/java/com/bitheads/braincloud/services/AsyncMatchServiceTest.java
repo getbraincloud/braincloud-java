@@ -1,15 +1,12 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.BrainCloudClient;
-import com.bitheads.braincloud.client.ReasonCodes;
+import java.math.BigInteger;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
 
-import java.math.BigInteger;
-
-import static org.junit.Assert.*;
+import com.bitheads.braincloud.client.ReasonCodes;
 
 /**
  * Created by prestonjennings on 15-09-02.
@@ -80,7 +77,7 @@ public class AsyncMatchServiceTest extends TestFixtureBase
     @Test
     public void testSubmitTurn() throws Exception
     {
-        String matchId = createMatch();
+        createMatch();
         TestResult tr = new TestResult(_wrapper);
 
         _wrapper.getAsyncMatchService().submitTurn(
@@ -102,7 +99,7 @@ public class AsyncMatchServiceTest extends TestFixtureBase
     @Test
     public void testUpdateMatchSummaryData() throws Exception
     {
-        String matchId = createMatch();
+        createMatch();
         TestResult tr = new TestResult(_wrapper);
 
         _wrapper.getAsyncMatchService().updateMatchSummaryData(
@@ -118,7 +115,7 @@ public class AsyncMatchServiceTest extends TestFixtureBase
     @Test
     public void testCompleteMatch() throws Exception
     {
-        String matchId = createMatchWithInitialTurn();
+        createMatchWithInitialTurn();
         TestResult tr = new TestResult(_wrapper);
 
         _wrapper.getAsyncMatchService().completeMatch(
@@ -132,7 +129,7 @@ public class AsyncMatchServiceTest extends TestFixtureBase
     @Test
     public void testReadMatch() throws Exception
     {
-        String matchId = createMatch();
+        createMatch();
         TestResult tr = new TestResult(_wrapper);
 
         _wrapper.getAsyncMatchService().readMatch(
@@ -146,7 +143,7 @@ public class AsyncMatchServiceTest extends TestFixtureBase
     @Test
     public void testReadMatchHistory() throws Exception
     {
-        String matchId = createMatch();
+        createMatch();
         TestResult tr = new TestResult(_wrapper);
 
         _wrapper.getAsyncMatchService().readMatch(
@@ -184,7 +181,7 @@ public class AsyncMatchServiceTest extends TestFixtureBase
     @Test
     public void testAbandonMatch() throws Exception
     {
-        String matchId = createMatch();
+        createMatch();
         TestResult tr = new TestResult(_wrapper);
 
         _wrapper.getAsyncMatchService().abandonMatch(
@@ -198,7 +195,7 @@ public class AsyncMatchServiceTest extends TestFixtureBase
     @Test
     public void testDeleteMatch() throws Exception
     {
-        String matchId = createMatch();
+        createMatch();
         TestResult tr = new TestResult(_wrapper);
 
         _wrapper.getAsyncMatchService().deleteMatch(
@@ -332,13 +329,13 @@ public class AsyncMatchServiceTest extends TestFixtureBase
         return matchId;
     }
 
-    private void abandonMatch(String matchId) throws Exception
-    {
-        TestResult tr = new TestResult(_wrapper);
-        _wrapper.getAsyncMatchService().abandonMatch(
-                "invalid_profileId",
-                "invalid_matchId",
-                tr);
-        tr.RunExpectFail(400, ReasonCodes.MATCH_NOT_FOUND);
-    }
+   //  private void abandonMatch(String matchId) throws Exception
+   //  {
+   //      TestResult tr = new TestResult(_wrapper);
+   //      _wrapper.getAsyncMatchService().abandonMatch(
+   //              "invalid_profileId",
+   //              "invalid_matchId",
+   //              tr);
+   //      tr.RunExpectFail(400, ReasonCodes.MATCH_NOT_FOUND);
+   //  }
 }

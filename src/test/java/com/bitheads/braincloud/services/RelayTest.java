@@ -1,26 +1,21 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.AuthenticationType;
-import com.bitheads.braincloud.client.BrainCloudClient;
+import java.nio.charset.StandardCharsets;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.junit.Assert;
+import org.junit.Test;
+
 import com.bitheads.braincloud.client.IBrainCloudWrapper;
+import com.bitheads.braincloud.client.IRTTCallback;
+import com.bitheads.braincloud.client.IRTTConnectCallback;
 import com.bitheads.braincloud.client.IRelayCallback;
 import com.bitheads.braincloud.client.IRelayConnectCallback;
 import com.bitheads.braincloud.client.IRelaySystemCallback;
-import com.bitheads.braincloud.client.IRTTCallback;
-import com.bitheads.braincloud.client.IRTTConnectCallback;
 import com.bitheads.braincloud.client.ReasonCodes;
 import com.bitheads.braincloud.client.RelayConnectionType;
-import com.bitheads.braincloud.client.RelayConnectionType;
-import com.bitheads.braincloud.client.StatusCodes;
 
-import junit.framework.Assert;
-import java.nio.charset.StandardCharsets;
-
-import org.junit.Test;
-import org.json.JSONObject;
-import org.json.JSONException;
-
-import java.util.ArrayList;
 
 /**
  * Created by David St-Louis on 20-01-20.

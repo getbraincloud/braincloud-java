@@ -2,8 +2,6 @@ package com.bitheads.braincloud.services;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by prestonjennings on 15-09-02.
  */

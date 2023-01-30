@@ -196,32 +196,30 @@ public class FileUploader implements Runnable {
             connection.setFixedLengthStreamingMode((int) _totalBytesToTransfer);
             connection.connect();
 
-            DataOutputStream out = new DataOutputStream(connection.getOutputStream());
-            try {
+            try (DataOutputStream out = new DataOutputStream(connection.getOutputStream())) {
                 out.writeBytes(stringData);
                 out.flush();
 
                 int progress = 0;
                 int bytesRead;
                 byte buf[] = new byte[1024];
-                BufferedInputStream bufInput = new BufferedInputStream(new FileInputStream(file));
 
-                while ((bytesRead = bufInput.read(buf)) != -1 && !_isCanceled) {
-                    // write output
-                    out.write(buf, 0, bytesRead);
-                    out.flush();
-                    progress += bytesRead;
-                    // update progress
-                    setBytesTransferred(progress);
-                }
+					try (BufferedInputStream bufInput = new BufferedInputStream(new FileInputStream(file))) {
+						while ((bytesRead = bufInput.read(buf)) != -1 && !_isCanceled) {
+							// write output
+							out.write(buf, 0, bytesRead);
+							out.flush();
+							progress += bytesRead;
+							// update progress
+							setBytesTransferred(progress);
+						}
+					}
 
                 // Write closing boundary and close stream
                 if (!_isCanceled) {
                     out.writeBytes(tail);
                     out.flush();
                 }
-            } finally {
-                out.close();
             }
 
             if (!_isCanceled) {

@@ -1,10 +1,8 @@
 package com.bitheads.braincloud.services;
 
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
-import java.util.Calendar;
-import java.text.ParseException;
 
 public class TimeUtil {
 

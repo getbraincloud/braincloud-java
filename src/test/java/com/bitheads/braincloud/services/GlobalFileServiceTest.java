@@ -1,10 +1,6 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.BrainCloudClient;
-
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class GlobalFileServiceTest extends TestFixtureBase
 {

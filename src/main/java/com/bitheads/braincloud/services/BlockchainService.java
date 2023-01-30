@@ -32,6 +32,7 @@ public class BlockchainService {
             JSONObject data = new JSONObject();
             data.put(Parameter.integrationId.name(), in_integrationID);
 
+				@SuppressWarnings("unused")
             JSONObject jsonData = new JSONObject(in_contextJson);
             data.put(Parameter.contextJson.name(), in_contextJson);
 
@@ -54,6 +55,7 @@ public class BlockchainService {
             JSONObject data = new JSONObject();
             data.put(Parameter.integrationId.name(), in_integrationID);
 
+				@SuppressWarnings("unused")
             JSONObject jsonData = new JSONObject(in_contextJson);
             data.put(Parameter.contextJson.name(), in_contextJson);
 

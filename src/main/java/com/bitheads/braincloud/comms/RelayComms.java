@@ -1,12 +1,11 @@
 package com.bitheads.braincloud.comms;
 
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.nio.ByteBuffer;
@@ -17,7 +16,6 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.net.ssl.SSLContext;
@@ -27,7 +25,6 @@ import javax.net.ssl.X509TrustManager;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,12 +32,7 @@ import com.bitheads.braincloud.client.BrainCloudClient;
 import com.bitheads.braincloud.client.IRelayCallback;
 import com.bitheads.braincloud.client.IRelayConnectCallback;
 import com.bitheads.braincloud.client.IRelaySystemCallback;
-import com.bitheads.braincloud.client.IServerCallback;
 import com.bitheads.braincloud.client.RelayConnectionType;
-import com.bitheads.braincloud.client.RelayConnectionType;
-import com.bitheads.braincloud.client.ServiceName;
-import com.bitheads.braincloud.client.ServiceOperation;
-import com.bitheads.braincloud.services.AuthenticationService;
 
 public class RelayComms {
 
@@ -53,8 +45,8 @@ public class RelayComms {
 
     private final boolean VERBOSE_LOG = true;
 
-    private final int CONTROL_BYTES_SIZE    = 1;
-    private final int CHANNEL_COUNT         = 4;
+   //  private final int CONTROL_BYTES_SIZE    = 1;
+   //  private final int CHANNEL_COUNT         = 4;
     private final int MAX_PACKET_ID_HISTORY = 60 * 10; // So we last 10 seconds at 60 fps
 
     private final int MAX_PLAYERS       = 40;
@@ -99,17 +91,17 @@ public class RelayComms {
         }
 
         RelayCallback(RelayCallbackType type, String message) {
-            _type = type;
+            this(type);
             _message = message;
         }
 
         RelayCallback(RelayCallbackType type, JSONObject json) {
-            _type = type;
+            this(type);
             _json = json;
         }
 
         RelayCallback(RelayCallbackType type, int netId, byte[] data) {
-            _type = type;
+            this(type);
             _netId = netId;
             _data = data;
         }

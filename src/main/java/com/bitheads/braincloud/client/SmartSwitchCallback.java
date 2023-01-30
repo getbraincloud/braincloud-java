@@ -1,6 +1,5 @@
 package com.bitheads.braincloud.client;
 
-import com.bitheads.braincloud.client.IServerCallback;
 import org.json.JSONObject;
 
 

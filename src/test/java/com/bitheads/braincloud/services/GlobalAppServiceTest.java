@@ -1,12 +1,9 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.BrainCloudClient;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.junit.Test;
-import java.util.Arrays;
-import java.util.ArrayList;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by prestonjennings on 15-09-02.

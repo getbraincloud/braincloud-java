@@ -1,13 +1,5 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.AuthenticationType;
-import com.bitheads.braincloud.client.BrainCloudClient;
-import com.bitheads.braincloud.client.BrainCloudWrapper;
-import com.bitheads.braincloud.client.IBrainCloudWrapper;
-
-import org.junit.After;
-import org.junit.Before;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -15,8 +7,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 import java.util.Map;
+import java.util.Random;
+
+import org.junit.After;
+import org.junit.Before;
+
+import com.bitheads.braincloud.client.AuthenticationType;
+import com.bitheads.braincloud.client.BrainCloudClient;
+import com.bitheads.braincloud.client.BrainCloudWrapper;
 
 public class TestFixtureBase {
     static protected String m_serverUrl = "";

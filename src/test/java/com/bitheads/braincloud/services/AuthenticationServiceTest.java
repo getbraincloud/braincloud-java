@@ -1,23 +1,16 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.ReasonCodes;
-import com.bitheads.braincloud.client.StatusCodes;
-import com.bitheads.braincloud.client.AuthenticationType;
-import com.bitheads.braincloud.client.AuthenticationIds;
-import com.bitheads.braincloud.client.BrainCloudClient;
-
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.Before;
-import org.json.JSONObject;
+import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import com.bitheads.braincloud.client.AuthenticationIds;
+import com.bitheads.braincloud.client.AuthenticationType;
+import com.bitheads.braincloud.client.ReasonCodes;
+import com.bitheads.braincloud.client.StatusCodes;
 
-import junit.framework.Assert;
 
 /**
  * Created by prestonjennings on 15-08-31.

@@ -1,11 +1,5 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.AuthenticationType;
-import com.bitheads.braincloud.client.BrainCloudClient;
-import com.bitheads.braincloud.client.ReasonCodes;
-import com.bitheads.braincloud.client.StatusCodes;
-
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class ItemCatalogServiceTest extends TestFixtureBase {

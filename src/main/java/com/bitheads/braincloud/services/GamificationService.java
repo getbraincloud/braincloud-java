@@ -233,11 +233,6 @@ public class GamificationService {
         }
     }
 
-    /**
-     */
-    private void achievementAwardedSuccessCallback(String data) {
-        //To be implemented for Android
-    }
 
     // goes through JSON response to award achievements via third party (ie game centre, facebook etc).
     // notifies achievement delegate
@@ -247,6 +242,7 @@ public class GamificationService {
 
             if (!incomingData.isNull(Parameter.data.name())) {
 
+					@SuppressWarnings("unused")
                 JSONArray josnData = incomingData.optJSONArray(Parameter.data.name());
                 if (data != null) {
                     // TODO
@@ -259,10 +255,6 @@ public class GamificationService {
 
         } catch (JSONException je) {
         }
-    }
-
-    private void awardThirdPartyAchievements(String achievements) {
-        //TODO Platform specific
     }
 
     /**

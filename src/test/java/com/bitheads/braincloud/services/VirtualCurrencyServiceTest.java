@@ -1,12 +1,9 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.ReasonCodes;
-import com.bitheads.braincloud.client.StatusCodes;
-
 import org.junit.Test;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.bitheads.braincloud.client.ReasonCodes;
+import com.bitheads.braincloud.client.StatusCodes;
 
 /**
  * Created by David St-Louis on 18-09-17.

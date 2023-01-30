@@ -1,7 +1,5 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.BrainCloudClient;
-
 import org.json.JSONArray;
 import org.junit.Test;
 

@@ -1,17 +1,16 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.BrainCloudClient;
-import com.bitheads.braincloud.client.IFileUploadCallback;
-
-import junit.framework.Assert;
+import java.io.File;
+import java.io.RandomAccessFile;
 
 import org.json.JSONObject;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.RandomAccessFile;
+import com.bitheads.braincloud.client.IFileUploadCallback;
+
 
 /**
  * Created by bradleyh on 3/30/2016.

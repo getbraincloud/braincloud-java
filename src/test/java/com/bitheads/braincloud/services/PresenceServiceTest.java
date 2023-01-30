@@ -1,15 +1,11 @@
 package com.bitheads.braincloud.services;
 
-import java.util.Arrays;
 import java.util.ArrayList;
-
-import org.json.JSONObject;
-
-import com.bitheads.braincloud.client.BrainCloudClient;
-import com.bitheads.braincloud.client.Platform;
-import com.bitheads.braincloud.client.ReasonCodes;
+import java.util.Arrays;
 
 import org.junit.Test;
+
+import com.bitheads.braincloud.client.ReasonCodes;
 
 public class PresenceServiceTest extends TestFixtureBase
 {
@@ -127,8 +123,6 @@ public class PresenceServiceTest extends TestFixtureBase
     @Test
     public void testUpdateActivity() throws Exception
     {
-        JSONObject jsonActivity = new JSONObject();
-
         TestResult tr = new TestResult(_wrapper);
         _wrapper.getPresenceService().updateActivity(
             "{ \"LOCATION\": \"POKER_TABLE\", \"STATUS\": \"PLAYING_GAME\"}",

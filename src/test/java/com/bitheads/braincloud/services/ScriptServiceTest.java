@@ -1,11 +1,8 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.BrainCloudClient;
-
-import org.junit.Ignore;
-import org.junit.Test;
-
 import java.util.Date;
+
+import org.junit.Test;
 
 /**
  * Created by prestonjennings on 15-09-02.
@@ -27,6 +24,7 @@ public class ScriptServiceTest extends TestFixtureBase {
     }
 
     @Test
+	 @SuppressWarnings("deprecation")
     public void testScheduleRunScriptUTC() throws Exception {
         TestResult tr = new TestResult(_wrapper);
 
@@ -57,6 +55,7 @@ public class ScriptServiceTest extends TestFixtureBase {
     }
 
     @Test
+	 @SuppressWarnings("deprecation")
     public void testScheduleRunScriptUTC_DATE_CONVERSIONS() throws Exception {
         TestResult tr = new TestResult(_wrapper);
         Date date = new Date();

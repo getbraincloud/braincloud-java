@@ -1,16 +1,13 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.BrainCloudClient;
-import com.bitheads.braincloud.client.ReasonCodes;
-import com.bitheads.braincloud.client.StatusCodes;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.json.JSONObject;
 import org.junit.Test;
 
-import java.util.Calendar;
-import java.util.Date;
-
-import static org.junit.Assert.*;
+import com.bitheads.braincloud.client.ReasonCodes;
+import com.bitheads.braincloud.client.StatusCodes;
 
 /**
  * Created by prestonjennings on 15-09-02.
@@ -206,6 +203,7 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     }
 
     @Test
+	 @SuppressWarnings("deprecation")
     public void testPostScoreToDynamicLeaderboardDays() throws Exception
     {
         TestResult tr = new TestResult(_wrapper);
@@ -242,6 +240,7 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     }
 
     @Test
+	 @SuppressWarnings("deprecation")
     public void testPostScoreToDynamicLeaderboardLowValue() throws Exception
     {
         TestResult tr = new TestResult(_wrapper);
@@ -260,6 +259,7 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     }
 
     @Test
+	 @SuppressWarnings("deprecation")
     public void testPostScoreToDynamicLeaderboardCumulative() throws Exception
     {
         TestResult tr = new TestResult(_wrapper);
@@ -278,6 +278,7 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     }
 
     @Test
+	 @SuppressWarnings("deprecation")
     public void testPostScoreToDynamicLeaderboardLastValue() throws Exception
     {
         TestResult tr = new TestResult(_wrapper);
@@ -504,6 +505,7 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     }
 
     @Test
+	 @SuppressWarnings("deprecation")
     public void testPostScoreToDynamicGroupLeaderboard() throws Exception
     {
         TestResult tr = new TestResult(_wrapper);
@@ -736,6 +738,7 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
         tr.Run();
     }
 
+	 @SuppressWarnings("deprecation")
     public void postScoreToDynamicLeaderboard() throws Exception
     {
         TestResult tr = new TestResult(_wrapper);

@@ -1,12 +1,7 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.BrainCloudClient;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by prestonjennings on 15-09-02.
@@ -106,6 +101,7 @@ public class PlayerStateServiceTest extends TestFixtureBase
     }
 
     @Test
+	 @SuppressWarnings("deprecation")
     public void testUpdatePlayerName() throws Exception
     {
         TestResult tr = new TestResult(_wrapper);
@@ -118,6 +114,7 @@ public class PlayerStateServiceTest extends TestFixtureBase
     }
 
     @Test
+	 @SuppressWarnings("deprecation")
     public void testUpdatePlayerNameWithEmoji() throws Exception
     {
         TestResult tr = new TestResult(_wrapper);

@@ -1,14 +1,13 @@
 package com.bitheads.braincloud.services;
 
-import com.bitheads.braincloud.client.BrainCloudClient;
-import com.bitheads.braincloud.client.IEventCallback;
-
-import junit.framework.Assert;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Test;
+
+import com.bitheads.braincloud.client.IEventCallback;
+
 
 /**
  * Created by prestonjennings on 15-09-02.
@@ -20,8 +19,6 @@ public class EventServiceTest extends TestFixtureBase implements IEventCallback 
     private boolean _callbackRan = false;
     private String _eventId = null;
     private String[] evIds = {"608c40c3a3a7950f388c4eac", "368c40c3a3a7950f388c4eac"};
-    private String ev1 = evIds[0];
-    private String ev2 = evIds[1];
 
     private String eventType = "my-event_type";
     private long dateMillis = 1619804426154L;
@@ -47,9 +44,10 @@ public class EventServiceTest extends TestFixtureBase implements IEventCallback 
     @Override
     public void eventsReceived(JSONObject events) {
         //Console.WriteLine("Events received: " + jsonResponse);
-        int numEvents = 0;
+      //   int numEvents = 0;
         try {
-            numEvents = events.getJSONArray("events").length();
+            // numEvents = events.getJSONArray("events").length();
+            events.getJSONArray("events").length();
         } catch (JSONException je) {
             je.printStackTrace();
         }
