@@ -50,6 +50,7 @@ public class FriendService {
      *
      * @param externalId The users's external ID
      * @param authenticationType The authentication type of the user ID
+     * @param callback  The callback handler
      */
     public void getProfileInfoForCredential(String externalId, AuthenticationType authenticationType, IServerCallback callback) {
         JSONObject data = new JSONObject();
@@ -72,6 +73,7 @@ public class FriendService {
      *
      * @param externalId External ID of the user to find
      * @param externalAuthType The external authentication type used for this users's external ID
+     * @param callback  The callback handler
      */
     public void getProfileInfoForExternalAuthId(String externalId, String externalAuthType, IServerCallback callback) {
         JSONObject data = new JSONObject();
@@ -94,6 +96,7 @@ public class FriendService {
      *
      * @param profileId Profile ID.
      * @param authenticationType The authentication type e.g. Facebook
+     * @param callback  The callback handler
      */
     public void getExternalIdForProfileId(String profileId, String authenticationType, IServerCallback callback) {
         JSONObject data = new JSONObject();
@@ -157,8 +160,8 @@ public class FriendService {
 
     /** Retrieves profile information for the partial matches of the specified text. 
      * 
-     * @param searchText Universal Id text on which to search
-     * @param maxResults Maximum number of results to return
+     * @param searchText    Universal Id text on which to search
+     * @param callback      The callback handler
      */
     public void findUserByExactUniversalId(String searchText, IServerCallback callback) {
         JSONObject data = new JSONObject();

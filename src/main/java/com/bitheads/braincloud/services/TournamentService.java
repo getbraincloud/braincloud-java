@@ -227,6 +227,14 @@ public class TournamentService {
     }
 
     /**
+     * Post the users score to the tournament leaderboard. 
+     *
+     * @param leaderboardId The leaderboard for the tournament
+     * @param score The score to post
+     * @param jsonData  Optional data attached to the leaderboard entry
+     * @param roundStartedTime  Time the user started the match resulting in the score being posted.
+     * @param callback  The method to be invoked when the server response is received
+     *
      * @deprecated Use postTournamentScoreUTC instead - Removal September 1, 2021
      */
     public void postTournamentScore(String leaderboardId, long score, String jsonData, Date roundStartedTime, IServerCallback callback) {
@@ -284,6 +292,18 @@ public class TournamentService {
     }
 
     /**
+     * Post the users score to the tournament leaderboard, and returns updated standings.
+     * 
+     * @param leaderboardId The leaderboard for the tournament
+     * @param score The score to post
+     * @param jsonData  Optional data attached to the leaderboard entry
+     * @param roundStartedTime  Time the user started the match resulting in the score being posted
+     * @param sort  Sort key Sort order of page. ("HIGH_TO_LOW" or "LOW_TO_HIGH")
+     * @param beforeCount   The count of number of players before the current player to include.
+     * @param afterCount    The count of number of players after the current player to include.
+     * @param initialScore  The initial score for players first joining a tournament. Usually 0, unless leaderboard is LOW_VALUE.
+     * @param callback  The method to be invoked when the server response is received
+     *
      * @deprecated Use postTournamentScoreWithResultsUTC instead - Removal September 1, 2021
      */
     public void postTournamentScoreWithResults(

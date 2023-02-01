@@ -177,12 +177,12 @@ public interface IBrainCloudWrapper {
 	 * Service Name - Authenticate
 	 * Server Operation - Authenticate
 	 *
-	 * @param userId           The user id
-	 * @param token            The user token (password etc)
-	 * @param externalAuthName The name of the cloud script to call for external authentication
-	 * @param forceCreate      Should a new profile be created for this user if the account
-	 *                         does not exist?
-	 * @returns performs the in_success callback on success, in_failure callback on failure
+	 * @param userId           	The user id
+	 * @param token            	The user token (password etc)
+	 * @param externalAuthName 	The name of the cloud script to call for external authentication
+	 * @param forceCreate      	Should a new profile be created for this user if the account
+	 *                         	does not exist?
+	 * @param callback			The callback handler 
 	 */
 	void authenticateExternal(String userId, String token, String externalAuthName, boolean forceCreate,
 			IServerCallback callback);
@@ -241,7 +241,7 @@ public interface IBrainCloudWrapper {
 	 * Authenticate the user using a google userid(email address) and google
 	 * authentication token.
 	 *
-	 * @param appleId    String representation of google+ userid (email)
+	 * @param appleUserId    String representation of google+ userid (email)
 	 * @param token The authentication token derived via the google apis.
 	 * @param forceCreate     Should a new profile be created for this user if the account
 	 *                        does not exist?
@@ -284,7 +284,6 @@ public interface IBrainCloudWrapper {
 	 * @param secret      The secret given when attempting to link with Twitter
 	 * @param forceCreate Should a new profile be created for this user if the account does not exist?
 	 * @param callback    The callback handler
-	 * @returns performs the in_success callback on success, in_failure callback on failure
 	 */
 	void authenticateTwitter(String userId, String token, String secret, boolean forceCreate, IServerCallback callback);
 
@@ -350,9 +349,10 @@ public interface IBrainCloudWrapper {
 	 * Note that the password sent from the client to the server is protected
 	 * via SSL.
 	 *
-	 * @param email       The e-mail address of the user
-	 * @param serviceParams
-	 * @param callback    The callback handler
+	 * @param email       	The e-mail address of the user
+	 * @param serviceParams	Parameters to send to the email service. see documentation for full
+     *                      list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+	 * @param callback    	The callback handler
 	 */
 	void resetEmailPasswordAdvanced(String email, String serviceParams, IServerCallback callback);
 
@@ -366,9 +366,9 @@ public interface IBrainCloudWrapper {
 	 * Note that the password sent from the client to the server is protected
 	 * via SSL.
 	 *
-	 * @param email       The e-mail address of the user
-	 *  * @param tokenTtlInMinutes
-	 * @param callback    The callback handler
+	 * @param email       		The e-mail address of the user
+	 * @param tokenTtlInMinutes	Expiry token in mins
+	 * @param callback    		The callback handler
 	 */
 	void resetEmailPasswordWithExpiry(String email, int tokenTtlInMinutes, IServerCallback callback);
 
@@ -382,10 +382,11 @@ public interface IBrainCloudWrapper {
 	 * Note that the password sent from the client to the server is protected
 	 * via SSL.
 	 *
-	 * @param email       The e-mail address of the user
-	 * @param serviceParams
-	 * @param tokenTtlInMinutes
-	 * @param callback    The callback handler
+	 * @param email       		The e-mail address of the user
+	 * @param serviceParams		Parameters to send to the email service. see documentation for full
+     *                      	list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+	 * @param tokenTtlInMinutes	Expiry token in mins
+	 * @param callback    		The callback handler
 	 */
 	void resetEmailPasswordAdvancedWithExpiry(String email, String serviceParams, Integer tokenTtlInMinutes,
 			IServerCallback callback);
@@ -400,7 +401,7 @@ public interface IBrainCloudWrapper {
 	 * Note that the password sent from the client to the server is protected
 	 * via SSL.
 	 *
-	 * @param universalId       The e-mail address of the user
+	 * @param universalId The e-mail address of the user
 	 * @param callback    The callback handler
 	 */
 	void resetUniversalIdPassword(String universalId, IServerCallback callback);
@@ -415,9 +416,10 @@ public interface IBrainCloudWrapper {
 	 * Note that the password sent from the client to the server is protected
 	 * via SSL.
 	 *
-	 * @param universalId       The e-mail address of the user
-	 * @param serviceParams
-	 * @param callback    The callback handler
+	 * @param universalId   The e-mail address of the user
+	 * @param serviceParams	Parameters to send to the email service. see documentation for full
+     *                      list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+	 * @param callback    	The callback handler
 	 */
 	void resetUniversalIdPasswordAdvanced(String universalId, String serviceParams, IServerCallback callback);
 
@@ -432,8 +434,8 @@ public interface IBrainCloudWrapper {
 	 * via SSL.
 	 *
 	 * @param universalId       The e-mail address of the user
-	 *  * @param tokenTtlInMinutes
-	 * @param callback    The callback handler
+	 * @param tokenTtlInMinutes	Expiry token in mins
+	 * @param callback    		The callback handler
 	 */
 	void resetUniversalIdPasswordWithExpiry(String universalId, int tokenTtlInMinutes, IServerCallback callback);
 
@@ -448,9 +450,10 @@ public interface IBrainCloudWrapper {
 	 * via SSL.
 	 *
 	 * @param universalId       The e-mail address of the user
-	 * @param serviceParams
-	 * @param tokenTtlInMinutes
-	 * @param callback    The callback handler
+	 * @param serviceParams		parameters to send to the email service. see documentation for full
+     *                      	list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+	 * @param tokenTtlInMinutes	Expiry token in mins
+	 * @param callback    		The callback handler
 	 */
 	void resetUniversalIdPasswordAdvancedWithExpiry(String universalId, String serviceParams, Integer tokenTtlInMinutes,
 			IServerCallback callback);

@@ -37,6 +37,8 @@ public class ScriptService {
      *
      * @param scriptName The name of the script to be run
      * @param jsonScriptData Data to be sent to the script in json format
+     * @param callback  The callback handler
+     *
      * See The API documentation site for more details on cloud code
      */
     public void runScript(String scriptName, String jsonScriptData, IServerCallback callback) {
@@ -58,6 +60,13 @@ public class ScriptService {
     }
 
     /**
+     * Schedules a script to run at given UTC time.
+     *
+     * @param scriptName    The name of the script with its path to be run.
+     * @param jsonScriptData    Data to be sent to the script in JSON format.
+     * @param startTimeUTC  The start date. (date in millis UTC)
+     * @param callback  The callback handler 
+     *
      * @deprecated Use scheduleRunScriptMillisUTC instead - Removal September 1, 2021
      */
     public void scheduleRunScriptUTC(String scriptName, String jsonScriptData, Date startTimeUTC, IServerCallback callback) {
@@ -89,6 +98,7 @@ public class ScriptService {
      * @param scriptName The name of the script to be run
      * @param jsonScriptData JSON bundle to pass to script
      * @param startTimeUTC The start date as a Date object
+     * @param callback  The callback handler
      * See The API documentation site for more details on cloud code
      */
     public void scheduleRunScriptMillisUTC(String scriptName, String jsonScriptData, long startTimeUTC, IServerCallback callback) {
@@ -119,6 +129,7 @@ public class ScriptService {
      * @param scriptName The name of the script to be run
      * @param jsonScriptData JSON bundle to pass to script
      * @param minutesFromNow Number of minutes from now to run script
+     * @param callback  The callback handler
      * See The API documentation site for more details on cloud code
      */
     public void scheduleRunScriptMinutes(String scriptName, String jsonScriptData, int minutesFromNow, IServerCallback callback) {
@@ -182,6 +193,7 @@ public class ScriptService {
      * Service Operation - ScheduleCloudScript
      *
      * @param startTimeUTC The start date as a Date object
+     * @param callback  The method to be invoked when the server response is received
      * See The API documentation site for more details on cloud code
      */
     public void getScheduledCloudScripts(Date startTimeUTC, IServerCallback callback) {
@@ -204,6 +216,8 @@ public class ScriptService {
      *
      * Service Name - Script
      * Service Operation - ScheduleCloudScript
+     *
+     * @param callback  The method to be invoked when the server response is received
      *
      * See The API documentation site for more details on cloud code
      */

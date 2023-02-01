@@ -454,7 +454,6 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
      * @param externalAuthName The name of the cloud script to call for external authentication
      * @param forceCreate      Should a new profile be created for this user if the account
      *                         does not exist?
-     * @returns performs the in_success callback on success, in_failure callback on failure
      */
     @Override
 	public void authenticateExternal(String userId,
@@ -561,7 +560,7 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
      * Authenticate the user using a google userid(email address) and google
      * authentication token.
      *
-     * @param appleId    String representation of google+ userid (email)
+     * @param appleUserId    String representation of google+ userid (email)
      * @param token The authentication token derived via the google apis.
      * @param forceCreate     Should a new profile be created for this user if the account
      *                        does not exist?
@@ -633,7 +632,6 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
      * @param secret      The secret given when attempting to link with Twitter
      * @param forceCreate Should a new profile be created for this user if the account does not exist?
      * @param callback    The callback handler
-     * @returns performs the in_success callback on success, in_failure callback on failure
      */
     @Override
 	public void authenticateTwitter(String userId,
@@ -738,9 +736,10 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
      * Note that the password sent from the client to the server is protected
      * via SSL.
      *
-     * @param email       The e-mail address of the user
-     * @param serviceParams
-     * @param callback    The callback handler
+     * @param email         The e-mail address of the user
+     * @param serviceParams Parameters to send to the email service. see documentation for full
+     *                      list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+     * @param callback      The callback handler
      */
     @Override
 	public void resetEmailPasswordAdvanced(String email, String serviceParams,
@@ -758,9 +757,9 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
      * Note that the password sent from the client to the server is protected
      * via SSL.
      *
-     * @param email       The e-mail address of the user
-     *  * @param tokenTtlInMinutes
-     * @param callback    The callback handler
+     * @param email             The e-mail address of the user
+     * @param tokenTtlInMinutes The expiry token in mins
+     * @param callback          The callback handler
      */
     @Override
 	public void resetEmailPasswordWithExpiry(String email, int tokenTtlInMinutes,
@@ -778,10 +777,11 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
      * Note that the password sent from the client to the server is protected
      * via SSL.
      *
-     * @param email       The e-mail address of the user
-     * @param serviceParams
-     * @param tokenTtlInMinutes
-     * @param callback    The callback handler
+     * @param email             The e-mail address of the user
+     * @param serviceParams     Parameters to send to the email service. see documentation for full
+     *                          list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+     * @param tokenTtlInMinutes The expiry token in mins
+     * @param callback          The callback handler
      */
     @Override
 	public void resetEmailPasswordAdvancedWithExpiry(String email, String serviceParams, Integer tokenTtlInMinutes,
@@ -799,7 +799,7 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
      * Note that the password sent from the client to the server is protected
      * via SSL.
      *
-     * @param universalId       The e-mail address of the user
+     * @param universalId The e-mail address of the user
      * @param callback    The callback handler
      */
     @Override
@@ -818,9 +818,10 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
      * Note that the password sent from the client to the server is protected
      * via SSL.
      *
-     * @param universalId       The e-mail address of the user
-     * @param serviceParams
-     * @param callback    The callback handler
+     * @param universalId   The e-mail address of the user
+     * @param serviceParams Parameters to send to the email service. see documentation for full
+     *                      list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+     * @param callback      The callback handler
      */
     @Override
 	public void resetUniversalIdPasswordAdvanced(String universalId, String serviceParams,
@@ -839,8 +840,8 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
      * via SSL.
      *
      * @param universalId       The e-mail address of the user
-     *  * @param tokenTtlInMinutes
-     * @param callback    The callback handler
+     * @param tokenTtlInMinutes The expiry token in mins
+     * @param callback          The callback handler
      */
     @Override
 	public void resetUniversalIdPasswordWithExpiry(String universalId, int tokenTtlInMinutes,
@@ -859,9 +860,10 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
      * via SSL.
      *
      * @param universalId       The e-mail address of the user
-     * @param serviceParams
-     * @param tokenTtlInMinutes
-     * @param callback    The callback handler
+     * @param serviceParams     Parameters to send to the email service. see documentation for full
+     *                          list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+     * @param tokenTtlInMinutes The expiry token in mins
+     * @param callback          The callback handler
      */
     @Override
 	public void resetUniversalIdPasswordAdvancedWithExpiry(String universalId, String serviceParams, Integer tokenTtlInMinutes,

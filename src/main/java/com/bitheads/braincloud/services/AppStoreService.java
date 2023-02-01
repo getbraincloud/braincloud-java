@@ -42,8 +42,8 @@ public class AppStoreService {
     * - windows
     * - windowsPhone
     * - googlePlay
-    * @param receiptData the specific store data required
-    * @param callback The method to be invoked when the server response is received
+    * @param jsonReceiptData    The specific store data required
+    * @param callback           The method to be invoked when the server response is received
     */
     public void verifyPurchase(String storeId, String jsonReceiptData, IServerCallback callback) {
         try {
@@ -148,7 +148,7 @@ public class AppStoreService {
     * - windows
     * - windowsPhone
     * - googlePlay
-    * @param purchaseData specific data for purchasing 2 staged purchases
+    * @param jsonPurchaseData specific data for purchasing 2 staged purchases
     * @param callback The method to be invoked when the server response is received
     */
     public void startPurchase(String storeId, String jsonPurchaseData, IServerCallback callback) {
@@ -179,7 +179,7 @@ public class AppStoreService {
     * - windowsPhone
     * - googlePlay
     * @param transactionId the transactionId returned from start Purchase
-    * @param transactionData specific data for purchasing 2 staged purchases
+    * @param jsonTransactionData specific data for purchasing 2 staged purchases
     * @param callback The method to be invoked when the server response is received
     */
     public void finalizePurchase(String storeId, String transactionId, String jsonTransactionData, IServerCallback callback) {

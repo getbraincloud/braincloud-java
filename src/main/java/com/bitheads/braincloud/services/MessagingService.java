@@ -41,8 +41,9 @@ public class MessagingService {
      * Service Name - Messaging
      * Service Operation - DELETE_MESSAGES
      *
-     * @param msgIds Arrays of message ids to delete.
-     * @param callback The method to be invoked when the server response is received
+     * @param msgbox    The msgbox that we are deleting messages from
+     * @param msgIds    Arrays of message ids to delete.
+     * @param callback  The method to be invoked when the server response is received
      */
     public void deleteMessages(String msgbox, ArrayList<String> msgIds, IServerCallback callback) {
         try {
@@ -126,8 +127,8 @@ public class MessagingService {
      * Service Name - Messaging
      * Service Operation - GET_MESSAGES_PAGE
      *
-     * @param context
-     * @param callback The method to be invoked when the server response is received
+     * @param context   A context object that controls the searchCriteria, pagination and sorting of the results to be returned.
+     * @param callback  The method to be invoked when the server response is received
      */
     public void getMessagesPage(String context, IServerCallback callback) {
         try {
@@ -150,9 +151,10 @@ public class MessagingService {
      * Service Name - Messaging
      * Service Operation - GET_MESSAGES_PAGE_OFFSET
      *
-     * @param context
-     * @param pageOffset
-     * @param callback The method to be invoked when the server response is received
+     * @param context       Encoded context object returned by getMessagesPage   
+     * @param pageOffset    Number of pages to go forward or back
+     * @param callback      The method to be invoked when the server response is received
+     * @see #getMessagesPage(String context, IServerCallback callback)
      */
     public void getMessagesPageOffset(String context, int pageOffset, IServerCallback callback) {
         try {
@@ -174,9 +176,9 @@ public class MessagingService {
      * Service Name - Messaging
      * Service Operation - SEND_MESSAGE
      *
-     * @param toProfileIds
-     * @param contentJson
-     * @param callback The method to be invoked when the server response is received
+     * @param toProfileIds  An array of recipients of the message.
+     * @param contentJson   The message content.
+     * @param callback      The method to be invoked when the server response is received
      */
     public void sendMessage(ArrayList<String> toProfileIds, String contentJson, IServerCallback callback) {
         try {
@@ -200,9 +202,9 @@ public class MessagingService {
      * Service Name - Messaging
      * Service Operation - SEND_MESSAGE_SIMPLE
      *
-     * @param toProfileIds
-     * @param messageText
-     * @param callback The method to be invoked when the server response is received
+     * @param toProfileIds  An array of recipients of the message.
+     * @param messageText   The text to send
+     * @param callback      The method to be invoked when the server response is received
      */
     public void sendMessageSimple(ArrayList<String> toProfileIds, String messageText, IServerCallback callback) {
         try {
@@ -226,9 +228,9 @@ public class MessagingService {
      * Service Name - Messaging
      * Service Operation - MARK_MESSAGES_READ
      *
-     * @param msgbox
-     * @param msgIds
-     * @param callback The method to be invoked when the server response is received
+     * @param msgbox    The box that the messages reside in.
+     * @param msgIds    An array of msgIds.
+     * @param callback  The method to be invoked when the server response is received
      */
     public void markMessagesRead(String msgbox, ArrayList<String> msgIds, IServerCallback callback) {
         try {

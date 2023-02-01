@@ -28,7 +28,7 @@ public class RelayService {
     * brainClouds Relay Servers. Connect options come in
     * from ROOM_ASSIGNED lobby callback.
     * 
-    * @param connectionType
+    * @param connectionType The connection type. INVALID, WEBSOCKET, TCP, UDP, MAX
     * @param options {
     *   ssl: false,
     *   host: "168.0.1.192"
@@ -38,7 +38,7 @@ public class RelayService {
     * }
     * @param callback Callback objects that report Success or Failure|Disconnect.
     *
-    * @note SSL option will only work with WEBSOCKET connetion type.
+    * Note SSL option will only work with WEBSOCKET connetion type.
     */
     public void connect(RelayConnectionType connectionType, JSONObject options, IRelayConnectCallback callback) {
         _client.getRelayComms().connect(connectionType, options, callback);
@@ -54,6 +54,8 @@ public class RelayService {
     /**
      * Returns whether or not we have a successful connection with
      * the relay server
+     *
+     * @return Whether or not we have a successful connection with the relay server
      */
     public boolean isConnected() {
         return _client.getRelayComms().isConnected();
@@ -63,6 +65,8 @@ public class RelayService {
      * Get the current ping for our user.
      * Note: Pings are not distributed among other members. Your game will
      * have to bundle it inside a packet and distribute to other peers.
+     *
+     * @return The current ping
      */
     public int getPing() {
         return _client.getRelayComms().getPing();
@@ -72,6 +76,8 @@ public class RelayService {
      * Set the ping interval. Ping allows to keep the connection
      * alive, but also inform the player of his current ping.
      * The default is 1000 miliseconds interval. (1 seconds)
+     *
+     * @param intervalMS    Seconds inbetween pings.
      */
     public void setPingInterval(int intervalMS) {
         _client.getRelayComms().setPingInterval(intervalMS);
@@ -79,6 +85,8 @@ public class RelayService {
 
     /**
      * Get the lobby's owner profile Id.
+     *
+     * @return The lobby owner's profile Id
      */
     public String getOwnerProfileId() {
         return _client.getRelayComms().getOwnerProfileId();
@@ -86,6 +94,9 @@ public class RelayService {
 
     /**
      * Returns the profileId associated with a netId.
+     *
+     * @param netId The netId the profileId is associated with
+     * @return The profileId associated with a netId
      */
     public String getProfileIdForNetId(int netId) {
         return _client.getRelayComms().getProfileIdForNetId(netId);
@@ -93,6 +104,9 @@ public class RelayService {
 
     /**
      * Returns the netId associated with a profileId.
+     *
+     * @param profileId  The profileId the netId is associated with
+     * @return The netId associated with a profileId
      */
     public int getNetIdForProfileId(String profileId) {
         return _client.getRelayComms().getNetIdForProfileId(profileId);
@@ -100,6 +114,8 @@ public class RelayService {
 
     /**
      * Get the lobby's owner connection Id.
+     *
+     * @return The lobby owner's connection Id
      */
     public String getOwnerCxId() {
         return _client.getRelayComms().getOwnerCxId();
@@ -107,6 +123,9 @@ public class RelayService {
 
     /**
      * Returns the connection id associated with a netId.
+     *
+     * @param netId The netId the connection id is associated with
+     * @return The connection id associated with a netId
      */
     public String getCxIdForNetId(int netId) {
         return _client.getRelayComms().getCxIdForNetId(netId);
@@ -114,6 +133,9 @@ public class RelayService {
 
     /**
      * Returns the netId associated with a connection id.
+     *
+     * @param cxId The connection id the netId is associated with
+     * @return the netId associated with a connection id
      */
     public int getNetIdForCxId(String cxId) {
         return _client.getRelayComms().getNetIdForCxId(cxId);
@@ -127,6 +149,10 @@ public class RelayService {
     public void registerRelayCallback(IRelayCallback callback) {
         _client.getRelayComms().registerRelayCallback(callback);
     }
+
+    /**
+    * Deregisters callback for relay messages coming from peers.
+    */
     public void deregisterRelayCallback() {
         _client.getRelayComms().deregisterRelayCallback();
     }
@@ -178,6 +204,10 @@ public class RelayService {
     public void registerSystemCallback(IRelaySystemCallback callback) {
         _client.getRelayComms().registerSystemCallback(callback);
     }
+
+    /**
+    * Deregister callback for RelayServer system messages.
+    */
     public void deregisterSystemCallback() {
         _client.getRelayComms().deregisterSystemCallback();
     }
@@ -204,7 +234,7 @@ public class RelayService {
      * Send a packet to any players by using a mask
      * 
      * @param data Byte array for the data to send
-     * @param playerMask Mask of the players to send to. 0001 = netId 0, 0010 = netId 1, etc. If you pass ALL_PLAYER_MASK you will be included and you will get an echo for your message. Use sendToAll instead, you will be filtered out. You can manually filter out by : ALL_PLAYER_MASK &= ~(1 << myNetId)
+     * @param playerMask Mask of the players to send to. 0001 is netId 0, 0010 is netId 1, etc. If you pass ALL_PLAYER_MASK you will be included and you will get an echo for your message. Use sendToAll instead, you will be filtered out. You can manually filter out by : {@code ALL_PLAYER_MASK &= ~(1 << myNetId)}
      * @param reliable Send this reliable or not.
      * @param ordered Receive this ordered or not.
      * @param channel One of: (CHANNEL_HIGH_PRIORITY_1, CHANNEL_HIGH_PRIORITY_2, CHANNEL_NORMAL_PRIORITY, CHANNEL_LOW_PRIORITY)

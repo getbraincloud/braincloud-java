@@ -47,9 +47,13 @@ public class PresenceService
 	}
 
 	/**
-	* Gets the presence data for the given <platform>. Can be one of "all",
+	* Gets the presence data for the given platform. Can be one of "all",
 	* "brainCloud", or "facebook". Will not include offline profiles
-	* unless <includeOffline> is set to true.
+	* unless includeOffline is set to true.
+	*
+	* @param platform	Gets a list of Presence entries for the specified platform or "all" for all platforms.
+	* @param includeOffline	Should offline users be included in the response?
+	* @param callback	The callback handler
 	*/
 	public void getPresenceOfFriends(String platform, boolean includeOffline, IServerCallback callback)
 	{
@@ -66,8 +70,12 @@ public class PresenceService
 	}
 
 	/**
-	* Gets the presence data for the given <groupId>. Will not include
-	* offline profiles unless <includeOffline> is set to true.
+	* Gets the presence data for the given groupId. Will not include
+	* offline profiles unless includeOffline is set to true.
+	*
+	* @param groupId	Gets a list of Presence for the members of the specified group. The caller must be a member of the given group.
+	* @param includeOffline	Should offline users be included in the response?
+	* @param callback	The callback handler
 	*/
 	public void getPresenceOfGroup(String groupId, boolean includeOffline, IServerCallback callback)
 	{
@@ -84,8 +92,12 @@ public class PresenceService
 	}
 
 	/**
-	* Gets the presence data for the given <profileIds>. Will not include
-	* offline profiles unless <includeOffline> is set to true.
+	* Gets the presence data for the given profileIds. Will not include
+	* offline profiles unless includeOffline is set to true.
+	*
+	* @param profileIds	Gets a list of Presence for the specified profile ids.
+	* @param includeOffline	Should offline users be included in the response?
+	* @param callback	The callback handler
 	*/
 	public void getPresenceOfUsers(ArrayList<String> profileIds, boolean includeOffline, IServerCallback callback)
 	{
@@ -103,9 +115,13 @@ public class PresenceService
 
 	/**
 	* Registers the caller for RTT presence updates from friends for the
-	* given <platform>. Can be one of "all", "brainCloud", or "facebook".
-	* If <bidirectional> is set to true, then also registers the targeted
+	* given platform. Can be one of "all", "brainCloud", or "facebook".
+	* If bidirectional is set to true, then also registers the targeted
 	* users for presence updates from the caller.
+	*
+	* @param platform	Presence for friends of the caller on the specified platform. Use "all" or omit for all platforms.
+	* @param bidirectional	Should those profiles be mutually registered to listen to the current profile?
+	* @param callback	The callback handler
 	*/
 	public void registerListenersForFriends(String platform, boolean bidirectional, IServerCallback callback)
 	{
@@ -123,9 +139,13 @@ public class PresenceService
 
 	/**
 	* Registers the caller for RTT presence updates from the members of
-	* the given <groupId>. Caller must be a member of said group. If
-	* <bidirectional> is set to true, then also registers the targeted
+	* the given groupId. Caller must be a member of said group. If
+	* bidirectional is set to true, then also registers the targeted
 	* users for presence updates from the caller.
+	*
+	* @param groupId	Target group ID.
+	* @param bidirectional	Should those profiles be mutually registered to listen to the current profile?
+	* @param callback	The callback handler
 	*/
 	public void registerListenersForGroup(String groupId, boolean bidirectional, IServerCallback callback)
 	{
@@ -143,8 +163,12 @@ public class PresenceService
 
 	/**
 	* Registers the caller for RTT presence updates for the given
-	* <profileIds>. If <bidirectional> is set to true, then also registers
+	* profileIds. If bidirectional is set to true, then also registers
 	* the targeted users for presence updates from the caller.
+	*
+	* @param profileIds	Array of target profile IDs.
+	* @param bidirectional	Should those profiles be mutually registered to listen to the current profile?
+	* @param callback	The callback handler
 	*/
 	public void registerListenersForProfiles(ArrayList<String> profileIds, boolean bidirectional, IServerCallback callback)
 	{
@@ -162,6 +186,9 @@ public class PresenceService
 
 	/**
 	* Update the presence data visible field for the caller.
+	*
+	* @param visible	Should user appear in presence? True by default.
+	* @param callback	The callback handler
 	*/
 	public void setVisibility(boolean visible, IServerCallback callback)
 	{
@@ -180,6 +207,8 @@ public class PresenceService
 	* Stops the caller from receiving RTT presence updates. Does not
 	* affect the broadcasting of *their* presence updates to other
 	* listeners.
+	*
+	* @param callback	The callback handler
 	*/
 	public void stopListening(IServerCallback callback)
 	{
@@ -189,6 +218,11 @@ public class PresenceService
 
 	/**
 	* Update the presence data activity field for the caller.
+	*
+	* @param activity	Presence activity record json. 
+						Size of the given activity must be equal to or less than the Max content size (bytes) app setting 
+						(see Messaging/Presence in the portal).
+	* @param callback	The callback handler
 	*/
 	public void updateActivity(String activity, IServerCallback callback)
 	{

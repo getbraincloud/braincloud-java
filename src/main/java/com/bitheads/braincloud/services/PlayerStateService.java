@@ -135,6 +135,7 @@ public class PlayerStateService {
      *
      * @param jsonAttributes Single layer json string that is a set of key-value pairs
      * @param wipeExisting Whether to wipe existing attributes prior to update.
+     * @param callback  The callback handler
      */
     public void updateAttributes(String jsonAttributes, boolean wipeExisting,
                                  IServerCallback callback) {
@@ -158,6 +159,7 @@ public class PlayerStateService {
      * Update user's attributes.
      *
      * @param timeZoneOffset Whether to wipe existing attributes prior to update.
+     * @param callback  The callback handler
      */
     public void updateTimeZoneOffset(int timeZoneOffset,
                                  IServerCallback callback) {
@@ -178,6 +180,7 @@ public class PlayerStateService {
      * Update user's attributes.
      *
      * @param languageCode Whether to wipe existing attributes prior to update.
+     * @param callback  The callback handler
      */
     public void updateLanguageCode(String languageCode,
                                  IServerCallback callback) {
@@ -322,8 +325,8 @@ public class PlayerStateService {
      * Service Name - PlayerState
      * Service Operation - ClearUserStatus
      *
-     * @param statusName 
-     * @param callback The method to be invoked when the server response is received
+     * @param statusName    Name of the status
+     * @param callback      The method to be invoked when the server response is received
      */
     public void clearUserStatus(
             String statusName,
@@ -346,10 +349,10 @@ public class PlayerStateService {
      * Service Name - PlayerState
      * Service Operation - ClearUserStatus
      *
-     * @param statusName
-     * @param additionalSecs
-     * @param details 
-     * @param callback The method to be invoked when the server response is received
+     * @param statusName    Name of the status
+     * @param additionalSecs    Add time to existing expiry time.
+     * @param details   Json String to add additional details.
+     * @param callback  The method to be invoked when the server response is received
      */
     public void extendUserStatus(
             String statusName,
@@ -377,8 +380,8 @@ public class PlayerStateService {
      * Service Name - PlayerState
      * Service Operation - ClearUserStatus
      *
-     * @param statusName
-     * @param callback The method to be invoked when the server response is received
+     * @param statusName    Name of the status
+     * @param callback  The method to be invoked when the server response is received
      */
     public void getUserStatus(
             String statusName,
@@ -401,7 +404,9 @@ public class PlayerStateService {
      * Service Name - PlayerState
      * Service Operation - ClearUserStatus
      *
-     * @param statusName
+     * @param statusName    Name of the status
+     * @param durationSecs  An active duration.
+     * @param details   Json String to add additional details.
      * @param callback The method to be invoked when the server response is received
      */
     public void setUserStatus(

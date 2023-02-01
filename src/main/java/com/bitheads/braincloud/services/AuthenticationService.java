@@ -135,7 +135,7 @@ public class AuthenticationService {
      * don't want to bother the user to login, or for users who are sensitive to
      * their privacy.
      *
-     * @param anonymousId 
+     * @param anonymousId The anonymous id of the user
      * @param forceCreate Should a new profile be created if it does not exist?
      * @param callback    The callback handler
      */
@@ -150,7 +150,7 @@ public class AuthenticationService {
      * potentially password (for convenience) in the client data. For the
      * greatest security, force the user to re-enter their * password at each
      * login. (Or at least give them that option).
-     * <p/>
+     * 
      * Note that the password sent from the client to the server is protected
      * via SSL.
      *
@@ -167,15 +167,16 @@ public class AuthenticationService {
     /**
      * Authenticate the user via cloud code (which in turn validates the supplied credentials against an external system).
      * This allows the developer to extend brainCloud authentication to support other backend authentication systems.
-     * <p/>
+     * 
      * Service Name - Authenticate
      * Server Operation - Authenticate
      *
-     * @param userId           The user id
-     * @param token            The user token (password etc)
-     * @param externalAuthName The name of the cloud script to call for external authentication
-     * @param forceCreate      Should a new profile be created for this user if the account
-     *                         does not exist?
+     * @param userId            The user id
+     * @param token             The user token (password etc)
+     * @param externalAuthName  The name of the cloud script to call for external authentication
+     * @param forceCreate       Should a new profile be created for this user if the account
+     *                          does not exist?
+     * @param callback          The callback handler
      */
     public void authenticateExternal(
             String userId,
@@ -297,7 +298,7 @@ public class AuthenticationService {
 
     /**
      * Authenticate the user using a Twitter userid, authentication token, and secret from Twitter.
-     * <p/>
+     * 
      * Service Name - Authenticate
      * Service Operation - Authenticate
      *

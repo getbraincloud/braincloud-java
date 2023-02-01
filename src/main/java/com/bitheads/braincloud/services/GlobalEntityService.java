@@ -36,7 +36,7 @@ public class GlobalEntityService {
      * Method creates a new entity on the server.
      *
      * @param entityType The entity type as defined by the user
-     * @param timeToLive Sets expiry time in millis for entity if > 0
+     * @param timeToLive Sets expiry time in millis for entity if greater than 0
      * @param jsonEntityAcl The entity's access control list as json. A null acl implies default
      * @param jsonEntityData The entity's data as a json String
      * @param callback Callback.
@@ -70,7 +70,7 @@ public class GlobalEntityService {
      *
      * @param entityType The entity type as defined by the user
      * @param indexedId A secondary ID that will be indexed
-     * @param timeToLive Sets expiry time in millis for entity if > 0
+     * @param timeToLive Sets expiry time in millis for entity if greater than 0
      * @param jsonEntityAcl The entity's access control list as json. A null acl implies default
      * @param jsonEntityData The entity's data as a json String
      * @param callback Callback.
@@ -167,7 +167,7 @@ public class GlobalEntityService {
      * @param version Current version of the entity. If the version of the entity on
      *            the server does not match the version passed in, the server
      *            operation will fail. Use -1 to skip version checking.
-     * @param timeToLive Sets expiry time in millis for entity if > 0
+     * @param timeToLive Sets expiry time in millis for entity if greater than 0
      * @param callback Callback
      */
     public void updateEntityTimeToLive(String entityId, int version,

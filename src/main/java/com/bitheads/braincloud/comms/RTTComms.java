@@ -260,6 +260,8 @@ public class RTTComms implements IServerCallback {
 
     /**
      * Returns true if RTT is enabled
+     *
+     * @return True if RTT is enabled
      */
     public boolean isRTTEnabled()
     {

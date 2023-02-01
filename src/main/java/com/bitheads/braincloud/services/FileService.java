@@ -43,6 +43,7 @@ public class FileService {
      * @param replaceIfExists Whether to replace file if it exists
      * @param localPath The path and filename of the local file
      * @param callback The method to be invoked when the server response is received
+     * @return False if the file does not exist at the localPath
      *
      * Significant error codes:
      *

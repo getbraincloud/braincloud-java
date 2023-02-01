@@ -31,6 +31,8 @@ public class GamificationService {
     /**
      * Sets the achievement awarded delegate which is called anytime
      * an achievement is awarded
+     *
+     * @param delegate  Achievement awarded delegate
      */
     public void setAchievementAwardedDelegate(IAchievementsDelegate delegate) {
         m_achievementsDelegate = delegate;
@@ -41,6 +43,9 @@ public class GamificationService {
      *
      * Service Name - Gamification
      * Service Operation - Read
+     *
+     * @param includeMetaData   Whether to return meta data as well
+     * @param callback  The callback handler
      */
     public void readAllGamification(
             boolean includeMetaData,
@@ -60,6 +65,9 @@ public class GamificationService {
      *
      * Service Name - Gamification
      * Service Operation - ReadMilestones
+     *
+     * @param includeMetaData   Whether to return meta data as well
+     * @param callback  The callback handler
      */
     public void readMilestones(
             boolean includeMetaData,
@@ -79,6 +87,9 @@ public class GamificationService {
      *
      * Service Name - Gamification
      * Service Operation - ReadAchievements
+     *
+     * @param includeMetaData   Whether to return meta data as well
+     * @param callback  The callback handler
      */
     public void readAchievements(
             boolean includeMetaData,
@@ -116,6 +127,7 @@ public class GamificationService {
      * Service Name - Gamification
      * Service Operation - ReadAchievedAchievements
      *
+     * @param includeMetaData   Whether to return meta data as well
      * @param callback Callback.
      */
     public void readAchievedAchievements(
@@ -140,6 +152,7 @@ public class GamificationService {
      * Service Name - Gamification
      * Service Operation - ReadCompleteMilestones
      *
+     * @param includeMetaData   Whether to return meta data as well
      * @param callback Callback.
      */
     public void readCompletedMilestones(
@@ -163,6 +176,7 @@ public class GamificationService {
      * Service Name - Gamification
      * Service Operation - ReadInProgressMilestones
      *
+     * @param includeMetaData   Whether to return meta data as well
      * @param callback Callback.
      */
     public void readInProgressMilestones(
@@ -186,6 +200,7 @@ public class GamificationService {
      * Service Operation - ReadMilestonesByCategory
      *
      * @param category The milestone category
+     * @param includeMetaData   Whether to return meta data as well
      * @param callback Callback.
      */
     public void readMilestonesByCategory(
@@ -263,6 +278,7 @@ public class GamificationService {
      * Service Name - Gamification
      * Service Operation - ReadQuests
      *
+     * @param includeMetaData Whether to return meta data as well
      * @param callback Callback.
      *
      *
@@ -294,6 +310,7 @@ public class GamificationService {
      * Service Name - Gamification
      * Service Operation - ReadCompletedQuests
      *
+     * @param includeMetaData   Whether to return meta data as well
      * @param callback Callback.
      */
     public void readQuestsCompleted(
@@ -316,6 +333,7 @@ public class GamificationService {
      * Service Name - Gamification
      * Service Operation - ReadInProgressQuests
      *
+     * @param includeMetaData   Whether to return meta data as well
      * @param callback Callback.
      */
     public void readQuestsInProgress(
@@ -338,6 +356,7 @@ public class GamificationService {
      * Service Name - Gamification
      * Service Operation - ReadNotStartedQuests
      *
+     * @param includeMetaData   Whether to return meta data as well
      * @param callback Callback.
      */
     public void readQuestsNotStarted(
@@ -361,6 +380,7 @@ public class GamificationService {
      * Service Name - Gamification
      * Service Operation - ReadQuestsWithStatus
      *
+     * @param includeMetaData   Whether to return meta data as well
      * @param callback Callback.
      */
     public void readQuestsWithStatus(
@@ -382,6 +402,7 @@ public class GamificationService {
      * Service Name - Gamification
      * Service Operation - ReadQuestsWithBasicPercentage
      *
+     * @param includeMetaData   Whether to return meta data as well
      * @param callback Callback.
      */
     public void readQuestsWithBasicPercentage(
@@ -405,6 +426,7 @@ public class GamificationService {
      * Service Name - Gamification
      * Service Operation - ReadQuestsWithComplexPercentage
      *
+     * @param includeMetaData   Whether to return meta data as well
      * @param callback Callback
      */
     public void readQuestsWithComplexPercentage(
@@ -429,6 +451,7 @@ public class GamificationService {
      *
      *
      * @param category The quest category
+     * @param includeMetaData   Whether to return meta data as well
      * @param callback Callback.
      */
     public void readQuestsByCategory(

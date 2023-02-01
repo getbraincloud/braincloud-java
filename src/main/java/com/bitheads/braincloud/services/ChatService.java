@@ -35,8 +35,8 @@ public class ChatService {
     }
 
     /**
-     * Registers a listener for incoming events from <channelId>.
-     * Also returns a list of <maxReturn> recent messages from history.
+     * Registers a listener for incoming events from channelId.
+     * Also returns a list of maxReturn recent messages from history.
      *
      * Service Name - Chat
      * Service Operation - ChannelConnect
@@ -60,7 +60,7 @@ public class ChatService {
     }
 
     /**
-     * Unregisters a listener for incoming events from <channelId>.
+     * Unregisters a listener for incoming events from channelId.
      *
      * Service Name - Chat
      * Service Operation - channelDisconnect
@@ -82,7 +82,7 @@ public class ChatService {
     }
 
     /**
-     * Delete a chat message. <version> must match the latest or pass -1 to bypass version check.
+     * Delete a chat message. Version must match the latest or pass -1 to bypass version check.
      *
      * Service Name - Chat
      * Service Operation - deleteChatMessage
@@ -108,7 +108,7 @@ public class ChatService {
     }
 
     /**
-     * Gets the channelId for the given <channelType> and <channelSubId>. Channel type must be one of "gl" or "gr".
+     * Gets the channelId for the given channelType and channelSubId. Channel type must be one of "gl" or "gr".
      *
      * Service Name - Chat
      * Service Operation - getChannelId
@@ -132,7 +132,7 @@ public class ChatService {
     }
 
     /**
-     * Gets description info and activity stats for channel <channelId>.
+     * Gets description info and activity stats for channel channelId.
      * Note that numMsgs and listeners only returned for non-global groups.
      * Only callable for channels the user is a member of.
      *
@@ -180,7 +180,7 @@ public class ChatService {
     }
 
     /**
-     * Get a list of <maxReturn> messages from history of channel <channelId>.
+     * Get a list of maxReturn messages from history of channel channelId.
      *
      * Service Name - Chat
      * Service Operation - GET_RECENT_CHAT_MESSAGES
@@ -204,7 +204,7 @@ public class ChatService {
     }
 
     /**
-     * Gets a list of the channels of type <channelType> that the user has access to.
+     * Gets a list of the channels of type channelType that the user has access to.
      * Channel type must be one of "gl", "gr" or "all".
      *
      * Service Name - Chat
@@ -228,13 +228,13 @@ public class ChatService {
 
     /**
      * Send a potentially rich chat message.
-     * <content> must contain at least a "plain" field for plain-text messaging.
+     * Content must contain at least a "plain" field for plain-text messaging.
      *
      * Service Name - Chat
      * Service Operation - postChatMessage
      *
      * @param channelId Channel id to post message to.
-     * @param plain the text message.
+     * @param text the text message.
      * @param rich custom data.
      * @param recordInHistory true if the message persist in history
      * @param callback The method to be invoked when the server response is received.
@@ -287,8 +287,7 @@ public class ChatService {
 
     /**
      * Update a chat message.
-     * <content> must contain at least a "plain" field for plain-text messaging.
-     * <version> must match the latest or pass -1 to bypass version check.
+     * content must contain at least a "plain" field for plain-text messaging.
      *
      * Service Name - Chat
      * Service Operation - updateChatMessage
@@ -296,7 +295,7 @@ public class ChatService {
      * @param channelId Channel id where the message to update is.
      * @param msgId Message id to update.
      * @param version Version of the message to update. Must match latest or pass -1 to bypass version check.
-     * @param plain the text message.
+     * @param text the text message.
      * @param rich custom data.
      * @param callback The method to be invoked when the server response is received.
      */
