@@ -58,8 +58,6 @@ public class IdentityService {
      *   (that will be further validated when sent to the bC service)
      * @param callback The method to be invoked when the server response is received
      *
-     * @returns performs the success callback on success, failure callback on failure
-     *
      * Errors to watch for:  SWITCHING_PROFILES - this means that the Facebook identity you provided
      * already points to a different profile.  You will likely want to offer the player the 
      * choice to *SWITCH* to that profile, or *MERGE* the profiles.
@@ -81,8 +79,6 @@ public class IdentityService {
      * @param authenticationToken The validated token from the Facebook SDK
      *   (that will be further validated when sent to the bC service)
      * @param callback The method to be invoked when the server response is received
-     *
-     * @returns performs the success callback on success, failure callback on failure
      */
     public void mergeFacebookIdentity(String facebookId, String authenticationToken, IServerCallback callback) {
         mergeIdentity(facebookId, authenticationToken, AuthenticationType.Facebook, callback);
@@ -98,7 +94,6 @@ public class IdentityService {
      * @param continueAnon Proceed even if the profile will revert to anonymous?
      * @param callback The method to be invoked when the server response is received
      *
-     * @returns performs the success callback on success, failure callback on failure
      *
      * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
      * disconnecting this identity would result in the profile being anonymous (which means that
@@ -227,8 +222,6 @@ public class IdentityService {
      *   (that will be further validated when sent to the bC service)
      * @param callback The method to be invoked when the server response is received
      *
-     * @returns performs the success callback on success, failure callback on failure
-     *
      * Errors to watch for:  SWITCHING_PROFILES - this means that the FacebookLimited identity you provided
      * already points to a different profile.  You will likely want to offer the player the 
      * choice to *SWITCH* to that profile, or *MERGE* the profiles.
@@ -250,8 +243,6 @@ public class IdentityService {
      * @param authenticationToken The validated token from the Facebook SDK
      *   (that will be further validated when sent to the bC service)
      * @param callback The method to be invoked when the server response is received
-     *
-     * @returns performs the success callback on success, failure callback on failure
      */
     public void mergeFacebookLimitedIdentity(String facebookLimitedId, String authenticationToken, IServerCallback callback) {
         mergeIdentity(facebookLimitedId, authenticationToken, AuthenticationType.FacebookLimited, callback);
@@ -266,8 +257,6 @@ public class IdentityService {
      * @param facebookLimitedId The facebookLimited id of the user
      * @param continueAnon Proceed even if the profile will revert to anonymous?
      * @param callback The method to be invoked when the server response is received
-     *
-     * @returns performs the success callback on success, failure callback on failure
      *
      * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
      * disconnecting this identity would result in the profile being anonymous (which means that
@@ -289,8 +278,6 @@ public class IdentityService {
      * @param oculusNonce token from the Oculus SDK
      * @param callback The method to be invoked when the server response is received
      *
-     * @returns performs the success callback on success, failure callback on failure
-     *
      * Errors to watch for:  SWITCHING_PROFILES - this means that the Oculus identity you provided
      * already points to a different profile.  You will likely want to offer the player the 
      * choice to *SWITCH* to that profile, or *MERGE* the profiles.
@@ -311,8 +298,6 @@ public class IdentityService {
      * @param oculusId The oculus id of the user
      * @param oculusNonce token from the Oculus SDK
      * @param callback The method to be invoked when the server response is received
-     *
-     * @returns performs the success callback on success, failure callback on failure
      */
     public void mergeOculusIdentity(String oculusId, String oculusNonce, IServerCallback callback) {
         mergeIdentity(oculusId, oculusNonce, AuthenticationType.Oculus, callback);
@@ -327,8 +312,6 @@ public class IdentityService {
      * @param oculusId The oculus id of the user
      * @param continueAnon Proceed even if the profile will revert to anonymous?
      * @param callback The method to be invoked when the server response is received
-     *
-     * @returns performs the success callback on success, failure callback on failure
      *
      * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
      * disconnecting this identity would result in the profile being anonymous (which means that
@@ -349,8 +332,6 @@ public class IdentityService {
      * @param gameCenterId The player's game center id  (use the playerID property from the local GKPlayer object)
      * @param callback The method to be invoked when the server response is received
      *
-     * @returns performs the success callback on success, failure callback on failure
-     *
      * Errors to watch for:  SWITCHING_PROFILES - this means that the Facebook identity you provided
      * already points to a different profile.  You will likely want to offer the player the 
      * choice to *SWITCH* to that profile, or *MERGE* the profiles.
@@ -370,9 +351,6 @@ public class IdentityService {
      *
      * @param gameCenterId The player's game center id  (use the playerID property from the local GKPlayer object)
      * @param callback The method to be invoked when the server response is received
-     *
-     * @returns performs the success callback on success, failure callback on failure
-     *
      */
     public void mergeGameCenterIdentity(String gameCenterId, IServerCallback callback) {
         mergeIdentity(gameCenterId, "", AuthenticationType.GameCenter, callback);
@@ -387,8 +365,6 @@ public class IdentityService {
      * @param gameCenterId The player's game center id  (use the playerID property from the local GKPlayer object)
      * @param continueAnon Proceed even if the profile will revert to anonymous?
      * @param callback The method to be invoked when the server response is received
-     *
-     * @returns performs the success callback on success, failure callback on failure
      *
      * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
      * disconnecting this identity would result in the profile being anonymous (which means that 
@@ -411,7 +387,7 @@ public class IdentityService {
      * (that will be further validated when sent to the bC service)
      * @param callback The callback method
      *
-     * @returns Errors to watch for:  SWITCHING_PROFILES - this means that the Google identity you provided
+     * Errors to watch for:  SWITCHING_PROFILES - this means that the Google identity you provided
      * already points to a different profile.  You will likely want to offer the player the
      * choice to *SWITCH* to that profile, or *MERGE* the profiles.
      *
@@ -432,9 +408,6 @@ public class IdentityService {
      * @param authenticationToken  The validated token from the Google SDK
      * (that will be further validated when sent to the bC service)
      * @param callback The callback method
-     *
-     * @returns
-     *
      */
     public void mergeGoogleIdentity(String googleId, String authenticationToken, IServerCallback callback) {
         mergeIdentity(googleId, authenticationToken, AuthenticationType.Google, callback);
@@ -450,7 +423,7 @@ public class IdentityService {
      * @param continueAnon Proceed even if the profile will revert to anonymous?
      * @param callback The method to be invoked when the server response is received
      *
-     * @returns Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
+     * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
      * disconnecting this identity would result in the profile being anonymous (which means that
      * the profile wouldn't be retrievable if the user loses their device)
      */
@@ -469,7 +442,7 @@ public class IdentityService {
      * (that will be further validated when sent to the bC service)
      * @param callback The callback method
      *
-     * @returns Errors to watch for:  SWITCHING_PROFILES - this means that the Google identity you provided
+     * Errors to watch for:  SWITCHING_PROFILES - this means that the Google identity you provided
      * already points to a different profile.  You will likely want to offer the player the
      * choice to *SWITCH* to that profile, or *MERGE* the profiles.
      *
@@ -490,9 +463,6 @@ public class IdentityService {
      * @param authenticationToken  The validated token from the Google SDK
      * (that will be further validated when sent to the bC service)
      * @param callback The callback method
-     *
-     * @returns
-     *
      */
     public void mergeGoogleOpenIdIdentity(String googleOpenId, String authenticationToken, IServerCallback callback) {
         mergeIdentity(googleOpenId, authenticationToken, AuthenticationType.GoogleOpenId, callback);
@@ -508,7 +478,7 @@ public class IdentityService {
      * @param continueAnon Proceed even if the profile will revert to anonymous?
      * @param callback The method to be invoked when the server response is received
      *
-     * @returns Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
+     * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
      * disconnecting this identity would result in the profile being anonymous (which means that
      * the profile wouldn't be retrievable if the user loses their device)
      */
@@ -527,7 +497,7 @@ public class IdentityService {
      * (that will be further validated when sent to the bC service)
      * @param callback The callback method
      *
-     * @returns Errors to watch for:  SWITCHING_PROFILES - this means that the Google identity you provided
+     * Errors to watch for:  SWITCHING_PROFILES - this means that the Google identity you provided
      * already points to a different profile.  You will likely want to offer the player the
      * choice to *SWITCH* to that profile, or *MERGE* the profiles.
      *
@@ -548,9 +518,6 @@ public class IdentityService {
      * @param authenticationToken  The validated token from the Google SDK
      * (that will be further validated when sent to the bC service)
      * @param callback The callback method
-     *
-     * @returns
-     *
      */
     public void mergeAppleIdentity(String appleId, String authenticationToken, IServerCallback callback) {
         mergeIdentity(appleId, authenticationToken, AuthenticationType.Apple, callback);
@@ -566,7 +533,7 @@ public class IdentityService {
      * @param continueAnon Proceed even if the profile will revert to anonymous?
      * @param callback The method to be invoked when the server response is received
      *
-     * @returns Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
+     * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
      * disconnecting this identity would result in the profile being anonymous (which means that
      * the profile wouldn't be retrievable if the user loses their device)
      */
@@ -587,8 +554,8 @@ public class IdentityService {
      * @param password The player's password
      * @param callback The method to be invoked when the server response is received
      *
-     * @returns performs the success callback on success, failure callback on failure
-     *.
+     * Performs the success callback on success, failure callback on failure
+     *
      * Errors to watch for:  SWITCHING_PROFILES - this means that the email address you provided
      * already points to a different profile.  You will likely want to offer the player the 
      * choice to *SWITCH* to that profile, or *MERGE* the profiles.
@@ -609,7 +576,7 @@ public class IdentityService {
      * @param password The player's password
      * @param callback The method to be invoked when the server response is received
      *
-     * @returns performs the success callback on success, failure callback on failure
+     * Performs the success callback on success, failure callback on failure
      *
      */
     public void mergeEmailIdentity(String email, String password, IServerCallback callback) {
@@ -626,7 +593,7 @@ public class IdentityService {
      * @param continueAnon Proceed even if the profile will revert to anonymous?
      * @param callback The method to be invoked when the server response is received
      *
-     * @returns performs the success callback on success, failure callback on failure
+     * Performs the success callback on success, failure callback on failure
      *
      * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
      * disconnecting this identity would result in the profile being anonymous (which means that 
@@ -648,8 +615,8 @@ public class IdentityService {
      * @param password The player's password
      * @param callback The method to be invoked when the server response is received
      *
-     * @returns performs the success callback on success, failure callback on failure
-     *.
+     * Performs the success callback on success, failure callback on failure
+     *
      * Errors to watch for:  SWITCHING_PROFILES - this means that the email address you provided
      * already points to a different profile.  You will likely want to offer the player the 
      * choice to *SWITCH* to that profile, or *MERGE* the profiles.
@@ -670,7 +637,7 @@ public class IdentityService {
      * @param password The player's password
      * @param callback The method to be invoked when the server response is received
      *
-     * @returns performs the success callback on success, failure callback on failure
+     * Performs the success callback on success, failure callback on failure
      *
      */
     public void mergeUniversalIdentity(String userId, String password, IServerCallback callback) {
@@ -687,7 +654,7 @@ public class IdentityService {
      * @param continueAnon Proceed even if the profile will revert to anonymous?
      * @param callback The method to be invoked when the server response is received
      *
-     * @returns performs the success callback on success, failure callback on failure
+     * Performs the success callback on success, failure callback on failure
      *
      * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
      * disconnecting this identity would result in the profile being anonymous (which means that 
@@ -709,7 +676,7 @@ public class IdentityService {
      * @param sessionTicket The player's session ticket (hex encoded)
      * @param callback The method to be invoked when the server response is received
      *
-     * @returns performs the success callback on success, failure callback on failure
+     * Performs the success callback on success, failure callback on failure
      *.
      * Errors to watch for:  SWITCHING_PROFILES - this means that the email address you provided
      * already points to a different profile.  You will likely want to offer the player the 
@@ -731,7 +698,7 @@ public class IdentityService {
      * @param sessionTicket The player's session ticket (hex encoded)
      * @param callback The method to be invoked when the server response is received
      *
-     * @returns performs the success callback on success, failure callback on failure
+     * Performs the success callback on success, failure callback on failure
      *
      */
     public void mergeSteamIdentity(String steamId, String sessionTicket, IServerCallback callback) {
@@ -748,7 +715,7 @@ public class IdentityService {
      * @param continueAnon Proceed even if the profile will revert to anonymous?
      * @param callback The method to be invoked when the server response is received
      *
-     * @returns performs the success callback on success, failure callback on failure
+     * Performs the success callback on success, failure callback on failure
      *
      * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
      * disconnecting this identity would result in the profile being anonymous (which means that 
@@ -768,7 +735,7 @@ public class IdentityService {
      * @param ultraIdToken       The "id_token" taken from Ultra's JWT.
      * @param callback           The method to be invoked when the server response is received
      *
-     * @returns performs the success callback on success, failure callback on failure
+     * Performs the success callback on success, failure callback on failure
      *.
      * Errors to watch for:  SWITCHING_PROFILES - this means that the email address you provided
      * already points to a different profile.  You will likely want to offer the player the 
@@ -790,7 +757,7 @@ public class IdentityService {
      * @param ultraIdToken       The "id_token" taken from Ultra's JWT.
      * @param callback           The method to be invoked when the server response is received
      *
-     * @returns performs the success callback on success, failure callback on failure
+     * Performs the success callback on success, failure callback on failure
      */
     public void mergeUltraIdentity(String ultraUsername, String ultraIdToken, IServerCallback callback) {
         mergeIdentity(ultraUsername, ultraIdToken, AuthenticationType.Ultra, callback);
@@ -806,7 +773,7 @@ public class IdentityService {
      * @param continueAnon       Proceed even if the profile will revert to anonymous?
      * @param callback           The method to be invoked when the server response is received
      *
-     * @returns performs the success callback on success, failure callback on failure
+     * Performs the success callback on success, failure callback on failure
      *
      * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
      * disconnecting this identity would result in the profile being anonymous (which means that 
@@ -895,7 +862,7 @@ public class IdentityService {
      * (that will be further validated when sent to the bC service)
      * @param callback The callback method
      *
-     * @returns Errors to watch for:  SWITCHING_PROFILES - this means that the Parse identity you provided
+     * Errors to watch for:  SWITCHING_PROFILES - this means that the Parse identity you provided
      * already points to a different profile.  You will likely want to offer the player the
      * choice to *SWITCH* to that profile, or *MERGE* the profiles.
      *
@@ -1234,8 +1201,8 @@ public class IdentityService {
      * Service Name - identity
      * Service Operation - ATTACH_BLOCKCHAIN_IDENTITY
      *
-     * @param blockchainConfig
-     * @param publicKey
+     * @param blockchainConfig  Identifies the block chain.
+     * @param publicKey Block chain public key.
      * @param callback The method to be invoked when the server response is received
      */
     public void attachBlockchainIdentity(String blockchainConfig, String publicKey, IServerCallback callback) {
@@ -1255,8 +1222,7 @@ public class IdentityService {
      * Service Name - identity
      * Service Operation - DETACH_BLOCKCHAIN_IDENTITY
      *
-     * @param blockchainConfig
-     * @param publicKey
+     * @param blockchainConfig  Identifies the block chain.
      * @param callback The method to be invoked when the server response is received
      */
     public void detachBlockchainIdentity(String blockchainConfig, IServerCallback callback) {

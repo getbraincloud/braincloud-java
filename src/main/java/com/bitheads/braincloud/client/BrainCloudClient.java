@@ -142,6 +142,7 @@ public class BrainCloudClient {
 
     /**
      * @deprecated Use of the *singleton* has been deprecated. We recommend that you create your own *variable* to hold an instance of the brainCloudWrapper. Explanation here: http://getbraincloud.com/apidocs/wrappers-clients-and-inconvenient-singletons/
+     * @return AssertionError warning of disabled singleton usage
      */
     public static BrainCloudClient getInstance() {
 
@@ -182,7 +183,7 @@ public class BrainCloudClient {
      * Method initializes the BrainCloudClient.
      *
      * @param serverURL
-     *            
+     *            The server URL
      * @param secretKey
      *            The app id
      * @param appId
@@ -261,7 +262,7 @@ public class BrainCloudClient {
      * Method initializes the BrainCloudClient.
      *
      * @param serverUrl
-     *            
+     *            The server URL
      * @param appId
      *            The app id
      * @param secretMap
@@ -352,6 +353,8 @@ public class BrainCloudClient {
 
     /**
      * Run callbacks, to be called every so often (e.g. once per frame) from your main thread.
+     * 
+     * @param updateType An enum denoting which callback service to run
      */
     public void runCallbacks(BrainCloudUpdateType updateType) {
         switch (updateType) {
@@ -468,9 +471,9 @@ public class BrainCloudClient {
 
     /**
      * Sets a reward handler for any api call results that return rewards.
+     * See The brainCloud apidocs site for more information on the return JSON
      *
      * @param in_rewardCallback The reward callback handler.
-     * @seealso The brainCloud apidocs site for more information on the return JSON
      */
     public void registerRewardCallback(IRewardCallback in_rewardCallback) {
         _restClient.registerRewardCallback(in_rewardCallback);
@@ -535,6 +538,8 @@ public class BrainCloudClient {
 
     /**
      * Returns the list of packet timeouts.
+     *
+     * @return The list of packet timeouts
      */
     public ArrayList<Integer> getPacketTimeouts() {
         return _restClient.getPacketTimeouts();
@@ -607,7 +612,7 @@ public class BrainCloudClient {
     /**
      * Returns the low transfer rate timeout in secs
      *
-     * @returns The low transfer rate timeout in secs
+     * @return The low transfer rate timeout in secs
      */
     public int getUploadLowTransferRateTimeout() {
         return _restClient.getUploadLowTransferRateTimeout();
@@ -628,7 +633,7 @@ public class BrainCloudClient {
     /**
      * Returns the low transfer rate threshold in bytes/sec
      *
-     * @returns The low transfer rate threshold in bytes/sec
+     * @return The low transfer rate threshold in bytes/sec
      */
     public int getUploadLowTransferRateThreshold() {
         return _restClient.getUploadLowTransferRateThreshold();
@@ -660,7 +665,7 @@ public class BrainCloudClient {
      *     a) retryCachedMessages() to retry sending to brainCloud
      *     b) flushCachedMessages() to dump all messages in the queue.
      *
-     * Between steps 2 & 3, the app can prompt the user to retry connecting
+     * Between steps 2 and 3, the app can prompt the user to retry connecting
      * to brainCloud to determine whether to follow path 3a or 3b.
      *
      * Note that if path 3a is followed, and another network error is encountered,
@@ -723,8 +728,6 @@ public class BrainCloudClient {
 
     /**
      * Returns the sessionId or empty string if no session present.
-     *
-     * @returns The sessionId or empty string if no session present.
      */
     public void getSessionId() {
         _restClient.getSessionId();

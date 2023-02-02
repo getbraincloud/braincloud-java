@@ -30,7 +30,7 @@ public class VirtualCurrencyService {
      * Service Name - VirtualCurrency
      * Service Operation - GetCurrency
      *
-     * @param vcId
+     * @param vcId  The currency type to retrieve or null if all currency types are being requested.
      * @param callback The method to be invoked when the server response is received
      */
     public void getCurrency(String vcId, IServerCallback callback) {
@@ -51,8 +51,8 @@ public class VirtualCurrencyService {
      * Service Name - VirtualCurrency
      * Service Operation - GetParentCurrency
      *
-     * @param vcId
-     * @param levelName
+     * @param vcId  The currency type to retrieve or null if all currency types are being requested.
+     * @param levelName Name of the parent level.
      * @param callback The method to be invoked when the server response is received
     */
     public void getParentCurrency(String vcId, String levelName, IServerCallback callback) {
@@ -74,8 +74,8 @@ public class VirtualCurrencyService {
      * Service Name - VirtualCurrency
      * Service Operation - GetPeerCurrency
      *
-     * @param vcId
-     * @param peerCode
+     * @param vcId  The currency type to retrieve or null if all currency types are being requested.
+     * @param peerCode  Name of the peer
      * @param callback The method to be invoked when the server response is received
     */
     public void getPeerCurrency(String vcId, String peerCode, IServerCallback callback) {
@@ -113,11 +113,11 @@ public class VirtualCurrencyService {
      * Service Name - VirtualCurrency
      * Service Operation - GetPeerCurrency
      *
-     * @warning Method is recommended to be used in Cloud Code only for security
+     * Warning, Method is recommended to be used in Cloud Code only for security
      * If you need to use it client side, enable 'Allow Currency Calls from Client' on the brainCloud dashboard
      *
-     * @param vcId
-     * @param vcAmount
+     * @param vcId  The currency type to award.
+     * @param vcAmount  The amount of currency to award.
      * @param callback The method to be invoked when the server response is received
      */
     public void awardCurrency(String vcId, int vcAmount, IServerCallback callback) {
@@ -141,11 +141,11 @@ public class VirtualCurrencyService {
      * Service Name - VirtualCurrency
      * Service Operation - GetPeerCurrency
      *
-     * @warning Method is recommended to be used in Cloud Code only for security
+     * Warning, Method is recommended to be used in Cloud Code only for security
      * If you need to use it client side, enable 'Allow Currency Calls from Client' on the brainCloud dashboard
      *
-     * @param vcId
-     * @param vcAmount
+     * @param vcId  The currency type to consume.
+     * @param vcAmount  The amount of currency to consume.
      * @param callback The method to be invoked when the server response is received
      */
     public void consumeCurrency(String vcId, int vcAmount, IServerCallback callback) {

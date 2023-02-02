@@ -378,11 +378,12 @@ public class AsyncMatchService {
      * Service Name - AsyncMatch
      * Service Operation - CompleteMatch
      *
-     * @param ownerId   Match owner identifier
-     * @param matchId   Match identifier
-     * @param pushContent
-     * @param summary
-     * @param callback  Optional instance of IServerCallback to call when the server response is received.
+     * @param ownerId       Match owner identifier
+     * @param matchId       Match identifier
+     * @param pushContent   Optional push notification message to send to the other party. Refer to the Push Notification functions for 
+     *                      the syntax required.
+     * @param summary       Optional JSON string defining what the other player will see as a summary of the game when listing their games.
+     * @param callback      Optional instance of IServerCallback to call when the server response is received.
      */
     public void completeMatchWithSummaryData(String ownerId, String matchId, String pushContent, String summary, IServerCallback callback) {
         try {
@@ -410,11 +411,12 @@ public class AsyncMatchService {
      * Service Name - AsyncMatch
      * Service Operation - AbandonMatch
      *
-     * @param ownerId   Match owner identifier
-     * @param matchId   Match identifier
-     * @param pushContent
-     * @param summary
-     * @param callback  Optional instance of IServerCallback to call when the server response is received.
+     * @param ownerId       Match owner identifier
+     * @param matchId       Match identifier
+     * @param pushContent   Optional push notification message to send to the other party. Refer to the Push Notification functions for 
+     *                      the syntax required.
+     * @param summary       Optional JSON string defining what the other player will see as a summary of the game when listing their games.
+     * @param callback      Optional instance of IServerCallback to call when the server response is received.
      */
     public void abandonMatchWithSummaryData(String ownerId, String matchId, String pushContent, String summary, IServerCallback callback) {
         try {

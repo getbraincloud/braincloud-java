@@ -80,7 +80,7 @@ public class SocialLeaderboardService {
      * @param replaceName
      *            If true, the currently logged in player's name will be
      *            replaced by the String "You".
-     *
+     * @param callback  The method to be invoked when the server response is received
      */
     public void getSocialLeaderboard(String leaderboardId, boolean replaceName,
                                      IServerCallback callback) {
@@ -179,6 +179,7 @@ public class SocialLeaderboardService {
      * @param sort Sort order of the returned list.
      * @param startIndex The index at which to start the page.
      * @param endIndex The index at which to end the page.
+     * @param callback  The method to be invoked when the server response is received
      */
     public void getGlobalLeaderboardPage(
             String leaderboardId,
@@ -214,6 +215,7 @@ public class SocialLeaderboardService {
      * @param startIndex The index at which to start the page.
      * @param endIndex The index at which to end the page.
      * @param versionId The historical version to retrieve
+     * @param callback  The method to be invoked when the server response is received
      */
     public void getGlobalLeaderboardPageByVersion(
             String leaderboardId,
@@ -253,6 +255,7 @@ public class SocialLeaderboardService {
      * @param sort Sort order of the returned list.
      * @param beforeCount The count of number of players before the current player to include.
      * @param afterCount The count of number of players after the current player to include.
+     * @param callback  The method to be invoked when the server response is received
      */
     public void getGlobalLeaderboardView(
             String leaderboardId,
@@ -288,7 +291,7 @@ public class SocialLeaderboardService {
      * @param beforeCount The count of number of players before the current player to include.
      * @param afterCount The count of number of players after the current player to include.
      * @param versionId The historical version id
-     * @returns JSON String representing the entries in the leaderboard.
+     * @param callback  The method to be invoked when the server response is received
      * See GetGlobalLeaderboardView documentation. Note that historial leaderboards do not
      * include the 'timeBeforeReset' parameter.
      */
@@ -423,6 +426,19 @@ public class SocialLeaderboardService {
     }
 
     /**
+     * Post the players score to the given social leaderboard. 
+     * You can optionally send a user-defined json string of data with the posted score. 
+     * This string could include information relevant to the posted score. 
+     *
+     * @param leaderboardId The leaderboard to post to
+     * @param score The score to post
+     * @param jsonData  Optional user-defined data to post with the score
+     * @param leaderboardType   Leaderboard type
+     * @param rotationType  Type of rotation
+     * @param rotationReset Date to next rotate rotation (date in millis UTC)
+     * @param retainedCount How many previous rotations to keep
+     * @param callback  The callback handler
+     *
      * @deprecated Use postScoreToDynamicLeaderboardUTC instead - Removal September 1, 2021
      */
     public void postScoreToDynamicLeaderboard(
@@ -552,7 +568,21 @@ public class SocialLeaderboardService {
     }
 
     /**
-     * @deprecated Use postScoreToDynamicLeaderboardDays instead - Removal September 1, 2021
+     * Post the players score to the given social leaderboard. Pass leaderboard
+     * config data to dynamically create if necessary. You can optionally send a
+     * user-defined json String of data with the posted score. This String could
+     * include information relevant to the posted score.
+     *
+     * @param leaderboardId The leaderboard to post to
+     * @param score The score to post
+     * @param jsonData Optional user-defined data to post with the score
+     * @param leaderboardType leaderboard type
+     * @param rotationReset Date to reset the leaderboard
+     * @param retainedCount How many rotations to keep
+     * @param numDaysToRotate How many days between each rotation
+     * @param callback The callback.
+     * 
+     * @deprecated Use postScoreToDynamicLeaderboardDaysUTC instead - Removal September 1, 2021
      */
     public void postScoreToDynamicLeaderboardDays(
             String leaderboardId,
@@ -588,7 +618,7 @@ public class SocialLeaderboardService {
         }
     }
 
-        /**
+    /**
      * Post the players score to the given social leaderboard. Pass leaderboard
      * config data to dynamically create if necessary. You can optionally send a
      * user-defined json String of data with the posted score. This String could
@@ -879,6 +909,22 @@ public class SocialLeaderboardService {
     }
 
     /**
+     * Post the group score to the given group leaderboard and dynamically create if necessary. 
+     * LeaderboardType, rotationType, rotationReset, and retainedCount are required.
+     *
+     * Service Name - leaderboard
+     * Service Operation - POST_GROUP_SCORE_DYNAMIC
+     *
+     * @param leaderboardId the leaderboard
+     * @param groupId the groups id
+     * @param score the score you want to post
+     * @param data  Optional user-defined data to post with the score.
+     * @param leaderboardType the type of leaderboard
+     * @param rotationType  daily, weekly, monthly
+     * @param rotationReset time that rotation resets
+     * @param retainedCount times to retain the leaderboard
+     * @param callback The method to be invoked when the server response is received
+     *
      * @deprecated Use postScoreToDynamicGroupLeaderboardUTC instead - Removal September 1, 2021
      */
     public void postScoreToDynamicGroupLeaderboard(String leaderboardId, String groupId, long score, String data, String leaderboardType, String rotationType, Date rotationReset, int retainedCount, IServerCallback callback) {
@@ -916,11 +962,11 @@ public class SocialLeaderboardService {
      * @param leaderboardId the leaderboard
      * @param groupId the groups id
      * @param score the score you want to post
-     * @param data
-     * @param leaderboardType
-     * @param rotationType
+     * @param data  Optional user-defined data to post with the score.
+     * @param leaderboardType   the type of leaderboard
+     * @param rotationType  daily, weekly, monthly
      * @param rotationResetUTC time that rotation resets in UTC mmilliseconds time
-     * @param retainedCount
+     * @param retainedCount times to retain the leaderboard
      * @param callback The method to be invoked when the server response is received
      */
     public void postScoreToDynamicGroupLeaderboardUTC(String leaderboardId, String groupId, long score, String data, String leaderboardType, String rotationType, long rotationResetUTC, int retainedCount, IServerCallback callback) {
@@ -1011,7 +1057,7 @@ public class SocialLeaderboardService {
      *
      * @param leaderboardId the leaderboard
      * @param groupId the groups id
-     * @param versionId
+     * @param versionId The historical version to retrieve.
      * @param sort the sort order
      * @param beforeCount count of players before current player to include
      * @param afterCount count of the players after current player to include

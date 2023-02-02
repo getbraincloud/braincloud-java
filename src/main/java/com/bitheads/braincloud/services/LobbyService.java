@@ -153,6 +153,7 @@ public class LobbyService implements IServerCallback{
      * @param extraJson Initial extra-data about this user.
      * @param teamCode Preferred team for this user, if applicable. Send "" or null for automatic assignment.
      * @param settings Configuration data for the room.
+     * @param callback  The callback handler
      */
     public void createLobby(String lobbyType, int rating, ArrayList<String> otherUserCxIds, Boolean isReady, String extraJson, String teamCode, String settings, IServerCallback callback) {
         try {
@@ -194,6 +195,7 @@ public class LobbyService implements IServerCallback{
      * @param extraJson Initial extra-data about this user.
      * @param teamCode Preferred team for this user, if applicable. Send "" or null for automatic assignment.
      * @param settings Configuration data for the room.
+     * @param callback  The callback handler
      */
     public void createLobbyWithPingData(String lobbyType, int rating, ArrayList<String> otherUserCxIds, Boolean isReady, String extraJson, String teamCode, String settings, IServerCallback callback) {
         try {
@@ -234,6 +236,7 @@ public class LobbyService implements IServerCallback{
      * @param isReady Initial ready-status of this user.
      * @param extraJson Initial extra-data about this user.
      * @param teamCode Preferred team for this user, if applicable. Send "" or null for automatic assignment
+     * @param callback The callback handler
      */
     public void findLobby(String lobbyType, int rating, int maxSteps, String algo, String filterJson, ArrayList<String> otherUserCxIds, Boolean isReady, String extraJson, String teamCode, IServerCallback callback) {
         try {
@@ -279,6 +282,7 @@ public class LobbyService implements IServerCallback{
      * @param isReady Initial ready-status of this user.
      * @param extraJson Initial extra-data about this user.
      * @param teamCode Preferred team for this user, if applicable. Send "" or null for automatic assignment
+     * @param callback  The callback handler
      */
     public void findLobbyWithPingData(String lobbyType, int rating, int maxSteps, String algo, String filterJson, ArrayList<String> otherUserCxIds, Boolean isReady, String extraJson, String teamCode, IServerCallback callback) {
         try {
@@ -324,6 +328,7 @@ public class LobbyService implements IServerCallback{
      * @param isReady Initial ready-status of this user.
      * @param extraJson Initial extra-data about this user.
      * @param teamCode Preferred team for this user, if applicable. Send "" or null for automatic assignment.
+     * @param callback  The callback handler
      */
     public void findOrCreateLobby(String lobbyType, int rating, int maxSteps, String algo, String filterJson, ArrayList<String> otherUserCxIds, String settings, Boolean isReady, String extraJson, String teamCode, IServerCallback callback) {
         try {
@@ -373,6 +378,7 @@ public class LobbyService implements IServerCallback{
      * @param isReady Initial ready-status of this user.
      * @param extraJson Initial extra-data about this user.
      * @param teamCode Preferred team for this user, if applicable. Send "" or null for automatic assignment.
+     * @param callback  The callback handler
      */
     public void findOrCreateLobbyWithPingData(String lobbyType, int rating, int maxSteps, String algo, String filterJson, ArrayList<String> otherUserCxIds, String settings, Boolean isReady, String extraJson, String teamCode, IServerCallback callback) {
         try {
@@ -412,6 +418,7 @@ public class LobbyService implements IServerCallback{
      * Service Operation - GET_LOBBY_DATA
      *
      * @param lobbyId Id of chosen lobby.
+     * @param callback The callback handler
      */
     public void getLobbyData(String lobbyId, IServerCallback callback) {
         try {
@@ -433,6 +440,7 @@ public class LobbyService implements IServerCallback{
      * Service Operation - LEAVE_LOBBY
      *
      * @param lobbyId Id of chosen lobby.
+     * @param callback The callback handler
      */
     public void leaveLobby(String lobbyId, IServerCallback callback) {
         try {
@@ -458,6 +466,7 @@ public class LobbyService implements IServerCallback{
      * @param extraJson Initial extra-data about this user
      * @param teamCode specified team code
      * @param otherUserCxIds Array fo other users (ie party members) to add to the lobby as well. Constrains things so only lobbies with room for all players will be considered. 
+     * @param callback  The callback handler
      */
     public void joinLobby(String lobbyId, boolean isReady, String extraJson, String teamCode, ArrayList<String> otherUserCxIds, IServerCallback callback) {
         try {
@@ -491,6 +500,7 @@ public class LobbyService implements IServerCallback{
      * @param extraJson Initial extra-data about this user
      * @param teamCode specified team code
      * @param otherUserCxIds Array fo other users (ie party members) to add to the lobby as well. Constrains things so only lobbies with room for all players will be considered. 
+     * @param callback  The callback handler
      */
     public void joinLobbyWithPingData(String lobbyId, boolean isReady, String extraJson, String teamCode, ArrayList<String> otherUserCxIds, IServerCallback callback) {
         try {
@@ -520,6 +530,7 @@ public class LobbyService implements IServerCallback{
      *
      * @param lobbyId Id of chosen lobby.
      * @param cxId Specified member to be removed from the lobby.
+     * @param callback  The callback handler
      */
     public void removeMember(String lobbyId, String cxId, IServerCallback callback) {
         try {
@@ -543,6 +554,7 @@ public class LobbyService implements IServerCallback{
      *
      * @param lobbyId Id of chosen lobby.
      * @param signalData Signal data to be sent.
+     * @param callback  The callback handler
      */
     public void sendSignal(String lobbyId, String signalData, IServerCallback callback) {
         try {
@@ -570,6 +582,7 @@ public class LobbyService implements IServerCallback{
      *
      * @param lobbyId Id of chosen lobby.
      * @param toTeamCode Specified team code.
+     * @param callback  The callback handler
      */
     public void switchTeam(String lobbyId, String toTeamCode, IServerCallback callback) {
         try {
@@ -594,6 +607,7 @@ public class LobbyService implements IServerCallback{
      * @param lobbyId The type of lobby to look for. Lobby types are defined in the portal.
      * @param isReady Initial ready-status of this user.
      * @param extraJson Initial extra-data about this user.
+     * @param callback The callback handler
      */
     public void updateReady(String lobbyId, Boolean isReady, String extraJson, IServerCallback callback) {
         try {
@@ -620,6 +634,7 @@ public class LobbyService implements IServerCallback{
      *
      * @param lobbyId Id of the specfified lobby.
      * @param settings Configuration data for the room.
+     * @param callback The callback handler
      */
     public void updateSettings(String lobbyId, String settings, IServerCallback callback) {
         try {
@@ -645,6 +660,7 @@ public class LobbyService implements IServerCallback{
      *
      * @param lobbyType The type of lobby to look for.
      * @param criteriaJson A JSON string used to describe filter criteria.
+     * @param callback The callback handler
      */
     public void getLobbyInstances(String lobbyType, String criteriaJson, IServerCallback callback) {
         try {
@@ -669,6 +685,7 @@ public class LobbyService implements IServerCallback{
      *
      * @param lobbyType The type of lobby to look for.
      * @param criteriaJson A JSON string used to describe filter criteria.
+     * @param callback The callback handler
      */
     public void getLobbyInstancesWithPingData(String lobbyType, String criteriaJson, IServerCallback callback) {
         try {
@@ -682,9 +699,13 @@ public class LobbyService implements IServerCallback{
         }
     }
 
-    /// <summary>
-    /// Cancel this members Find, Join and Searching of Lobbies
-    /// </summary>
+    /**
+     * Cancel this members Find, Join and Searching of Lobbies
+     *
+     * @param lobbyType Type of lobby being targeted.
+     * @param cxId  RTT connection id.
+     * @param callback  The callback handler
+     */
     public void cancelFindRequest(String lobbyType, String cxId, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -699,6 +720,12 @@ public class LobbyService implements IServerCallback{
         }
     }
 
+    /**
+     * Retrieves the region settings for each of the given lobby types.
+     *
+     * @param in_lobbyTypes Types of lobby being queried.
+     * @param callback The callback handler
+     */
     public void getRegionsForLobbies(String[] in_lobbyTypes, IServerCallback callback) {
         try {
             _pingData = null;

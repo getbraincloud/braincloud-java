@@ -94,13 +94,6 @@ public class SmartSwitchCallback implements IServerCallback
      *
      * Service Name - Authenticate
      * Server Operation - Authenticate
-     *
-     * @param in_userid The user id
-     * @param in_token The user token (password etc)
-     * @param in_externalAuthName The name of the cloud script to call for external authentication
-     * @param in_force Should a new profile be created for this user if the account does not exist?
-     *
-     * @returns   performs the in_success callback on success, in_failure callback on failure
      */
     public class SmartSwitchExternal extends SmartSwitchCallback
     {

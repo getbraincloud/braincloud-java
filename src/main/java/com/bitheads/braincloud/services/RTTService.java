@@ -43,6 +43,8 @@ public class RTTService {
 
     /**
      * Returns true is RTT is enabled
+     *
+     * @return True if RTT is enabled
      */
     public boolean getRTTEnabled()
     {
@@ -50,13 +52,20 @@ public class RTTService {
     }
 
     /**
-     * Returns rtt connection status
+     * Returns RTT connection status
+     * 
+     * @return RTT connection status
      */
     public RTTComms.RttConnectionStatus getConnectionStatus()
     {
         return _client.getRTTComms().getConnectionStatus();
     }
     
+    /**
+    * Returns RTT connectionId
+    *
+    * @return RTT connectionId
+    */
     public String getRTTConnectionId() {
         return _client.getRTTComms().getConnectionId();
     }
@@ -66,10 +75,16 @@ public class RTTService {
      * 
      * Notes: RTT must be enabled for this app, and enableRTT must have been successfully called.
      * Only one event callback can be registered at a time. Calling this a second time will override the previous callback.
+     *
+     * @param callback  The callback handler
      */
     public void registerRTTEventCallback(IRTTCallback callback) {
         _client.getRTTComms().registerRTTCallback(ServiceName.event.toString(), callback);
     }
+
+    /**
+    * Deregisters the RTT Event callback.
+    */
     public void deregisterRTTEventCallback() {
         _client.getRTTComms().deregisterRTTCallback(ServiceName.event.toString());
     }
@@ -79,10 +94,16 @@ public class RTTService {
      * 
      * Notes: RTT must be enabled for this app, and enableRTT must have been successfully called.
      * Only one chat callback can be registered at a time. Calling this a second time will override the previous callback.
+     *
+     * @param callback  The callback handler
      */
     public void registerRTTChatCallback(IRTTCallback callback) {
         _client.getRTTComms().registerRTTCallback(ServiceName.chat.toString(), callback);
     }
+
+    /**
+    * Deregisters the RTT Chat callback.
+    */
     public void deregisterRTTChatCallback() {
         _client.getRTTComms().deregisterRTTCallback(ServiceName.chat.toString());
     }
@@ -92,10 +113,16 @@ public class RTTService {
      * 
      * Notes: RTT must be enabled for this app, and enableRTT must have been successfully called.
      * Only one messaging callback can be registered at a time. Calling this a second time will override the previous callback.
+     *
+     * @param callback  The callback handler
      */
     public void registerRTTMessagingCallback(IRTTCallback callback) {
         _client.getRTTComms().registerRTTCallback(ServiceName.messaging.toString(), callback);
     }
+
+    /**
+    * Deregisters the RTT Messaging callback.
+    */
     public void deregisterRTTMessagingCallback() {
         _client.getRTTComms().deregisterRTTCallback(ServiceName.messaging.toString());
     }
@@ -105,10 +132,16 @@ public class RTTService {
      * 
      * Notes: RTT must be enabled for this app, and enableRTT must have been successfully called.
      * Only one lobby callback can be registered at a time. Calling this a second time will override the previous callback.
+     *
+     * @param callback  The callback handler
      */
     public void registerRTTLobbyCallback(IRTTCallback callback) {
         _client.getRTTComms().registerRTTCallback(ServiceName.lobby.toString(), callback);
     }
+
+    /**
+    * Deregisters the RTT Lobby callback.
+    */
     public void deregisterRTTLobbyCallback() {
         _client.getRTTComms().deregisterRTTCallback(ServiceName.lobby.toString());
     }
@@ -118,10 +151,16 @@ public class RTTService {
      * 
      * Notes: RTT must be enabled for this app, and enableRTT must have been successfully called.
      * Only one presence callback can be registered at a time. Calling this a second time will override the previous callback.
+     * 
+     * @param callback  The callback handler
      */
     public void registerRTTPresenceCallback(IRTTCallback callback) {
         _client.getRTTComms().registerRTTCallback(ServiceName.presence.toString(), callback);
     }
+
+    /**
+    * Deregisters the RTT Presence callback.
+    */
     public void deregisterRTTPresenceCallback() {
         _client.getRTTComms().deregisterRTTCallback(ServiceName.presence.toString());
     }
@@ -131,10 +170,16 @@ public class RTTService {
      * 
      * Notes: RTT must be enabled for this app, and enableRTT must have been successfully called.
      * Only one presence callback can be registered at a time. Calling this a second time will override the previous callback.
+     *
+     * @param callback  The callback handler
      */
     public void registerRTTBlockchainRefreshCallback(IRTTCallback callback) {
         _client.getRTTComms().registerRTTCallback(ServiceName.userItems.toString(), callback);
     }
+
+    /**
+    * Deregisters the blockchain callback.
+    */
     public void deregisterRTTBlockchainRefreshCallback() {
         _client.getRTTComms().deregisterRTTCallback(ServiceName.userItems.toString());
     }

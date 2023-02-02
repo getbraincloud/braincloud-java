@@ -37,6 +37,10 @@ public class PlayerStatisticsEventService {
      * Service Name - PlayerStatisticsEvent
      * Service Operation - Trigger
      *
+     * @param eventName The name of the event configured through the brainCloud portal
+     * @param eventMultiplier   The multiplier to apply to the event
+     * @param callback  The callback handler
+     *
      * @see PlayerStatisticsService
      * 
      * @deprecated Use triggerStatsEvent instead - removal September 1, 2021
@@ -67,6 +71,10 @@ public class PlayerStatisticsEventService {
      * Service Name - PlayerStatisticsEvent
      * Service Operation - Trigger
      *
+     * @param eventName The name of the event configured through the brainCloud portal
+     * @param eventMultiplier  The multiplier to apply to the event 
+     * @param callback  The callback handler
+     *
      * @see PlayerStatisticsService
      */
     public void triggerStatsEvent(String eventName, int eventMultiplier, IServerCallback callback) {
@@ -83,6 +91,21 @@ public class PlayerStatisticsEventService {
     }
 
     /**
+     * Trigger an event server side that will increase the user statistics.
+     * This may cause one or more awards to be sent back to the user -
+     * could be achievements, experience, etc. Achievements will be sent by this
+     * client library to the appropriate awards service (Apple Game Center, etc).
+     *
+     * This mechanism supercedes the PlayerStatisticsService API methods, since
+     * PlayerStatisticsService API method only update the raw statistics without
+     * triggering the rewards.
+     *
+     * Service Name - PlayerStatisticsEvent
+     * Service Operation - Trigger 
+     *
+     * @param jsonData  An array of JSON objects representing Event Names and Multipliers. ex. [ { "eventName": "event1", "eventMultiplier": 1 } ]
+     * @param callback  The callback handler
+     *
      * @deprecated Use triggerStatsEvents instead - removal September 1, 2021
      */
     public void triggerUserStatsEvents(String jsonData, IServerCallback callback) {
@@ -115,6 +138,7 @@ public class PlayerStatisticsEventService {
      *       "eventMultiplier": 1
      *     }
      *   ]
+     * @param callback  The callback handler
      */
     public void triggerStatsEvents(String jsonData, IServerCallback callback) {
         try {

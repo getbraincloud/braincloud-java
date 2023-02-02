@@ -323,6 +323,7 @@ public class EntityService {
      * @param targetProfileId The id of the profile who owns the shared entity
      * @param entityType The entity type as defined by the user
      * @param jsonEntityData    The entity's data as a json string.
+     * @param version   The version of the entity to update. Use -1 to indicate the newest version
      * @param callback The method to be invoked when the server response is received
      */
     public void updateSharedEntity(String targetProfileId, String entityId,

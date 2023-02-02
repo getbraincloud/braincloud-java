@@ -617,7 +617,7 @@ public class GroupService {
      * Service Name - group
      * Service Operation - LIST_GROUPS_WITH_MEMBER
      *
-     * @param profileId
+     * @param profileId ID of the user to search for
      * @param callback The method to be invoked when the server response is received
      */
     public void listGroupsWithMember(String profileId, IServerCallback callback) {
