@@ -778,7 +778,7 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
      *
      * @param email             The e-mail address of the user
      * @param serviceParams     Set of parameters dependant on the mail service configured.
-     * @param tokenTtlInMinutes The expiry token in mins
+     * @param tokenTtlInMinutes Token expiry time
      * @param callback          The callback handler
      */
     @Override
@@ -837,7 +837,7 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
      * via SSL.
      *
      * @param universalId       The e-mail address of the user
-     * @param tokenTtlInMinutes The expiry token in mins
+     * @param tokenTtlInMinutes Token expiry time
      * @param callback          The callback handler
      */
     @Override
@@ -858,7 +858,7 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
      *
      * @param universalId       The e-mail address of the user
      * @param serviceParams     Set of parameters dependant on the mail service configured.
-     * @param tokenTtlInMinutes The expiry token in mins
+     * @param tokenTtlInMinutes Token expiry time
      * @param callback          The callback handler
      */
     @Override

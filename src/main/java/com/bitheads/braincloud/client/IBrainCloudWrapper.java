@@ -434,7 +434,7 @@ public interface IBrainCloudWrapper {
 	 * via SSL.
 	 *
 	 * @param universalId       The e-mail address of the user
-	 * @param tokenTtlInMinutes	Expiry token in mins
+	 * @param tokenTtlInMinutes	Token expiry time
 	 * @param callback    		The callback handler
 	 */
 	void resetUniversalIdPasswordWithExpiry(String universalId, int tokenTtlInMinutes, IServerCallback callback);
@@ -452,7 +452,7 @@ public interface IBrainCloudWrapper {
 	 * @param universalId       The e-mail address of the user
 	 * @param serviceParams		parameters to send to the email service. see documentation for full
      *                      	list. http://getbraincloud.com/apidocs/apiref/#capi-mail
-	 * @param tokenTtlInMinutes	Expiry token in mins
+	 * @param tokenTtlInMinutes	Token expiry time
 	 * @param callback    		The callback handler
 	 */
 	void resetUniversalIdPasswordAdvancedWithExpiry(String universalId, String serviceParams, Integer tokenTtlInMinutes,
