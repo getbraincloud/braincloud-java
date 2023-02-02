@@ -238,11 +238,11 @@ public interface IBrainCloudWrapper {
 			IServerCallback callback);
 
 	/**
-	 * Authenticate the user using a google userid(email address) and google
+	 * Authenticate the user using an apple userid(email address) and apple
 	 * authentication token.
 	 *
-	 * @param appleUserId    String representation of google+ userid (email)
-	 * @param token The authentication token derived via the google apis.
+	 * @param appleUserId    String representation of apple userid (email)
+	 * @param token The authentication token derived via the apple apis.
 	 * @param forceCreate     Should a new profile be created for this user if the account
 	 *                        does not exist?
 	 * @param callback        The callback handler
@@ -367,7 +367,7 @@ public interface IBrainCloudWrapper {
 	 * via SSL.
 	 *
 	 * @param email       		The e-mail address of the user
-	 * @param tokenTtlInMinutes	Expiry token in mins
+	 * @param tokenTtlInMinutes	Token expiry time
 	 * @param callback    		The callback handler
 	 */
 	void resetEmailPasswordWithExpiry(String email, int tokenTtlInMinutes, IServerCallback callback);
@@ -385,7 +385,7 @@ public interface IBrainCloudWrapper {
 	 * @param email       		The e-mail address of the user
 	 * @param serviceParams		Parameters to send to the email service. see documentation for full
      *                      	list. http://getbraincloud.com/apidocs/apiref/#capi-mail
-	 * @param tokenTtlInMinutes	Expiry token in mins
+	 * @param tokenTtlInMinutes	Token expiry time
 	 * @param callback    		The callback handler
 	 */
 	void resetEmailPasswordAdvancedWithExpiry(String email, String serviceParams, Integer tokenTtlInMinutes,

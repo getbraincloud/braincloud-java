@@ -42,7 +42,7 @@ public class MessagingService {
      * Service Operation - DELETE_MESSAGES
      *
      * @param msgbox    The msgbox that we are deleting messages from
-     * @param msgIds    Arrays of message ids to delete.
+     * @param msgIds    Array of message ids to delete.
      * @param callback  The method to be invoked when the server response is received
      */
     public void deleteMessages(String msgbox, ArrayList<String> msgIds, IServerCallback callback) {

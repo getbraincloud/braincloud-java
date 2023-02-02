@@ -557,11 +557,11 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
     }
 
     /**
-     * Authenticate the user using a google userid(email address) and google
+     * Authenticate the user using an apple userid(email address) and apple
      * authentication token.
      *
-     * @param appleUserId    String representation of google+ userid (email)
-     * @param token The authentication token derived via the google apis.
+     * @param appleUserId    String representation of apple userid (email)
+     * @param token The authentication token derived via the apple apis.
      * @param forceCreate     Should a new profile be created for this user if the account
      *                        does not exist?
      * @param callback        The callback handler
@@ -737,8 +737,7 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
      * via SSL.
      *
      * @param email         The e-mail address of the user
-     * @param serviceParams Parameters to send to the email service. see documentation for full
-     *                      list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+     * @param serviceParams Set of parameters dependant on the mail service configured.
      * @param callback      The callback handler
      */
     @Override
@@ -758,7 +757,7 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
      * via SSL.
      *
      * @param email             The e-mail address of the user
-     * @param tokenTtlInMinutes The expiry token in mins
+     * @param tokenTtlInMinutes The token expiry time
      * @param callback          The callback handler
      */
     @Override
@@ -778,8 +777,7 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
      * via SSL.
      *
      * @param email             The e-mail address of the user
-     * @param serviceParams     Parameters to send to the email service. see documentation for full
-     *                          list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+     * @param serviceParams     Set of parameters dependant on the mail service configured.
      * @param tokenTtlInMinutes The expiry token in mins
      * @param callback          The callback handler
      */
@@ -819,8 +817,7 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
      * via SSL.
      *
      * @param universalId   The e-mail address of the user
-     * @param serviceParams Parameters to send to the email service. see documentation for full
-     *                      list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+     * @param serviceParams Set of parameters dependant on the mail service configured.
      * @param callback      The callback handler
      */
     @Override
@@ -860,8 +857,7 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
      * via SSL.
      *
      * @param universalId       The e-mail address of the user
-     * @param serviceParams     Parameters to send to the email service. see documentation for full
-     *                          list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+     * @param serviceParams     Set of parameters dependant on the mail service configured.
      * @param tokenTtlInMinutes The expiry token in mins
      * @param callback          The callback handler
      */

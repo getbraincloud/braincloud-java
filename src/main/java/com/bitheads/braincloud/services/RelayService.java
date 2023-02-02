@@ -28,7 +28,7 @@ public class RelayService {
     * brainClouds Relay Servers. Connect options come in
     * from ROOM_ASSIGNED lobby callback.
     * 
-    * @param connectionType The connection type. INVALID, WEBSOCKET, TCP, UDP, MAX
+    * @param connectionType The connection type. WEBSOCKET, TCP, UDP
     * @param options {
     *   ssl: false,
     *   host: "168.0.1.192"
@@ -77,7 +77,7 @@ public class RelayService {
      * alive, but also inform the player of his current ping.
      * The default is 1000 miliseconds interval. (1 seconds)
      *
-     * @param intervalMS    Seconds inbetween pings.
+     * @param intervalMS    Seconds between pings.
      */
     public void setPingInterval(int intervalMS) {
         _client.getRelayComms().setPingInterval(intervalMS);
