@@ -53,8 +53,8 @@ public class RelayComms {
 
     private final boolean VERBOSE_LOG = true;
 
-    private final int CONTROL_BYTES_SIZE    = 1;
-    private final int CHANNEL_COUNT         = 4;
+    // private final int CONTROL_BYTES_SIZE    = 1;
+    // private final int CHANNEL_COUNT         = 4;
     private final int MAX_PACKET_ID_HISTORY = 60 * 10; // So we last 10 seconds at 60 fps
 
     private final int MAX_PLAYERS       = 40;
@@ -100,17 +100,17 @@ public class RelayComms {
         }
 
         RelayCallback(RelayCallbackType type, String message) {
-            _type = type;
+            this(type);
             _message = message;
         }
 
         RelayCallback(RelayCallbackType type, JSONObject json) {
-            _type = type;
+            this(type);
             _json = json;
         }
 
         RelayCallback(RelayCallbackType type, int netId, byte[] data) {
-            _type = type;
+            this(type);
             _netId = netId;
             _data = data;
         }
@@ -937,9 +937,9 @@ public class RelayComms {
         short playerMask1 = buffer.getShort();
         short playerMask2 = buffer.getShort();
         long ackId = (((long)rh << 48L)          & 0xFFFF000000000000L) |
-                (((long)playerMask0 << 32L) & 0x0000FFFF00000000L) |
-                (((long)playerMask1 << 16L) & 0x00000000FFFF0000L) |
-                (((long)playerMask2)        & 0x000000000000FFFFL);
+                     (((long)playerMask0 << 32L) & 0x0000FFFF00000000L) |
+                     (((long)playerMask1 << 16L) & 0x00000000FFFF0000L) |
+                     (((long)playerMask2)        & 0x000000000000FFFFL);
 
         long ackIdWithoutPacketId = (ackId & 0xF000FFFFFFFFFFFFL);
         boolean reliable = (rh & RELIABLE_BIT) == 0 ? false : true;
