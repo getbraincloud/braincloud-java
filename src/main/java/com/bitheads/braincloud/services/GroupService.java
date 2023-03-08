@@ -38,6 +38,7 @@ public class GroupService {
         defaultMemberAttributes,
         isOwnedByGroupMember,
         entityId,
+        entityType,
         version,
         context,
         pageOffset,
@@ -357,7 +358,7 @@ public class GroupService {
 
             data.put(Parameter.groupId.name(), groupId);
             if (StringUtil.IsOptionalParameterValid(entityType))
-                data.put(Parameter.groupType.name(), entityType);
+                data.put(Parameter.entityType.name(), entityType);
             data.put(Parameter.isOwnedByGroupMember.name(), isOwnedByGroupMember);
             if (acl != null)
                 data.put(Parameter.acl.name(), new JSONObject(acl.toJsonString()));
