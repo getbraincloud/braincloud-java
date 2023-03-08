@@ -1,29 +1,36 @@
 package com.bitheads.braincloud.services;
 
-import java.nio.charset.StandardCharsets;
+import static org.junit.Assert.assertTrue;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.junit.Assert;
-import org.junit.Test;
-
-import com.bitheads.braincloud.client.IBrainCloudWrapper;
-import com.bitheads.braincloud.client.IRTTCallback;
-import com.bitheads.braincloud.client.IRTTConnectCallback;
-import com.bitheads.braincloud.client.IRelayCallback;
+import com.bitheads.braincloud.client.BrainCloudWrapper;
 import com.bitheads.braincloud.client.IRelayConnectCallback;
 import com.bitheads.braincloud.client.IRelaySystemCallback;
+import com.bitheads.braincloud.client.IRTTCallback;
+import com.bitheads.braincloud.client.IRTTConnectCallback;
+import com.bitheads.braincloud.client.IServerCallback;
 import com.bitheads.braincloud.client.ReasonCodes;
 import com.bitheads.braincloud.client.RelayConnectionType;
+import com.bitheads.braincloud.client.ServiceName;
+import com.bitheads.braincloud.client.ServiceOperation;
 
+import junit.framework.Assert;
+import java.nio.charset.StandardCharsets;
+
+import org.junit.Test;
+import org.json.JSONObject;
+import org.json.JSONException;
 
 /**
  * Created by David St-Louis on 20-01-20.
  */
 public class RelayTest extends TestFixtureBase
 {
+    private boolean endMatch;
+
     @Test
     public void testConnectWithNullOptions() throws Exception {
+        System.out.println("testConnectWithNullOptions...");
+
         RelayConnectionTestResult tr = new RelayConnectionTestResult(_wrapper);
         _wrapper.getRelayService().connect(RelayConnectionType.WEBSOCKET, null, tr);
         tr.RunExpectFail();
@@ -31,6 +38,8 @@ public class RelayTest extends TestFixtureBase
 
     @Test
     public void testConnectWithEmptyOptions() throws Exception {
+        System.out.println("testConnectWithEmptyOptions...");
+
         RelayConnectionTestResult tr = new RelayConnectionTestResult(_wrapper);
         JSONObject options = new JSONObject();
         _wrapper.getRelayService().connect(RelayConnectionType.WEBSOCKET, options, tr);
@@ -39,12 +48,16 @@ public class RelayTest extends TestFixtureBase
 
     @Test
     public void testInvalidProfileIdForNetId() throws Exception {
+        System.out.println("testInvalidProfileIdForNetId...");
+
         String profileId = _wrapper.getRelayService().getProfileIdForNetId(0); // Just make sure the dictionary returns null and doesn't asserts
-        Assert.assertTrue(profileId == null);
+        assertTrue(profileId == null);
     }
 
     @Test
     public void testConnectWithBadURL() throws Exception {
+        System.out.println("testConnectWithBadURL...");
+
         RelayConnectionTestResult tr = new RelayConnectionTestResult(_wrapper);
         JSONObject options = new JSONObject();
         options.put("ssl", false);
@@ -64,6 +77,7 @@ public class RelayTest extends TestFixtureBase
 
         // Enable RTT
         {
+            System.out.println("Enable RTT...");
             RTTConnectionTestResult tr = new RTTConnectionTestResult(_wrapper);
             _wrapper.getClient().getRTTService().enableRTT(tr, true);
             tr.Run();
@@ -71,6 +85,7 @@ public class RelayTest extends TestFixtureBase
 
         // Find or create lobby
         {
+            System.out.println("Find or create lobby...");
             TestResult tr = new TestResult(_wrapper);
             _wrapper.getLobbyService().findOrCreateLobby("READY_START_V2", 0, 1, "{\"strategy\":\"ranged-absolute\",\"alignment\":\"center\",\"ranges\":[1000]}", "{}", null, "{}", true, "{}", "all", tr);
             tr.Run();
@@ -78,13 +93,13 @@ public class RelayTest extends TestFixtureBase
         }
 
         // Register callbacks
+        System.out.println("Register callbacks...");
         RelayConnectSystemCheck systemCallbackReceived = new RelayConnectSystemCheck(_wrapper);
         _wrapper.getRelayService().registerSystemCallback(systemCallbackReceived);
-        RelayCheck relayCallbackReceived = new RelayCheck(_wrapper);
-        _wrapper.getRelayService().registerRelayCallback(relayCallbackReceived);
 
         // Connect to relay server
         {
+            System.out.println("Connect to relay server...");
             RelayConnectionTestResult tr = new RelayConnectionTestResult(_wrapper);
             JSONObject options = new JSONObject();
             options.put("ssl", false);
@@ -109,19 +124,18 @@ public class RelayTest extends TestFixtureBase
             int myNetId = _wrapper.getRelayService().getNetIdForProfileId(_wrapper.getAuthenticationService().getProfileId());
             _wrapper.getRelayService().send("Hello World!".getBytes(StandardCharsets.US_ASCII), myNetId, true, true, RelayService.CHANNEL_HIGH_PRIORITY_1);
         }
-        relayCallbackReceived.Run();
 
         // Check the cx/profile id conversions
         String myProfileId = _wrapper.getAuthenticationService().getProfileId();
         String myCxId = _wrapper.getClient().getRttConnectionId();
         int myNetId = _wrapper.getRelayService().getNetIdForCxId(myCxId);
-        Assert.assertTrue(myNetId != RelayService.INVALID_NET_ID);
+        assertTrue(myNetId != RelayService.INVALID_NET_ID);
         String _cxId = _wrapper.getRelayService().getCxIdForNetId(myNetId);
-        Assert.assertTrue(_cxId.equals(myCxId));
+        assertTrue(_cxId.equals(myCxId));
         String _profileId = _wrapper.getRelayService().getProfileIdForNetId(myNetId);
-        Assert.assertTrue(_profileId.equals(myProfileId));
+        assertTrue(_profileId.equals(myProfileId));
         int _netId = _wrapper.getRelayService().getNetIdForProfileId(myProfileId);
-        Assert.assertTrue(_netId == myNetId);
+        assertTrue(_netId == myNetId);
 
         // Wait 30sec and make sure the Ping kept us alive
         int t = 0;
@@ -133,31 +147,52 @@ public class RelayTest extends TestFixtureBase
             } catch(InterruptedException ie) {}
             t += 100;
         }
-        Assert.assertTrue(_wrapper.getRelayService().isConnected());
-        _wrapper.getRelayService().disconnect();
+
+        if(!endMatch){
+            assertTrue(_wrapper.getRelayService().isConnected());
+            _wrapper.getRelayService().disconnect();
+        }
+        else{
+            assertTrue(!_wrapper.getRelayService().isConnected());
+        }
+
     }
 
     @Test
     public void testFullFlowWS() throws Exception {
+        System.out.println("Starting test: testFullFlowWS...");
+
         fullFlow(RelayConnectionType.WEBSOCKET);
     }
 
     @Test
     public void testFullFlowTCP() throws Exception {
+        System.out.println("Starting test: testFullFlowTCP...");
+
         fullFlow(RelayConnectionType.TCP);
     }
 
     @Test
     public void testFullFlowUDP() throws Exception {
+        System.out.println("Starting test: testFullFlowUDP...");
+
         fullFlow(RelayConnectionType.UDP);
+    }
+
+    @Test
+    public void testFullFlowWSEndMatch() throws Exception {
+        System.out.println("Starting test: testFullFlowWSEndMatch...");
+
+        endMatch = true;
+        fullFlow(RelayConnectionType.WEBSOCKET);
     }
 
     public class RelayConnectSystemCheck implements IRelaySystemCallback {
         public boolean _received = false;
 
-        IBrainCloudWrapper _wrapper;
+        BrainCloudWrapper _wrapper;
 
-        public RelayConnectSystemCheck(IBrainCloudWrapper wrapper) {
+        public RelayConnectSystemCheck(BrainCloudWrapper wrapper) {
             _wrapper = wrapper;
             _wrapper.getClient().enableLogging(true);
         }
@@ -168,6 +203,37 @@ public class RelayTest extends TestFixtureBase
                     _received = true;
 
                     System.out.println("relaySystemCallback CONNECT");
+
+                    if(endMatch){
+                        JSONObject json = new JSONObject();
+                        json.put("cxId", _wrapper.getClient().getRttConnectionId());
+                        json.put("op", "END_MATCH");
+                        _wrapper.getRelayService().endMatch(json);
+                    }
+                }
+                else if (jsonData.getString("op").equals("END_MATCH")) {
+                    _received = true;
+
+                    System.out.println("relaySystemCallback END_MATCH");
+
+                    System.out.println("Send a test event...");
+                    String profileId = _wrapper.getClient().getAuthenticationService().getProfileId();
+                    _wrapper.getEventService().sendEvent(
+                            profileId,
+                            "test",
+                            "{\"testData\":42}",
+                            new IServerCallback() {
+                                @Override
+                                public void serverCallback(ServiceName serviceName, ServiceOperation serviceOperation, JSONObject jsonData) {
+                                    System.out.println("IServer Success");
+                                }
+
+                                @Override
+                                public void serverError(ServiceName serviceName, ServiceOperation serviceOperation, int statusCode, int reasonCode, String jsonError) {
+                                    System.out.println("IServer Error: " + jsonError);
+                                }
+                            }
+                    );
                 }
             } catch (JSONException e) {}
         }
@@ -182,42 +248,7 @@ public class RelayTest extends TestFixtureBase
                 } catch(InterruptedException ie) {}
                 t += 100;
                 if (t > 20000) {
-                    Assert.assertTrue(false);
-                }
-            }
-        }
-    }
-
-    public class RelayCheck implements IRelayCallback {
-        public boolean _received = false;
-
-        IBrainCloudWrapper _wrapper;
-
-        public RelayCheck(IBrainCloudWrapper wrapper) {
-            _wrapper = wrapper;
-            _wrapper.getClient().enableLogging(true);
-        }
-
-        public void relayCallback(int netId, byte[] data) {
-            String str = new String(data, StandardCharsets.US_ASCII);
-            
-            System.out.println("relayCallback: " + str);
-            if (str.equals("Hello World!")) {
-                _received = true;
-            }
-        }
-
-        public void Run() {
-            int t = 0;
-            while (!_received) {
-                TestFixtureBase._client.runCallbacks();
-                _wrapper.runCallbacks();
-                try {
-                    Thread.sleep(100);
-                } catch(InterruptedException ie) {}
-                t += 100;
-                if (t > 20000) {
-                    Assert.assertTrue(false);
+                    assertTrue(false);
                 }
             }
         }
@@ -228,19 +259,19 @@ public class RelayTest extends TestFixtureBase
         private JSONObject m_server = null;
         public String ownerCxId = null;
 
-        IBrainCloudWrapper _wrapper;
+        BrainCloudWrapper _wrapper;
 
-        public RTTLobbyResults(IBrainCloudWrapper wrapper) {
+        public RTTLobbyResults(BrainCloudWrapper wrapper) {
             _wrapper = wrapper;
             _wrapper.getClient().enableLogging(true);
         }
-        
+
         public void rttCallback(JSONObject eventJson) {
             try {
                 JSONObject jsonData = eventJson.getJSONObject("data");
                 switch (eventJson.getString("operation")) {
                     case "DISBANDED": {
-                        Assert.assertTrue(jsonData.getJSONObject("reason").getInt("code") == ReasonCodes.RTT_ROOM_READY);
+                        assertTrue(jsonData.getJSONObject("reason").getInt("code") == ReasonCodes.RTT_ROOM_READY);
                         m_done = true;
                         break;
                     }
@@ -265,7 +296,7 @@ public class RelayTest extends TestFixtureBase
 
         public JSONObject Run() {
             Spin();
-            Assert.assertTrue(m_server != null);
+            assertTrue(m_server != null);
             return m_server;
         }
 
@@ -283,7 +314,7 @@ public class RelayTest extends TestFixtureBase
                 {}
                 t += 100;
                 if (t > 5 * 60 * 1000) {
-                    Assert.assertTrue(false);
+                    assertTrue(false);
                 }
             }
         }
@@ -292,20 +323,20 @@ public class RelayTest extends TestFixtureBase
     public class RelayConnectionTestResult implements IRelayConnectCallback {
         private boolean m_result = false;
         private boolean m_done = false;
-        
-        IBrainCloudWrapper _wrapper;
 
-        public RelayConnectionTestResult(IBrainCloudWrapper wrapper) {
+        BrainCloudWrapper _wrapper;
+
+        public RelayConnectionTestResult(BrainCloudWrapper wrapper) {
             _wrapper = wrapper;
             _wrapper.getClient().enableLogging(true);
         }
-        
+
         public boolean Run() {
             Spin();
-            Assert.assertTrue(m_result);
+            assertTrue(m_result);
             return m_result;
         }
-        
+
         public boolean RunExpectFail() {
             Spin();
             Assert.assertFalse(m_result);
@@ -346,14 +377,14 @@ public class RelayTest extends TestFixtureBase
     public class RTTConnectionTestResult implements IRTTConnectCallback {
         private boolean m_result = false;
         private boolean m_done = false;
-        
-        IBrainCloudWrapper _wrapper;
 
-        public RTTConnectionTestResult(IBrainCloudWrapper wrapper) {
+        BrainCloudWrapper _wrapper;
+
+        public RTTConnectionTestResult(BrainCloudWrapper wrapper) {
             _wrapper = wrapper;
             _wrapper.getClient().enableLogging(true);
         }
-        
+
         public boolean Run() {
             Spin();
             Assert.assertTrue(m_result);

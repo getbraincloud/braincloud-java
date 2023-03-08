@@ -1,11 +1,12 @@
 package com.bitheads.braincloud.comms;
 
 import java.io.DataInputStream;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
+import java.io.DataOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.nio.ByteBuffer;
@@ -16,6 +17,7 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.net.ssl.SSLContext;
@@ -25,6 +27,7 @@ import javax.net.ssl.X509TrustManager;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,7 +35,12 @@ import com.bitheads.braincloud.client.BrainCloudClient;
 import com.bitheads.braincloud.client.IRelayCallback;
 import com.bitheads.braincloud.client.IRelayConnectCallback;
 import com.bitheads.braincloud.client.IRelaySystemCallback;
+import com.bitheads.braincloud.client.IServerCallback;
 import com.bitheads.braincloud.client.RelayConnectionType;
+import com.bitheads.braincloud.client.RelayConnectionType;
+import com.bitheads.braincloud.client.ServiceName;
+import com.bitheads.braincloud.client.ServiceOperation;
+import com.bitheads.braincloud.services.AuthenticationService;
 
 public class RelayComms {
 
@@ -45,8 +53,8 @@ public class RelayComms {
 
     private final boolean VERBOSE_LOG = true;
 
-   //  private final int CONTROL_BYTES_SIZE    = 1;
-   //  private final int CHANNEL_COUNT         = 4;
+    private final int CONTROL_BYTES_SIZE    = 1;
+    private final int CHANNEL_COUNT         = 4;
     private final int MAX_PACKET_ID_HISTORY = 60 * 10; // So we last 10 seconds at 60 fps
 
     private final int MAX_PLAYERS       = 40;
@@ -59,6 +67,7 @@ public class RelayComms {
     private final int CL2RS_ACK         = 3;
     private final int CL2RS_PING        = 4;
     private final int CL2RS_RSMG_ACK    = 5;
+    private final int CL2RS_ENDMATCH    = 6;
 
     // Messages sent from Relay-Server to Client
     private final int RS2CL_RSMG        = 0;
@@ -75,7 +84,7 @@ public class RelayComms {
     private final int MAX_PACKET_ID = 0xFFF;
     private final int PACKET_LOWER_THRESHOLD = MAX_PACKET_ID * 25 / 100;
     private final int PACKET_HIGHER_THRESHOLD = MAX_PACKET_ID * 75 / 100;
-        
+
     private final int MAX_PACKET_SIZE = 1024;
     private final int TIMEOUT_MS = 10000;
 
@@ -91,17 +100,17 @@ public class RelayComms {
         }
 
         RelayCallback(RelayCallbackType type, String message) {
-            this(type);
+            _type = type;
             _message = message;
         }
 
         RelayCallback(RelayCallbackType type, JSONObject json) {
-            this(type);
+            _type = type;
             _json = json;
         }
 
         RelayCallback(RelayCallbackType type, int netId, byte[] data) {
-            this(type);
+            _type = type;
             _netId = netId;
             _data = data;
         }
@@ -121,12 +130,12 @@ public class RelayComms {
         public WSClient(String ip) throws Exception {
             super(new URI(ip));
         }
-        
+
         @Override
         public void onMessage(String message) {
             onRecv(ByteBuffer.wrap(message.getBytes()));
         }
-        
+
         @Override
         public void onMessage(ByteBuffer bytes) {
             onRecv(bytes);
@@ -140,8 +149,15 @@ public class RelayComms {
 
         @Override
         public void onClose(int code, String reason, boolean remote) {
-            System.out.println("Relay WS onClose: " + reason + ", code: " + Integer.toString(code) + ", remote: " + Boolean.toString(remote));
+            if(_endMatchRequested){
+                System.out.println("Relay WS onClose: end match");
+            }
+            else{
+                System.out.println("Relay WS onClose: " + reason + ", code: " + Integer.toString(code) + ", remote: " + Boolean.toString(remote));
+            }
+
             disconnect();
+
             synchronized(_callbackEventQueue) {
                 _callbackEventQueue.add(new RelayCallback(RelayCallbackType.ConnectFailure, "webSocket onClose: " + reason));
             }
@@ -215,12 +231,12 @@ public class RelayComms {
     private HashMap<Long, Integer> _sendPacketId = new HashMap<Long, Integer>();
     private HashMap<Long, Integer> _recvPacketId = new HashMap<Long, Integer>();
     private HashMap<Long, ArrayList<RelayPacket>> _orderedReliablePackets = new HashMap<Long, ArrayList<RelayPacket>>();
-    
+
     private int _ping = 999;
     private int _pingIntervalMS = 1000;
     private long _lastPingTime = 0;
     private long _lastRecvTime = 0;
-    
+
     private RelayConnectionType _connectionType = RelayConnectionType.WEBSOCKET;
     private WSClient _webSocketClient;
     private Socket _tcpSocket;
@@ -231,7 +247,9 @@ public class RelayComms {
 
     private IRelayCallback _relayCallback = null;
     private IRelaySystemCallback _relaySystemCallback = null;
-    
+
+    private boolean _endMatchRequested;
+
     public RelayComms(BrainCloudClient client) {
         _client = client;
     }
@@ -249,6 +267,7 @@ public class RelayComms {
             disconnect();
         }
 
+        _endMatchRequested = false;
         _connectionType = connectionType;
         _isConnected = false;
         _connectCallback = callback;
@@ -296,11 +315,11 @@ public class RelayComms {
                     String uri = (ssl ? "wss://" : "ws://") + host + ":" + port;
 
                     _webSocketClient = new WSClient(uri);
-        
+
                     if (ssl) {
                         setupSSL();
                     }
-                    
+
                     _webSocketClient.connect();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -369,31 +388,33 @@ public class RelayComms {
             _isConnected = false;
             _isConnecting = false;
 
-            if (_webSocketClient != null) {
-                _webSocketClient.close();
-                _webSocketClient = null;
-            }
+            if(!_endMatchRequested){
+                if (_webSocketClient != null) {
+                    _webSocketClient.close();
+                    _webSocketClient = null;
+                }
 
-            try {
-                if (_tcpSocket != null) {
-                    _tcpSocket.close();
+                try {
+                    if (_tcpSocket != null) {
+                        _tcpSocket.close();
+                        _tcpSocket = null;
+                    }
+                } catch (Exception e) {
                     _tcpSocket = null;
                 }
-            } catch (Exception e) {
-                _tcpSocket = null;
-            }
 
-            try {
-                if (_udpSocket != null) {
-                    _udpSocket.close();
+                try {
+                    if (_udpSocket != null) {
+                        _udpSocket.close();
+                        _udpSocket = null;
+                    }
+                } catch (Exception e) {
                     _udpSocket = null;
                 }
-            } catch (Exception e) {
-                _udpSocket = null;
             }
 
             _connectInfo = null;
-            
+
             _reliables.clear();
             _udpRsmgPackets.clear();
             _rsmgHistory.clear();
@@ -402,6 +423,21 @@ public class RelayComms {
             _recvPacketId.clear();
             _reliables.clear();
             _orderedReliablePackets.clear();
+        }
+    }
+
+    public void endMatch(JSONObject json){
+        if(isConnected()){
+            byte[] jsonPayload = json.toString().getBytes();
+
+            ByteBuffer buffer = ByteBuffer.allocate(3 + jsonPayload.length);
+            buffer.order(ByteOrder.BIG_ENDIAN);
+            buffer.putShort((short)3);
+            buffer.put((byte)CL2RS_ENDMATCH);
+            buffer.put(jsonPayload);
+            send(buffer);
+
+            _endMatchRequested = true;
         }
     }
 
@@ -462,14 +498,14 @@ public class RelayComms {
         }
         return INVALID_NET_ID;
     }
-    
+
     public void registerRelayCallback(IRelayCallback callback) {
         _relayCallback = callback;
     }
     public void deregisterRelayCallback() {
         _relayCallback = null;
     }
-    
+
     public void registerSystemCallback(IRelaySystemCallback callback) {
         _relaySystemCallback = callback;
     }
@@ -485,11 +521,11 @@ public class RelayComms {
                 return new java.security.cert.X509Certificate[]{};
             }
 
-            public void checkClientTrusted(X509Certificate[] chain, String authType) 
+            public void checkClientTrusted(X509Certificate[] chain, String authType)
                     throws CertificateException {
             }
 
-            public void checkServerTrusted(X509Certificate[] chain, String authType) 
+            public void checkServerTrusted(X509Certificate[] chain, String authType)
                     throws CertificateException {
             }
         }};
@@ -558,13 +594,10 @@ public class RelayComms {
     }
 
     private void send(int netId, String text) {
-        // if (_loggingEnabled && VERBOSE_LOG) {
-        //     System.out.println("RELAY SEND: " + text);
-        // }
 
         byte[] textBytes = text.getBytes(StandardCharsets.US_ASCII);
         int bufferSize = textBytes.length + 3;
-        
+
         ByteBuffer buffer = ByteBuffer.allocate(bufferSize);
         buffer.order(ByteOrder.BIG_ENDIAN);
         buffer.putShort((short)bufferSize);
@@ -713,7 +746,7 @@ public class RelayComms {
                         buffer.putShort((short)len);
                         buffer.put(bytes, 0, bytes.length);
                         buffer.rewind();
-                        
+
                         onRecv(buffer);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -758,7 +791,7 @@ public class RelayComms {
                         buffer.order(ByteOrder.BIG_ENDIAN);
                         buffer.put(packet.getData(), 0, packet.getLength());
                         buffer.rewind();
-                        
+
                         _lastRecvTime = System.currentTimeMillis();
                         onRecv(buffer);
                     }
@@ -787,7 +820,7 @@ public class RelayComms {
         buffer.put((byte)CL2RS_PING);
         buffer.putShort((short)_ping);
         send(buffer);
-        
+
         _lastPingTime = System.currentTimeMillis();
     }
 
@@ -871,25 +904,16 @@ public class RelayComms {
         short playerMask0 = buffer.getShort();
         short playerMask1 = buffer.getShort();
         short playerMask2 = buffer.getShort();
-        long ackId = (((long)rh << 48L)          & 0xFFFF000000000000L) | 
-                     (((long)playerMask0 << 32L) & 0x0000FFFF00000000L) |
-                     (((long)playerMask1 << 16L) & 0x00000000FFFF0000L) |
-                     (((long)playerMask2)        & 0x000000000000FFFFL);
-
-        // if (_loggingEnabled && VERBOSE_LOG) {
-        //     int packetId = (int)(rh & 0xFFFL);
-        //     System.out.println("ON ACK: " + packetId + ", " + ackId + ", " + rh + ", " + playerMask0 + ", " + playerMask1 + ", " + playerMask2);
-        // }
+        long ackId = (((long)rh << 48L)          & 0xFFFF000000000000L) |
+                (((long)playerMask0 << 32L) & 0x0000FFFF00000000L) |
+                (((long)playerMask1 << 16L) & 0x00000000FFFF0000L) |
+                (((long)playerMask2)        & 0x000000000000FFFFL);
 
         synchronized(_lock) {
             for (int i = 0; i < _reliables.size(); ++i) {
                 Reliable reliable = _reliables.get(i);
                 if (reliable.ackId == ackId) {
                     _reliables.remove(i);
-                    // if (_loggingEnabled && VERBOSE_LOG) {
-                    //     int packetId = (int)(rh & 0xFFFL);
-                    //     System.out.println("RELAY ACKED: " + packetId + ", " + ackId);
-                    // }
                     break;
                 }
             }
@@ -906,16 +930,16 @@ public class RelayComms {
         }
         return a <= b;
     }
-    
+
     private void onRelay(ByteBuffer buffer, int size) {
         short rh          = buffer.getShort();
         short playerMask0 = buffer.getShort();
         short playerMask1 = buffer.getShort();
         short playerMask2 = buffer.getShort();
-        long ackId = (((long)rh << 48L)          & 0xFFFF000000000000L) | 
-                     (((long)playerMask0 << 32L) & 0x0000FFFF00000000L) |
-                     (((long)playerMask1 << 16L) & 0x00000000FFFF0000L) |
-                     (((long)playerMask2)        & 0x000000000000FFFFL);
+        long ackId = (((long)rh << 48L)          & 0xFFFF000000000000L) |
+                (((long)playerMask0 << 32L) & 0x0000FFFF00000000L) |
+                (((long)playerMask1 << 16L) & 0x00000000FFFF0000L) |
+                (((long)playerMask2)        & 0x000000000000FFFFL);
 
         long ackIdWithoutPacketId = (ackId & 0xF000FFFFFFFFFFFFL);
         boolean reliable = (rh & RELIABLE_BIT) == 0 ? false : true;
@@ -1084,7 +1108,7 @@ public class RelayComms {
             buffer.get(bytes, 0, size);
             String jsonString = new String(bytes, StandardCharsets.US_ASCII);
             JSONObject json = new JSONObject(jsonString);
-            
+
             if (_loggingEnabled) {
                 System.out.println("RELAY System Msg: " + jsonString);
             }
@@ -1121,6 +1145,11 @@ public class RelayComms {
                 }
                 case "MIGRATE_OWNER": {
                     _ownerCxId = json.getString("cxId");
+                    break;
+                }
+                case "END_MATCH": {
+                    _endMatchRequested = true;
+                    disconnect();
                     break;
                 }
             }
@@ -1183,7 +1212,8 @@ public class RelayComms {
                         break;
                     }
                     case ConnectFailure: {
-                        if (_connectCallback != null) {
+                        // When End Match is requested, then the server will close the connection
+                        if (!_endMatchRequested && _connectCallback != null) {
                             _connectCallback.relayConnectFailure(relayCallback._message);
                         }
                         break;
@@ -1259,7 +1289,7 @@ public class RelayComms {
         // Check if we timeout (no response for 10 seconds).
         // For UDP only since we don't have a connection.
         if (_connectionType == RelayConnectionType.UDP &&
-            (_isConnecting || _isConnected)) {
+                (_isConnecting || _isConnected)) {
             if (nowMs - _lastRecvTime > TIMEOUT_MS) {
                 disconnect();
                 synchronized(_callbackEventQueue) {
