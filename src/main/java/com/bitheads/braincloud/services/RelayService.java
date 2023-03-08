@@ -134,6 +134,9 @@ public class RelayService {
 
     /**
      * Returns the connection id associated with a netId.
+     *
+     * @param netId The netId the connection id is associated with
+     * @return The connection id associated with a netId
      */
     public String getCxIdForNetId(int netId) {
         return _client.getRelayComms().getCxIdForNetId(netId);
@@ -142,8 +145,8 @@ public class RelayService {
     /**
      * Returns the netId associated with a connection id.
      *
-     * @param netId The netId the connection id is associated with
-     * @return The connection id associated with a netId
+     * @param cxId The connection id the netId is associated with
+     * @return the netId associated with a connection id
      */
     public int getNetIdForCxId(String cxId) {
         return _client.getRelayComms().getNetIdForCxId(cxId);
@@ -242,7 +245,8 @@ public class RelayService {
      * Send a packet to any players by using a mask
      *
      * @param data Byte array for the data to send
-     * @param playerMask Mask of the players to send to. 0001 is netId 0, 0010 is netId 1, etc. If you pass ALL_PLAYER_MASK you will be included and you will get an echo for your message. Use sendToAll instead, you will be filtered out. You can manually filter out by : {@code ALL_PLAYER_MASK &= ~(1 << myNetId)}* @param reliable Send this reliable or not.
+     * @param playerMask Mask of the players to send to. 0001 is netId 0, 0010 is netId 1, etc. If you pass ALL_PLAYER_MASK you will be included and you will get an echo for your message. Use sendToAll instead, you will be filtered out. You can manually filter out by : {@code ALL_PLAYER_MASK &= ~(1 << myNetId)}
+     * @param reliable Send this reliable or not.
      * @param ordered Receive this ordered or not.
      * @param channel One of: (CHANNEL_HIGH_PRIORITY_1, CHANNEL_HIGH_PRIORITY_2, CHANNEL_NORMAL_PRIORITY, CHANNEL_LOW_PRIORITY)
      */

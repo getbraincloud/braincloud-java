@@ -905,9 +905,9 @@ public class RelayComms {
         short playerMask1 = buffer.getShort();
         short playerMask2 = buffer.getShort();
         long ackId = (((long)rh << 48L)          & 0xFFFF000000000000L) |
-                (((long)playerMask0 << 32L) & 0x0000FFFF00000000L) |
-                (((long)playerMask1 << 16L) & 0x00000000FFFF0000L) |
-                (((long)playerMask2)        & 0x000000000000FFFFL);
+                     (((long)playerMask0 << 32L) & 0x0000FFFF00000000L) |
+                     (((long)playerMask1 << 16L) & 0x00000000FFFF0000L) |
+                     (((long)playerMask2)        & 0x000000000000FFFFL);
 
         synchronized(_lock) {
             for (int i = 0; i < _reliables.size(); ++i) {
