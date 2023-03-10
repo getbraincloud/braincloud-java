@@ -3,6 +3,7 @@ package com.bitheads.braincloud.services;
 import static org.junit.Assert.assertTrue;
 
 import com.bitheads.braincloud.client.IBrainCloudWrapper;
+import com.bitheads.braincloud.client.IRelayCallback;
 import com.bitheads.braincloud.client.IRelayConnectCallback;
 import com.bitheads.braincloud.client.IRelaySystemCallback;
 import com.bitheads.braincloud.client.IRTTCallback;
@@ -96,6 +97,8 @@ public class RelayTest extends TestFixtureBase
         System.out.println("Register callbacks...");
         RelayConnectSystemCheck systemCallbackReceived = new RelayConnectSystemCheck(_wrapper);
         _wrapper.getRelayService().registerSystemCallback(systemCallbackReceived);
+        RelayCheck relayCallbackReceived = new RelayCheck(_wrapper);
+        _wrapper.getRelayService().registerRelayCallback(relayCallbackReceived);
 
         // Connect to relay server
         {
@@ -125,6 +128,10 @@ public class RelayTest extends TestFixtureBase
             _wrapper.getRelayService().send("Hello World!".getBytes(StandardCharsets.US_ASCII), myNetId, true, true, RelayService.CHANNEL_HIGH_PRIORITY_1);
         }
 
+        if(!endMatch){
+            relayCallbackReceived.Run();
+        }
+
         // Check the cx/profile id conversions
         String myProfileId = _wrapper.getAuthenticationService().getProfileId();
         String myCxId = _wrapper.getClient().getRttConnectionId();
@@ -150,6 +157,8 @@ public class RelayTest extends TestFixtureBase
 
         if(!endMatch){
             assertTrue(_wrapper.getRelayService().isConnected());
+
+            System.out.println("Disconnecting...");
             _wrapper.getRelayService().disconnect();
         }
         else{
@@ -163,6 +172,8 @@ public class RelayTest extends TestFixtureBase
         System.out.println("Starting test: testFullFlowWS...");
 
         fullFlow(RelayConnectionType.WEBSOCKET);
+
+        System.out.println("testFullFlowWS Complete");
     }
 
     @Test
@@ -170,6 +181,8 @@ public class RelayTest extends TestFixtureBase
         System.out.println("Starting test: testFullFlowTCP...");
 
         fullFlow(RelayConnectionType.TCP);
+
+        System.out.println("testFullFlowTCP Complete");
     }
 
     @Test
@@ -177,6 +190,8 @@ public class RelayTest extends TestFixtureBase
         System.out.println("Starting test: testFullFlowUDP...");
 
         fullFlow(RelayConnectionType.UDP);
+
+        System.out.println("testFullFlowUDP Complete");
     }
 
     @Test
@@ -185,6 +200,8 @@ public class RelayTest extends TestFixtureBase
 
         endMatch = true;
         fullFlow(RelayConnectionType.WEBSOCKET);
+
+        System.out.println("testFullFlowWSEndMatch Complete");
     }
 
     public class RelayConnectSystemCheck implements IRelaySystemCallback {
@@ -249,6 +266,42 @@ public class RelayTest extends TestFixtureBase
                 t += 100;
                 if (t > 20000) {
                     assertTrue(false);
+                }
+            }
+        }
+    }
+
+    public class RelayCheck implements IRelayCallback {
+        public boolean _received = false;
+
+        BrainCloudWrapper _wrapper;
+
+        public RelayCheck(BrainCloudWrapper wrapper) {
+            _wrapper = wrapper;
+            _wrapper.getClient().enableLogging(true);
+        }
+
+        public void relayCallback(int netId, byte[] data) {
+            String str = new String(data, StandardCharsets.US_ASCII);
+
+            System.out.println("relayCallback: " + str);
+
+            if (str.equals("Hello World!")) {
+                _received = true;
+            }
+        }
+
+        public void Run() {
+            int t = 0;
+            while (!_received) {
+                TestFixtureBase._client.runCallbacks();
+                _wrapper.runCallbacks();
+                try {
+                    Thread.sleep(100);
+                } catch(InterruptedException ie) {}
+                t += 100;
+                if (t > 20000) {
+                    Assert.assertTrue(false);
                 }
             }
         }
