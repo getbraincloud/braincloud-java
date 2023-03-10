@@ -274,9 +274,9 @@ public class RelayTest extends TestFixtureBase
     public class RelayCheck implements IRelayCallback {
         public boolean _received = false;
 
-        BrainCloudWrapper _wrapper;
+        IBrainCloudWrapper _wrapper;
 
-        public RelayCheck(BrainCloudWrapper wrapper) {
+        public RelayCheck(IBrainCloudWrapper wrapper) {
             _wrapper = wrapper;
             _wrapper.getClient().enableLogging(true);
         }
