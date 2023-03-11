@@ -372,7 +372,7 @@ public class GroupFileService {
      * @param fileId ID of the file
      * @param version Target version of the file
      * @param newFilename Optional new file name
-     * @param newAcl Optional new acl
+     * @param newACL Optional new acl
      * @param callback The method to be invoked when the server response is received
      */
     public void updateFileInfo(
