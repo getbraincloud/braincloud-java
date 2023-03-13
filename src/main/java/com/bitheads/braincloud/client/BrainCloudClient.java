@@ -26,6 +26,7 @@ import com.bitheads.braincloud.services.GlobalAppService;
 import com.bitheads.braincloud.services.GlobalEntityService;
 import com.bitheads.braincloud.services.GlobalFileService;
 import com.bitheads.braincloud.services.GlobalStatisticsService;
+import com.bitheads.braincloud.services.GroupFileService;
 import com.bitheads.braincloud.services.GroupService;
 import com.bitheads.braincloud.services.IdentityService;
 import com.bitheads.braincloud.services.ItemCatalogService;
@@ -97,6 +98,7 @@ public class BrainCloudClient {
     private GlobalAppService _globalAppService = new GlobalAppService(this);
     private GlobalEntityService _globalEntityService = new GlobalEntityService(this);
     private GlobalStatisticsService _globalStatisticsService = new GlobalStatisticsService(this);
+    private GroupFileService _groupFileService = new GroupFileService(this);
     private GroupService _groupService = new GroupService(this);
     private IdentityService _identityService = new IdentityService(this);
     private LobbyService _lobbyService = new LobbyService(this);
@@ -855,6 +857,10 @@ public class BrainCloudClient {
 
     public GlobalStatisticsService getGlobalStatisticsService() {
         return _globalStatisticsService;
+    }
+
+    public GroupFileService getGroupFileService(){
+        return _groupFileService;
     }
 
     public GroupService getGroupService() {

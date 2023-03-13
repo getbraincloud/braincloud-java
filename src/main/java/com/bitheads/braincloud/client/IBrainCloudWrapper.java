@@ -17,6 +17,7 @@ import com.bitheads.braincloud.services.GlobalAppService;
 import com.bitheads.braincloud.services.GlobalEntityService;
 import com.bitheads.braincloud.services.GlobalFileService;
 import com.bitheads.braincloud.services.GlobalStatisticsService;
+import com.bitheads.braincloud.services.GroupFileService;
 import com.bitheads.braincloud.services.GroupService;
 import com.bitheads.braincloud.services.IdentityService;
 import com.bitheads.braincloud.services.ItemCatalogService;
@@ -553,6 +554,8 @@ public interface IBrainCloudWrapper {
 	GlobalStatisticsService getGlobalStatisticsService();
 
 	GroupService getGroupService();
+
+	GroupFileService getGroupFileService();
 
 	IdentityService getIdentityService();
 

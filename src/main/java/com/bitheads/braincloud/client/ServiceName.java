@@ -20,6 +20,7 @@ public enum ServiceName {
     globalGameStatistics,
     globalApp,
     group,
+    groupFile,
     heartbeat,
     lobby,
     mail,

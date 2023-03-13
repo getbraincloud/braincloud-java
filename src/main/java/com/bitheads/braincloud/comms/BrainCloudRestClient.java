@@ -633,8 +633,9 @@ public class BrainCloudRestClient implements Runnable {
 
             try {
                 JSONObject responseBody = new JSONObject();
+                JSONArray responseArray = new JSONArray(responses);
                 responseBody.put("packetId", _expectedPacketId);
-                responseBody.put("responses", responses);
+                responseBody.put("responses", responseArray);
                 LogString("INCOMING (" + 200 + "): " + responseBody.toString(2));
             } catch (JSONException e) {
                 e.printStackTrace();
