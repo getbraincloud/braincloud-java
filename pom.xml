@@ -1,5 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  
   <groupId>com.bitheads.braincloud</groupId>
   <artifactId>braincloud-java-api</artifactId>
   <version>4.14.0</version>
@@ -41,13 +42,29 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.4.1</version>
+        <version>3.5.0</version>
         <configuration>
           <source>8</source>
         </configuration>
         <executions>
           <execution>
             <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+              </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.2.1</version>
+        <configuration>
+          <source>8</source>
+        </configuration>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
             <goals>
               <goal>jar</goal>
               </goals>
@@ -65,6 +82,8 @@
   </licenses>
 
   <scm>
+    <connection>scm:git:git://github.com/getbraincloud/braincloud-java-android</connection>
+    <developerConnection>scm:git:ssh://github.com/getbraincloud/braincloud-java-android</developerConnection>
     <url>https://github.com/getbraincloud/braincloud-java-api</url>
   </scm>
 
