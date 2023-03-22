@@ -96,8 +96,8 @@
   </licenses>
 
   <scm>
-    <connection>scm:git:git://github.com/getbraincloud/braincloud-java-android</connection>
-    <developerConnection>scm:git:ssh://github.com/getbraincloud/braincloud-java-android</developerConnection>
+    <connection>scm:git:git://github.com/getbraincloud/braincloud-java-api</connection>
+    <developerConnection>scm:git:ssh://github.com/getbraincloud/braincloud-java-api</developerConnection>
     <url>https://github.com/getbraincloud/braincloud-java-api</url>
   </scm>
 
