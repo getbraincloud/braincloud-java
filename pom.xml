@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   
-  <groupId>com.bitheads.braincloud</groupId>
+  <groupId>com.getbraincloud</groupId>
   <artifactId>braincloud-java-api</artifactId>
   <version>4.14.0</version>
 
@@ -27,6 +27,13 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <distributionManagement>
+    <repository>
+      <id>nexus</id>
+      <url>http://207.181.118.33:8081/repository/bcdev-releases/</url>
+    </repository>
+  </distributionManagement>
 
   <build>
     <plugins>
