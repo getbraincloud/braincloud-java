@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   
-  <groupId>com.getbraincloud</groupId>
+  <groupId>com.braincloud</groupId>
   <artifactId>braincloud-java-api</artifactId>
   <version>4.14.0</version>
 
@@ -29,10 +29,10 @@
   </dependencies>
 
   <distributionManagement>
-    <repository>
-      <id>nexus</id>
-      <url>http://207.181.118.60:8081/repository/bcdev-releases/</url>
-    </repository>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
   </distributionManagement>
 
   <build>
@@ -92,6 +92,17 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.7</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
@@ -107,5 +118,14 @@
     <developerConnection>scm:git:ssh://github.com/getbraincloud/braincloud-java-api</developerConnection>
     <url>https://github.com/getbraincloud/braincloud-java-api</url>
   </scm>
+
+  <developers>
+    <developer>
+      <name>Paul Winterhalder</name>
+      <email>paulw@bitheads.com</email>
+      <organization>bitHeads, inc.</organization>
+      <organizationUrl>https://www.bitheads.com/</organizationUrl>
+    </developer>
+  </developers>
 
 </project>
