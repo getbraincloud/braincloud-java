@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   
   <groupId>com.bitheads</groupId>
-  <artifactId>braincloud-java-api</artifactId>
+  <artifactId>braincloud-java</artifactId>
   <version>4.14.0</version>
 
   <name>brainCloud Java API</name>
