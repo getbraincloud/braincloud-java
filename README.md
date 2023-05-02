@@ -9,9 +9,11 @@ If you haven't signed up or you want to log into the brainCloud portal, you can 
 https://portal.braincloudservers.com/
 
 For Android development:
+
 https://github.com/getbraincloud/braincloud-java-android
 
 For previous versions of brainCloud (4.13.0 and earlier):
+
 https://github.com/getbraincloud/braincloud-java-deprecated
 
 ## Releases
