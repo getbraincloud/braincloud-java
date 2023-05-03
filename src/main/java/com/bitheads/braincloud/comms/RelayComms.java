@@ -1168,7 +1168,7 @@ public class RelayComms {
                     JSONArray packetIdArray = json.getJSONArray("orderedPacketIds");
                     
                     // Loop through the array to get the index and value of each packet ID
-                    if(!packetIdArray.isEmpty()){
+                    if(packetIdArray != null && !packetIdArray.isEmpty()){
                     	for(int channelId = 0; channelId < packetIdArray.length(); channelId++) {
                     		int packetId = packetIdArray.getInt(channelId);
                     		if(packetId != 0) {
