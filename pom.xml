@@ -3,7 +3,7 @@
   
   <groupId>com.bitheads</groupId>
   <artifactId>braincloud-java</artifactId>
-  <version>4.14.0</version>
+  <version>4.14.1</version>
 
   <name>brainCloud Java API</name>
   <description>The Java client library for brainCloud</description>
@@ -13,7 +13,7 @@
     <dependency>
       <groupId>org.json</groupId>
       <artifactId>json</artifactId>
-      <version>20220924</version>
+      <version>20230227</version>
     </dependency>
     <dependency>
       <groupId>org.java-websocket</groupId>
