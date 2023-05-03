@@ -228,10 +228,19 @@ public class RelayComms {
     private HashMap<Integer, String> _netIdToCxId = new HashMap<Integer, String>();
     private HashMap<String, Integer> _cxIdToNetId = new HashMap<String, Integer>();
 
+    //Packet
     private HashMap<Long, Integer> _sendPacketId = new HashMap<Long, Integer>();
     private HashMap<Long, Integer> _recvPacketId = new HashMap<Long, Integer>();
     private HashMap<Long, ArrayList<RelayPacket>> _orderedReliablePackets = new HashMap<Long, ArrayList<RelayPacket>>();
-
+    
+    /*
+     * Tracking packet IDs for each player
+     * Index of array represents channel IDs 0 to 3
+     * Player netId is the key, and tracked packetId is the value
+     * Data is structured this way because once it is used to update the client it will then be discarded
+     */
+    private ArrayList<HashMap<Integer, Integer>> _trackedPacketIds = new ArrayList<HashMap<Integer, Integer>>();
+    
     private int _ping = 999;
     private int _pingIntervalMS = 1000;
     private long _lastPingTime = 0;
@@ -262,6 +271,13 @@ public class RelayComms {
         _loggingEnabled = isEnabled;
     }
 
+    /**
+     * Start off a connection, based off connection type to brainCloud's Relay Servers.
+     * Connect options come in from "ROOM_ASSIGNED" lobby callback
+     * @param connectionType The connection type. INVALID, WEBSOCKET, TCP, UDP, MAX
+     * @param options Options sent in the connection
+     * @param callback The method to be invoked when the server response is received
+     */
     public void connect(RelayConnectionType connectionType, JSONObject options, IRelayConnectCallback callback) {
         if (_isConnected) {
             disconnect();
@@ -282,6 +298,7 @@ public class RelayComms {
         _orderedReliablePackets.clear();
         _udpRsmgPackets.clear();
         _rsmgHistory.clear();
+        _trackedPacketIds.clear();
 
         if (options == null) {
             _callbackEventQueue.add(new RelayCallback(RelayCallbackType.ConnectFailure, "Invalid arguments"));
@@ -975,6 +992,15 @@ public class RelayComms {
                     if (it != null) {
                         prevPacketId = it;
                     }
+                    
+                    // Look for a tracked packetId in channel for netId
+                    if(_trackedPacketIds.size() > 0 && _trackedPacketIds.get(channel).containsKey(netId)) {
+                    	prevPacketId = _trackedPacketIds.get(channel).get(netId);
+                    	_trackedPacketIds.get(channel).remove(netId);
+                    	
+                    	System.out.printf("Found tracked packetId for channel: %d netId: %d which was %d%n", channel, netId, prevPacketId);
+                    }
+                    
                     if (reliable) {
                         // We already received that packet if it's lower than the last confirmed
                         // packetId. This must be a duplicate
@@ -1139,6 +1165,22 @@ public class RelayComms {
                 case "NET_ID": {
                     int netId = json.getInt("netId");
                     String cxId = json.getString("cxId");
+                    JSONArray packetIdArray = json.getJSONArray("orderedPacketIds");
+                    
+                    // Loop through the array to get the index and value of each packet ID
+                    if(packetIdArray != null && !packetIdArray.isEmpty()){
+                    	for(int channelId = 0; channelId < packetIdArray.length(); channelId++) {
+                    		int packetId = packetIdArray.getInt(channelId);
+                    		if(packetId != 0) {
+                    			HashMap<Integer, Integer> trackedPacketId = new HashMap<Integer, Integer>();
+                    			
+                    			trackedPacketId.put(netId, packetId);
+                    			_trackedPacketIds.add(trackedPacketId);
+                    			
+                    			System.out.printf("Added tracked packetId %d for netId %d at channelId %d%n", packetId, netId, channelId);
+                    		}
+                    	}
+                    }
                     _netIdToCxId.put(netId, cxId);
                     _cxIdToNetId.put(cxId, netId);
                     break;

@@ -295,6 +295,18 @@ public class GroupFileServiceTest extends TestFixtureNoAuth implements IFileUplo
                 tr
         );
         tr.Run();
+        
+        try {
+        	if(file.delete()) {
+            	System.out.println("Temporary file has been deleted from workspace.");
+            }
+            else {
+            	System.out.println("Failed to delete temporary file from workspace...");
+            }
+        } catch(Exception e) {
+        	System.out.println("Error attempting to delete temporary file from workspace...");
+        	e.printStackTrace();
+        }
 
         _wrapper.getClient().deregisterFileUploadCallback();
     }
