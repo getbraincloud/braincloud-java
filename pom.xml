@@ -3,11 +3,11 @@
   
   <groupId>com.bitheads</groupId>
   <artifactId>braincloud-java</artifactId>
-  <version>4.14.1</version>
+  <version>4.14.2</version>
 
   <name>brainCloud Java API</name>
   <description>The Java client library for brainCloud</description>
-  <url>https://github.com/getbraincloud/braincloud-java-api</url>
+  <url>https://github.com/getbraincloud/braincloud-java</url>
   
   <dependencies>
     <dependency>
@@ -100,7 +100,7 @@
         <configuration>
           <serverId>ossrh</serverId>
           <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+          <autoReleaseAfterClose>false</autoReleaseAfterClose>
         </configuration>
       </plugin>
     </plugins>
@@ -114,9 +114,9 @@
   </licenses>
 
   <scm>
-    <connection>scm:git:git://github.com/getbraincloud/braincloud-java-api</connection>
-    <developerConnection>scm:git:ssh://github.com/getbraincloud/braincloud-java-api</developerConnection>
-    <url>https://github.com/getbraincloud/braincloud-java-api</url>
+    <connection>scm:git:git://github.com/getbraincloud/braincloud-java</connection>
+    <developerConnection>scm:git:ssh://github.com/getbraincloud/braincloud-java</developerConnection>
+    <url>https://github.com/getbraincloud/braincloud-java</url>
   </scm>
 
   <developers>

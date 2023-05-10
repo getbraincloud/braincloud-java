@@ -18,7 +18,34 @@ https://github.com/getbraincloud/braincloud-java-deprecated
 
 ## Releases
 
-*Maven Central*
+Now on Maven Central!
+
+The brainCloud Java client library is published under the com.bitheads namespace on Maven Central: 
+
+https://central.sonatype.com/artifact/com.bitheads/braincloud-java/
+
+### Maven Dependency
+
+Add the following to a pom.xml:
+
+```
+<dependency>
+    <groupId>com.bitheads</groupId>
+    <artifactId>braincloud-java</artifactId>
+    <version>4.14.2</version>
+</dependency>
+```
+
+### Gradle Dependency
+Add the following to a build.gradle:
+
+```
+implementation 'com.bitheads:braincloud-java:4.14.2'
+```
+
+Note that for Android projects there is a ```braincloud-java-android``` artifact published on Maven Central containing a separate Android version of the BrainCloudWrapper.java:
+
+https://central.sonatype.com/artifact/com.bitheads/braincloud-java-android/
 
 ## Examples
 

@@ -79,7 +79,7 @@ public class BrainCloudClient {
 
 
 
-    private final static String BRAINCLOUD_VERSION = "4.13.0";
+    private final static String BRAINCLOUD_VERSION = "4.14.0";
 
     private BrainCloudRestClient _restClient;
     private RTTComms _rttComms;
