@@ -46,8 +46,6 @@ public class TestFixtureBase {
     @Before
     public void setUp() throws Exception {
 
-        //LoadIds();
-
         _wrapper = new BrainCloudWrapper();
         _client = _wrapper.getClient();
 

@@ -22,7 +22,7 @@ public class GroupFileServiceTest extends TestFixtureNoAuth {
     private static String _groupId = "a7ff751c-3251-407a-b2fd-2bd1e9bca64a";
     private static JSONObject acl = new JSONObject();
     private static boolean uploadSuccess;
-    private static String fileId = "rip";
+    private static String fileId = "";
 
     private String movedFilename = "moved-testfile-java.txt";
     private String copiedFilename = "copied-testfile-java.txt";
