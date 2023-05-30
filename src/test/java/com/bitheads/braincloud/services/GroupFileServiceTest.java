@@ -59,6 +59,11 @@ public class GroupFileServiceTest extends TestFixtureNoAuth {
                 tr);
         tr.Run();
 
+        /* Add user to test group */
+        System.out.println("Joining test group...");
+    	_wrapper.getGroupService().joinGroup(_groupId, tr);
+    	tr.Run();
+
         _client.registerFileUploadCallback(new IFileUploadCallback() {
 
             @Override
@@ -86,7 +91,7 @@ public class GroupFileServiceTest extends TestFixtureNoAuth {
             file.deleteOnExit();
         } catch (IOException e) {
             System.out.println("Error creating/locating '" + _tempFilename + "'");
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
         // Upload the file
@@ -107,7 +112,8 @@ public class GroupFileServiceTest extends TestFixtureNoAuth {
 
                 waitForReturn(new String[] { id }, false);
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                System.out.println("Error reading upload ID");
+                e.printStackTrace();
             }
         }
         assertTrue(uploadSuccess);
@@ -117,11 +123,12 @@ public class GroupFileServiceTest extends TestFixtureNoAuth {
             acl.put("other", 0);
             acl.put("member", 2);
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+            System.out.println("Error creaing acl json object");
+            e.printStackTrace();
         }
 
         /* moveUserToGroupFile Test */
-        System.out.println("Moving file...");
+        System.out.println("moveUserToGroupFile");
         _wrapper.getGroupFileService().moveUserToGroupFile(
                 "TestFolder/",
                 _tempFilename,
@@ -139,7 +146,8 @@ public class GroupFileServiceTest extends TestFixtureNoAuth {
             fileDetails = data.getJSONObject("fileDetails");
             fileId = fileDetails.getString("fileId");
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+            System.out.println("Error saving group file ID");
+            e.printStackTrace();
         }
     }
 
@@ -166,7 +174,7 @@ public class GroupFileServiceTest extends TestFixtureNoAuth {
 
     @Test
     public void testCheckFilenameExists() {
-        System.out.println("testCheckFilenameExists");
+        System.out.println("checkFilenameExists");
 
         TestResult tr = new TestResult(_wrapper);
         JSONObject data;
@@ -187,7 +195,7 @@ public class GroupFileServiceTest extends TestFixtureNoAuth {
 
     @Test
     public void testCheckFullpathFilenameExists() {
-        System.out.println("testCheckFullpathFilenameExists");
+        System.out.println("checkFullpathFilenameExists");
 
         TestResult tr = new TestResult(_wrapper);
         JSONObject data;
@@ -208,7 +216,7 @@ public class GroupFileServiceTest extends TestFixtureNoAuth {
 
     @Test
     public void testGetFileInfo() {
-        System.out.println("testGetFileInfo");
+        System.out.println("getFileInfo");
 
         TestResult tr = new TestResult(_wrapper);
 
@@ -218,7 +226,7 @@ public class GroupFileServiceTest extends TestFixtureNoAuth {
 
     @Test
     public void testGetFileInfoSimple() {
-        System.out.println("testGetFileInfoSimple");
+        System.out.println("getFileInfoSimple");
         
         TestResult tr = new TestResult(_wrapper);
 
@@ -228,7 +236,7 @@ public class GroupFileServiceTest extends TestFixtureNoAuth {
 
     @Test
     public void testGetCDNUrl() {
-        System.out.println("testGetCDNUrl");
+        System.out.println("getCDNUrl");
 
         TestResult tr = new TestResult(_wrapper);
 
@@ -238,7 +246,7 @@ public class GroupFileServiceTest extends TestFixtureNoAuth {
 
     @Test
     public void testGetFileList() {
-        System.out.println("testGetFileList");
+        System.out.println("getFileList");
 
         TestResult tr = new TestResult(_wrapper);
         _wrapper.getGroupFileService().getFileList(_groupId, "", true, tr);
@@ -247,7 +255,7 @@ public class GroupFileServiceTest extends TestFixtureNoAuth {
 
     @Test
     public void testMoveFile(){
-        System.out.println("testMoveFile");
+        System.out.println("moveFile");
         
         TestResult tr = new TestResult(_wrapper);
 
@@ -264,7 +272,7 @@ public class GroupFileServiceTest extends TestFixtureNoAuth {
         tr.Run();
 
         // Revert back
-        System.out.println("Moving back...");
+        System.out.println("Moving file back");
         _wrapper.getGroupFileService().moveFile(
                 _groupId,
                 fileId,
@@ -280,12 +288,12 @@ public class GroupFileServiceTest extends TestFixtureNoAuth {
 
     @Test
     public void testCopyFile(){
+        System.out.println("copyFile");
+        
         TestResult tr = new TestResult(_wrapper);
         JSONObject data;
         JSONObject fileDetails;
         String copiedFileId;
-
-        System.out.println("testCopyFile...");
 
         _wrapper.getGroupFileService().copyFile(
                 _groupId,
@@ -316,13 +324,14 @@ public class GroupFileServiceTest extends TestFixtureNoAuth {
             );
             tr.Run();
         } catch (JSONException e) {
+            System.out.println("Error saving copied group file ID");
             e.printStackTrace();
         }
     }
 
     @Test
     public void testUpdateFileInfo(){
-        System.out.println("testUpdateFileInfo");
+        System.out.println("updateFileInfo");
         
         TestResult tr = new TestResult(_wrapper);
         JSONObject acl = new JSONObject();
@@ -332,10 +341,10 @@ public class GroupFileServiceTest extends TestFixtureNoAuth {
             acl.put("other", 0);
             acl.put("member", 2);
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+            System.out.println("Error creating acl json object");
+            e.printStackTrace();
         }
 
-        System.out.println("Updating file info...");
         _wrapper.getGroupFileService().updateFileInfo(
                 _groupId,
                 fileId,
@@ -347,7 +356,7 @@ public class GroupFileServiceTest extends TestFixtureNoAuth {
         tr.Run();
 
         // Revert back
-        System.out.println("Reverting back...");
+        System.out.println("Reverting updated file back");
         _wrapper.getGroupFileService().updateFileInfo(
                 _groupId,
                 fileId,
