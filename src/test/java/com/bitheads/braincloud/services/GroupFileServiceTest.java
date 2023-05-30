@@ -16,7 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class GroupFileServiceTest extends TestFixtureBase {
+public class GroupFileServiceTest extends TestFixtureNoAuth {
 
     private static String _tempFilename = "testfile-java.txt";
     private static String _groupId = "a7ff751c-3251-407a-b2fd-2bd1e9bca64a";
@@ -36,7 +36,7 @@ public class GroupFileServiceTest extends TestFixtureBase {
      * also fail.
      */
     @BeforeClass
-    public static void groupFileSetup() {
+    public static void uploadTestFile() {
         JSONObject data;
         JSONObject fileDetails;
 
@@ -51,7 +51,13 @@ public class GroupFileServiceTest extends TestFixtureBase {
 
         _client.initializeWithApps(m_serverUrl, m_appId, m_secretMap, m_appVersion);
 
-        //TODO
+        /* Authenticate */
+        _wrapper.getClient().getAuthenticationService().authenticateUniversal(
+                "java-tester",
+                "java-tester",
+                true,
+                tr);
+        tr.Run();
 
         _client.registerFileUploadCallback(new IFileUploadCallback() {
 
