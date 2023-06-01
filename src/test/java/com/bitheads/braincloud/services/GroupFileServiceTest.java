@@ -1,398 +1,367 @@
 package com.bitheads.braincloud.services;
 
+import com.bitheads.braincloud.client.BrainCloudWrapper;
 import com.bitheads.braincloud.client.IFileUploadCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.Assert;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.util.HashMap;
 
-public class GroupFileServiceTest extends TestFixtureNoAuth implements IFileUploadCallback {
+public class GroupFileServiceTest extends TestFixtureNoAuth {
 
-    /* Information grabbed from internal servers -> Unit Test Master */
-    //id for testingGroupFile.dat
-    private String groupFileId = "d2dd646a-f1af-4a96-90a7-a0310246f5a2";
-    private String groupID = "a7ff751c-3251-407a-b2fd-2bd1e9bca64a";
+    private static String _tempFilename = "testfile-java.txt";
+    private static String _groupId = "a7ff751c-3251-407a-b2fd-2bd1e9bca64a";
+    private static JSONObject acl = new JSONObject();
+    private static boolean uploadSuccess;
+    private static String fileId = "";
 
-    //Making version a negative value to tell the server to use the latest version
-    private int version = -1;
-    private int _returnCount;
-    private int _failCount;
-    private String filename = "testingGroupFile.dat";
-    String newFileName = "testCopiedFile.dat";
-    private String tempFilename = "deleteThisFileAfter.dat";
-    private String updatedName = "UpdatedGroupFile.dat";
+    private String movedFilename = "moved-testfile-java.txt";
+    private String copiedFilename = "copied-testfile-java.txt";
+    private String updatedFilename = "updated-testfile-java.txt";
 
-    @Test
-    public void testCheckFilenameExists(){
-        TestResult tr = new TestResult(_wrapper);
+    /**
+     * Creates and uploads a temporary file to be used for each of the Group File
+     * tests.
+     * Also acts as a test for the moveUserToGroupFile method.
+     * If the file fails to upload or get moved to the group, the other tests should
+     * also fail.
+     */
+    @BeforeClass
+    public static void uploadTestFile() {
         JSONObject data;
-        boolean exists;
+        JSONObject fileDetails;
 
-        System.out.println("testCheckFilenameExists...");
+        /* From setup() in TestFixtureBase.java */
+        _wrapper = new BrainCloudWrapper();
+        _client = _wrapper.getClient();
+        TestResult tr = new TestResult(_wrapper);
 
-        System.out.println("Authenticating...");
+        m_secretMap = new HashMap<String, String>();
+        m_secretMap.put(m_appId, m_secret);
+        m_secretMap.put(m_childAppId, m_childSecret);
+
+        _client.initializeWithApps(m_serverUrl, m_appId, m_secretMap, m_appVersion);
+
+        /* Authenticate */
         _wrapper.getClient().getAuthenticationService().authenticateUniversal(
                 "java-tester",
                 "java-tester",
                 true,
-                tr
-        );
+                tr);
         tr.Run();
 
-        System.out.println("Checking if file exists...");
-        _wrapper.getGroupFileService().checkFilenameExists(groupID, "", filename, tr);
+        /* Add user to test group */
+        System.out.println("Joining test group...");
+    	_wrapper.getGroupService().joinGroup(_groupId, tr);
+    	tr.Run();
+
+        _client.registerFileUploadCallback(new IFileUploadCallback() {
+
+            @Override
+            public void fileUploadCompleted(String fileUploadId, String jsonResponse) {
+                System.out.println("Temporary file uploaded successfully");
+                uploadSuccess = true;
+            }
+
+            @Override
+            public void fileUploadFailed(String fileUploadId, int statusCode, int reasonCode, String jsonResponse) {
+                System.out.println("Temporary file failed to upload");
+            }
+        });
+
+        /* Create and upload a temporary file */
+        // Create the file
+        System.out.println("Creating file...");
+        File file = new File(_tempFilename);
+        try {
+            if (file.createNewFile()) {
+                System.out.println("File created.");
+            } else {
+                System.out.println("File already exists...");
+            }
+            file.deleteOnExit();
+        } catch (IOException e) {
+            System.out.println("Error creating/locating '" + _tempFilename + "'");
+            e.printStackTrace();
+        }
+
+        // Upload the file
+        System.out.println("Uploading file...");
+        _wrapper.getFileService().uploadFile(
+                "TestFolder",
+                _tempFilename,
+                true,
+                true,
+                _tempFilename,
+                tr);
         tr.Run();
 
-        //Confirm that file exists
+        // Wait for upload to complete
+        if (tr.m_result) {
+            try {
+                String id = getUploadId(tr.m_response);
+
+                waitForReturn(new String[] { id }, false);
+            } catch (Exception e) {
+                System.out.println("Error reading upload ID");
+                e.printStackTrace();
+            }
+        }
+        assertTrue(uploadSuccess);
+
+        // Create acl json object
+        try {
+            acl.put("other", 0);
+            acl.put("member", 2);
+        } catch (JSONException e) {
+            System.out.println("Error creaing acl json object");
+            e.printStackTrace();
+        }
+
+        /* moveUserToGroupFile Test */
+        System.out.println("moveUserToGroupFile");
+        _wrapper.getGroupFileService().moveUserToGroupFile(
+                "TestFolder/",
+                _tempFilename,
+                _groupId,
+                "",
+                _tempFilename,
+                acl,
+                true,
+                tr);
+        tr.Run();
+
+        /* Save group file ID for tests */
+        try {
+            data = tr.m_response.getJSONObject("data");
+            fileDetails = data.getJSONObject("fileDetails");
+            fileId = fileDetails.getString("fileId");
+        } catch (JSONException e) {
+            System.out.println("Error saving group file ID");
+            e.printStackTrace();
+        }
+    }
+
+    @AfterClass
+    public static void groupFileTearDown() {
+        _client.deregisterFileUploadCallback();
+    }
+
+    /**
+     * Authenticate a user that has been added to a group.
+     */
+    @Before
+    public void groupFileAuthenticate() {
+        TestResult tr = new TestResult(_wrapper);
+
+        /* Authenticate */
+        _wrapper.getClient().getAuthenticationService().authenticateUniversal(
+                "java-tester",
+                "java-tester",
+                true,
+                tr);
+        tr.Run();
+    }
+
+    @Test
+    public void testCheckFilenameExists() {
+        System.out.println("checkFilenameExists");
+
+        TestResult tr = new TestResult(_wrapper);
+        JSONObject data;
+        boolean exists;
+
+        _wrapper.getGroupFileService().checkFilenameExists(_groupId, "", _tempFilename, tr);
+        tr.Run();
+
+        // Confirm that the file exists
         try {
             data = tr.m_response.getJSONObject("data");
             exists = data.getBoolean("exists");
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        Assert.assertTrue(exists);
+        assertTrue(exists);
     }
 
     @Test
-    public void testCheckFullpathFilenameExists(){
+    public void testCheckFullpathFilenameExists() {
+        System.out.println("checkFullpathFilenameExists");
+
         TestResult tr = new TestResult(_wrapper);
         JSONObject data;
         boolean exists;
 
-        System.out.println("testCheckFullpathFilenameExists...");
-
-        System.out.println("Authenticating...");
-        _wrapper.getClient().getAuthenticationService().authenticateUniversal(
-                "java-tester",
-                "java-tester",
-                true,
-                tr
-        );
+        _wrapper.getGroupFileService().checkFullpathFilenameExists(_groupId, _tempFilename, tr);
         tr.Run();
 
-        System.out.println("Checking if file exists...");
-        _wrapper.getGroupFileService().checkFullpathFilenameExists(groupID, filename, tr);
-        tr.Run();
-
-        //Confirm that file exists
+        // Confirm that the file exists
         try {
             data = tr.m_response.getJSONObject("data");
             exists = data.getBoolean("exists");
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        Assert.assertTrue(exists);
+        assertTrue(exists);
     }
 
     @Test
-    public void testGetFileInfo(){
+    public void testGetFileInfo() {
+        System.out.println("getFileInfo");
+
         TestResult tr = new TestResult(_wrapper);
 
-        System.out.println("testGetFileInfo...");
-
-        _wrapper.getClient().getAuthenticationService().authenticateUniversal(
-                "java-tester",
-                "java-tester",
-                true,
-                tr
-        );
-        tr.Run();
-
-        System.out.println("Getting file info...");
-        _wrapper.getGroupFileService().getFileInfo(groupID, groupFileId, tr);
-        tr.Run();
-
-        //testGetCDNUrl
-        System.out.println("Getting CDN URL...");
-        _wrapper.getGroupFileService().getCDNUrl(groupID, groupFileId, tr);
+        _wrapper.getGroupFileService().getFileInfo(_groupId, fileId, tr);
         tr.Run();
     }
 
     @Test
-    public void testGetFileInfoSimple(){
+    public void testGetFileInfoSimple() {
+        System.out.println("getFileInfoSimple");
+        
         TestResult tr = new TestResult(_wrapper);
 
-        System.out.println("testGetFileInfoSimple...");
-
-        System.out.println("Authenticating...");
-        _wrapper.getClient().getAuthenticationService().authenticateUniversal(
-                "java-tester",
-                "java-tester",
-                true,
-                tr
-        );
-        tr.Run();
-
-        System.out.println("Getting file info...");
-        _wrapper.getGroupFileService().getFileInfoSimple(groupID, "", filename, tr);
+        _wrapper.getGroupFileService().getFileInfoSimple(_groupId, "", _tempFilename, tr);
         tr.Run();
     }
 
     @Test
-    public void testGetFileList(){
+    public void testGetCDNUrl() {
+        System.out.println("getCDNUrl");
+
         TestResult tr = new TestResult(_wrapper);
 
-        System.out.println("testGetFileList...");
-
-        System.out.println("Authenticating...");
-        _wrapper.getClient().getAuthenticationService().authenticateUniversal(
-                "java-tester",
-                "java-tester",
-                true,
-                tr
-        );
+        _wrapper.getGroupFileService().getCDNUrl(_groupId, fileId, tr);
         tr.Run();
+    }
 
-        System.out.println("Getting file list...");
-        boolean recurse = true;
-        _wrapper.getGroupFileService().getFileList(groupID, "", recurse, tr);
+    @Test
+    public void testGetFileList() {
+        System.out.println("getFileList");
+
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupFileService().getFileList(_groupId, "", true, tr);
         tr.Run();
     }
 
     @Test
     public void testMoveFile(){
-        TestResult tr = new TestResult(_wrapper);
-
-        System.out.println("testMoveFile...");
-
-        System.out.println("Authenticating...");
-        _wrapper.getClient().getAuthenticationService().authenticateUniversal(
-                "java-tester",
-                "java-tester",
-                true,
-                tr
-        );
-        tr.Run();
-
-        System.out.println("Moving file...");
-        _wrapper.getGroupFileService().moveFile(
-                groupID,
-                groupFileId,
-                version,
-                "",
-                0,
-                newFileName,
-                true,
-                tr
-        );
-        tr.Run();
-
-        //Revert back
-        System.out.println("Moving back...");
-        _wrapper.getGroupFileService().moveFile(
-                groupID,
-                groupFileId,
-                version,
-                "",
-                0,
-                filename,
-                true,
-                tr
-        );
-        tr.Run();
-    }
-
-    @Test
-    public void testMoveUserToGroupFile(){
-        TestResult tr = new TestResult(_wrapper);
-        JSONObject acl = new JSONObject();
-        JSONObject data;
-        JSONObject fileDetails;
-        String newFileId;
-
-        System.out.println("testMoveUserToGroupFile...");
-
-        _wrapper.getClient().registerFileUploadCallback(this);
-
-        System.out.println("Authenticating...");
-        _wrapper.getClient().getAuthenticationService().authenticateUniversal("java-tester", "java-tester", true, tr);
-        tr.Run();
-
-        /* Upload a new file */
-        //Create the file
-        System.out.println("Creating file...");
-        File file = new File(tempFilename);
-        try {
-            if(file.createNewFile()){
-                System.out.println("File created.");
-            }
-            else{
-                System.out.println("File already exists...");
-            }
-        } catch (IOException e) {
-            System.out.println("Error creating/locating '" + tempFilename + "'");
-            throw new RuntimeException(e);
-        }
-
-        //Create acl json object
-        try {
-            acl.put("other", 0);
-            acl.put("member", 2);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-
-        //Upload the file
-        System.out.println("Uploading file...");
-        boolean _shareable = true;
-        boolean _replaceIfExists = true;
-        _wrapper.getFileService().uploadFile(
-                "TestFolder",
-                tempFilename,
-                _shareable,
-                _replaceIfExists,
-                tempFilename,
-                tr
-        );
-        tr.Run();
-
-        //Wait for upload to complete
-        if (tr.m_result) {
-            try {
-                String id = getUploadId(tr.m_response);
-
-                waitForReturn(new String[]{id}, false);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-        Assert.assertEquals(0, _failCount);
-
-        //Move file
-        System.out.println("Moving file...");
-        _wrapper.getGroupFileService().moveUserToGroupFile(
-                "TestFolder/",
-                tempFilename,
-                groupID,
-                "",
-                tempFilename,
-                acl,
-                true,
-                tr
-        );
-        tr.Run();
-
-        try{
-            data = tr.m_response.getJSONObject("data");
-            fileDetails = data.getJSONObject("fileDetails");
-            newFileId = fileDetails.getString("fileId");
-        } catch (JSONException e){
-            throw new RuntimeException(e);
-        }
-
-        //Delete new file
-        System.out.println("Deleting file...");
-        _wrapper.getGroupFileService().deleteFile(
-                groupID,
-                newFileId,
-                version,
-                tempFilename,
-                tr
-        );
-        tr.Run();
+        System.out.println("moveFile");
         
-        try {
-        	if(file.delete()) {
-            	System.out.println("Temporary file has been deleted from workspace.");
-            }
-            else {
-            	System.out.println("Failed to delete temporary file from workspace...");
-            }
-        } catch(Exception e) {
-        	System.out.println("Error attempting to delete temporary file from workspace...");
-        	e.printStackTrace();
-        }
+        TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getClient().deregisterFileUploadCallback();
+        _wrapper.getGroupFileService().moveFile(
+                _groupId,
+                fileId,
+                -1,
+                "",
+                0,
+                movedFilename,
+                true,
+                tr
+        );
+        tr.Run();
+
+        // Revert back
+        System.out.println("Moving file back");
+        _wrapper.getGroupFileService().moveFile(
+                _groupId,
+                fileId,
+                -1,
+                "",
+                0,
+                _tempFilename,
+                true,
+                tr
+        );
+        tr.Run();
     }
 
     @Test
     public void testCopyFile(){
+        System.out.println("copyFile");
+        
         TestResult tr = new TestResult(_wrapper);
         JSONObject data;
         JSONObject fileDetails;
-        String fileId;
+        String copiedFileId;
 
-        System.out.println("testCopyFile...");
-
-        System.out.println("Authenticating...");
-        _wrapper.getClient().getAuthenticationService().authenticateUniversal("java-tester", "java-tester", true, tr);
-        tr.Run();
-
-        System.out.println("Copying file...");
         _wrapper.getGroupFileService().copyFile(
-                groupID,
-                groupFileId,
-                version,
+                _groupId,
+                fileId,
+                -1,
                 "",
                 0,
-                newFileName,
+                copiedFilename,
                 true,
                 tr
         );
         tr.Run();
 
+        // Save data from copied file
         try {
             data = tr.m_response.getJSONObject("data");
             fileDetails = data.getJSONObject("fileDetails");
-            fileId = fileDetails.getString("fileId");
+            copiedFileId = fileDetails.getString("fileId");
 
-            //Delete new file
+            // Delete new file
             System.out.println("Deleting new file...");
             _wrapper.getGroupFileService().deleteFile(
-                    groupID,
-                    fileId,
-                    version,
-                    newFileName,
+                    _groupId,
+                    copiedFileId,
+                    -1,
+                    copiedFilename,
                     tr
             );
             tr.Run();
         } catch (JSONException e) {
+            System.out.println("Error saving copied group file ID");
             e.printStackTrace();
         }
     }
 
     @Test
     public void testUpdateFileInfo(){
+        System.out.println("updateFileInfo");
+        
         TestResult tr = new TestResult(_wrapper);
         JSONObject acl = new JSONObject();
 
-        System.out.println("testUpdateFileInfo...");
-
-        System.out.println("Authenticating...");
-        _wrapper.getClient().getAuthenticationService().authenticateUniversal("java-tester", "java-tester", true, tr);
-        tr.Run();
-
+        // Create acl json object
         try {
             acl.put("other", 0);
             acl.put("member", 2);
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+            System.out.println("Error creating acl json object");
+            e.printStackTrace();
         }
 
-        System.out.println("Updating file info...");
         _wrapper.getGroupFileService().updateFileInfo(
-                groupID,
-                groupFileId,
-                version,
-                updatedName,
+                _groupId,
+                fileId,
+                -1,
+                updatedFilename,
                 acl,
                 tr
         );
         tr.Run();
 
-        //Revert back
-        System.out.println("Reverting back...");
+        // Revert back
+        System.out.println("Reverting updated file back");
         _wrapper.getGroupFileService().updateFileInfo(
-                groupID,
-                groupFileId,
-                version,
-                filename,
+                _groupId,
+                fileId,
+                -1,
+                _tempFilename,
                 acl,
                 tr
         );
@@ -400,27 +369,14 @@ public class GroupFileServiceTest extends TestFixtureNoAuth implements IFileUplo
     }
 
     /* Taken from FileServiceTest. */
-    private String createFile(int fileSizeMb) throws Exception {
-        File tempFile = File.createTempFile("test", ".dat");
-        tempFile.deleteOnExit();
-
-        RandomAccessFile raf = new RandomAccessFile(tempFile, "rw");
-
-        int fileSize = fileSizeMb * 1024 * 1024;
-        raf.setLength(fileSize);
-        raf.close();
-
-        return tempFile.getCanonicalPath();
-    }
-
-    private void waitForReturn(String[] uploadIds, Boolean cancelUpload) throws Exception {
+    private static void waitForReturn(String[] uploadIds, Boolean cancelUpload) throws Exception {
         FileService service = _wrapper.getFileService();
         int count = 0;
         Boolean sw = true;
 
         System.out.println("Waiting for file to upload...");
 
-        while (_returnCount < uploadIds.length && count < 1000 * 30) {
+        while (!uploadSuccess && count < 1000 * 30) {
             _wrapper.runCallbacks();
             for (String id : uploadIds) {
                 double progress = service.getUploadProgress(id);
@@ -443,18 +399,8 @@ public class GroupFileServiceTest extends TestFixtureNoAuth implements IFileUplo
         }
     }
 
-    private String getUploadId(JSONObject response) throws Exception {
+    private static String getUploadId(JSONObject response) throws Exception {
         return response.getJSONObject("data").getJSONObject("fileDetails").getString("uploadId");
     }
 
-    @Override
-    public void fileUploadCompleted(String fileUploadId, String jsonResponse) {
-        _returnCount++;
-    }
-
-    @Override
-    public void fileUploadFailed(String fileUploadId, int statusCode, int reasonCode, String jsonResponse) {
-        _returnCount++;
-        _failCount++;
-    }
 }

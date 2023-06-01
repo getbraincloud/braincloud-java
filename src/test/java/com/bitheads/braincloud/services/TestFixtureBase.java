@@ -12,6 +12,7 @@ import java.util.Random;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 
 import com.bitheads.braincloud.client.AuthenticationType;
 import com.bitheads.braincloud.client.BrainCloudClient;
@@ -37,10 +38,13 @@ public class TestFixtureBase {
         return m_serverUrl;
     }
 
+    @BeforeClass
+    public static void getIds(){
+        LoadIds();
+    }
+
     @Before
     public void setUp() throws Exception {
-
-        LoadIds();
 
         _wrapper = new BrainCloudWrapper();
         _client = _wrapper.getClient();
@@ -85,7 +89,7 @@ public class TestFixtureBase {
     /// Routine loads up brainCloud configuration info from "tests/ids.txt" (hopefully)
     /// in a platform agnostic way.
     /// </summary>
-    private void LoadIds() {
+    private static void LoadIds() {
         if (m_serverUrl.length() > 0) return;
 
         File idsFile = new File("ids.txt");
