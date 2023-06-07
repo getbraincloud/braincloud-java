@@ -2,6 +2,9 @@ package com.bitheads.braincloud.services;
 
 import com.bitheads.braincloud.client.BrainCloudWrapper;
 import com.bitheads.braincloud.client.IFileUploadCallback;
+import com.bitheads.braincloud.client.IServerCallback;
+import com.bitheads.braincloud.client.ServiceName;
+import com.bitheads.braincloud.client.ServiceOperation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -151,10 +154,41 @@ public class GroupFileServiceTest extends TestFixtureNoAuth {
         }
     }
 
+    /**
+     * Leave group after tests to ensure that the group does not reach max capacity
+     * Also deregisters callback
+     */
     @AfterClass
     public static void groupFileTearDown() {
+
+        /* From setup() in TestFixtureBase.java */
+        _wrapper = new BrainCloudWrapper();
+        _client = _wrapper.getClient();
+        TestResult tr = new TestResult(_wrapper);
+
+        m_secretMap = new HashMap<String, String>();
+        m_secretMap.put(m_appId, m_secret);
+        m_secretMap.put(m_childAppId, m_childSecret);
+
+        _client.initializeWithApps(m_serverUrl, m_appId, m_secretMap, m_appVersion);
+
+        /* Authenticate */
+        _wrapper.getClient().getAuthenticationService().authenticateUniversal(
+                "java-tester",
+                "java-tester",
+                true,
+                tr);
+        tr.Run();
+
+        /* Remove user from test group */
+        System.out.println("Leaving test group...");
+    	_wrapper.getGroupService().leaveGroup(_groupId, tr);
+    	tr.Run();
+        
         _client.deregisterFileUploadCallback();
     }
+
+
 
     /**
      * Authenticate a user that has been added to a group.
