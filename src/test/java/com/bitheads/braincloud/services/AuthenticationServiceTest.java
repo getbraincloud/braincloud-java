@@ -25,8 +25,8 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
 
         TestResult tr = new TestResult(_wrapper);
         String anonId = _client.getAuthenticationService().generateAnonymousId();
+        
         _client.getAuthenticationService().authenticateAnonymous(anonId, true, tr);
-
         tr.RunExpectFail(202, ReasonCodes.MANUAL_REDIRECT /* 40308 */);
     }
 
@@ -34,8 +34,8 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
     public void testAuthenticateAnonymous() throws Exception {
         TestResult tr = new TestResult(_wrapper);
         String anonId = _client.getAuthenticationService().generateAnonymousId();
-        _client.getAuthenticationService().authenticateAnonymous(anonId, true, tr);
 
+        _client.getAuthenticationService().authenticateAnonymous(anonId, true, tr);
         tr.Run();
     }
 
@@ -43,9 +43,11 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
     public void testAuthenticateUniversalInstance() throws Exception {
         TestResult tr2 = new TestResult(_wrapper);
 
-        _wrapper.getClient().getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id,
-                getUser(Users.UserA).password, true, tr2);
-
+        _wrapper.getClient().getAuthenticationService().authenticateUniversal(
+                getUser(Users.UserA).id,
+                getUser(Users.UserA).password, 
+                true, 
+                tr2);
         tr2.Run();
     }
 
@@ -61,7 +63,6 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
                 true,
                 "{\"AnswerToEverything\":42}",
                 tr);
-
         tr.Run();
     }
 
@@ -74,7 +75,6 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
                 getUser(Users.UserA).password,
                 true,
                 tr);
-
         tr.Run();
     }
 
@@ -82,21 +82,22 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
     public void testAuthenticateHandoff() throws Exception {
         String handoffId;
         String handoffToken;
-
         TestResult tr3 = new TestResult(_wrapper);
+        TestResult tr2 = new TestResult(_wrapper);
+        TestResult tr = new TestResult(_wrapper);
         String anonId = _client.getAuthenticationService().generateAnonymousId();
+
         _client.getAuthenticationService().authenticateAnonymous(anonId, true, tr3);
         tr3.Run();
 
-        TestResult tr2 = new TestResult(_wrapper);
         _client.getScriptService().runScript("createHandoffId",
                 Helpers.createJsonPair("", ""),
                 tr2);
         tr2.Run();
+        
         handoffId = tr2.m_response.getJSONObject("data").getJSONObject("response").getString("handoffId");
         handoffToken = tr2.m_response.getJSONObject("data").getJSONObject("response").getString("securityToken");
 
-        TestResult tr = new TestResult(_wrapper);
         _client.getAuthenticationService().authenticateHandoff(handoffId, handoffToken, tr);
         tr.Run();
     }
@@ -104,20 +105,22 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
     @Test
     public void testAuthenticateSettopHandoff() throws Exception {
         String handoffCode;
-
         TestResult tr3 = new TestResult(_wrapper);
+        TestResult tr2 = new TestResult(_wrapper);
+        TestResult tr = new TestResult(_wrapper);
         String anonId = _client.getAuthenticationService().generateAnonymousId();
+
         _client.getAuthenticationService().authenticateAnonymous(anonId, true, tr3);
         tr3.Run();
 
-        TestResult tr2 = new TestResult(_wrapper);
-        _client.getScriptService().runScript("CreateSettopHandoffCode",
+        _client.getScriptService().runScript(
+                "CreateSettopHandoffCode",
                 Helpers.createJsonPair("", ""),
                 tr2);
         tr2.Run();
+        
         handoffCode = tr2.m_response.getJSONObject("data").getJSONObject("response").getString("handoffCode");
 
-        TestResult tr = new TestResult(_wrapper);
         _client.getAuthenticationService().authenticateSettopHandoff(handoffCode, tr);
         tr.Run();
     }
@@ -155,46 +158,45 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
     @Test
     public void testAuthenticateUniversal() throws Exception {
         TestResult tr = new TestResult(_wrapper);
+
         _wrapper.getClient().getAuthenticationService().authenticateUniversal("abc", "abc", true, tr);
         tr.Run();
     }
 
     @Test
     public void testResetEmailPassword() throws Exception {
-        String email = "braincloudunittest@gmail.com";
-
+        String emailAddress = getUser(Users.UserA).email;
         TestResult tr = new TestResult(_wrapper);
-        _wrapper.getClient().getAuthenticationService().resetEmailPassword(
-                email, tr);
+
+        _wrapper.getClient().getAuthenticationService().resetEmailPassword(emailAddress, tr);
         tr.Run();
     }
 
     @Test
     public void testResetEmailPasswordAdvanced() throws Exception {
-        TestResult tr2 = new TestResult(_wrapper);
+        String emailAddress = getUser(Users.UserA).email;
+        String serviceParams = "{\"fromAddress\": \"fromAddress\",\"fromName\": \"fromName\",\"replyToAddress\": \"replyToAddress\",\"replyToName\": \"replyToName\", \"templateId\": \"8f14c77d-61f4-4966-ab6d-0bee8b13d090\",\"subject\": \"subject\",\"body\": \"Body goes here\", \"substitutions\": { \":name\": \"John Doe\",\":resetLink\": \"www.dummuyLink.io\"}, \"categories\": [\"category1\",\"category2\" ]}";
+        TestResult tr = new TestResult(_wrapper);
 
-        String content = "{\"fromAddress\": \"fromAddress\",\"fromName\": \"fromName\",\"replyToAddress\": \"replyToAddress\",\"replyToName\": \"replyToName\", \"templateId\": \"8f14c77d-61f4-4966-ab6d-0bee8b13d090\",\"subject\": \"subject\",\"body\": \"Body goes here\", \"substitutions\": { \":name\": \"John Doe\",\":resetLink\": \"www.dummuyLink.io\"}, \"categories\": [\"category1\",\"category2\" ]}";
         _wrapper.getClient().getAuthenticationService().resetEmailPasswordAdvanced(
-                "braincloudunittest@gmail.com",
-                content,
-                tr2);
-
-        tr2.RunExpectFail(StatusCodes.BAD_REQUEST, ReasonCodes.INVALID_FROM_ADDRESS);
+                emailAddress,
+                serviceParams,
+                tr);
+        tr.RunExpectFail(StatusCodes.BAD_REQUEST, ReasonCodes.INVALID_FROM_ADDRESS);
     }
 
     @Test
     public void testResetEmailPasswordWithExpiry() throws Exception {
         System.out.println("Test: resetEmailPasswordWithExpiry");
 
+        String emailAddress = getUser(Users.UserA).email;
         TestResult tr2 = new TestResult(_wrapper);
+        TestResult tr = new TestResult(_wrapper);
+
         _wrapper.getClient().getAuthenticationService().authenticateUniversal("abc", "abc", true, tr2);
         tr2.Run();
 
-        String email = "braincloudunittest@gmail.com";
-
-        TestResult tr = new TestResult(_wrapper);
-        _wrapper.getClient().getAuthenticationService().resetEmailPasswordWithExpiry(
-                email, 1, tr);
+        _wrapper.getClient().getAuthenticationService().resetEmailPasswordWithExpiry(emailAddress, 1, tr);
         tr.Run();
     }
 
@@ -202,19 +204,19 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
     public void testResetEmailPasswordAdvancedWithExpiry() throws Exception {
         System.out.println("Test: resetEmailPasswordAdvancedWithExpiry");
 
+        String emailAddress = getUser(Users.UserA).email;
+        String serviceParams = "{\"fromAddress\": \"fromAddress\",\"fromName\": \"fromName\",\"replyToAddress\": \"replyToAddress\",\"replyToName\": \"replyToName\", \"templateId\": \"8f14c77d-61f4-4966-ab6d-0bee8b13d090\",\"subject\": \"subject\",\"body\": \"Body goes here\", \"substitutions\": { \":name\": \"John Doe\",\":resetLink\": \"www.dummuyLink.io\"}, \"categories\": [\"category1\",\"category2\" ]}";
         TestResult tr = new TestResult(_wrapper);
+        TestResult tr2 = new TestResult(_wrapper);
+
         _wrapper.getClient().getAuthenticationService().authenticateUniversal("abc", "abc", true, tr);
         tr.Run();
 
-        TestResult tr2 = new TestResult(_wrapper);
-
-        String content = "{\"fromAddress\": \"fromAddress\",\"fromName\": \"fromName\",\"replyToAddress\": \"replyToAddress\",\"replyToName\": \"replyToName\", \"templateId\": \"8f14c77d-61f4-4966-ab6d-0bee8b13d090\",\"subject\": \"subject\",\"body\": \"Body goes here\", \"substitutions\": { \":name\": \"John Doe\",\":resetLink\": \"www.dummuyLink.io\"}, \"categories\": [\"category1\",\"category2\" ]}";
         _wrapper.getClient().getAuthenticationService().resetEmailPasswordAdvancedWithExpiry(
-                "braincloudunittest@gmail.com",
-                content,
+                emailAddress,
+                serviceParams,
                 1,
                 tr2);
-
         tr2.RunExpectFail(StatusCodes.BAD_REQUEST, ReasonCodes.INVALID_FROM_ADDRESS);
     }
 
@@ -222,7 +224,9 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
     public void testResetUniversalIdPassword() throws Exception {
         System.out.println("Test: resetUniversalIdPassword");
 
+        String emailAddress = getUser(Users.UserA).email;
         TestResult tr2 = new TestResult(_wrapper);
+        TestResult tr = new TestResult(_wrapper);
 
         _wrapper.getClient().getAuthenticationService().authenticateUniversal(
                 getUser(Users.UserB).id,
@@ -232,11 +236,9 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
         tr2.Run();
 
         _wrapper.getClient().getPlayerStateService().updateContactEmail(
-                "braincloudunittest@gmail.com",
+                emailAddress,
                 tr2);
         tr2.Run();
-
-        TestResult tr = new TestResult(_wrapper);
 
         _wrapper.getClient().getAuthenticationService().resetUniversalIdPassword(
                 getUser(Users.UserB).id,
@@ -248,7 +250,10 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
     public void testResetUniversalIdPasswordAdvanced() throws Exception {
         System.out.println("Test: resetUniversalIdPasswordAdvanced");
 
+        String emailAddress = getUser(Users.UserA).email;
+        String serviceParams = "{\"templateId\": \"8f14c77d-61f4-4966-ab6d-0bee8b13d090\", \"substitutions\": { \":name\": \"John Doe\",\":resetLink\": \"www.dummuyLink.io\"}, \"categories\": [\"category1\",\"category2\" ]}";
         TestResult tr2 = new TestResult(_wrapper);
+        TestResult tr = new TestResult(_wrapper);
 
         _wrapper.getClient().getAuthenticationService().authenticateUniversal(
                 getUser(Users.UserB).id,
@@ -258,18 +263,14 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
         tr2.Run();
 
         _wrapper.getClient().getPlayerStateService().updateContactEmail(
-                "braincloudunittest@gmail.com",
+                emailAddress,
                 tr2);
         tr2.Run();
 
-        TestResult tr = new TestResult(_wrapper);
-
-        String content = "{\"templateId\": \"8f14c77d-61f4-4966-ab6d-0bee8b13d090\", \"substitutions\": { \":name\": \"John Doe\",\":resetLink\": \"www.dummuyLink.io\"}, \"categories\": [\"category1\",\"category2\" ]}";
         _wrapper.getClient().getAuthenticationService().resetUniversalIdPasswordAdvanced(
                 getUser(Users.UserB).id,
-                content,
+                serviceParams,
                 tr);
-
         tr.Run();
     }
 
@@ -277,7 +278,9 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
     public void testResetUniversalIdPasswordWithExpiry() throws Exception {
         System.out.println("Test: resetUniversalIdPasswordWithExpiry");
 
+        String emailAddress = getUser(Users.UserA).email;
         TestResult tr2 = new TestResult(_wrapper);
+        TestResult tr = new TestResult(_wrapper);
 
         _wrapper.getClient().getAuthenticationService().authenticateUniversal(
                 getUser(Users.UserB).id,
@@ -286,12 +289,8 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
                 tr2);
         tr2.Run();
 
-        _wrapper.getClient().getPlayerStateService().updateContactEmail(
-                "braincloudunittest@gmail.com",
-                tr2);
+        _wrapper.getClient().getPlayerStateService().updateContactEmail(emailAddress, tr2);
         tr2.Run();
-
-        TestResult tr = new TestResult(_wrapper);
 
         _wrapper.getClient().getAuthenticationService().resetUniversalIdPasswordWithExpiry(
                 getUser(Users.UserB).id,
@@ -304,7 +303,10 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
     public void testResetUniversalIdPasswordAdvancedWithExpiry() throws Exception {
         System.out.println("Test: resetUniversalIdPasswordAdvancedWithExpiry");
 
+        String emailAddress = getUser(Users.UserA).email;
+        String serviceParams = "{\"templateId\": \"8f14c77d-61f4-4966-ab6d-0bee8b13d090\", \"substitutions\": { \":name\": \"John Doe\",\":resetLink\": \"www.dummuyLink.io\"}, \"categories\": [\"category1\",\"category2\" ]}";
         TestResult tr2 = new TestResult(_wrapper);
+        TestResult tr = new TestResult(_wrapper);
 
         _wrapper.getClient().getAuthenticationService().authenticateUniversal(
                 getUser(Users.UserB).id,
@@ -314,16 +316,13 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
         tr2.Run();
 
         _wrapper.getClient().getPlayerStateService().updateContactEmail(
-                "braincloudunittest@gmail.com",
+                emailAddress,
                 tr2);
         tr2.Run();
 
-        TestResult tr = new TestResult(_wrapper);
-
-        String content = "{\"templateId\": \"8f14c77d-61f4-4966-ab6d-0bee8b13d090\", \"substitutions\": { \":name\": \"John Doe\",\":resetLink\": \"www.dummuyLink.io\"}, \"categories\": [\"category1\",\"category2\" ]}";
         _wrapper.getClient().getAuthenticationService().resetUniversalIdPasswordAdvancedWithExpiry(
                 getUser(Users.UserB).id,
-                content,
+                serviceParams,
                 1,
                 tr);
         tr.Run();
@@ -549,16 +548,16 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
 
     @Test
     public void testSmartSwitchAuthenticateEmailFromUniversal() throws Exception {
-        String email = "braincloudunittest@gmail.com";
+        String emailAddress = getUser(Users.UserA).email;
         // get anon auth
         TestResult tr = new TestResult(_wrapper);
 
-        _client.getAuthenticationService().authenticateUniversal(email, "12345", true, tr);
+        _client.getAuthenticationService().authenticateUniversal(emailAddress, "12345", true, tr);
 
         tr.Run();
 
         TestResult tr2 = new TestResult(_wrapper);
-        _wrapper.smartSwitchAuthenticateEmail(email, "12345", true, tr2);
+        _wrapper.smartSwitchAuthenticateEmail(emailAddress, "12345", true, tr2);
         tr2.Run();
     }
 }
