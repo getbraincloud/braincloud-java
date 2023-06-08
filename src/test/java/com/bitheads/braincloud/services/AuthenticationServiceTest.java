@@ -121,6 +121,7 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
         tr.Run();
     }
 
+    /* Incomplete. See BCloud 5041: https://bitheads.atlassian.net/browse/BCLOUD-5041
     @Test
     public void testAuthenticateExternal() throws Exception {
 
@@ -150,7 +151,8 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
     public void testAuthenticateTwitter() throws Exception {
 
     }
-
+    */
+    
     @Test
     public void testAuthenticateUniversal() throws Exception {
         TestResult tr = new TestResult(_wrapper);
