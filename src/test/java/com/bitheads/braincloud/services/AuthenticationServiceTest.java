@@ -120,38 +120,6 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
         _client.getAuthenticationService().authenticateSettopHandoff(handoffCode, tr);
         tr.Run();
     }
-
-    /* Incomplete. See BCloud 5041: https://bitheads.atlassian.net/browse/BCLOUD-5041
-    @Test
-    public void testAuthenticateExternal() throws Exception {
-
-    }
-
-    @Test
-    public void testAuthenticateFacebook() throws Exception {
-
-    }
-
-    @Test
-    public void testAuthenticateFacebookLimited() throws Exception {
-
-    }
-
-    @Test
-    public void testAuthenticateGoogle() throws Exception {
-
-    }
-
-    @Test
-    public void testAuthenticateSteam() throws Exception {
-
-    }
-
-    @Test
-    public void testAuthenticateTwitter() throws Exception {
-
-    }
-    */
     
     @Test
     public void testAuthenticateUniversal() throws Exception {
