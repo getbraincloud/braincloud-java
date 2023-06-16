@@ -163,16 +163,19 @@ public class RelayTest extends TestFixtureBase {
 
     @Test
     public void testFullFlowWS() throws Exception {
+        System.out.println("Endmatch set to: " + endMatch);
         fullFlow(RelayConnectionType.WEBSOCKET);
     }
 
     @Test
     public void testFullFlowTCP() throws Exception {
+        System.out.println("Endmatch set to: " + endMatch);
         fullFlow(RelayConnectionType.TCP);
     }
 
     @Test
     public void testFullFlowUDP() throws Exception {
+        System.out.println("Endmatch set to: " + endMatch);
         fullFlow(RelayConnectionType.UDP);
     }
 
