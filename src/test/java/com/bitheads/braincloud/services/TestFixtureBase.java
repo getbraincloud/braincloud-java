@@ -115,7 +115,7 @@ public class TestFixtureBase {
 
     @Before
     public void setUp() throws Exception {
-        System.out.println("Starting test: " + currentTest.getMethodName());
+        System.out.println("\nStarting test: " + currentTest.getMethodName());
 
         _wrapper = new BrainCloudWrapper();
         _client = _wrapper.getClient();

@@ -42,8 +42,9 @@ public class RelayTest extends TestFixtureBase {
 
     @Test
     public void testInvalidProfileIdForNetId() throws Exception {
-        String profileId = _wrapper.getRelayService().getProfileIdForNetId(0); // Just make sure the dictionary returns
-                                                                               // null and doesn't asserts
+        String profileId = _wrapper.getRelayService().getProfileIdForNetId(0);
+
+        // Just make sure the dictionary returns null and doesn't asserts
         assertTrue(profileId == null);
     }
 

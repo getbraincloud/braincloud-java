@@ -766,7 +766,9 @@ public class RelayComms {
 
                         onRecv(buffer);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        if(_tcpSocket != null){
+                            e.printStackTrace();
+                        }
                         disconnect();
                         synchronized(_callbackEventQueue) {
                             _callbackEventQueue.add(new RelayCallback(RelayCallbackType.ConnectFailure, "TCP Connect Failed"));
