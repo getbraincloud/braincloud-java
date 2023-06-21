@@ -4,12 +4,7 @@ import com.bitheads.braincloud.client.BrainCloudClient;
 import com.bitheads.braincloud.client.IRelayCallback;
 import com.bitheads.braincloud.client.IRelayConnectCallback;
 import com.bitheads.braincloud.client.IRelaySystemCallback;
-import com.bitheads.braincloud.client.IServerCallback;
 import com.bitheads.braincloud.client.RelayConnectionType;
-import com.bitheads.braincloud.client.ServiceName;
-import com.bitheads.braincloud.client.ServiceOperation;
-import com.bitheads.braincloud.comms.ServerCall;
-
 import org.json.JSONObject;
 
 public class RelayService {

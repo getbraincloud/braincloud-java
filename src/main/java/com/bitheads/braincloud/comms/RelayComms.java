@@ -207,7 +207,7 @@ public class RelayComms {
     private int _nextExpectedUdpRsmgPacketId = 0;
 
     private BrainCloudClient _client;
-    private boolean _loggingEnabled = true;
+    private boolean _loggingEnabled = false;
     private IRelayConnectCallback _connectCallback = null;
     private ArrayList<RelayCallback> _callbackEventQueue = new ArrayList<RelayCallback>();
 
@@ -1175,10 +1175,6 @@ public class RelayComms {
                     			System.out.printf("Added tracked packetId %d for netId %d at channelId %d%n", packetId, netId, channelId);
                     		}
                     	}
-                    }
-                    //TODO
-                    else{
-                        System.out.println("orderedPacketIDs issue");
                     }
                     _netIdToCxId.put(netId, cxId);
                     _cxIdToNetId.put(cxId, netId);
