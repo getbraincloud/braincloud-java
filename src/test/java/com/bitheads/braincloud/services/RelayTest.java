@@ -108,6 +108,7 @@ public class RelayTest extends TestFixtureBase {
                 options.put("port", server.getJSONObject("connectData").getJSONObject("ports").getInt("udp"));
             options.put("passcode", server.getString("passcode"));
             options.put("lobbyId", server.getString("lobbyId"));
+            
             _wrapper.getRelayService().connect(connectionType, options, tr);
             tr.Run();
         }
@@ -165,24 +166,34 @@ public class RelayTest extends TestFixtureBase {
     @Test
     public void testFullFlowWS() throws Exception {
         System.out.println("Endmatch set to: " + endMatch);
+
+        endMatch = false;
+
         fullFlow(RelayConnectionType.WEBSOCKET);
     }
 
     @Test
     public void testFullFlowTCP() throws Exception {
         System.out.println("Endmatch set to: " + endMatch);
+
+        endMatch = false;
+        
         fullFlow(RelayConnectionType.TCP);
     }
 
     @Test
     public void testFullFlowUDP() throws Exception {
         System.out.println("Endmatch set to: " + endMatch);
+
+        endMatch = false;
+
         fullFlow(RelayConnectionType.UDP);
     }
 
     @Test
     public void testFullFlowWSEndMatch() throws Exception {
         endMatch = true;
+        
         fullFlow(RelayConnectionType.WEBSOCKET);
     }
 
@@ -235,6 +246,8 @@ public class RelayTest extends TestFixtureBase {
                             });
                 }
             } catch (JSONException e) {
+                System.out.println("relaySystemCallback JSONException");
+                e.printStackTrace();
             }
         }
 
@@ -386,7 +399,7 @@ public class RelayTest extends TestFixtureBase {
         public void relayConnectFailure(String errorMessage) {
             m_result = false;
             m_done = true;
-            System.out.println("relayConnectFailure: " + errorMessage);
+            System.out.println("relayConnectFailure: " + errorMessage); 
         }
 
         public boolean IsDone() {

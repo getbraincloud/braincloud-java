@@ -1,7 +1,6 @@
 package com.bitheads.braincloud.comms;
 
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
@@ -17,7 +16,6 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.net.ssl.SSLContext;
@@ -35,12 +33,7 @@ import com.bitheads.braincloud.client.BrainCloudClient;
 import com.bitheads.braincloud.client.IRelayCallback;
 import com.bitheads.braincloud.client.IRelayConnectCallback;
 import com.bitheads.braincloud.client.IRelaySystemCallback;
-import com.bitheads.braincloud.client.IServerCallback;
 import com.bitheads.braincloud.client.RelayConnectionType;
-import com.bitheads.braincloud.client.RelayConnectionType;
-import com.bitheads.braincloud.client.ServiceName;
-import com.bitheads.braincloud.client.ServiceOperation;
-import com.bitheads.braincloud.services.AuthenticationService;
 
 public class RelayComms {
 
@@ -214,7 +207,7 @@ public class RelayComms {
     private int _nextExpectedUdpRsmgPacketId = 0;
 
     private BrainCloudClient _client;
-    private boolean _loggingEnabled = false;
+    private boolean _loggingEnabled = true;
     private IRelayConnectCallback _connectCallback = null;
     private ArrayList<RelayCallback> _callbackEventQueue = new ArrayList<RelayCallback>();
 
@@ -1182,6 +1175,10 @@ public class RelayComms {
                     			System.out.printf("Added tracked packetId %d for netId %d at channelId %d%n", packetId, netId, channelId);
                     		}
                     	}
+                    }
+                    //TODO
+                    else{
+                        System.out.println("orderedPacketIDs issue");
                     }
                     _netIdToCxId.put(netId, cxId);
                     _cxIdToNetId.put(cxId, netId);
