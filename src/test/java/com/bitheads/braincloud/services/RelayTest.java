@@ -165,22 +165,16 @@ public class RelayTest extends TestFixtureBase {
 
     @Test
     public void testFullFlowWS() throws Exception {
-        System.out.println("Endmatch set to: " + endMatch);
-
         fullFlow(RelayConnectionType.WEBSOCKET);
     }
 
     @Test
     public void testFullFlowTCP() throws Exception {
-        System.out.println("Endmatch set to: " + endMatch);
-        
         fullFlow(RelayConnectionType.TCP);
     }
 
     @Test
     public void testFullFlowUDP() throws Exception {
-        System.out.println("Endmatch set to: " + endMatch);
-
         fullFlow(RelayConnectionType.UDP);
     }
 
@@ -213,7 +207,6 @@ public class RelayTest extends TestFixtureBase {
                         json.put("cxId", _wrapper.getClient().getRttConnectionId());
                         json.put("op", "END_MATCH");
 
-                        System.out.println("Call endMatch()");
                         _wrapper.getRelayService().endMatch(json);
                     }
                 } else if (jsonData.getString("op").equals("END_MATCH")) {
