@@ -38,18 +38,19 @@ public class TestFixtureBase {
     @Rule
     public TestName currentTest = new TestName();
 
-    static String getServerUrl()
-    {
+    static String getServerUrl() {
         return m_serverUrl;
     }
 
     /// <summary>
-    /// Routine loads up brainCloud configuration info from "tests/ids.txt" (hopefully)
+    /// Routine loads up brainCloud configuration info from "tests/ids.txt"
+    /// (hopefully)
     /// in a platform agnostic way.
     /// </summary>
     @BeforeClass
-    public static void getIds(){
-        if (m_serverUrl.length() > 0) return;
+    public static void getIds() {
+        if (m_serverUrl.length() > 0)
+            return;
 
         File idsFile = new File("ids.txt");
         try {
@@ -58,7 +59,8 @@ public class TestFixtureBase {
             e.printStackTrace();
         }
 
-        if (idsFile.exists()) System.out.println("Found ids.txt file");
+        if (idsFile.exists())
+            System.out.println("Found ids.txt file");
 
         List<String> lines = new ArrayList<>();
         BufferedReader reader = null;
@@ -132,7 +134,8 @@ public class TestFixtureBase {
             TestResult tr = new TestResult(_wrapper);
 
             System.out.println("Authenticating...");
-            _wrapper.getClient().getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id, getUser(Users.UserA).password, true, tr);
+            _wrapper.getClient().getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id,
+                    getUser(Users.UserA).password, true, tr);
 
             if (!tr.Run()) {
                 // what do we do on error?
@@ -143,7 +146,7 @@ public class TestFixtureBase {
     @After
     public void tearDown() throws Exception {
         System.out.println("Completed test: " + currentTest.getMethodName());
-        
+
         _wrapper.getClient().resetCommunication();
         _wrapper.getClient().deregisterEventCallback();
         _wrapper.getClient().deregisterRewardCallback();
@@ -156,7 +159,8 @@ public class TestFixtureBase {
     /// Overridable method which if set to true, will cause unit test "SetUp" to
     /// attempt an authentication before calling the test method.
     /// </summary>
-    /// <returns><c>true</c>, if authenticate was shoulded, <c>false</c> otherwise.</returns>
+    /// <returns><c>true</c>, if authenticate was shoulded, <c>false</c>
+    /// otherwise.</returns>
     public boolean shouldAuthenticate() {
         return true;
     }
@@ -187,25 +191,25 @@ public class TestFixtureBase {
     /// <returns> Object contining the user's Id, Password, and profileId </returns>
     protected TestUser getUser(Users user) {
         if (!_init) {
-            //Log.i(getClass().getName(), "Initializing New Random Users");
+            // Log.i(getClass().getName(), "Initializing New Random Users");
             _wrapper.getClient().enableLogging(false);
             _testUsers = new TestUser[TestFixtureBase.Users.values().length];
             Random rand = new Random();
 
             for (int i = 0, ilen = _testUsers.length; i < ilen; ++i) {
-                if(i < 2)
-                {
+                if (i < 2) {
                     _testUsers[i] = new TestUser(_wrapper, Users.byOrdinal(i).toString() + "-", rand.nextInt(), false);
                 }
-                //a crummy solution to this scritp's logic. Sets it up so all the users other than A and B authenticate with email. It is necessary to allow test users to
-                // have both authentications because Jenkins tends to miss vital information on some tests based on the test user's authentication.
-                if(i <= 2)
-                {
+                // a crummy solution to this scritp's logic. Sets it up so all the users other
+                // than A and B authenticate with email. It is necessary to allow test users to
+                // have both authentications because Jenkins tends to miss vital information on
+                // some tests based on the test user's authentication.
+                if (i <= 2) {
                     _testUsers[i] = new TestUser(_wrapper, Users.byOrdinal(i).toString() + "-", rand.nextInt(), true);
                 }
-                //Log.i(getClass().getName(), ".");
+                // Log.i(getClass().getName(), ".");
             }
-            //Log.i(getClass().getName(), "\n");
+            // Log.i(getClass().getName(), "\n");
             _wrapper.getClient().enableLogging(true);
             _init = true;
         }
@@ -229,7 +233,7 @@ public class TestFixtureBase {
         TestUser testUser = getUser(user);
         TestResult tr = new TestResult(_wrapper);
         _wrapper.getIdentityService().attachPeerProfile(
-                m_peerName, testUser.id + "_peer", testUser.password, AuthenticationType.Universal,null,  true, tr);
+                m_peerName, testUser.id + "_peer", testUser.password, AuthenticationType.Universal, null, true, tr);
         return tr.Run();
     }
 
