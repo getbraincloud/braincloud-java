@@ -445,14 +445,7 @@ public class RelayComms {
 
     public void endMatch(JSONObject json){
         if(isConnected()){
-            byte[] jsonPayload = json.toString().getBytes();
-
-            ByteBuffer buffer = ByteBuffer.allocate(3 + jsonPayload.length);
-            buffer.order(ByteOrder.BIG_ENDIAN);
-            buffer.putShort((short)3);
-            buffer.put((byte)CL2RS_ENDMATCH);
-            buffer.put(jsonPayload);
-            send(buffer);
+            send(CL2RS_ENDMATCH, json);
 
             _endMatchRequested = true;
         }

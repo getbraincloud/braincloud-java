@@ -207,6 +207,8 @@ public class RelayTest extends TestFixtureBase {
                         JSONObject json = new JSONObject();
                         json.put("cxId", _wrapper.getClient().getRttConnectionId());
                         json.put("op", "END_MATCH");
+
+                        System.out.println("Call endMatch()...");
                         _wrapper.getRelayService().endMatch(json);
                     }
                 } else if (jsonData.getString("op").equals("END_MATCH")) {
