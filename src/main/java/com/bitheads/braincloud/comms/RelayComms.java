@@ -445,14 +445,7 @@ public class RelayComms {
 
     public void endMatch(JSONObject json){
         if(isConnected()){
-            byte[] jsonPayload = json.toString().getBytes();
-
-            ByteBuffer buffer = ByteBuffer.allocate(3 + jsonPayload.length);
-            buffer.order(ByteOrder.BIG_ENDIAN);
-            buffer.putShort((short)3);
-            buffer.put((byte)CL2RS_ENDMATCH);
-            buffer.put(jsonPayload);
-            send(buffer);
+            send(CL2RS_ENDMATCH, json);
 
             _endMatchRequested = true;
         }
@@ -766,7 +759,10 @@ public class RelayComms {
 
                         onRecv(buffer);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        if(_tcpSocket != null){
+                            e.printStackTrace();
+                        }
+                        
                         disconnect();
                         synchronized(_callbackEventQueue) {
                             _callbackEventQueue.add(new RelayCallback(RelayCallbackType.ConnectFailure, "TCP Connect Failed"));
@@ -1165,7 +1161,7 @@ public class RelayComms {
                 case "NET_ID": {
                     int netId = json.getInt("netId");
                     String cxId = json.getString("cxId");
-                    JSONArray packetIdArray = json.getJSONArray("orderedPacketIds");
+                    JSONArray packetIdArray = json.optJSONArray("orderedPacketIds");
                     
                     // Loop through the array to get the index and value of each packet ID
                     if(packetIdArray != null && !packetIdArray.isEmpty()){

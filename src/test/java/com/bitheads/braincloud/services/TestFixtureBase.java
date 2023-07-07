@@ -13,6 +13,8 @@ import java.util.Random;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.rules.TestName;
 
 import com.bitheads.braincloud.client.AuthenticationType;
 import com.bitheads.braincloud.client.BrainCloudClient;
@@ -33,64 +35,22 @@ public class TestFixtureBase {
     public static BrainCloudWrapper _wrapper;
     public static BrainCloudClient _client;
 
-    static String getServerUrl()
-    {
+    @Rule
+    public TestName currentTest = new TestName();
+
+    static String getServerUrl() {
         return m_serverUrl;
     }
 
-    @BeforeClass
-    public static void getIds(){
-        LoadIds();
-    }
-
-    @Before
-    public void setUp() throws Exception {
-
-        _wrapper = new BrainCloudWrapper();
-        _client = _wrapper.getClient();
-
-        m_secretMap = new HashMap<String, String>();
-        m_secretMap.put(m_appId, m_secret);
-        m_secretMap.put(m_childAppId, m_childSecret);
-
-        _client.initializeWithApps(m_serverUrl, m_appId, m_secretMap, m_appVersion);
-        _client.enableLogging(true);
-
-        if (shouldAuthenticate()) {
-            TestResult tr = new TestResult(_wrapper);
-            _wrapper.getClient().getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id, getUser(Users.UserA).password, true, tr);
-
-            if (!tr.Run()) {
-                // what do we do on error?
-            }
-        }
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        _wrapper.getClient().resetCommunication();
-        _wrapper.getClient().deregisterEventCallback();
-        _wrapper.getClient().deregisterRewardCallback();
-        _client.resetCommunication();
-        _client.deregisterEventCallback();
-        _client.deregisterRewardCallback();
-    }
-
     /// <summary>
-    /// Overridable method which if set to true, will cause unit test "SetUp" to
-    /// attempt an authentication before calling the test method.
-    /// </summary>
-    /// <returns><c>true</c>, if authenticate was shoulded, <c>false</c> otherwise.</returns>
-    public boolean shouldAuthenticate() {
-        return true;
-    }
-
-    /// <summary>
-    /// Routine loads up brainCloud configuration info from "tests/ids.txt" (hopefully)
+    /// Routine loads up brainCloud configuration info from "tests/ids.txt"
+    /// (hopefully)
     /// in a platform agnostic way.
     /// </summary>
-    private static void LoadIds() {
-        if (m_serverUrl.length() > 0) return;
+    @BeforeClass
+    public static void getIds() {
+        if (m_serverUrl.length() > 0)
+            return;
 
         File idsFile = new File("ids.txt");
         try {
@@ -99,7 +59,8 @@ public class TestFixtureBase {
             e.printStackTrace();
         }
 
-        if (idsFile.exists()) System.out.println("Found ids.txt file");
+        if (idsFile.exists())
+            System.out.println("Found ids.txt file");
 
         List<String> lines = new ArrayList<>();
         BufferedReader reader = null;
@@ -156,6 +117,54 @@ public class TestFixtureBase {
         }
     }
 
+    @Before
+    public void setUp() throws Exception {
+        System.out.println("Starting test: " + currentTest.getMethodName());
+        _wrapper = new BrainCloudWrapper();
+        _client = _wrapper.getClient();
+
+        m_secretMap = new HashMap<String, String>();
+        m_secretMap.put(m_appId, m_secret);
+        m_secretMap.put(m_childAppId, m_childSecret);
+
+        _client.initializeWithApps(m_serverUrl, m_appId, m_secretMap, m_appVersion);
+        _client.enableLogging(true);
+
+        if (shouldAuthenticate()) {
+            TestResult tr = new TestResult(_wrapper);
+
+            System.out.println("Authenticating...");
+            _wrapper.getClient().getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id,
+                    getUser(Users.UserA).password, true, tr);
+
+            if (!tr.Run()) {
+                // what do we do on error?
+            }
+        }
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        System.out.println("Completed test: " + currentTest.getMethodName());
+
+        _wrapper.getClient().resetCommunication();
+        _wrapper.getClient().deregisterEventCallback();
+        _wrapper.getClient().deregisterRewardCallback();
+        _client.resetCommunication();
+        _client.deregisterEventCallback();
+        _client.deregisterRewardCallback();
+    }
+
+    /// <summary>
+    /// Overridable method which if set to true, will cause unit test "SetUp" to
+    /// attempt an authentication before calling the test method.
+    /// </summary>
+    /// <returns><c>true</c>, if authenticate was shoulded, <c>false</c>
+    /// otherwise.</returns>
+    public boolean shouldAuthenticate() {
+        return true;
+    }
+
     public enum Users {
         UserA,
         UserB,
@@ -182,25 +191,25 @@ public class TestFixtureBase {
     /// <returns> Object contining the user's Id, Password, and profileId </returns>
     protected TestUser getUser(Users user) {
         if (!_init) {
-            //Log.i(getClass().getName(), "Initializing New Random Users");
+            // Log.i(getClass().getName(), "Initializing New Random Users");
             _wrapper.getClient().enableLogging(false);
             _testUsers = new TestUser[TestFixtureBase.Users.values().length];
             Random rand = new Random();
 
             for (int i = 0, ilen = _testUsers.length; i < ilen; ++i) {
-                if(i < 2)
-                {
+                if (i < 2) {
                     _testUsers[i] = new TestUser(_wrapper, Users.byOrdinal(i).toString() + "-", rand.nextInt(), false);
                 }
-                //a crummy solution to this scritp's logic. Sets it up so all the users other than A and B authenticate with email. It is necessary to allow test users to
-                // have both authentications because Jenkins tends to miss vital information on some tests based on the test user's authentication.
-                if(i <= 2)
-                {
+                // a crummy solution to this scritp's logic. Sets it up so all the users other
+                // than A and B authenticate with email. It is necessary to allow test users to
+                // have both authentications because Jenkins tends to miss vital information on
+                // some tests based on the test user's authentication.
+                if (i <= 2) {
                     _testUsers[i] = new TestUser(_wrapper, Users.byOrdinal(i).toString() + "-", rand.nextInt(), true);
                 }
-                //Log.i(getClass().getName(), ".");
+                // Log.i(getClass().getName(), ".");
             }
-            //Log.i(getClass().getName(), "\n");
+            // Log.i(getClass().getName(), "\n");
             _wrapper.getClient().enableLogging(true);
             _init = true;
         }
@@ -224,7 +233,7 @@ public class TestFixtureBase {
         TestUser testUser = getUser(user);
         TestResult tr = new TestResult(_wrapper);
         _wrapper.getIdentityService().attachPeerProfile(
-                m_peerName, testUser.id + "_peer", testUser.password, AuthenticationType.Universal,null,  true, tr);
+                m_peerName, testUser.id + "_peer", testUser.password, AuthenticationType.Universal, null, true, tr);
         return tr.Run();
     }
 
