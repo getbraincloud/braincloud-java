@@ -32,7 +32,7 @@ Add the following to a pom.xml, replacing the version with the desired value:
 <dependency>
     <groupId>com.bitheads</groupId>
     <artifactId>braincloud-java</artifactId>
-    <version>4.x.x</version>
+    <version>x.x.x</version>
 </dependency>
 ```
 
@@ -40,7 +40,7 @@ Add the following to a pom.xml, replacing the version with the desired value:
 Add the following to a build.gradle:
 
 ```
-implementation 'com.bitheads:braincloud-java:4.x.x'
+implementation 'com.bitheads:braincloud-java:x.x.x'
 ```
 
 Note that for Android projects there is a ```braincloud-java-android``` artifact published on Maven Central containing a separate Android version of the BrainCloudWrapper.java:
