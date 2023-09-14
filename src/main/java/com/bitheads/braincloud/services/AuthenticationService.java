@@ -370,8 +370,8 @@ public class AuthenticationService {
      * @param securityToken The authentication token
      * @param callback   The callback handler
      */
-    public void authenticateHandoff(String handoffId, String securityToken, IServerCallback callback) {
-        authenticate(handoffId, securityToken, AuthenticationType.Handoff, null, false, null, callback);
+    public void authenticateHandoff(String handoffId, String securityToken, IServerCallback callback) {    	
+    	authenticate(handoffId, securityToken, AuthenticationType.Handoff, null, false, null, callback);
     }
 
     /**

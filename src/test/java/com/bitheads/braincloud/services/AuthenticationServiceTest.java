@@ -96,7 +96,7 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
         handoffId = tr.m_response.getJSONObject("data").getJSONObject("response").getString("handoffId");
         handoffToken = tr.m_response.getJSONObject("data").getJSONObject("response").getString("securityToken");
 
-        _client.getAuthenticationService().authenticateHandoff(handoffId, handoffToken, tr);
+        _wrapper.authenticateHandoff(handoffId, handoffToken, tr);
         tr.Run();
     }
 
@@ -117,7 +117,7 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
         
         handoffCode = tr.m_response.getJSONObject("data").getJSONObject("response").getString("handoffCode");
 
-        _client.getAuthenticationService().authenticateSettopHandoff(handoffCode, tr);
+        _wrapper.authenticateSettopHandoff(handoffCode, tr);
         tr.Run();
     }
     
