@@ -401,7 +401,9 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
      */
     @Override
 	public void authenticateHandoff(String handoffId, String securityToken, IServerCallback callback) {
-        getClient().getAuthenticationService().authenticateHandoff(handoffId, securityToken, this);
+    	_authenticateCallback = callback;
+    	
+    	getClient().getAuthenticationService().authenticateHandoff(handoffId, securityToken, this);
     }
 
     /**
@@ -412,7 +414,9 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
      */
     @Override
 	public void authenticateSettopHandoff(String handoffCode, IServerCallback callback) {
-        getClient().getAuthenticationService().authenticateSettopHandoff(handoffCode, this);
+    	_authenticateCallback = callback;
+    	
+    	getClient().getAuthenticationService().authenticateSettopHandoff(handoffCode, this);
     }
 
     /**
