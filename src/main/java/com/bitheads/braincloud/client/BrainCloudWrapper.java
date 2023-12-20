@@ -980,6 +980,15 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
         getIdentitiesCallback(advancedSwitch);
     }
 
+    @Override
+    public void logout(boolean forgetUser, IServerCallback callback) {
+        if(forgetUser){
+            resetStoredProfileId();
+        }
+
+        getClient().getPlayerStateService().logout(callback);
+    }
+
     private void getIdentitiesCallback(IServerCallback success) 
     {
 

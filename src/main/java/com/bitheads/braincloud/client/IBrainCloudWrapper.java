@@ -493,6 +493,13 @@ public interface IBrainCloudWrapper {
 	void smartSwitchAuthenticateAdvanced(AuthenticationType authenticationType, AuthenticationIds ids,
 			boolean forceCreate, String extraJson, IServerCallback callback);
 
+	/***
+	 * Logs user out of server.
+	 * @param forgetUser determines whether the profileId should be cleared or not
+	 * @param callback method to be invoked when the request is processed
+	 */
+	void logout(boolean forgetUser, IServerCallback callback);
+
 	/**
 	 * Run callbacks, to be called once per frame from your main thread
 	 */
