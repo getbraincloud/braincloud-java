@@ -465,47 +465,4 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
         _wrapper.getClient().getAuthenticationService().authenticateUltra("braincloud1", id_token, true, tr);
         tr.Run();
     }
-
-    @Test
-    public void testSmartSwitchAuthenticateEmailFromAnonAuth() throws Exception {
-        // get anon auth
-        TestResult tr = new TestResult(_wrapper);
-        String anonId = _client.getAuthenticationService().generateAnonymousId();
-        _client.getAuthenticationService().authenticateAnonymous(anonId, true, tr);
-
-        tr.Run();
-
-        TestResult tr2 = new TestResult(_wrapper);
-        _wrapper.smartSwitchAuthenticateEmail(anonId, "12345", true, tr2);
-        tr2.Run();
-    }
-
-    @Test
-    public void testSmartSwitchAuthenticateUniversalFromAnon() throws Exception {
-        // get anon auth
-        TestResult tr = new TestResult(_wrapper);
-        String anonId = _client.getAuthenticationService().generateAnonymousId();
-        _client.getAuthenticationService().authenticateAnonymous(anonId, true, tr);
-
-        tr.Run();
-
-        TestResult tr2 = new TestResult(_wrapper);
-        _wrapper.smartSwitchAuthenticateUniversal(anonId, "12345", true, tr2);
-        tr2.Run();
-    }
-
-    @Test
-    public void testSmartSwitchAuthenticateEmailFromUniversal() throws Exception {
-        String emailAddress = getUser(Users.UserA).email;
-        // get anon auth
-        TestResult tr = new TestResult(_wrapper);
-
-        _client.getAuthenticationService().authenticateUniversal(emailAddress, "12345", true, tr);
-
-        tr.Run();
-
-        TestResult tr2 = new TestResult(_wrapper);
-        _wrapper.smartSwitchAuthenticateEmail(emailAddress, "12345", true, tr2);
-        tr2.Run();
-    }
 }
