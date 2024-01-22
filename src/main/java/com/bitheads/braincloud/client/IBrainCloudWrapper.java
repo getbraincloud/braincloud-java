@@ -319,6 +319,22 @@ public interface IBrainCloudWrapper {
 			String extraJson, IServerCallback callback);
 
 	/**
+	 * Authenticate the user with brainCloud using their Oculus Credentials
+	 *
+	 * @param oculusUserId The oculus id of the user
+	 * @param oculusNonce  from the Oculus SDK (that will be
+	 *                     further validated when sent to the bC service)
+	 * @param forceCreate  Should a new profile be created for this user if the
+	 *                     account
+	 *                     does not exist?
+	 * @param callback     The callback handler
+	 */
+	void authenticateOculus(String oculusUserId,
+			String oculusNonce,
+			boolean forceCreate,
+			IServerCallback callback);
+
+	/**
 	 * Re-authenticates the user with brainCloud
 	 *
 	 * @param callback The callback handler
