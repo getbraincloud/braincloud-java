@@ -319,6 +319,22 @@ public interface IBrainCloudWrapper {
 			String extraJson, IServerCallback callback);
 
 	/**
+	 * Authenticate the user with brainCloud using their Oculus Credentials
+	 *
+	 * @param oculusUserId The oculus id of the user
+	 * @param oculusNonce  from the Oculus SDK (that will be
+	 *                     further validated when sent to the bC service)
+	 * @param forceCreate  Should a new profile be created for this user if the
+	 *                     account
+	 *                     does not exist?
+	 * @param callback     The callback handler
+	 */
+	void authenticateOculus(String oculusUserId,
+			String oculusNonce,
+			boolean forceCreate,
+			IServerCallback callback);
+
+	/**
 	 * Re-authenticates the user with brainCloud
 	 *
 	 * @param callback The callback handler
@@ -492,6 +508,13 @@ public interface IBrainCloudWrapper {
 
 	void smartSwitchAuthenticateAdvanced(AuthenticationType authenticationType, AuthenticationIds ids,
 			boolean forceCreate, String extraJson, IServerCallback callback);
+
+	/***
+	 * Logs user out of server.
+	 * @param forgetUser determines whether the profileId should be cleared or not
+	 * @param callback method to be invoked when the request is processed
+	 */
+	void logout(boolean forgetUser, IServerCallback callback);
 
 	/**
 	 * Run callbacks, to be called once per frame from your main thread
