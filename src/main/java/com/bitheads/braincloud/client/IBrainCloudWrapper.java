@@ -335,6 +335,12 @@ public interface IBrainCloudWrapper {
 			IServerCallback callback);
 
 	/**
+	 * Check if there are stored anonymous and profile IDs. If there are, reconnect authentication is possible.
+	 * @return False if the anonymous and/or profile IDs are empty
+	 */
+	boolean canReconnect();
+
+	/**
 	 * Re-authenticates the user with brainCloud
 	 *
 	 * @param callback The callback handler
