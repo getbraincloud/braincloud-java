@@ -305,7 +305,7 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
      *
      * @return The stored anonymous id
      */
-    String getStoredAnonymousId() {
+    public String getStoredAnonymousId() {
     	return _prefs.get("anonymousId", "");
     }
 
@@ -706,6 +706,15 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
         initializeIdentity(false);
 
         getClient().getAuthenticationService().authenticateOculus(oculusUserId, oculusNonce, forceCreate, this);
+    }
+
+    /**
+	 * Check if there are stored anonymous and profile IDs. If there are, reconnect authentication is possible.
+	 * @return False if the anonymous and/or profile IDs are empty
+	 */
+    @Override
+    public boolean canReconnect(){
+        return !getStoredAnonymousId().equals("") && !getStoredProfileId().equals("");
     }
 
     /**
