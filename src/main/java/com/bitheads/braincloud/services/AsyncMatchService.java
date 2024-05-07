@@ -430,7 +430,7 @@ public class AsyncMatchService {
             JSONObject summaryData = new JSONObject(summary);
             data.put(Parameter.summary.name(), summaryData);
 
-            ServerCall sc = new ServerCall(ServiceName.asyncMatch, ServiceOperation.COMPLETE_MATCH_WITH_SUMMARY_DATA, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.asyncMatch, ServiceOperation.ABANDON_MATCH_WITH_SUMMARY_DATA, data, callback);
             _client.sendRequest(sc);
 
         } catch (JSONException e) {
