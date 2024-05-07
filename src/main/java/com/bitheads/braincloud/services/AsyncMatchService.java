@@ -437,4 +437,52 @@ public class AsyncMatchService {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Allows the current player in the game to overwrite the matchState and
+     * statistics without completing their turn or adding to matchHistory.
+     * 
+     * Service Name - AsyncMatch
+     * Service Operation - UpdateMatchStateCurrentTurn
+     * 
+     * @param ownerId        Match owner identifier
+     * @param matchId        Match identifier
+     * @param version        Game state version being updated, to ensure data
+     *                       integrity
+     * @param jsonMatchState JSON string provided by the caller Required.
+     * @param jsonStatistics Optional JSON string provided by the caller. Overwrites
+     *                       the statistics.
+     * @param callback       The method to be invoked when the server response is
+     *                       received
+     */
+    public void updateMatchStateCurrentTurn(String ownerId, String matchId, BigInteger version, String jsonMatchState,
+            String jsonStatistics, IServerCallback callback) {
+
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.ownerId.name(), ownerId);
+            data.put(Parameter.matchId.name(), matchId);
+            data.put(Parameter.version.name(), version);
+
+            if (StringUtil.IsOptionalParameterValid(jsonMatchState)) {
+                JSONObject matchStateData = new JSONObject(jsonMatchState);
+                data.put(Parameter.matchState.name(), matchStateData);
+            }
+
+            if (StringUtil.IsOptionalParameterValid(jsonMatchState)) {
+                data.put(Parameter.statistics.name(), new JSONObject(jsonStatistics));
+            }
+
+            ServerCall sc = new ServerCall(
+                    ServiceName.asyncMatch,
+                    ServiceOperation.UPDATE_MATCH_STATE_CURRENT_TURN,
+                    data,
+                    callback);
+
+            _client.sendRequest(sc);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

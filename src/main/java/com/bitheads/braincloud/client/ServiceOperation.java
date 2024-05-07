@@ -26,6 +26,7 @@ public enum ServiceOperation {
     READ_MATCH,
     READ_MATCH_HISTORY,
     SUBMIT_TURN,
+    UPDATE_MATCH_STATE_CURRENT_TURN,
     UPDATE_SUMMARY,
 
     //
