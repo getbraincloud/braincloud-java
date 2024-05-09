@@ -265,6 +265,22 @@ public class AsyncMatchServiceTest extends TestFixtureBase
                 tr2);
         tr2.Run();
     }
+
+    @Test
+    public void testUpdateMatchStateCurrentTurn() throws Exception {
+        String matchId = createMatch();
+        TestResult tr = new TestResult(_wrapper);
+
+        _wrapper.getAsyncMatchService().updateMatchStateCurrentTurn(
+                ownerId,
+                matchId,
+                BigInteger.valueOf(0),
+                Helpers.createJsonPair("map", "level1"),
+                Helpers.createJsonPair("summary", "sum"),
+                tr);
+
+        tr.Run();
+    }
     
     ///// helper fns
 
