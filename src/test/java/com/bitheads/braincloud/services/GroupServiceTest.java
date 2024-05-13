@@ -1,9 +1,5 @@
 package com.bitheads.braincloud.services;
 
-import static org.junit.Assert.fail;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Test;
@@ -282,36 +278,6 @@ public class GroupServiceTest extends TestFixtureBase {
                 tr);
         tr.Run();
 
-        logout();
-        deleteGroupAsUserA();
-    }
-
-    @Test
-    public void testDeleteGroupJoinRequest() throws Exception {
-        createGroupAsUserA();
-        authenticate(Users.UserB);
-
-        TestResult tr = new TestResult(_wrapper);
-        _wrapper.getGroupService().joinGroup(
-                _groupId,
-                tr);
-        tr.Run();
-
-        // Verify that the user has requested to join the group
-        if(!joinRequestExists()){
-            fail("Join request does not exist but it should have been created.");
-        }
-
-        // Join request exists, now delete it
-        _wrapper.getGroupService().deleteGroupJoinRequest(_groupId, tr);
-        tr.Run();
-
-        // verify that the join request no longer exists
-        if(joinRequestExists()){
-            fail("Join request exists but it should have been deleted.");
-        }
-
-        // Wrap up test
         logout();
         deleteGroupAsUserA();
     }
@@ -790,36 +756,5 @@ public class GroupServiceTest extends TestFixtureBase {
         context.put("searchCriteria", searchCriteria);
 
         return context.toString();
-    }
-
-    /**
-     * Check if the authenticated user has a join request for the provided group.
-     * 
-     * @param groupId ID of the group
-     * @return True if the authenticated user has a join request for the provided group
-     */
-    private boolean joinRequestExists(){
-        System.out.println("Checking if join request exists . . .");
-        
-        TestResult tr = new TestResult(_wrapper);
-        _wrapper.getGroupService().getMyGroups(tr);
-        tr.Run();
-        
-        try{
-            JSONArray requestedGroups = tr.m_response.getJSONObject("data").getJSONArray("requested");
-            for(int i = 0; i < requestedGroups.length(); i++){
-                JSONObject requestedGroup = requestedGroups.getJSONObject(i);
-                String requestedGroupId = requestedGroup.getString("groupId");
-
-                if(requestedGroupId.equals(_groupId)){
-                    return true;
-                }
-            }
-        } catch (JSONException je){
-            fail("JSONException while reading GET_MY_GROUPS response");
-            je.printStackTrace();
-        }
-
-        return false;
     }
 }

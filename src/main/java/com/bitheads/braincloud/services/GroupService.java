@@ -545,29 +545,6 @@ public class GroupService {
     }
 
     /**
-     * Delete a request to join the group.
-     * 
-     * Service Name - group
-     * Service Operation - DELETE_GROUP_JOIN_REQUEST
-     * 
-     * @param groupId ID of the group
-     * @param callback The method to be invoked when the server response is received
-     */
-    public void deleteGroupJoinRequest(String groupId, IServerCallback callback){
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.groupId.name(), groupId);
-
-            ServerCall sc = new ServerCall(ServiceName.group,
-                    ServiceOperation.DELETE_GROUP_JOIN_REQUEST, data, callback);
-
-            _client.sendRequest(sc);
-        } catch (JSONException je) {
-            je.printStackTrace();
-        }
-    }
-
-    /**
      * Leave a group in which the player is a member.
      *
      * Service Name - group
