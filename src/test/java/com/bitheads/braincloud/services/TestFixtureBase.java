@@ -21,15 +21,15 @@ import com.bitheads.braincloud.client.BrainCloudClient;
 import com.bitheads.braincloud.client.BrainCloudWrapper;
 
 public class TestFixtureBase {
-    static protected String m_serverUrl = "";
-    static protected String m_appId = "";
-    static protected String m_secret = "";
-    static protected String m_appVersion = "";
-    static protected String m_parentLevelName = "";
-    static protected String m_childAppId = "";
-    static protected String m_childSecret = "";
-    static protected String m_peerName = "";
-    static protected String m_redirectAppId = "";
+    static protected String m_serverUrl = "https://api.internal.braincloudservers.com/dispatcherv2";
+    static protected String m_appId = "20001";
+    static protected String m_secret = "4e51b45c-030e-4f21-8457-dc53c9a0ed5f";
+    static protected String m_appVersion = "1.0.0";
+    static protected String m_parentLevelName = "Master";
+    static protected String m_childAppId = "20005";
+    static protected String m_childSecret = "f8cec1cf-2f95-4989-910c-8caf598f83db";
+    static protected String m_peerName = "peerapp";
+    static protected String m_redirectAppId = "25176";
 
     static protected Map<String, String> m_secretMap;
     public static BrainCloudWrapper _wrapper;
@@ -49,72 +49,84 @@ public class TestFixtureBase {
     /// </summary>
     @BeforeClass
     public static void getIds() {
-        if (m_serverUrl.length() > 0)
-            return;
+        // if (m_serverUrl.length() > 0)
+        //     return;
 
-        File idsFile = new File("ids.txt");
-        try {
-            System.out.println("Looking for ids.txt file in " + idsFile.getCanonicalPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // File idsFile = new File("ids.txt");
+        // try {
+        //     System.out.println("Looking for ids.txt file in " + idsFile.getCanonicalPath());
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
 
-        if (idsFile.exists())
-            System.out.println("Found ids.txt file");
+        // if (idsFile.exists())
+        //     System.out.println("Found ids.txt file");
 
-        List<String> lines = new ArrayList<>();
-        BufferedReader reader = null;
+        // List<String> lines = new ArrayList<>();
+        // BufferedReader reader = null;
 
-        try {
-            reader = new BufferedReader(new FileReader(idsFile));
-            String text;
-            while ((text = reader.readLine()) != null) {
-                lines.add(text);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        // try {
+        //     reader = new BufferedReader(new FileReader(idsFile));
+        //     String text;
+        //     while ((text = reader.readLine()) != null) {
+        //         lines.add(text);
+        //     }
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // } finally {
+        //     try {
+        //         if (reader != null) {
+        //             reader.close();
+        //         }
+        //     } catch (IOException e) {
+        //         e.printStackTrace();
+        //     }
+        // }
 
-        for (String line : lines) {
-            String[] split = line.split("=");
-            switch (split[0]) {
-                case "serverUrl":
-                    m_serverUrl = split[1];
-                    break;
-                case "appId":
-                    m_appId = split[1];
-                    break;
-                case "secret":
-                    m_secret = split[1];
-                    break;
-                case "version":
-                    m_appVersion = split[1];
-                    break;
-                case "childAppId":
-                    m_childAppId = split[1];
-                    break;
-                case "childSecret":
-                    m_childSecret = split[1];
-                    break;
-                case "parentLevelName":
-                    m_parentLevelName = split[1];
-                    break;
-                case "peerName":
-                    m_peerName = split[1];
-                    break;
-                case "redirectAppId":
-                    m_redirectAppId = split[1];
-                    break;
-            }
-        }
+        // for (String line : lines) {
+        //     String[] split = line.split("=");
+        //     switch (split[0]) {
+        //         case "serverUrl":
+        //             m_serverUrl = split[1];
+        //             System.out.println("ServerURL: " + m_serverUrl);
+        //             break;
+        //         case "appId":
+        //             m_appId = split[1];
+        //             System.out.println("AppID: " + m_appId);
+        //             break;
+        //         case "secret":
+        //             m_secret = split[1];
+        //             System.out.println("Secret: " + m_secret);
+        //             break;
+        //         case "version":
+        //             m_appVersion = split[1];
+        //             System.out.println("AppVersion: " + m_appVersion);
+        //             break;
+        //         case "childAppId":
+        //             m_childAppId = split[1];
+        //             System.out.println("ChildAppID: " + m_childAppId);
+        //             break;
+        //         case "childSecret":
+        //             m_childSecret = split[1];
+        //             System.out.println("ChildSecret: " + m_childSecret);
+        //             break;
+        //         case "parentLevelName":
+        //             m_parentLevelName = split[1];
+        //             System.out.println("ParentLevelName: " + m_parentLevelName);
+        //             break;
+        //         case "peerName":
+        //             m_peerName = split[1];
+        //             System.out.println("PeerName: " + m_peerName);
+        //             break;
+        //         case "redirectAppId":
+        //             m_redirectAppId = split[1];
+        //             System.out.println("RedirectAppID: " + m_redirectAppId);
+        //             break;
+        //         default:
+        //             System.out.println("error reading line..." + line);
+        //             break;
+        //     }
+        // }
     }
 
     @Before
