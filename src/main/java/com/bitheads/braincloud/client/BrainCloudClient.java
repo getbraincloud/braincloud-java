@@ -235,6 +235,10 @@ public class BrainCloudClient {
 
         Locale locale = Locale.getDefault();
         if (_countryCode == null || _countryCode.isEmpty()) _countryCode = locale.getCountry();
+        if(_countryCode.equals("419")){
+            _countryCode = "_LA_";
+        }
+
         if (_languageCode == null || _languageCode.isEmpty()) _languageCode = locale.getLanguage();
 
         TimeZone timeZone = TimeZone.getDefault();
@@ -314,6 +318,10 @@ public class BrainCloudClient {
 
         Locale locale = Locale.getDefault();
         if (_countryCode == null || _countryCode.isEmpty()) _countryCode = locale.getCountry();
+        if(_countryCode.equals("419")){
+            _countryCode = "_LA_";
+        }
+
         if (_languageCode == null || _languageCode.isEmpty()) _languageCode = locale.getLanguage();
 
         TimeZone timeZone = TimeZone.getDefault();
