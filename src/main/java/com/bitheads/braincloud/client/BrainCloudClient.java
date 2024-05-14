@@ -79,7 +79,7 @@ public class BrainCloudClient {
 
 
 
-    private final static String BRAINCLOUD_VERSION = "5.2.1";
+    private final static String BRAINCLOUD_VERSION = "5.3.0";
 
     private BrainCloudRestClient _restClient;
     private RTTComms _rttComms;
@@ -235,6 +235,10 @@ public class BrainCloudClient {
 
         Locale locale = Locale.getDefault();
         if (_countryCode == null || _countryCode.isEmpty()) _countryCode = locale.getCountry();
+        if(_countryCode.equals("419")){
+            _countryCode = "_LA_";
+        }
+
         if (_languageCode == null || _languageCode.isEmpty()) _languageCode = locale.getLanguage();
 
         TimeZone timeZone = TimeZone.getDefault();
@@ -314,6 +318,10 @@ public class BrainCloudClient {
 
         Locale locale = Locale.getDefault();
         if (_countryCode == null || _countryCode.isEmpty()) _countryCode = locale.getCountry();
+        if(_countryCode.equals("419")){
+            _countryCode = "_LA_";
+        }
+
         if (_languageCode == null || _languageCode.isEmpty()) _languageCode = locale.getLanguage();
 
         TimeZone timeZone = TimeZone.getDefault();
