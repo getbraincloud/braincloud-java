@@ -238,6 +238,9 @@ public class BrainCloudClient {
         if(_countryCode.equals("419")){
             _countryCode = "_LA_";
         }
+        if(_countryCode.equals("Hans") || _countryCode.equals("Hant")){
+            _countryCode = "CN";
+        }
 
         if (_languageCode == null || _languageCode.isEmpty()) _languageCode = locale.getLanguage();
 
