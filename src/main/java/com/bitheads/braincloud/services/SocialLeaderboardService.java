@@ -187,8 +187,8 @@ public class SocialLeaderboardService {
      * Method returns the social leaderboard by version.
      * A player's social leaderboard is comprised of players who are recognized as
      * being your friend.
-     * This method returns the exact same info as getSocialLeaderboardByVersion, but will not
-     * return an error if the leaderboard does not exist.
+     * This method returns the exact same info as getSocialLeaderboardByVersion, but
+     * will not return an error if the leaderboard does not exist.
      * 
      * The getSocialLeaderboard will retrieve all friends from all friend platforms,
      * so
@@ -231,16 +231,19 @@ public class SocialLeaderboardService {
     /**
      * Reads multiple social leaderboards.
      *
-     * @param leaderboardIds Collection of leaderboard IDs.
-     * @param leaderboardResultCount Maximum count of entries to return for each leaderboard.
-     * @param replaceName If true, the currently logged in player's name will be replaced
-     * by the string "You".
-     * @param callback The method to be invoked when the server response is received
+     * @param leaderboardIds         Collection of leaderboard IDs.
+     * @param leaderboardResultCount Maximum count of entries to return for each
+     *                               leaderboard.
+     * @param replaceName            If true, the currently logged in player's name
+     *                               will be replaced
+     *                               by the string "You".
+     * @param callback               The method to be invoked when the server
+     *                               response is received
      */
     public void getMultiSocialLeaderboard(String[] leaderboardIds,
-                                          int leaderboardResultCount,
-                                          boolean replaceName,
-                                          IServerCallback callback) {
+            int leaderboardResultCount,
+            boolean replaceName,
+            IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.leaderboardIds.name(), leaderboardIds);
@@ -298,8 +301,8 @@ public class SocialLeaderboardService {
 
     /**
      * Method returns a page of results of the global leaderboard.
-     * This method returns the exact same info as getGlobalLeaderboardPage, but will not
-     * return an error if the leaderboard does not exist.
+     * This method returns the exact same info as getGlobalLeaderboardPage, but will
+     * not return an error if the leaderboard does not exist.
      *
      * Leaderboards entries contain the player's score and optionally, some
      * user-defined
@@ -328,7 +331,8 @@ public class SocialLeaderboardService {
             data.put(Parameter.startIndex.name(), startIndex);
             data.put(Parameter.endIndex.name(), endIndex);
 
-            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_PAGE_IF_EXISTS, data,
+            ServerCall sc = new ServerCall(ServiceName.leaderboard,
+                    ServiceOperation.GET_GLOBAL_LEADERBOARD_PAGE_IF_EXISTS, data,
                     callback);
             _client.sendRequest(sc);
 
@@ -383,8 +387,8 @@ public class SocialLeaderboardService {
      * By using a non-current version id, the user can retrieve a historial
      * leaderboard.
      * See GetGlobalLeaderboardVersions method to retrieve the version id.
-     * This method returns the exact same info as getGlobalLeaderboardPageByVersion, but will not
-     * return an error if the leaderboard does not exist.
+     * This method returns the exact same info as getGlobalLeaderboardPageByVersion,
+     * but will not return an error if the leaderboard does not exist.
      *
      * Service Name - SocialLeaderboard
      * Service Operation - GetGlobalLeaderboardPage
@@ -412,7 +416,8 @@ public class SocialLeaderboardService {
             data.put(Parameter.endIndex.name(), endIndex);
             data.put(Parameter.versionId.name(), versionId);
 
-            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_PAGE_IF_EXISTS, data,
+            ServerCall sc = new ServerCall(ServiceName.leaderboard,
+                    ServiceOperation.GET_GLOBAL_LEADERBOARD_PAGE_IF_EXISTS, data,
                     callback);
             _client.sendRequest(sc);
 
@@ -466,8 +471,8 @@ public class SocialLeaderboardService {
 
     /**
      * Method returns a page of results of the global leaderboard.
-     * This method returns the exact same info as getGlobalLeaderboardView, but will not
-     * return an error if the leaderboard does not exist.
+     * This method returns the exact same info as getGlobalLeaderboardView, but will
+     * not return an error if the leaderboard does not exist.
      *
      * Leaderboards entries contain the player's score and optionally, some
      * user-defined
@@ -498,7 +503,8 @@ public class SocialLeaderboardService {
             data.put(Parameter.beforeCount.name(), beforeCount);
             data.put(Parameter.afterCount.name(), afterCount);
 
-            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VIEW_IF_EXISTS, data,
+            ServerCall sc = new ServerCall(ServiceName.leaderboard,
+                    ServiceOperation.GET_GLOBAL_LEADERBOARD_VIEW_IF_EXISTS, data,
                     callback);
             _client.sendRequest(sc);
 
@@ -558,8 +564,8 @@ public class SocialLeaderboardService {
      * By using a non-current version id, the user can retrieve a historial
      * leaderboard.
      * See GetGlobalLeaderboardVersions method to retrieve the version id.
-     * This method returns the exact same info as getGlobalLeaderboardViewByVersion, but will not
-     * return an error if the leaderboard does not exist.
+     * This method returns the exact same info as getGlobalLeaderboardViewByVersion,
+     * but will not return an error if the leaderboard does not exist.
      *
      * Service Name - SocialLeaderboard
      * Service Operation - GetGlobalLeaderboardPage
@@ -592,7 +598,8 @@ public class SocialLeaderboardService {
             data.put(Parameter.afterCount.name(), afterCount);
             data.put(Parameter.versionId.name(), versionId);
 
-            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VIEW_IF_EXISTS, data,
+            ServerCall sc = new ServerCall(ServiceName.leaderboard,
+                    ServiceOperation.GET_GLOBAL_LEADERBOARD_VIEW_IF_EXISTS, data,
                     callback);
             _client.sendRequest(sc);
 
@@ -601,13 +608,15 @@ public class SocialLeaderboardService {
         }
     }
 
-    /** Gets the global leaderboard versions.
+    /**
+     * Gets the global leaderboard versions.
      *
      * Service Name - SocialLeaderboard
      * Service Operation - GetGlobalLeaderboardVersions
      *
      * @param leaderboardId The leaderboard
-     * @param callback The method to be invoked when the server response is received
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
     public void getGlobalLeaderboardVersions(
             String leaderboardId,
@@ -616,7 +625,8 @@ public class SocialLeaderboardService {
             JSONObject data = new JSONObject();
             data.put(Parameter.leaderboardId.name(), leaderboardId);
 
-            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VERSIONS, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VERSIONS,
+                    data, callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -631,7 +641,8 @@ public class SocialLeaderboardService {
      * Service Operation - GET_GLOBAL_LEADERBOARD_ENTRY_COUNT
      *
      * @param leaderboardId The leaderboard ID
-     * @param callback The method to be invoked when the server response is received
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
     public void getGlobalLeaderboardEntryCount(
             String leaderboardId,
@@ -640,7 +651,8 @@ public class SocialLeaderboardService {
             JSONObject data = new JSONObject();
             data.put(Parameter.leaderboardId.name(), leaderboardId);
 
-            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_ENTRY_COUNT, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_ENTRY_COUNT,
+                    data, callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -655,8 +667,9 @@ public class SocialLeaderboardService {
      * Service Operation - GET_GLOBAL_LEADERBOARD_ENTRY_COUNT
      *
      * @param leaderboardId The leaderboard ID
-     * @param versionId The version of the leaderboard
-     * @param callback The method to be invoked when the server response is received
+     * @param versionId     The version of the leaderboard
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
     public void getGlobalLeaderboardEntryCountByVersion(
             String leaderboardId,
@@ -667,7 +680,8 @@ public class SocialLeaderboardService {
             data.put(Parameter.leaderboardId.name(), leaderboardId);
             data.put(Parameter.versionId.name(), versionId);
 
-            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_ENTRY_COUNT, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_ENTRY_COUNT,
+                    data, callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -685,12 +699,12 @@ public class SocialLeaderboardService {
      * best score.
      *
      * @param leaderboardId The leaderboard to post to
-     * @param score The score to post
-     * @param jsonData Optional user-defined data to post with the score
-     * @param callback The callback.
+     * @param score         The score to post
+     * @param jsonData      Optional user-defined data to post with the score
+     * @param callback      The callback.
      */
     public void postScoreToLeaderboard(String leaderboardId, long score,
-                                       String jsonData, IServerCallback callback) {
+            String jsonData, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.leaderboardId.name(), leaderboardId);
@@ -709,20 +723,22 @@ public class SocialLeaderboardService {
     }
 
     /**
-     * Post the players score to the given social leaderboard. 
-     * You can optionally send a user-defined json string of data with the posted score. 
-     * This string could include information relevant to the posted score. 
+     * Post the players score to the given social leaderboard.
+     * You can optionally send a user-defined json string of data with the posted
+     * score.
+     * This string could include information relevant to the posted score.
      *
-     * @param leaderboardId The leaderboard to post to
-     * @param score The score to post
-     * @param jsonData  Optional user-defined data to post with the score
-     * @param leaderboardType   Leaderboard type
-     * @param rotationType  Type of rotation
-     * @param rotationReset Date to next rotate rotation (date in millis UTC)
-     * @param retainedCount How many previous rotations to keep
-     * @param callback  The callback handler
+     * @param leaderboardId   The leaderboard to post to
+     * @param score           The score to post
+     * @param jsonData        Optional user-defined data to post with the score
+     * @param leaderboardType Leaderboard type
+     * @param rotationType    Type of rotation
+     * @param rotationReset   Date to next rotate rotation (date in millis UTC)
+     * @param retainedCount   How many previous rotations to keep
+     * @param callback        The callback handler
      *
-     * @deprecated Use postScoreToDynamicLeaderboardUTC instead - Removal September 1, 2021
+     * @deprecated Use postScoreToDynamicLeaderboardUTC instead - Removal September
+     *             1, 2021
      */
     public void postScoreToDynamicLeaderboard(
             String leaderboardId,
@@ -763,14 +779,15 @@ public class SocialLeaderboardService {
      * user-defined json String of data with the posted score. This String could
      * include information relevant to the posted score.
      *
-     * @param leaderboardId The leaderboard to post to
-     * @param score The score to post
-     * @param jsonData Optional user-defined data to post with the score
-     * @param leaderboardType leaderboard type
-     * @param rotationType Type of rotation
-     * @param rotationResetUTC Date to reset the leaderboard - in UTC milliseconds since epoch
-     * @param retainedCount How many rotations to keep
-     * @param callback The callback.
+     * @param leaderboardId    The leaderboard to post to
+     * @param score            The score to post
+     * @param jsonData         Optional user-defined data to post with the score
+     * @param leaderboardType  leaderboard type
+     * @param rotationType     Type of rotation
+     * @param rotationResetUTC Date to reset the leaderboard - in UTC milliseconds
+     *                         since epoch
+     * @param retainedCount    How many rotations to keep
+     * @param callback         The callback.
      */
     public void postScoreToDynamicLeaderboardUTC(
             String leaderboardId,
@@ -802,19 +819,22 @@ public class SocialLeaderboardService {
             je.printStackTrace();
         }
     }
- 
+
     /**
-     * Posts score to group leaderbopard and dynamically creates if necessary. leaderboardType, rotationReset, retainedCount and rotationType are required. uses UTC time in milliseconds since epoch
+     * Posts score to group leaderbopard and dynamically creates if necessary.
+     * leaderboardType, rotationReset, retainedCount and rotationType are required.
+     * uses UTC time in milliseconds since epoch
      *
-     * @param leaderboardId The leaderboard to post to
-     * @param groupId the group's id
-     * @param score The score to post
-     * @param jsonData Optional user-defined data to post with the score
-     * @param leaderboardType leaderboard type
-     * @param rotationResetUTC Date to reset the leaderboard - in UTC milliseconds since epoch
-     * @param retainedCount How many rotations to keep
-     * @param numDaysToRotate How many days between each rotation
-     * @param callback The callback.
+     * @param leaderboardId    The leaderboard to post to
+     * @param groupId          the group's id
+     * @param score            The score to post
+     * @param jsonData         Optional user-defined data to post with the score
+     * @param leaderboardType  leaderboard type
+     * @param rotationResetUTC Date to reset the leaderboard - in UTC milliseconds
+     *                         since epoch
+     * @param retainedCount    How many rotations to keep
+     * @param numDaysToRotate  How many days between each rotation
+     * @param callback         The callback.
      */
     public void postScoreToDynamicGroupLeaderboardDaysUTC(
             String leaderboardId,
@@ -856,16 +876,17 @@ public class SocialLeaderboardService {
      * user-defined json String of data with the posted score. This String could
      * include information relevant to the posted score.
      *
-     * @param leaderboardId The leaderboard to post to
-     * @param score The score to post
-     * @param jsonData Optional user-defined data to post with the score
+     * @param leaderboardId   The leaderboard to post to
+     * @param score           The score to post
+     * @param jsonData        Optional user-defined data to post with the score
      * @param leaderboardType leaderboard type
-     * @param rotationReset Date to reset the leaderboard
-     * @param retainedCount How many rotations to keep
+     * @param rotationReset   Date to reset the leaderboard
+     * @param retainedCount   How many rotations to keep
      * @param numDaysToRotate How many days between each rotation
-     * @param callback The callback.
+     * @param callback        The callback.
      * 
-     * @deprecated Use postScoreToDynamicLeaderboardDaysUTC instead - Removal September 1, 2021
+     * @deprecated Use postScoreToDynamicLeaderboardDaysUTC instead - Removal
+     *             September 1, 2021
      */
     public void postScoreToDynamicLeaderboardDays(
             String leaderboardId,
@@ -907,14 +928,14 @@ public class SocialLeaderboardService {
      * user-defined json String of data with the posted score. This String could
      * include information relevant to the posted score.
      *
-     * @param leaderboardId The leaderboard to post to
-     * @param score The score to post
-     * @param jsonData Optional user-defined data to post with the score
-     * @param leaderboardType leaderboard type
+     * @param leaderboardId    The leaderboard to post to
+     * @param score            The score to post
+     * @param jsonData         Optional user-defined data to post with the score
+     * @param leaderboardType  leaderboard type
      * @param rotationResetUTC Date to reset the leaderboard
-     * @param retainedCount How many rotations to keep
-     * @param numDaysToRotate How many days between each rotation
-     * @param callback The callback.
+     * @param retainedCount    How many rotations to keep
+     * @param numDaysToRotate  How many days between each rotation
+     * @param callback         The callback.
      */
     public void postScoreToDynamicLeaderboardDaysUTC(
             String leaderboardId,
@@ -948,7 +969,6 @@ public class SocialLeaderboardService {
         }
     }
 
-
     /**
      * Removes a player's score from the leaderboard
      *
@@ -956,8 +976,10 @@ public class SocialLeaderboardService {
      * Service Operation - REMOVE_PLAYER_SCORE
      *
      * @param leaderboardId The leaderboard ID
-     * @param versionId The version of the leaderboard. Use -1 to specifiy the currently active leaderboard version
-     * @param callback The method to be invoked when the server response is received
+     * @param versionId     The version of the leaderboard. Use -1 to specifiy the
+     *                      currently active leaderboard version
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
     public void removePlayerScore(String leaderboardId, int versionId, IServerCallback callback) {
         try {
@@ -980,8 +1002,9 @@ public class SocialLeaderboardService {
      * Service Operation - GET_GROUP_SOCIAL_LEADERBOARD
      *
      * @param leaderboardId The leaderboard to retrieve
-     * @param groupId The ID of the group
-     * @param callback The method to be invoked when the server response is received
+     * @param groupId       The ID of the group
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
     public void getGroupSocialLeaderboard(String leaderboardId, String groupId, IServerCallback callback) {
         try {
@@ -1005,11 +1028,13 @@ public class SocialLeaderboardService {
      * Service Operation - GET_GROUP_SOCIAL_LEADERBOARD_BY_VERSION
      *
      * @param leaderboardId The leaderboard to retrieve
-     * @param groupId The ID of the group
-     * @param versionId The ID of the group
-     * @param callback The method to be invoked when the server response is received
+     * @param groupId       The ID of the group
+     * @param versionId     The ID of the group
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
-    public void getGroupSocialLeaderboardByVersion(String leaderboardId, String groupId, int versionId, IServerCallback callback) {
+    public void getGroupSocialLeaderboardByVersion(String leaderboardId, String groupId, int versionId,
+            IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.leaderboardId.name(), leaderboardId);
@@ -1053,8 +1078,8 @@ public class SocialLeaderboardService {
 
     /**
      * Retrieve the social leaderboard for a list of players.
-     * This method returns the exact same info as getPlayersSocialLeaderboard, but will not
-     * return an error if the leaderboard does not exist.
+     * This method returns the exact same info as getPlayersSocialLeaderboard, but
+     * will not return an error if the leaderboard does not exist.
      *
      * Service Name - leaderboard
      * Service Operation - GET_PLAYERS_SOCIAL_LEADERBOARD
@@ -1064,7 +1089,8 @@ public class SocialLeaderboardService {
      * @param callback      The method to be invoked when the server response is
      *                      received
      */
-    public void getPlayersSocialLeaderboardIfExists(String leaderboardId, String[] profileIds, IServerCallback callback) {
+    public void getPlayersSocialLeaderboardIfExists(String leaderboardId, String[] profileIds,
+            IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.leaderboardId.name(), leaderboardId);
@@ -1110,7 +1136,8 @@ public class SocialLeaderboardService {
 
     /**
      * Retrieve the social leaderboard for a list of players by version.
-     * This method returns the exact same info as getPlayersSocialLeaderboardByVersion, but will not
+     * This method returns the exact same info as
+     * getPlayersSocialLeaderboardByVersion, but will not
      * return an error if the leaderboard does not exist.
      *
      * Service Name - leaderboard
@@ -1159,8 +1186,9 @@ public class SocialLeaderboardService {
      * Service Operation - GET_PLAYER_SCORE
      *
      * @param leaderboardId The leaderboard ID
-     * @param versionId The version of the leaderboard. Use -1 for current.
-     * @param callback The method to be invoked when the server response is received
+     * @param versionId     The version of the leaderboard. Use -1 for current.
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
     public void getPlayerScore(String leaderboardId, int versionId, IServerCallback callback) {
         try {
@@ -1183,9 +1211,10 @@ public class SocialLeaderboardService {
      * Service Operation - GET_PLAYER_SCORES
      *
      * @param leaderboardId The leaderboard ID
-     * @param versionId The version of the leaderboard. Use -1 for current.
-     * @param maxResults The maximum number of returned results
-     * @param callback The method to be invoked when the server response is received
+     * @param versionId     The version of the leaderboard. Use -1 for current.
+     * @param maxResults    The maximum number of returned results
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
     public void getPlayerScores(String leaderboardId, int versionId, int maxResults, IServerCallback callback) {
         try {
@@ -1209,7 +1238,8 @@ public class SocialLeaderboardService {
      * Service Operation - GET_PLAYER_SCORES_FROM_LEADERBOARDS
      *
      * @param leaderboardIds A collection of leaderboardIds to retrieve scores from
-     * @param callback The method to be invoked when the server response is received
+     * @param callback       The method to be invoked when the server response is
+     *                       received
      */
     public void getPlayerScoresFromLeaderboards(String[] leaderboardIds, IServerCallback callback) {
         try {
@@ -1225,18 +1255,21 @@ public class SocialLeaderboardService {
     }
 
     /**
-     * Posts score to Group's leaderboard - Note the user must be a member of the group
+     * Posts score to Group's leaderboard - Note the user must be a member of the
+     * group
      *
      * Service Name - leaderboard
      * Service Operation - POST_GROUP_SCORE
      *
      * @param leaderboardId the leaderboard
-     * @param groupId the groups id
-     * @param score the score you want to post
-     * @param jsonData extra json data
-     * @param callback The method to be invoked when the server response is received
+     * @param groupId       the groups id
+     * @param score         the score you want to post
+     * @param jsonData      extra json data
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
-    public void postScoreToGroupLeaderboard(String leaderboardId, String groupId, int score, String jsonData, IServerCallback callback) {
+    public void postScoreToGroupLeaderboard(String leaderboardId, String groupId, int score, String jsonData,
+            IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.leaderboardId.name(), leaderboardId);
@@ -1254,25 +1287,30 @@ public class SocialLeaderboardService {
     }
 
     /**
-     * Post the group score to the given group leaderboard and dynamically create if necessary. 
+     * Post the group score to the given group leaderboard and dynamically create if
+     * necessary.
      * LeaderboardType, rotationType, rotationReset, and retainedCount are required.
      *
      * Service Name - leaderboard
      * Service Operation - POST_GROUP_SCORE_DYNAMIC
      *
-     * @param leaderboardId the leaderboard
-     * @param groupId the groups id
-     * @param score the score you want to post
-     * @param data  Optional user-defined data to post with the score.
+     * @param leaderboardId   the leaderboard
+     * @param groupId         the groups id
+     * @param score           the score you want to post
+     * @param data            Optional user-defined data to post with the score.
      * @param leaderboardType the type of leaderboard
-     * @param rotationType  daily, weekly, monthly
-     * @param rotationReset time that rotation resets
-     * @param retainedCount times to retain the leaderboard
-     * @param callback The method to be invoked when the server response is received
+     * @param rotationType    daily, weekly, monthly
+     * @param rotationReset   time that rotation resets
+     * @param retainedCount   times to retain the leaderboard
+     * @param callback        The method to be invoked when the server response is
+     *                        received
      *
-     * @deprecated Use postScoreToDynamicGroupLeaderboardUTC instead - Removal September 1, 2021
+     * @deprecated Use postScoreToDynamicGroupLeaderboardUTC instead - Removal
+     *             September 1, 2021
      */
-    public void postScoreToDynamicGroupLeaderboard(String leaderboardId, String groupId, long score, String data, String leaderboardType, String rotationType, Date rotationReset, int retainedCount, IServerCallback callback) {
+    public void postScoreToDynamicGroupLeaderboard(String leaderboardId, String groupId, long score, String data,
+            String leaderboardType, String rotationType, Date rotationReset, int retainedCount,
+            IServerCallback callback) {
         try {
             JSONObject message = new JSONObject();
             message.put(Parameter.leaderboardId.name(), leaderboardId);
@@ -1299,22 +1337,27 @@ public class SocialLeaderboardService {
     }
 
     /**
-     * Post the group score to the given group leaderboard and dynamically create if necessary. LeaderboardType, rotationType, rotationReset, and retainedCount are required.	 *
+     * Post the group score to the given group leaderboard and dynamically create if
+     * necessary. LeaderboardType, rotationType, rotationReset, and retainedCount
+     * are required.
      *
      * Service Name - leaderboard
      * Service Operation - POST_GROUP_SCORE_DYNAMIC
      *
-     * @param leaderboardId the leaderboard
-     * @param groupId the groups id
-     * @param score the score you want to post
-     * @param data  Optional user-defined data to post with the score.
-     * @param leaderboardType   the type of leaderboard
-     * @param rotationType  daily, weekly, monthly
+     * @param leaderboardId    the leaderboard
+     * @param groupId          the groups id
+     * @param score            the score you want to post
+     * @param data             Optional user-defined data to post with the score.
+     * @param leaderboardType  the type of leaderboard
+     * @param rotationType     daily, weekly, monthly
      * @param rotationResetUTC time that rotation resets in UTC mmilliseconds time
-     * @param retainedCount times to retain the leaderboard
-     * @param callback The method to be invoked when the server response is received
+     * @param retainedCount    times to retain the leaderboard
+     * @param callback         The method to be invoked when the server response is
+     *                         received
      */
-    public void postScoreToDynamicGroupLeaderboardUTC(String leaderboardId, String groupId, long score, String data, String leaderboardType, String rotationType, long rotationResetUTC, int retainedCount, IServerCallback callback) {
+    public void postScoreToDynamicGroupLeaderboardUTC(String leaderboardId, String groupId, long score, String data,
+            String leaderboardType, String rotationType, long rotationResetUTC, int retainedCount,
+            IServerCallback callback) {
         try {
             JSONObject message = new JSONObject();
             message.put(Parameter.leaderboardId.name(), leaderboardId);
@@ -1345,9 +1388,10 @@ public class SocialLeaderboardService {
      * Service Operation - REMOVE_GROUP_SCORE
      *
      * @param leaderboardId the leaderboard
-     * @param groupId the groups id
-     * @param versionId the version
-     * @param callback The method to be invoked when the server response is received
+     * @param groupId       the groups id
+     * @param versionId     the version
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
     public void removeGroupScore(String leaderboardId, String groupId, int versionId, IServerCallback callback) {
         try {
@@ -1371,13 +1415,15 @@ public class SocialLeaderboardService {
      * Service Operation - GET_GROUP_LEADERBOARD_VIEW
      *
      * @param leaderboardId the leaderboard
-     * @param groupId the groups id
-     * @param sort the sort order
-     * @param beforeCount count of players before current player to include
-     * @param afterCount count of the players after current player to include
-     * @param callback The method to be invoked when the server response is received
+     * @param groupId       the groups id
+     * @param sort          the sort order
+     * @param beforeCount   count of players before current player to include
+     * @param afterCount    count of the players after current player to include
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
-    public void getGroupLeaderboardView(String leaderboardId, String groupId, SortOrder sort, int beforeCount, int afterCount, IServerCallback callback) {
+    public void getGroupLeaderboardView(String leaderboardId, String groupId, SortOrder sort, int beforeCount,
+            int afterCount, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.leaderboardId.name(), leaderboardId);
@@ -1395,20 +1441,23 @@ public class SocialLeaderboardService {
     }
 
     /**
-     * Retrieve a view of the group leaderbaord surrounding the current group by version
+     * Retrieve a view of the group leaderbaord surrounding the current group by
+     * version
      * 
      * Service Name - leaderboard
      * Service Operation - GET_GROUP_LEADERBOARD_VIEW
      *
      * @param leaderboardId the leaderboard
-     * @param groupId the groups id
-     * @param versionId The historical version to retrieve.
-     * @param sort the sort order
-     * @param beforeCount count of players before current player to include
-     * @param afterCount count of the players after current player to include
-     * @param callback The method to be invoked when the server response is received
+     * @param groupId       the groups id
+     * @param versionId     The historical version to retrieve.
+     * @param sort          the sort order
+     * @param beforeCount   count of players before current player to include
+     * @param afterCount    count of the players after current player to include
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
-    public void getGroupLeaderboardViewByVersion(String leaderboardId, String groupId, int versionId, SortOrder sort, int beforeCount, int afterCount, IServerCallback callback) {
+    public void getGroupLeaderboardViewByVersion(String leaderboardId, String groupId, int versionId, SortOrder sort,
+            int beforeCount, int afterCount, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.leaderboardId.name(), leaderboardId);
