@@ -97,7 +97,7 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase {
                 TestResult tr = new TestResult(_wrapper);
 
                 _wrapper.getLeaderboardService().getGlobalLeaderboardPage(
-                                "_globalLeaderboardId",
+                                _globalLeaderboardId,
                                 SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
                                 0,
                                 10,
