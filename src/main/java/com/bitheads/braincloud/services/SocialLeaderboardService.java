@@ -61,9 +61,10 @@ public class SocialLeaderboardService {
 
     /**
      * Method returns the social leaderboard. A player's social leaderboard is
-     * comprised of players who are recognized as being your friend. For now,
+     * comprised of players who are recognized as being your friend.
      * 
-     * The getSocialLeaderboard will retrieve all friends from all friend platforms, so
+     * The getSocialLeaderboard will retrieve all friends from all friend platforms,
+     * so
      * - all external friends (Facebook, Steam, PlaystationNetwork)
      * - all internal friends (brainCloud)
      * - plus "self".
@@ -76,14 +77,15 @@ public class SocialLeaderboardService {
      * updatedAt will contain NULL.
      *
      * @param leaderboardId
-     *            The id of the leaderboard to retrieve
+     *                      The id of the leaderboard to retrieve
      * @param replaceName
-     *            If true, the currently logged in player's name will be
-     *            replaced by the String "You".
-     * @param callback  The method to be invoked when the server response is received
+     *                      If true, the currently logged in player's name will be
+     *                      replaced by the String "You".
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
     public void getSocialLeaderboard(String leaderboardId, boolean replaceName,
-                                     IServerCallback callback) {
+            IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.leaderboardId.name(), leaderboardId);
@@ -98,10 +100,53 @@ public class SocialLeaderboardService {
     }
 
     /**
-     * Method returns the social leaderboard by the. A player's social leaderboard is
+     * Method returns the social leaderboard. A player's social leaderboard is
      * comprised of players who are recognized as being your friend.
+     * This method returns the exact same info as getSocialLeaderboard, but will not
+     * return an error if the leaderboard does not exist.
      * 
-     * The getSocialLeaderboard will retrieve all friends from all friend platforms, so
+     * The getSocialLeaderboard will retrieve all friends from all friend platforms,
+     * so
+     * - all external friends (Facebook, Steam, PlaystationNetwork)
+     * - all internal friends (brainCloud)
+     * - plus "self".
+     * 
+     * Leaderboards entries contain the player's score and optionally, some
+     * user-defined data associated with the score. The currently logged in
+     * player will also be returned in the social leaderboard.
+     *
+     * Note: If no friends have played the game, the bestScore, createdAt,
+     * updatedAt will contain NULL.
+     * 
+     * @param leaderboardId
+     *                      The id of the leaderboard to retrieve
+     * @param replaceName
+     *                      If true, the currently logged in player's name will be
+     *                      replaced by the String "You".
+     * @param callback      The method to be invoked when the server response is
+     *                      received
+     */
+    public void getSocialLeaderboardIfExists(String leaderboardId, boolean replaceName, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+            data.put(Parameter.replaceName.name(), replaceName);
+
+            ServerCall sc = new ServerCall(ServiceName.leaderboard,
+                    ServiceOperation.GET_SOCIAL_LEADERBOARD_IF_EXISTS, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Method returns the social leaderboard by version.
+     * A player's social leaderboard is comprised of players who are recognized as
+     * being your friend.
+     * 
+     * The getSocialLeaderboard will retrieve all friends from all friend platforms,
+     * so
      * - all external friends (Facebook, Steam, PlaystationNetwork)
      * - all internal friends (brainCloud)
      * - plus "self".
@@ -114,15 +159,16 @@ public class SocialLeaderboardService {
      * updatedAt will contain NULL.
      *
      * @param leaderboardId
-     *            The id of the leaderboard to retrieve
+     *                      The id of the leaderboard to retrieve
      * @param replaceName
-     *            If true, the currently logged in player's name will be
-     *            replaced by the String "You".
-     * @param versionId the version of the leaderboard
-     * @param callback The method to be invoked when the server response is received
+     *                      If true, the currently logged in player's name will be
+     *                      replaced by the String "You".
+     * @param versionId     the version of the leaderboard
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
     public void getSocialLeaderboardByVersion(String leaderboardId, boolean replaceName,
-                                                int versionId, IServerCallback callback) {
+            int versionId, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.leaderboardId.name(), leaderboardId);
@@ -131,6 +177,51 @@ public class SocialLeaderboardService {
 
             ServerCall sc = new ServerCall(ServiceName.leaderboard,
                     ServiceOperation.GET_SOCIAL_LEADERBOARD_BY_VERSION, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Method returns the social leaderboard by version.
+     * A player's social leaderboard is comprised of players who are recognized as
+     * being your friend.
+     * This method returns the exact same info as getSocialLeaderboardByVersion, but will not
+     * return an error if the leaderboard does not exist.
+     * 
+     * The getSocialLeaderboard will retrieve all friends from all friend platforms,
+     * so
+     * - all external friends (Facebook, Steam, PlaystationNetwork)
+     * - all internal friends (brainCloud)
+     * - plus "self".
+     *
+     * Leaderboards entries contain the player's score and optionally, some
+     * user-defined data associated with the score. The currently logged in
+     * player will also be returned in the social leaderboard.
+     *
+     * Note: If no friends have played the game, the bestScore, createdAt,
+     * updatedAt will contain NULL.
+     *
+     * @param leaderboardId
+     *                      The id of the leaderboard to retrieve
+     * @param replaceName
+     *                      If true, the currently logged in player's name will be
+     *                      replaced by the String "You".
+     * @param versionId     the version of the leaderboard
+     * @param callback      The method to be invoked when the server response is
+     *                      received
+     */
+    public void getSocialLeaderboardByVersionIfExists(String leaderboardId, boolean replaceName,
+            int versionId, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+            data.put(Parameter.replaceName.name(), replaceName);
+            data.put(Parameter.versionId.name(), versionId);
+
+            ServerCall sc = new ServerCall(ServiceName.leaderboard,
+                    ServiceOperation.GET_SOCIAL_LEADERBOARD_BY_VERSION_IF_EXISTS, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -167,7 +258,8 @@ public class SocialLeaderboardService {
     /**
      * Method returns a page of results of the global leaderboard.
      *
-     * Leaderboards entries contain the player's score and optionally, some user-defined
+     * Leaderboards entries contain the player's score and optionally, some
+     * user-defined
      * data associated with the score.
      *
      * Note: If no leaderboard records exist then this method will empty list.
@@ -176,10 +268,11 @@ public class SocialLeaderboardService {
      * Service Operation - GetGlobalLeaderboardPage
      *
      * @param leaderboardId The id of the leaderboard to retrieve
-     * @param sort Sort order of the returned list.
-     * @param startIndex The index at which to start the page.
-     * @param endIndex The index at which to end the page.
-     * @param callback  The method to be invoked when the server response is received
+     * @param sort          Sort order of the returned list.
+     * @param startIndex    The index at which to start the page.
+     * @param endIndex      The index at which to end the page.
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
     public void getGlobalLeaderboardPage(
             String leaderboardId,
@@ -194,7 +287,8 @@ public class SocialLeaderboardService {
             data.put(Parameter.startIndex.name(), startIndex);
             data.put(Parameter.endIndex.name(), endIndex);
 
-            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_PAGE, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_PAGE, data,
+                    callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -204,18 +298,61 @@ public class SocialLeaderboardService {
 
     /**
      * Method returns a page of results of the global leaderboard.
-     * By using a non-current version id, the user can retrieve a historial leaderboard.
+     * This method returns the exact same info as getGlobalLeaderboardPage, but will not
+     * return an error if the leaderboard does not exist.
+     *
+     * Leaderboards entries contain the player's score and optionally, some
+     * user-defined
+     * data associated with the score.
+     *
+     * Service Name - SocialLeaderboard
+     * Service Operation - GetGlobalLeaderboardPage
+     *
+     * @param leaderboardId The id of the leaderboard to retrieve
+     * @param sort          Sort order of the returned list.
+     * @param startIndex    The index at which to start the page.
+     * @param endIndex      The index at which to end the page.
+     * @param callback      The method to be invoked when the server response is
+     *                      received
+     */
+    public void getGlobalLeaderboardPageIfExists(
+            String leaderboardId,
+            SortOrder sort,
+            int startIndex,
+            int endIndex,
+            IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+            data.put(Parameter.sort.name(), sort.name());
+            data.put(Parameter.startIndex.name(), startIndex);
+            data.put(Parameter.endIndex.name(), endIndex);
+
+            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_PAGE_IF_EXISTS, data,
+                    callback);
+            _client.sendRequest(sc);
+
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Method returns a page of results of the global leaderboard.
+     * By using a non-current version id, the user can retrieve a historial
+     * leaderboard.
      * See GetGlobalLeaderboardVersions method to retrieve the version id.
      *
      * Service Name - SocialLeaderboard
      * Service Operation - GetGlobalLeaderboardPage
      *
      * @param leaderboardId The id of the leaderboard to retrieve
-     * @param sort Sort order of the returned list.
-     * @param startIndex The index at which to start the page.
-     * @param endIndex The index at which to end the page.
-     * @param versionId The historical version to retrieve
-     * @param callback  The method to be invoked when the server response is received
+     * @param sort          Sort order of the returned list.
+     * @param startIndex    The index at which to start the page.
+     * @param endIndex      The index at which to end the page.
+     * @param versionId     The historical version to retrieve
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
     public void getGlobalLeaderboardPageByVersion(
             String leaderboardId,
@@ -232,7 +369,51 @@ public class SocialLeaderboardService {
             data.put(Parameter.endIndex.name(), endIndex);
             data.put(Parameter.versionId.name(), versionId);
 
-            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_PAGE, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_PAGE, data,
+                    callback);
+            _client.sendRequest(sc);
+
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Method returns a page of results of the global leaderboard.
+     * By using a non-current version id, the user can retrieve a historial
+     * leaderboard.
+     * See GetGlobalLeaderboardVersions method to retrieve the version id.
+     * This method returns the exact same info as getGlobalLeaderboardPageByVersion, but will not
+     * return an error if the leaderboard does not exist.
+     *
+     * Service Name - SocialLeaderboard
+     * Service Operation - GetGlobalLeaderboardPage
+     *
+     * @param leaderboardId The id of the leaderboard to retrieve
+     * @param sort          Sort order of the returned list.
+     * @param startIndex    The index at which to start the page.
+     * @param endIndex      The index at which to end the page.
+     * @param versionId     The historical version to retrieve
+     * @param callback      The method to be invoked when the server response is
+     *                      received
+     */
+    public void getGlobalLeaderboardPageByVersionIfExists(
+            String leaderboardId,
+            SortOrder sort,
+            int startIndex,
+            int endIndex,
+            int versionId,
+            IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+            data.put(Parameter.sort.name(), sort.name());
+            data.put(Parameter.startIndex.name(), startIndex);
+            data.put(Parameter.endIndex.name(), endIndex);
+            data.put(Parameter.versionId.name(), versionId);
+
+            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_PAGE_IF_EXISTS, data,
+                    callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -243,7 +424,8 @@ public class SocialLeaderboardService {
     /**
      * Method returns a page of results of the global leaderboard.
      *
-     * Leaderboards entries contain the player's score and optionally, some user-defined
+     * Leaderboards entries contain the player's score and optionally, some
+     * user-defined
      * data associated with the score.
      *
      * Note: If no leaderboard records exist then this method will empty list.
@@ -252,10 +434,13 @@ public class SocialLeaderboardService {
      * Service Operation - GetGlobalLeaderboardPage
      *
      * @param leaderboardId The id of the leaderboard to retrieve
-     * @param sort Sort order of the returned list.
-     * @param beforeCount The count of number of players before the current player to include.
-     * @param afterCount The count of number of players after the current player to include.
-     * @param callback  The method to be invoked when the server response is received
+     * @param sort          Sort order of the returned list.
+     * @param beforeCount   The count of number of players before the current player
+     *                      to include.
+     * @param afterCount    The count of number of players after the current player
+     *                      to include.
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
     public void getGlobalLeaderboardView(
             String leaderboardId,
@@ -270,7 +455,8 @@ public class SocialLeaderboardService {
             data.put(Parameter.beforeCount.name(), beforeCount);
             data.put(Parameter.afterCount.name(), afterCount);
 
-            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VIEW, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VIEW, data,
+                    callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -280,20 +466,68 @@ public class SocialLeaderboardService {
 
     /**
      * Method returns a page of results of the global leaderboard.
-     * By using a non-current version id, the user can retrieve a historial leaderboard.
+     * This method returns the exact same info as getGlobalLeaderboardView, but will not
+     * return an error if the leaderboard does not exist.
+     *
+     * Leaderboards entries contain the player's score and optionally, some
+     * user-defined
+     * data associated with the score.
+     *
+     * Service Name - SocialLeaderboard
+     * Service Operation - GetGlobalLeaderboardPage
+     *
+     * @param leaderboardId The id of the leaderboard to retrieve
+     * @param sort          Sort order of the returned list.
+     * @param beforeCount   The count of number of players before the current player
+     *                      to include.
+     * @param afterCount    The count of number of players after the current player
+     *                      to include.
+     * @param callback      The method to be invoked when the server response is
+     *                      received
+     */
+    public void getGlobalLeaderboardViewIfExists(
+            String leaderboardId,
+            SortOrder sort,
+            int beforeCount,
+            int afterCount,
+            IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+            data.put(Parameter.sort.name(), sort.name());
+            data.put(Parameter.beforeCount.name(), beforeCount);
+            data.put(Parameter.afterCount.name(), afterCount);
+
+            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VIEW_IF_EXISTS, data,
+                    callback);
+            _client.sendRequest(sc);
+
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Method returns a page of results of the global leaderboard.
+     * By using a non-current version id, the user can retrieve a historial
+     * leaderboard.
      * See GetGlobalLeaderboardVersions method to retrieve the version id.
      *
      * Service Name - SocialLeaderboard
      * Service Operation - GetGlobalLeaderboardPage
      *
      * @param leaderboardId The id of the leaderboard to retrieve
-     * @param sort Sort order of the returned list.
-     * @param beforeCount The count of number of players before the current player to include.
-     * @param afterCount The count of number of players after the current player to include.
-     * @param versionId The historical version id
-     * @param callback  The method to be invoked when the server response is received
-     * See GetGlobalLeaderboardView documentation. Note that historial leaderboards do not
-     * include the 'timeBeforeReset' parameter.
+     * @param sort          Sort order of the returned list.
+     * @param beforeCount   The count of number of players before the current player
+     *                      to include.
+     * @param afterCount    The count of number of players after the current player
+     *                      to include.
+     * @param versionId     The historical version id
+     * @param callback      The method to be invoked when the server response is
+     *                      received
+     *                      See GetGlobalLeaderboardView documentation. Note that
+     *                      historial leaderboards do not
+     *                      include the 'timeBeforeReset' parameter.
      */
     public void getGlobalLeaderboardViewByVersion(
             String leaderboardId,
@@ -310,7 +544,56 @@ public class SocialLeaderboardService {
             data.put(Parameter.afterCount.name(), afterCount);
             data.put(Parameter.versionId.name(), versionId);
 
-            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VIEW, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VIEW, data,
+                    callback);
+            _client.sendRequest(sc);
+
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Method returns a page of results of the global leaderboard.
+     * By using a non-current version id, the user can retrieve a historial
+     * leaderboard.
+     * See GetGlobalLeaderboardVersions method to retrieve the version id.
+     * This method returns the exact same info as getGlobalLeaderboardViewByVersion, but will not
+     * return an error if the leaderboard does not exist.
+     *
+     * Service Name - SocialLeaderboard
+     * Service Operation - GetGlobalLeaderboardPage
+     *
+     * @param leaderboardId The id of the leaderboard to retrieve
+     * @param sort          Sort order of the returned list.
+     * @param beforeCount   The count of number of players before the current player
+     *                      to include.
+     * @param afterCount    The count of number of players after the current player
+     *                      to include.
+     * @param versionId     The historical version id
+     * @param callback      The method to be invoked when the server response is
+     *                      received
+     *                      See GetGlobalLeaderboardView documentation. Note that
+     *                      historial leaderboards do not
+     *                      include the 'timeBeforeReset' parameter.
+     */
+    public void getGlobalLeaderboardViewByVersionIfExists(
+            String leaderboardId,
+            SortOrder sort,
+            int beforeCount,
+            int afterCount,
+            int versionId,
+            IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+            data.put(Parameter.sort.name(), sort.name());
+            data.put(Parameter.beforeCount.name(), beforeCount);
+            data.put(Parameter.afterCount.name(), afterCount);
+            data.put(Parameter.versionId.name(), versionId);
+
+            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.GET_GLOBAL_LEADERBOARD_VIEW_IF_EXISTS, data,
+                    callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -749,8 +1032,9 @@ public class SocialLeaderboardService {
      * Service Operation - GET_PLAYERS_SOCIAL_LEADERBOARD
      *
      * @param leaderboardId The leaderboard to retrieve
-     * @param profileIds The IDs of the players
-     * @param callback The method to be invoked when the server response is received
+     * @param profileIds    The IDs of the players
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
     public void getPlayersSocialLeaderboard(String leaderboardId, String[] profileIds, IServerCallback callback) {
         try {
@@ -768,17 +1052,47 @@ public class SocialLeaderboardService {
     }
 
     /**
+     * Retrieve the social leaderboard for a list of players.
+     * This method returns the exact same info as getPlayersSocialLeaderboard, but will not
+     * return an error if the leaderboard does not exist.
+     *
+     * Service Name - leaderboard
+     * Service Operation - GET_PLAYERS_SOCIAL_LEADERBOARD
+     *
+     * @param leaderboardId The leaderboard to retrieve
+     * @param profileIds    The IDs of the players
+     * @param callback      The method to be invoked when the server response is
+     *                      received
+     */
+    public void getPlayersSocialLeaderboardIfExists(String leaderboardId, String[] profileIds, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+            data.put(Parameter.profileIds.name(), new JSONArray(profileIds));
+
+            ServerCall sc = new ServerCall(ServiceName.leaderboard,
+                    ServiceOperation.GET_PLAYERS_SOCIAL_LEADERBOARD_IF_EXISTS, data, callback);
+            _client.sendRequest(sc);
+
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
      * Retrieve the social leaderboard for a list of players by version.
      *
      * Service Name - leaderboard
      * Service Operation - GET_PLAYERS_SOCIAL_LEADERBOARD_BY_VERSION
      *
      * @param leaderboardId The leaderboard to retrieve
-     * @param profileIds The IDs of the players
-     * @param versionId The IDs of the players
-     * @param callback The method to be invoked when the server response is received
+     * @param profileIds    The IDs of the players
+     * @param versionId     The IDs of the players
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
-    public void getPlayersSocialLeaderboardByVersion(String leaderboardId, String[] profileIds, int versionId, IServerCallback callback) {
+    public void getPlayersSocialLeaderboardByVersion(String leaderboardId, String[] profileIds, int versionId,
+            IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.leaderboardId.name(), leaderboardId);
@@ -787,6 +1101,37 @@ public class SocialLeaderboardService {
 
             ServerCall sc = new ServerCall(ServiceName.leaderboard,
                     ServiceOperation.GET_PLAYERS_SOCIAL_LEADERBOARD_BY_VERSION, data, callback);
+            _client.sendRequest(sc);
+
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Retrieve the social leaderboard for a list of players by version.
+     * This method returns the exact same info as getPlayersSocialLeaderboardByVersion, but will not
+     * return an error if the leaderboard does not exist.
+     *
+     * Service Name - leaderboard
+     * Service Operation - GET_PLAYERS_SOCIAL_LEADERBOARD_BY_VERSION
+     *
+     * @param leaderboardId The leaderboard to retrieve
+     * @param profileIds    The IDs of the players
+     * @param versionId     The IDs of the players
+     * @param callback      The method to be invoked when the server response is
+     *                      received
+     */
+    public void getPlayersSocialLeaderboardByVersionIfExists(String leaderboardId, String[] profileIds, int versionId,
+            IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+            data.put(Parameter.profileIds.name(), new JSONArray(profileIds));
+            data.put(Parameter.versionId.name(), versionId);
+
+            ServerCall sc = new ServerCall(ServiceName.leaderboard,
+                    ServiceOperation.GET_PLAYERS_SOCIAL_LEADERBOARD_BY_VERSION_IF_EXISTS, data, callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {

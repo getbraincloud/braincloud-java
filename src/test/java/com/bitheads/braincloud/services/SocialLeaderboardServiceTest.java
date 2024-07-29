@@ -20,16 +20,29 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     private final String _groupLeaderboardId = "groupLeaderboardConfig";
     
     @Test
-    public void testGetSocialLeaderboard() throws Exception
-    {
-        TestResult tr = new TestResult(_wrapper);
+    public void testGetSocialLeaderboard() throws Exception {
+            TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getLeaderboardService().getSocialLeaderboard(
-                _globalLeaderboardId,
-                true,
-                tr);
+            _wrapper.getLeaderboardService().getSocialLeaderboard(
+                            _socialLeaderboardId,
+                            true,
+                            tr);
 
-        tr.Run();
+            tr.Run();
+    }
+
+    @Test
+    public void testGetSocialLeaderboardIfExists() throws Exception {
+            TestResult tr = new TestResult(_wrapper);
+
+            _wrapper.getLeaderboardService().getSocialLeaderboardIfExists(_socialLeaderboardId, false, tr);
+            tr.Run();
+
+            _wrapper.getLeaderboardService().getSocialLeaderboardIfExists(
+                            "nonExistentLeaderboard",
+                            true,
+                            tr);
+            tr.Run();
     }
 
     @Test
@@ -38,11 +51,30 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
         TestResult tr = new TestResult(_wrapper);
 
         _wrapper.getLeaderboardService().getSocialLeaderboardByVersion(
-                _globalLeaderboardId,
+                _socialLeaderboardId,
                 true,
                 0,
                 tr);
+        tr.Run();
+    }
 
+    @Test
+    public void testGetSocialLeaderboardByVersionIfExists() throws Exception
+    {
+        TestResult tr = new TestResult(_wrapper);
+
+        _wrapper.getLeaderboardService().getSocialLeaderboardByVersionIfExists(
+                _socialLeaderboardId,
+                true,
+                0,
+                tr);
+        tr.Run();
+
+        _wrapper.getLeaderboardService().getSocialLeaderboardByVersionIfExists(
+                "nonExistentLeaderboard",
+                true,
+                0,
+                tr);
         tr.Run();
     }
 
@@ -68,95 +100,167 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     }
 
     @Test
-    public void testGetGlobalLeaderboardPageHigh() throws Exception
-    {
-        TestResult tr = new TestResult(_wrapper);
+    public void testGetGlobalLeaderboardPageHigh() throws Exception {
+            TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getLeaderboardService().getGlobalLeaderboardPage(
-                _globalLeaderboardId,
-                SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
-                0,
-                10,
-                tr);
+            _wrapper.getLeaderboardService().getGlobalLeaderboardPage(
+                            "_globalLeaderboardId",
+                            SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
+                            0,
+                            10,
+                            tr);
 
-        tr.Run();
+            tr.Run();
     }
 
     @Test
-    public void testGetGlobalLeaderboardPageLow() throws Exception
-    {
-        TestResult tr = new TestResult(_wrapper);
+    public void testGetGlobalLeaderboardPageLow() throws Exception {
+            TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getLeaderboardService().getGlobalLeaderboardPage(
-                _globalLeaderboardId,
-                SocialLeaderboardService.SortOrder.LOW_TO_HIGH,
-                0,
-                10,
-                tr);
+            _wrapper.getLeaderboardService().getGlobalLeaderboardPage(
+                            _globalLeaderboardId,
+                            SocialLeaderboardService.SortOrder.LOW_TO_HIGH,
+                            0,
+                            10,
+                            tr);
 
-        tr.Run();
+            tr.Run();
     }
 
     @Test
-    public void testGetGlobalLeaderboardPageFail() throws Exception
-    {
-        TestResult tr = new TestResult(_wrapper);
+    public void testGetGlobalLeaderboardPageFail() throws Exception {
+            TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getLeaderboardService().getGlobalLeaderboardPage(
-                "thisDoesNotExistLeaderboard",
-                SocialLeaderboardService.SortOrder.LOW_TO_HIGH,
-                0,
-                10,
-                tr);
+            _wrapper.getLeaderboardService().getGlobalLeaderboardPage(
+                            "thisDoesNotExistLeaderboard",
+                            SocialLeaderboardService.SortOrder.LOW_TO_HIGH,
+                            0,
+                            10,
+                            tr);
 
-        tr.RunExpectFail(StatusCodes.INTERNAL_SERVER_ERROR, 40499);
+            tr.RunExpectFail(StatusCodes.INTERNAL_SERVER_ERROR, 40499);
     }
 
     @Test
-    public void testGetGlobalLeaderboardPageByVersion() throws Exception
-    {
-        TestResult tr = new TestResult(_wrapper);
+    public void testGetGlobalLeaderboardPageIfExists() throws Exception {
+            TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getLeaderboardService().getGlobalLeaderboardPageByVersion(
-                _globalLeaderboardId,
-                SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
-                0,
-                10,
-                1,
-                tr);
+            _wrapper.getLeaderboardService().getGlobalLeaderboardPageIfExists(_globalLeaderboardId,
+                            SocialLeaderboardService.SortOrder.HIGH_TO_LOW, 0, 10, tr);
+            tr.Run();
 
-        tr.Run();
+            _wrapper.getLeaderboardService().getGlobalLeaderboardPageIfExists("nonExistentLeaderboard",
+                            SocialLeaderboardService.SortOrder.HIGH_TO_LOW, 0, 10, tr);
+            tr.Run();
     }
 
     @Test
-    public void testGetGlobalLeaderboardView() throws Exception
-    {
-        TestResult tr = new TestResult(_wrapper);
+    public void testGetGlobalLeaderboardPageByVersion() throws Exception {
+            TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getLeaderboardService().getGlobalLeaderboardView(
-                _globalLeaderboardId,
-                SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
-                5,
-                5,
-                tr);
+            _wrapper.getLeaderboardService().getGlobalLeaderboardPageByVersion(
+                            _globalLeaderboardId,
+                            SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
+                            0,
+                            10,
+                            1,
+                            tr);
 
-        tr.Run();
+            tr.Run();
     }
 
     @Test
-    public void testGetGlobalLeaderboardViewByVersion() throws Exception
-    {
-        TestResult tr = new TestResult(_wrapper);
+    public void testGetGlobalLeaderboardPageByVersionIfExists() throws Exception {
+            TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getLeaderboardService().getGlobalLeaderboardViewByVersion(
-                _globalLeaderboardId,
-                SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
-                5,
-                5,
-                1,
-                tr);
+            _wrapper.getLeaderboardService().getGlobalLeaderboardPageByVersionIfExists(
+                            _globalLeaderboardId,
+                            SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
+                            0,
+                            10,
+                            1,
+                            tr);
+            tr.Run();
 
-        tr.Run();
+            _wrapper.getLeaderboardService().getGlobalLeaderboardPageByVersionIfExists(
+                            "nonExistentLeaderboard",
+                            SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
+                            0,
+                            10,
+                            1,
+                            tr);
+            tr.Run();
+    }
+
+    @Test
+    public void testGetGlobalLeaderboardView() throws Exception {
+            TestResult tr = new TestResult(_wrapper);
+
+            _wrapper.getLeaderboardService().getGlobalLeaderboardView(
+                            _globalLeaderboardId,
+                            SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
+                            5,
+                            5,
+                            tr);
+            tr.Run();
+    }
+
+    @Test
+    public void testGetGlobalLeaderboardViewIfExists() throws Exception {
+            TestResult tr = new TestResult(_wrapper);
+
+            _wrapper.getLeaderboardService().getGlobalLeaderboardViewIfExists(
+                            _globalLeaderboardId,
+                            SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
+                            5,
+                            5,
+                            tr);
+            tr.Run();
+
+            _wrapper.getLeaderboardService().getGlobalLeaderboardViewIfExists(
+                            "nonExistentLeaderboard",
+                            SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
+                            5,
+                            5,
+                            tr);
+            tr.Run();
+    }
+
+    @Test
+    public void testGetGlobalLeaderboardViewByVersion() throws Exception {
+            TestResult tr = new TestResult(_wrapper);
+
+            _wrapper.getLeaderboardService().getGlobalLeaderboardViewByVersion(
+                            _globalLeaderboardId,
+                            SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
+                            5,
+                            5,
+                            1,
+                            tr);
+            tr.Run();
+    }
+
+    @Test
+    public void testGetGlobalLeaderboardViewByVersionIfExists() throws Exception {
+            TestResult tr = new TestResult(_wrapper);
+
+            _wrapper.getLeaderboardService().getGlobalLeaderboardViewByVersionIfExists(
+                            _globalLeaderboardId,
+                            SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
+                            5,
+                            5,
+                            1,
+                            tr);
+            tr.Run();
+
+            _wrapper.getLeaderboardService().getGlobalLeaderboardViewByVersionIfExists(
+                            "nonExistentLeaderboard",
+                            SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
+                            5,
+                            5,
+                            1,
+                            tr);
+            tr.Run();
     }
 
     @Test
@@ -349,31 +453,62 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase
     }
 
     @Test
-    public void testGetPlayersSocialLeaderboard() throws Exception
-    {
-        TestResult tr = new TestResult(_wrapper);
+    public void testGetPlayersSocialLeaderboard() throws Exception {
+            TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getLeaderboardService().getPlayersSocialLeaderboard(
-                _socialLeaderboardId,
-                new String[] { getUser(Users.UserA).profileId, getUser(Users.UserB).profileId },
-                tr);
-
-        tr.Run();
+            _wrapper.getLeaderboardService().getPlayersSocialLeaderboard(
+                            _socialLeaderboardId,
+                            new String[] { getUser(Users.UserA).profileId, getUser(Users.UserB).profileId },
+                            tr);
+            tr.Run();
     }
 
     @Test
-    public void testGetPlayersSocialLeaderboardByVersion() throws Exception
-    {
-        TestResult tr = new TestResult(_wrapper);
+    public void testGetPlayersSocialLeaderboardIfExists() throws Exception {
+            TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getLeaderboardService().getPlayersSocialLeaderboardByVersion(
-                _socialLeaderboardId,
+            _wrapper.getLeaderboardService().getPlayersSocialLeaderboardIfExists(
+                            _socialLeaderboardId,
+                            new String[] { getUser(Users.UserA).profileId, getUser(Users.UserB).profileId },
+                            tr);
+            tr.Run();
 
-                new String[] { getUser(Users.UserA).profileId, getUser(Users.UserB).profileId },
-                0,
-                tr);
+            _wrapper.getLeaderboardService().getPlayersSocialLeaderboardIfExists(
+                            "nonExistentLeaderboard",
+                            new String[] { getUser(Users.UserA).profileId, getUser(Users.UserB).profileId },
+                            tr);
+            tr.Run();
+    }
 
-        tr.Run();
+    @Test
+    public void testGetPlayersSocialLeaderboardByVersion() throws Exception {
+            TestResult tr = new TestResult(_wrapper);
+
+            _wrapper.getLeaderboardService().getPlayersSocialLeaderboardByVersion(
+                            _socialLeaderboardId,
+                            new String[] { getUser(Users.UserA).profileId, getUser(Users.UserB).profileId },
+                            0,
+                            tr);
+            tr.Run();
+    }
+
+    @Test
+    public void testGetPlayersSocialLeaderboardByVersionIfExists() throws Exception {
+            TestResult tr = new TestResult(_wrapper);
+
+            _wrapper.getLeaderboardService().getPlayersSocialLeaderboardByVersionIfExists(
+                            _socialLeaderboardId,
+                            new String[] { getUser(Users.UserA).profileId, getUser(Users.UserB).profileId },
+                            0,
+                            tr);
+            tr.Run();
+
+            _wrapper.getLeaderboardService().getPlayersSocialLeaderboardByVersionIfExists(
+                            "nonExistentLeaderboard",
+                            new String[] { getUser(Users.UserA).profileId, getUser(Users.UserB).profileId },
+                            0,
+                            tr);
+            tr.Run();
     }
 
     @Test
