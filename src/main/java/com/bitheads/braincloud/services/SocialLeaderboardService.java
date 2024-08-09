@@ -50,7 +50,9 @@ public class SocialLeaderboardService {
         leaderboardResultCount,
         groupId,
         profileIds,
-        numDaysToRotate
+        numDaysToRotate,
+        scoreData,
+        configJson
     }
 
     private BrainCloudClient _client;
@@ -767,6 +769,53 @@ public class SocialLeaderboardService {
 
             ServerCall sc = new ServerCall(ServiceName.leaderboard,
                     ServiceOperation.POST_SCORE_DYNAMIC, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Post the player's score to the given social leaderboard, dynamically creating
+     * the leaderboard if it does not exist yet. To create new leaderboard,
+     * configJson must specify leaderboardType, rotationType, resetAt, and
+     * retainedCount, at a minimum, with support to optionally specify an expiry in
+     * minutes.
+     * 
+     * @param leaderboardId The leaderboard to post to.
+     * @param score         A score to post.
+     * @param scoreData     Optional user-defined data to post with the score.
+     * @param configJson    Configuration for the leaderboard if it does not exist
+     *                      yet, specified as JSON object. Configuration fields
+     *                      supported are: leaderboardType': Required. Type of
+     *                      leaderboard. Valid values are 'LAST_VALUE',
+     *                      'HIGH_VALUE', 'LOW_VALUE', 'CUMULATIVE', 'ARCADE_HIGH',
+     *                      'ARCADE_LOW'; 'rotationType': Required. Type of
+     *                      rotation. Valid values are 'NEVER', 'DAILY', 'DAYS',
+     *                      'WEEKLY', 'MONTHLY', 'YEARLY'; 'numDaysToRotate':
+     *                      Required if 'DAYS' rotation type, with valid values
+     *                      between 2 and 14; otherwise, null; 'resetAt': UTC
+     *                      timestamp, in milliseconds, at which to rotate the
+     *                      period. Always null if 'NEVER' rotation type;
+     *                      'retainedCount': Required. Number of rotations
+     *                      (versions) of the leaderboard to retain; 'expireInMins':
+     *                      Optional. Duration, in minutes, before the leaderboard
+     *                      is to automatically expire.
+     * @param callback      The method to be invoked when the server response is received.
+     */
+    public void postScoreToDynamicLeaderboardUsingConfig(String leaderboardId, int score, String scoreData,
+            String configJson, IServerCallback callback) {
+        try {
+            JSONObject requestData = new JSONObject();
+            requestData.put(Parameter.leaderboardId.name(), leaderboardId);
+            requestData.put(Parameter.score.name(), score);
+            if (StringUtil.IsOptionalParameterValid(scoreData)) {
+                requestData.put(Parameter.scoreData.name(), new JSONObject(scoreData));
+            }
+            requestData.put(Parameter.configJson.name(), new JSONObject(configJson));
+
+            ServerCall sc = new ServerCall(ServiceName.leaderboard, ServiceOperation.POST_SCORE_DYNAMIC_USING_CONFIG,
+                    requestData, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
