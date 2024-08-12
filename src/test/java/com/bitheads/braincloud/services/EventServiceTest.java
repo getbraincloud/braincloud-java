@@ -27,9 +27,9 @@ public class EventServiceTest extends TestFixtureBase implements IEventCallback 
 
     @After
     public void Teardown() throws Exception {
-        // if (_eventId != null && !_eventId.isEmpty()) {
-        //     cleanupIncomingEvent(_eventId);
-        // }
+        if (_eventId != null && !_eventId.isEmpty()) {
+        cleanupIncomingEvent(_eventId);
+        }
     }
 
     @Test
