@@ -278,6 +278,26 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase {
         }
 
         @Test
+        public void testPostScoreToDynamicLeaderboardUsingConfig() throws Exception {
+                TestResult tr = new TestResult(_wrapper);
+
+                String scoreData = "{\"nickname\": \"Tarnished\"}";
+                JSONObject configJsonObject = new JSONObject();
+                configJsonObject.put("leaderboardType", "HIGH_VALUE");
+                configJsonObject.put("rotationType", "DAYS");
+                configJsonObject.put("numDaysToRotate", 4);
+                long date = TimeUtil.UTCDateTimeToUTCMillis(addDays(new Date(), 3));
+                configJsonObject.put("resetAt", date);
+                configJsonObject.put("retainedCount", 2);
+
+                String configJson = configJsonObject.toString();
+
+                _wrapper.getLeaderboardService().postScoreToDynamicLeaderboardUsingConfig(_dynamicLeaderboardId, 777, scoreData, configJson, tr);
+
+                tr.Run();
+        }
+
+        @Test
         public void testPostScoreToDynamicLeaderboardUTC() throws Exception {
                 TestResult tr = new TestResult(_wrapper);
 
