@@ -37,6 +37,7 @@ public enum ServiceOperation {
     GET_EVENTS,
     SEND,
     UPDATE_EVENT_DATA,
+    UPDATE_EVENT_DATA_IF_EXISTS,
 
     // Group
     ACCEPT_GROUP_INVITATION,
