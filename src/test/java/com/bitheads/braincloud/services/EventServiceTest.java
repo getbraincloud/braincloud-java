@@ -72,6 +72,19 @@ public class EventServiceTest extends TestFixtureBase implements IEventCallback 
     }
 
     @Test
+    public void testUpdateIncomingEventDataIfExistsTrue() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+        sendDefaultMessage();
+
+        _wrapper.getEventService().updateIncomingEventDataIfExists(
+                _eventId,
+                Helpers.createJsonPair(_eventDataKey, _eventData),
+                tr);
+
+        tr.Run();
+    }
+
+    @Test
     public void testUpdateIncomingEventDataIfExistsFalse() throws Exception {
         TestResult tr = new TestResult(_wrapper);
 
@@ -140,7 +153,7 @@ public class EventServiceTest extends TestFixtureBase implements IEventCallback 
         TestResult tr = new TestResult(_wrapper);
 
         _wrapper.getEventService().sendEvent(
-                getUser(Users.UserA).profileId,
+                _wrapper.getStoredProfileId(),
                 _eventType,
                 Helpers.createJsonPair(_eventDataKey, _eventData),
                 tr);
