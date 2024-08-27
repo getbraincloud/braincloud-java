@@ -79,7 +79,7 @@ public class BrainCloudClient {
 
 
 
-    private final static String BRAINCLOUD_VERSION = "5.3.0";
+    private final static String BRAINCLOUD_VERSION = "5.4.0";
 
     private BrainCloudRestClient _restClient;
     private RTTComms _rttComms;
@@ -237,6 +237,9 @@ public class BrainCloudClient {
         if (_countryCode == null || _countryCode.isEmpty()) _countryCode = locale.getCountry();
         if(_countryCode.equals("419")){
             _countryCode = "_LA_";
+        }
+        if(_countryCode.equals("Hans") || _countryCode.equals("Hant")){
+            _countryCode = "CN";
         }
 
         if (_languageCode == null || _languageCode.isEmpty()) _languageCode = locale.getLanguage();

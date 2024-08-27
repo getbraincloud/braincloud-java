@@ -15,9 +15,11 @@ import com.bitheads.braincloud.client.IEventCallback;
 public class EventServiceTest extends TestFixtureBase implements IEventCallback {
     private final String _eventType = "test";
     private final String _eventDataKey = "testData";
+    private final String _eventData = "testEventData";
 
     private boolean _callbackRan = false;
     private String _eventId = null;
+    private String _nonExistentEventId = "66ba5285d9002730d8f707a0";
     private String[] evIds = {"608c40c3a3a7950f388c4eac", "368c40c3a3a7950f388c4eac"};
 
     private String eventType = "my-event_type";
@@ -26,7 +28,7 @@ public class EventServiceTest extends TestFixtureBase implements IEventCallback 
     @After
     public void Teardown() throws Exception {
         if (_eventId != null && !_eventId.isEmpty()) {
-            cleanupIncomingEvent(_eventId);
+        cleanupIncomingEvent(_eventId);
         }
     }
 
@@ -58,16 +60,36 @@ public class EventServiceTest extends TestFixtureBase implements IEventCallback 
 
     @Test
     public void testUpdateIncomingEventData() throws Exception {
-        //TODO
-        // TestResult tr = new TestResult(_wrapper);
-        // sendDefaultMessage();
+        TestResult tr = new TestResult(_wrapper);
+        sendDefaultMessage();
 
-        // _wrapper.getEventService().updateIncomingEventData(
-        //         _eventId,
-        //         Helpers.createJsonPair(_eventDataKey, 343),
-        //         tr);
+        _wrapper.getEventService().updateIncomingEventData(
+                _eventId,
+                Helpers.createJsonPair(_eventDataKey, _eventData),
+                tr);
 
-        // tr.Run();
+        tr.Run();
+    }
+
+    @Test
+    public void testUpdateIncomingEventDataIfExistsTrue() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+        sendDefaultMessage();
+
+        _wrapper.getEventService().updateIncomingEventDataIfExists(
+                _eventId,
+                Helpers.createJsonPair(_eventDataKey, _eventData),
+                tr);
+
+        tr.Run();
+    }
+
+    @Test
+    public void testUpdateIncomingEventDataIfExistsFalse() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        _wrapper.getEventService().updateIncomingEventDataIfExists(_nonExistentEventId, Helpers.createJsonPair(_eventDataKey, _eventData), tr);
+        tr.Run();
     }
 
     @Test
@@ -125,16 +147,15 @@ public class EventServiceTest extends TestFixtureBase implements IEventCallback 
         tr.Run();
     }
 
-
     /// helpers
 
     private void sendDefaultMessage() throws Exception {
         TestResult tr = new TestResult(_wrapper);
 
         _wrapper.getEventService().sendEvent(
-                getUser(Users.UserA).profileId,
+                _wrapper.getStoredProfileId(),
                 _eventType,
-                Helpers.createJsonPair(_eventDataKey, 117),
+                Helpers.createJsonPair(_eventDataKey, _eventData),
                 tr);
 
         if (tr.Run()) {

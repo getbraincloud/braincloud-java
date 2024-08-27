@@ -126,17 +126,10 @@ public class LobbyServiceTest extends TestFixtureBase
     @Test
     public void testCancelFindRequest() throws Exception {
         TestResult tr = new TestResult(_wrapper);
-        //_wrapper.getLobbyService().cancelFindRequest("MATCH_UNRANKED", _wrapper.client.getRttConnectionId(), tr);
-        //tr.Run();
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //need to come back to this test. When I send a bad cxId, it actually sends the parameter cxId to the server. But when I send a proper 
-        //cxId, it only sends the lobbyType and no cxId parameter, so it always says that the cxId parameter is missing. 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
-        _wrapper.getLobbyService().cancelFindRequest("MATCH_UNRANKED", "badCxId", tr);
-        //40653 is cxId must belong to the caller. 
-        tr.RunExpectFail(StatusCodes.BAD_REQUEST, 40653);;
+        _wrapper.getLobbyService().cancelFindRequest("MATCH_UNRANKED", tr);
+        
+        tr.Run();
     }
 
     @Test

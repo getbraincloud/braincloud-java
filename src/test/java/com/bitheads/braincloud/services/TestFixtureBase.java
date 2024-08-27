@@ -134,7 +134,7 @@ public class TestFixtureBase {
             TestResult tr = new TestResult(_wrapper);
 
             System.out.println("Authenticating...");
-            _wrapper.getClient().getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id,
+            _wrapper.authenticateUniversal(getUser(Users.UserA).id,
                     getUser(Users.UserA).password, true, tr);
 
             if (!tr.Run()) {

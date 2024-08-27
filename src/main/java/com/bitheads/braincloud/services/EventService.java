@@ -92,6 +92,33 @@ public class EventService {
     }
 
     /**
+     * Updates an event in the player's incoming event mailbox.
+     * Returns the same data as updateIncomingEventData, but will not return an error if the event does not exist.
+     *
+     * Service Name - event
+     * Service Operation - UPDATE_EVENT_DATA_IF_EXISTS
+     *
+     * @param evId The event id
+     * @param jsonEventData The user-defined data for this event encoded in JSON.
+     * @param callback The  callback.
+     */
+    public void updateIncomingEventDataIfExists(String evId, String jsonEventData, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.evId.name(), evId);
+
+            JSONObject jsonData = new JSONObject(jsonEventData);
+            data.put(Parameter.eventData.name(), jsonData);
+
+            ServerCall sc = new ServerCall(ServiceName.event, ServiceOperation.UPDATE_EVENT_DATA_IF_EXISTS, data, callback);
+            _client.sendRequest(sc);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Delete an event out of the player's incoming mailbox.
      *
      * Service Name - event
