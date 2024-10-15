@@ -126,9 +126,13 @@ public class LobbyServiceTest extends TestFixtureBase
     @Test
     public void testCancelFindRequest() throws Exception {
         TestResult tr = new TestResult(_wrapper);
+
+        _wrapper.getLobbyService().findOrCreateLobby("MATCH_UNRANKED", 0, 1, "{\"strategy\":\"ranged-absolute\",\"alignment\":\"center\",\"ranges\":[1000]}", "{}", null, "{}", true, "{}", "all", tr);
+        tr.Run();
+
+        String entryId = tr.m_response.optJSONObject("data").optString("entryId");
         
-        _wrapper.getLobbyService().cancelFindRequest("MATCH_UNRANKED", tr);
-        
+        _wrapper.getLobbyService().cancelFindRequest("MATCH_UNRANKED", entryId, tr);
         tr.Run();
     }
 
