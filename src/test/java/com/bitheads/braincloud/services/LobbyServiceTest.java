@@ -122,6 +122,17 @@ public class LobbyServiceTest extends TestFixtureBase
         _wrapper.getLobbyService().updateSettings("wrongLobbyId", "{\"test\":\"me\"}", tr);
         tr.RunExpectFail(StatusCodes.BAD_REQUEST, ReasonCodes.LOBBY_NOT_FOUND);
     }
+
+    @Test
+    public void testDeprecatedCancelFindRequest() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        _wrapper.getLobbyService().findOrCreateLobby("MATCH_UNRANKED", 0, 1, "{\"strategy\":\"ranged-absolute\",\"alignment\":\"center\",\"ranges\":[1000]}", "{}", null, "{}", true, "{}", "all", tr);
+        tr.Run();
+        
+        _wrapper.getLobbyService().cancelFindRequest("MATCH_UNRANKED", tr);
+        tr.Run();
+    }
   
     @Test
     public void testCancelFindRequest() throws Exception {

@@ -703,6 +703,26 @@ public class LobbyService implements IServerCallback{
     /**
      * Cancel this members Find, Join and Searching of Lobbies
      *
+     * @deprecated Use cancelFindRequest with entryId parameter
+     * @param lobbyType Type of lobby being targeted.
+     * @param callback  The callback handler
+     */
+    public void cancelFindRequest(String lobbyType, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.lobbyType.name(), lobbyType);
+
+            ServerCall sc = new ServerCall(ServiceName.lobby,
+                    ServiceOperation.CANCEL_FIND_REQUEST, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Cancel this members Find, Join and Searching of Lobbies
+     *
      * @param lobbyType Type of lobby being targeted.
      * @param callback  The callback handler
      */
