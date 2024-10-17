@@ -25,6 +25,7 @@ import com.bitheads.braincloud.comms.ServerCall;
 public class LobbyService implements IServerCallback{
  
     private enum Parameter {
+        entryId,
         lobbyType,
         rating,
         maxSteps,
@@ -702,6 +703,7 @@ public class LobbyService implements IServerCallback{
     /**
      * Cancel this members Find, Join and Searching of Lobbies
      *
+     * @deprecated Use cancelFindRequest with entryId parameter
      * @param lobbyType Type of lobby being targeted.
      * @param callback  The callback handler
      */
@@ -709,6 +711,26 @@ public class LobbyService implements IServerCallback{
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.lobbyType.name(), lobbyType);
+
+            ServerCall sc = new ServerCall(ServiceName.lobby,
+                    ServiceOperation.CANCEL_FIND_REQUEST, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Cancel this members Find, Join and Searching of Lobbies
+     *
+     * @param lobbyType Type of lobby being targeted.
+     * @param callback  The callback handler
+     */
+    public void cancelFindRequest(String lobbyType, String entryId, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.lobbyType.name(), lobbyType);
+            data.put(Parameter.entryId.name(), entryId);
 
             ServerCall sc = new ServerCall(ServiceName.lobby,
                     ServiceOperation.CANCEL_FIND_REQUEST, data, callback);
