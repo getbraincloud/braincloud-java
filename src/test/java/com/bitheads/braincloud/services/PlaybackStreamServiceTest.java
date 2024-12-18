@@ -105,7 +105,7 @@ public class PlaybackStreamServiceTest extends TestFixtureBase
     }
 
     @Test
-    public void testProtectStreamUntil() throws Exception{
+    public void testProtectStreamUntil() throws Exception {
         TestResult tr = new TestResult(_wrapper);
 
         String playbackStreamId = startStream();

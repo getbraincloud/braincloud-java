@@ -557,6 +557,24 @@ public class GroupServiceTest extends TestFixtureBase {
         logout();
     }
 
+    // TODO:  currently cloud code only
+    @Test
+    public void testUpdateGroupAcl() throws Exception {
+        authenticate(Users.UserA);
+        createGroup();
+
+        TestResult tr = new TestResult(_wrapper);
+        String groupId = _groupId;
+        GroupACL acl = new GroupACL(GroupACL.Access.ReadWrite, GroupACL.Access.ReadWrite);
+
+        _wrapper.getGroupService().updateGroupAcl(groupId, acl, tr);
+
+        tr.Run();
+
+        deleteGroup();
+        logout();
+    }
+
     
     @Test
     public void testUpdateGroupData() throws Exception {
@@ -569,6 +587,25 @@ public class GroupServiceTest extends TestFixtureBase {
                 1,
                 Helpers.createJsonPair("testUpdate", 1),
                 tr);
+        tr.Run();
+
+        deleteGroup();
+        logout();
+    }
+
+    // TODO:  currently cloud code only
+    @Test
+    public void testUpdateGroupEntityAcl() throws Exception {
+        authenticate(Users.UserA);
+        createGroup();
+
+        TestResult tr = new TestResult(_wrapper);
+        String groupId = _groupId;
+        String entityId = createGroupEntity();
+        GroupACL acl = new GroupACL(GroupACL.Access.ReadWrite, GroupACL.Access.ReadWrite);
+
+        _wrapper.getGroupService().updateGroupEntityAcl(groupId, entityId, acl, tr);
+
         tr.Run();
 
         deleteGroup();
