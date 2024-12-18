@@ -12,13 +12,14 @@ import org.json.JSONObject;
 public class PlaybackStreamService {
 
     private enum Parameter {
-        targetPlayerId,
+        eventData,
+        includeSharedData,
         initiatingPlayerId,
         maxNumStreams,
-        includeSharedData,
+        numDays,
         playbackStreamId,
-        eventData,
-        summary
+        summary,
+        targetPlayerId
     }
 
     private BrainCloudClient _client;
@@ -193,6 +194,21 @@ public class PlaybackStreamService {
             ServerCall sc = new ServerCall(ServiceName.playbackStream, ServiceOperation.GET_RECENT_STREAMS_FOR_TARGET_PLAYER, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
+        }
+    }
+
+    public void protectStreamUntil(String playbackStreamId, int numDays, IServerCallback callback){
+        try{
+            JSONObject data = new JSONObject();
+
+            data.put(Parameter.playbackStreamId.name(), playbackStreamId);
+            data.put(Parameter.numDays.name(), numDays);
+
+            ServerCall sc = new ServerCall(ServiceName.playbackStream, ServiceOperation.PROTECT_STREAM_UNTIL, data, callback);
+            
+            _client.sendRequest(sc);
+        } catch(JSONException je){
+            je.printStackTrace();
         }
     }
 

@@ -103,6 +103,20 @@ public class PlaybackStreamServiceTest extends TestFixtureBase
         tr.Run();
         endStream(streamId);
     }
+
+    @Test
+    public void testProtectStreamUntil() throws Exception{
+        TestResult tr = new TestResult(_wrapper);
+
+        String playbackStreamId = startStream();
+        int numDays = 1;
+
+        _wrapper.getPlaybackStreamService().protectStreamUntil(playbackStreamId, numDays, tr);
+
+        tr.Run();
+
+        endStream(playbackStreamId);
+    }
     
     ///// helpers
 
