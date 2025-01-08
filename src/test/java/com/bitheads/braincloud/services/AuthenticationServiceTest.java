@@ -133,11 +133,6 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
     public void testGetServerVersion() throws Exception {
         TestResult tr = new TestResult(_wrapper);
 
-        // TODO: shouldn't need to authenticate first
-        _client.getAuthenticationService().authenticateUniversal("abc", "abc", true, tr);
-
-        tr.Run();
-
         _client.getAuthenticationService().getServerVersion(tr);
 
         tr.Run();
