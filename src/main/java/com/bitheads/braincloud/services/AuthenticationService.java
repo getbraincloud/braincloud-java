@@ -125,13 +125,15 @@ public class AuthenticationService {
      * 
      * @param callback The method to be invoked when the server response is received
      */
-    public void getServerVersion(IServerCallback callback){
-        try{
+    public void getServerVersion(IServerCallback callback) {
+        try {
             JSONObject data = new JSONObject();
+            data.put(Parameter.appId.name(), _client.getAppId());
 
-            ServerCall sc = new ServerCall(ServiceName.authenticationV2, ServiceOperation.GET_SERVER_VERSION, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.authenticationV2, ServiceOperation.GET_SERVER_VERSION, data,
+                    callback);
             _client.sendRequest(sc);
-        } catch(JSONException je){
+        } catch (JSONException je) {
             je.printStackTrace();
         }
     }

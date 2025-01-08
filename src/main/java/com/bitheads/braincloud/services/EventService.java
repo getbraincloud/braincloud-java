@@ -12,17 +12,18 @@ import com.bitheads.braincloud.comms.ServerCall;
 public class EventService {
 
     private enum Parameter {
-        toId,
-        eventType,
+        dateMillis,
         eventData,
-        recordLocally,
-        fromId,
         eventId,
-        includeIncomingEvents,
-        includeSentEvents,
+        eventType,
         evId,
         evIds,
-        dateMillis
+        fromId,
+        includeIncomingEvents,
+        includeSentEvents,
+        recordLocally,
+        toId,
+        toIds
     }
 
     private BrainCloudClient _client;
@@ -63,6 +64,34 @@ public class EventService {
             _client.sendRequest(sc);
 
         } catch (JSONException e) {
+        }
+    }
+
+    /**
+     * Sends an event to multiple users with the attached json data.
+     * 
+     * Service - Event
+     * Operation - SEND_EVENT_TO_PROFILES
+     * 
+     * @param toIds     The profile ids of the users to send the event
+     * @param eventType The user-defined type of the event
+     * @param eventData The user-defined data for this event encoded in JSON
+     * @param callback  The method to be invoked when the server response is
+     *                  received
+     */
+    public void sendEventToProfiles(String toIds, String eventType, String eventData, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            JSONObject jsonData = new JSONObject(eventData);
+
+            data.put(Parameter.toIds.name(), toIds);
+            data.put(Parameter.eventType.name(), eventType);
+            data.put(Parameter.eventData.name(), jsonData);
+
+            ServerCall sc = new ServerCall(ServiceName.event, ServiceOperation.SEND_EVENT_TO_PROFILES, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
         }
     }
 
