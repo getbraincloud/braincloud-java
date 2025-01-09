@@ -173,7 +173,7 @@ public class GroupServiceTest extends TestFixtureBase {
     public void testcreateGroupEntity() throws Exception {
         authenticate(Users.UserA);
         createGroup();
-        createGroupEntity();
+        createGroupEntity(false);
         deleteGroup();
         logout();
     }
@@ -191,7 +191,7 @@ public class GroupServiceTest extends TestFixtureBase {
     public void testDeleteGroupEntity() throws Exception {
         authenticate(Users.UserA);
         createGroup();
-        String entityId = createGroupEntity();
+        String entityId = createGroupEntity(false);
 
         TestResult tr = new TestResult(_wrapper);
         _wrapper.getGroupService().deleteGroupEntity(
@@ -239,7 +239,7 @@ public class GroupServiceTest extends TestFixtureBase {
     public void testIncrementGroupEntityData() throws Exception {
         authenticate(Users.UserA);
         createGroup();
-        String id = createGroupEntity();
+        String id = createGroupEntity(false);
 
         TestResult tr = new TestResult(_wrapper);
         _wrapper.getGroupService().incrementGroupEntityData(
@@ -447,7 +447,7 @@ public class GroupServiceTest extends TestFixtureBase {
     public void testReadGroupEntity() throws Exception {
         authenticate(Users.UserA);
         createGroup();
-        String id = createGroupEntity();
+        String id = createGroupEntity(false);
 
         TestResult tr = new TestResult(_wrapper);
         _wrapper.getGroupService().readGroupEntity(
@@ -593,7 +593,6 @@ public class GroupServiceTest extends TestFixtureBase {
         logout();
     }
 
-    // TODO:  currently cloud code only
     @Test
     public void testUpdateGroupEntityAcl() throws Exception {
         authenticate(Users.UserA);
@@ -601,7 +600,7 @@ public class GroupServiceTest extends TestFixtureBase {
 
         TestResult tr = new TestResult(_wrapper);
         String groupId = _groupId;
-        String entityId = createGroupEntity();
+        String entityId = createGroupEntity(true);
         GroupACL acl = new GroupACL(GroupACL.Access.ReadWrite, GroupACL.Access.ReadWrite);
 
         _wrapper.getGroupService().updateGroupEntityAcl(groupId, entityId, acl, tr);
@@ -616,7 +615,7 @@ public class GroupServiceTest extends TestFixtureBase {
     public void testUpdateGroupEntity() throws Exception {
         authenticate(Users.UserA);
         createGroup();
-        String id = createGroupEntity();
+        String id = createGroupEntity(false);
 
         TestResult tr = new TestResult(_wrapper);
         _wrapper.getGroupService().updateGroupEntityData(
@@ -787,13 +786,13 @@ public class GroupServiceTest extends TestFixtureBase {
         _groupId = data.getString("groupId");
     }
 
-    private String createGroupEntity() throws Exception {
+    private String createGroupEntity(boolean isOwnedByGroupMember) throws Exception {
         TestResult tr = new TestResult(_wrapper);
 
         _wrapper.getGroupService().createGroupEntity(
                 _groupId,
                 _entityType,
-                false,
+                isOwnedByGroupMember,
                 new GroupACL(GroupACL.Access.ReadWrite, GroupACL.Access.ReadWrite),
                 Helpers.createJsonPair("testInc", 123),
                 tr);
