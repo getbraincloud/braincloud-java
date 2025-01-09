@@ -121,6 +121,18 @@ public class FriendServiceTest extends TestFixtureBase
     }
 
     @Test
+    public void testGetProfileInfoForCredentialIfExists() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        _wrapper.getFriendService().getProfileInfoForCredentialIfExists(
+                getUser(Users.UserA).id,
+                AuthenticationType.Universal,
+                tr);
+
+        tr.Run();
+    }
+
+    @Test
     public void testGetProfileInfoForExternalAuthId() throws Exception
     {
         TestResult tr = new TestResult(_wrapper);

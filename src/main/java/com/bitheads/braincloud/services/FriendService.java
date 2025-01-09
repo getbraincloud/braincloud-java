@@ -14,20 +14,20 @@ import org.json.JSONObject;
 public class FriendService {
 
     private enum Parameter {
-        externalId,
-        externalIds,
-        mode,
         authenticationType,
-        profileId,
-        searchText,
-        maxResults,
-        includeSummaryData,
-        friendId,
         entityId,
         entityType,
+        externalAuthType,
+        externalId,
+        externalIds,
+        friendId,
         friendPlatform,
+        includeSummaryData,
+        maxResults,
+        mode,
+        profileId,
         profileIds,
-        externalAuthType
+        searchText        
     }
 
     private BrainCloudClient _client;
@@ -62,6 +62,34 @@ public class FriendService {
         }
 
         ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.GET_PROFILE_INFO_FOR_CREDENTIAL, data, callback);
+        _client.sendRequest(sc);
+    }
+
+    /**
+     * Retrieves profile information for the specified user. Silently fails, if
+     * profile does not exist, just returns null and success, instead of an error.
+     * 
+     * Service Name - Friend
+     * Service Operation - GET_PROFILE_INFO_FOR_CREDENTIAL_IF_EXISTS
+     * 
+     * @param externalId         The user's external ID
+     * @param authenticationType Associated authentication type
+     * @param callback           The method to be invoked when the server response
+     *                           is received
+     */
+    public void getProfileInfoForCredentialIfExists(String externalId, AuthenticationType authenticationType,
+            IServerCallback callback) {
+        JSONObject data = new JSONObject();
+
+        try {
+            data.put(Parameter.externalId.name(), externalId);
+            data.put(Parameter.authenticationType.name(), authenticationType.toString());
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+
+        ServerCall sc = new ServerCall(ServiceName.friend, ServiceOperation.GET_PROFILE_INFO_FOR_CREDENTIAL_IF_EXISTS,
+                data, callback);
         _client.sendRequest(sc);
     }
 
