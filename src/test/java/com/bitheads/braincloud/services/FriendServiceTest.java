@@ -146,6 +146,19 @@ public class FriendServiceTest extends TestFixtureBase
     }
 
     @Test
+    public void testGetProfileInfoForExternalAuthIdIfExists() throws Exception
+    {
+        TestResult tr = new TestResult(_wrapper);
+
+        _wrapper.getFriendService().getProfileInfoForExternalAuthIdIfExists(
+                getUser(Users.UserA).id,
+                "testExternal",
+                tr);
+
+        tr.Run();
+    }
+
+    @Test
     public void testListFriends() throws Exception
     {
         addFriend();

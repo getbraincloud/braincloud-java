@@ -117,6 +117,34 @@ public class FriendService {
     }
 
     /**
+     * Retrieves profile information for the specified user. Silently fails, if
+     * profile does not exist, just returns null and success, instead of an error.
+     *
+     * Service Name - friend
+     * Service Operation - GET_PROFILE_INFO_FOR_EXTERNAL_AUTH_ID_IF_EXISTS
+     *
+     * @param externalId       External ID of the user to find
+     * @param externalAuthType The external authentication type used for this
+     *                         users's external ID
+     * @param callback         The callback handler
+     */
+    public void getProfileInfoForExternalAuthIdIfExists(String externalId, String externalAuthType,
+            IServerCallback callback) {
+        JSONObject data = new JSONObject();
+
+        try {
+            data.put(Parameter.externalId.name(), externalId);
+            data.put(Parameter.externalAuthType.name(), externalAuthType);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        ServerCall sc = new ServerCall(ServiceName.friend,
+                ServiceOperation.GET_PROFILE_INFO_FOR_EXTERNAL_AUTH_ID_IF_EXISTS, data, callback);
+        _client.sendRequest(sc);
+    }
+
+    /**
      * Retrieves the external ID for the specified user profile ID on the specified social platform.
      *
      * Service Name - Friend
