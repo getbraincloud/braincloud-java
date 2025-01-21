@@ -768,7 +768,9 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase {
                 JSONObject data = tr.m_response.getJSONObject("data");
                 String groupId = data.getString("groupId");
                 long score = 99;
-                String scoreData = "{\"nickname\": \"Tarnished\"}";
+                JSONObject scoreDataObject = new JSONObject();
+                scoreDataObject.put("nickname", "Tarnished");
+                String scoreData = scoreDataObject.toString();
                 JSONObject configJsonObject = new JSONObject();
                 configJsonObject.put("leaderboardType", "HIGH_VALUE");
                 configJsonObject.put("rotationType", "DAYS");

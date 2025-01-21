@@ -965,12 +965,14 @@ public class SocialLeaderboardService {
             data.put(Parameter.groupId.name(), groupId);
             data.put(Parameter.score.name(), score);
             if (StringUtil.IsOptionalParameterValid(scoreData)) {
-                data.put(Parameter.scoreData.name(), scoreData);
+                data.put(Parameter.scoreData.name(), new JSONObject(scoreData));
             }
-            data.put(Parameter.configJson.name(), configJson);
+            data.put(Parameter.configJson.name(), new JSONObject(configJson));
 
             ServerCall sc = new ServerCall(ServiceName.leaderboard,
                     ServiceOperation.POST_GROUP_SCORE_DYNAMIC_USING_CONFIG, data, callback);
+
+            _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
         }
