@@ -40,26 +40,22 @@ public class EventServiceTest extends TestFixtureBase implements IEventCallback 
         _wrapper.getClient().deregisterEventCallback();
     }
 
-    // TODO:  how to test?
-    // @Test
-    // public void testSendEventToProfiles() throws Exception{
-    //     // TODO
-    //     TestResult tr = new TestResult(_wrapper);
-    //     String profileId = _wrapper.getStoredProfileId();
-    //     JSONArray toIdsList = new JSONArray();
-    //     toIdsList.put(profileId);
-    //     String toIds = toIdsList.toString();
+    @Test
+    public void testSendEventToProfiles() throws Exception{
+        TestResult tr = new TestResult(_wrapper);
+        String profileId = _wrapper.getStoredProfileId();
+        JSONArray toIdsList = new JSONArray();
+        toIdsList.put(profileId);
+        String toIds = toIdsList.toString();
 
-    //     _wrapper.getEventService().sendEventToProfiles(
-    //             toIds,
-    //             _eventType,
-    //             Helpers.createJsonPair(_eventDataKey, _eventData),
-    //             tr);
+        _wrapper.getEventService().sendEventToProfiles(
+                toIds,
+                _eventType,
+                Helpers.createJsonPair(_eventDataKey, _eventData),
+                tr);
 
-    //     if (tr.Run()) {
-    //         _eventId = tr.m_response.getJSONObject("data").getString("evId");
-    //     }
-    // }
+        tr.Run();
+    }
 
     @Override
     public void eventsReceived(JSONObject events) {

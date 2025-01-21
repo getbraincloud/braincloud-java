@@ -1,5 +1,6 @@
 package com.bitheads.braincloud.services;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -84,7 +85,7 @@ public class EventService {
             JSONObject data = new JSONObject();
             JSONObject jsonData = new JSONObject(eventData);
 
-            data.put(Parameter.toIds.name(), toIds);
+            data.put(Parameter.toIds.name(), new JSONArray(toIds));
             data.put(Parameter.eventType.name(), eventType);
             data.put(Parameter.eventData.name(), jsonData);
 
