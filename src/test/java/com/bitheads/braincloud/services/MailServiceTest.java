@@ -46,7 +46,7 @@ public class MailServiceTest extends TestFixtureBase {
         data.put("categories", new String[]{"unit-test"});
 
         _wrapper.getMailService().sendAdvancedEmailByAddress(
-                "bc-client-team@bitheads.com",
+                "testemail@email.com",
                 data.toString(),
                 tr);
 
@@ -57,8 +57,8 @@ public class MailServiceTest extends TestFixtureBase {
     public void testSendAdvancedEmailByAddresses() throws Exception {
         TestResult tr = new TestResult(_wrapper);
 
-        String[] emailAddresses = {"bc-client-team@bitheads.com", "anothertest@email.com"};
-        String serviceParams = "{\"fromAddress\":\"bc-client-team@bitheads.com\",\"fromName\":\"BC Client Team\",\"replyToAddress\":\"bc-client-team@bitheads.com\",\"replyToName\":\"Optional ReplyTo\",\"templateId\":\"d-www-xxx-yyy-zzz\",\"dynamicData\":{\"user\":{\"firstName\":\"John\",\"lastName\":\"Doe\"},\"resetLink\":\"www.dummuyLink.io\"},\"categories\":[\"category1\",\"category2\"],\"attachments\":[{\"content\":\"VGhpcyBhdHRhY2htZW50IHRleHQ=\",\"filename\":\"attachment.txt\"}]}";
+        String[] emailAddresses = {"testemail@email.com"};
+        String serviceParams =  "{\"fromAddress\":\"testemail@email.com\",\"fromName\":\"BC Client Team\",\"replyToAddress\":\"\",\"replyToName\":\"\",\"categories\":[],\"attachments\":[], \"subject\":\"Plain text email\", \"body\":\"This is a test from Unity\"}";
 
         _wrapper.getMailService().sendAdvancedEmailByAddresses(emailAddresses, serviceParams, tr);
 
