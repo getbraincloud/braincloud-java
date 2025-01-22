@@ -749,7 +749,6 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase {
 
         @Test
         public void testPostScoreToDynamicGroupLeaderboardUsingConfig() throws Exception {
-                // TODO
                 TestResult tr = new TestResult(_wrapper);
 
                 _wrapper.getGroupService().createGroup(

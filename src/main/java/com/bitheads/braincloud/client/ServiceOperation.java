@@ -404,6 +404,7 @@ public enum ServiceOperation {
     SEND_BASIC_EMAIL,
     SEND_ADVANCED_EMAIL,
     SEND_ADVANCED_EMAIL_BY_ADDRESS,
+    SEND_ADVANCED_EMAIL_BY_ADDRESSES,
 
     //presence
     FORCE_PUSH,

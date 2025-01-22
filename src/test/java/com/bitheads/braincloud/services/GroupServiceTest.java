@@ -557,7 +557,6 @@ public class GroupServiceTest extends TestFixtureBase {
         logout();
     }
 
-    // TODO:  currently cloud code only
     @Test
     public void testUpdateGroupAcl() throws Exception {
         authenticate(Users.UserA);
