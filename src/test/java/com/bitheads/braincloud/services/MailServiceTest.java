@@ -58,7 +58,7 @@ public class MailServiceTest extends TestFixtureBase {
         TestResult tr = new TestResult(_wrapper);
 
         String[] emailAddresses = {"testemail@email.com"};
-        String serviceParams =  "{\"fromAddress\":\"testemail@email.com\",\"fromName\":\"BC Client Team\",\"replyToAddress\":\"\",\"replyToName\":\"\",\"categories\":[],\"attachments\":[], \"subject\":\"Plain text email\", \"body\":\"This is a test from Unity\"}";
+        String serviceParams =  "{\"fromAddress\":\"testemail@email.com\",\"fromName\":\"BC Client Team\",\"replyToAddress\":\"\",\"replyToName\":\"\",\"categories\":[],\"attachments\":[], \"subject\":\"Plain text email\", \"body\":\"This is a test from Java\"}";
 
         _wrapper.getMailService().sendAdvancedEmailByAddresses(emailAddresses, serviceParams, tr);
 
