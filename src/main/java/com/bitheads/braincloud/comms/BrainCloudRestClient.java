@@ -10,7 +10,6 @@ import com.bitheads.braincloud.client.ReasonCodes;
 import com.bitheads.braincloud.client.ServiceName;
 import com.bitheads.braincloud.client.ServiceOperation;
 import com.bitheads.braincloud.client.StatusCodes;
-import com.bitheads.braincloud.services.StringUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
