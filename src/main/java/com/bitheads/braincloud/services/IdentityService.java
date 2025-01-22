@@ -14,29 +14,29 @@ import org.json.JSONObject;
 public class IdentityService {
 
     private enum Parameter {
-        externalId,
-        authenticationType,
-        confirmAnonymous,
-        authenticationToken,
-        profileId,
         appId,
-        gameId,
-        forceSingleton,
-        includePlayerSummaryData,
-        levelName,
-        forceCreate,
-        releasePlatform,
-        countryCode,
-        languageCode,
-        timeZoneOffset,
-        externalAuthName,
-        extraJson,
-        peer,
-        oldEmailAddress,
-        newEmailAddress,
-        updateContactEmail,
+        authenticationToken,
+        authenticationType,
         blockchainConfig,
-        publicKey
+        confirmAnonymous,
+        countryCode,
+        externalAuthName,
+        externalId,
+        extraJson,
+        forceCreate,
+        forceSingleton,
+        gameId,
+        includePlayerSummaryData,
+        languageCode,
+        levelName,
+        newEmailAddress,
+        oldEmailAddress,
+        peer,
+        profileId,
+        publicKey,
+        releasePlatform,
+        timeZoneOffset,
+        updateContactEmail
     }
 
     private BrainCloudClient _client;
@@ -1033,6 +1033,36 @@ public class IdentityService {
     public void getIdentities(IServerCallback callback) {
         ServerCall sc = new ServerCall(ServiceName.identity, ServiceOperation.GET_IDENTITIES, null, callback);
         _client.sendRequest(sc);
+    }
+
+    /**
+     * Retrieves identity status for given identity type for this profile.
+     * 
+     * Service - Identity
+     * Operation - GET_IDENTITY_STATUS
+     * 
+     * @param authenticationType Type of authentication
+     * @param externalAuthName   The name of the external authentication mechanism
+     *                           (optional, used for custom authentication types)
+     * @param callback           The method to be invoked when the server response
+     *                           is received
+     */
+    public void getIdentityStatus(AuthenticationType authenticationType, String externalAuthName,
+            IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+
+            data.put(Parameter.authenticationType.name(), authenticationType.toString());
+            if (StringUtil.IsOptionalParameterValid(externalAuthName)) {
+                data.put(Parameter.externalAuthName.name(), externalAuthName);
+            }
+
+            ServerCall sc = new ServerCall(ServiceName.identity, ServiceOperation.GET_IDENTITY_STATUS, data, callback);
+
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
     }
 
     /**

@@ -549,11 +549,13 @@ public class BrainCloudRestClient implements Runnable {
                     Thread.sleep(400);
                 } catch (InterruptedException ignored) {
                 }
-            } else {
+            } 
+            else {
                 if (_networkErrorMessageQueue.size() > 0) {
                     _bundleQueue.addAll(_networkErrorMessageQueue);
                     _networkErrorMessageQueue.clear();
-                } else {
+                } 
+                else {
                     fillBundle();
                 }
 
@@ -565,24 +567,25 @@ public class BrainCloudRestClient implements Runnable {
                             ServerCall serverCall = iter.next();
                             if (serverCall.getServiceOperation() == ServiceOperation.AUTHENTICATE ||
                                     serverCall.getServiceOperation() == ServiceOperation.RESET_EMAIL_PASSWORD||
-                                    serverCall.getServiceOperation() == ServiceOperation.RESET_EMAIL_PASSWORD_ADVANCED) {
+                                    serverCall.getServiceOperation() == ServiceOperation.RESET_EMAIL_PASSWORD_ADVANCED ||
+                                    serverCall.getServiceOperation() == ServiceOperation.GET_SERVER_VERSION) {
                                 isAuth = true;
-                            } else if (serverCall.getServiceName() == ServiceName.heartbeat) {
+                            } 
+                            else if (serverCall.getServiceName() == ServiceName.heartbeat) {
                                 iter.remove();
                             }
                         }
                     }
-
                     if(!_killSwitchEngaged) {
                         if (!isAuth) {
                             fakeErrorResponse(_statusCodeCache, _reasonCodeCache, _statusMessageCache);
-                        } else {
+                        } 
+                        else {
                             _retryCount = 0;
                             _expectedPacketId = _packetId++;
                             for (; ; ) {
                                 long timeoutTimeMs = getRetryTimeoutMillis(_retryCount);
                                 long startTime = System.currentTimeMillis();
-                                
                                 if (sendBundle()) {
                                     break;
                                 }
@@ -874,7 +877,6 @@ public class BrainCloudRestClient implements Runnable {
                 return true;
             }
             _expectedPacketId = NO_PACKET_EXPECTED;
-
             handleBundle(root);
             _bundleQueue.clear();
         } catch (java.net.SocketTimeoutException e) {
@@ -1091,7 +1093,8 @@ public class BrainCloudRestClient implements Runnable {
                                 e.printStackTrace();
                             }
                         }
-                    } else {
+                    } 
+                    else {
                         int reasonCode = 0;
                         if (!message.isNull("reason_code")) {
                             reasonCode = message.getInt("reason_code");

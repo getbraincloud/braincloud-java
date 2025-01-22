@@ -130,6 +130,15 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
     }
 
     @Test
+    public void testGetServerVersion() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        _client.getAuthenticationService().getServerVersion(tr);
+
+        tr.Run();
+    }
+
+    @Test
     public void testResetEmailPassword() throws Exception {
         String emailAddress = getUser(Users.UserA).email;
         TestResult tr = new TestResult(_wrapper);

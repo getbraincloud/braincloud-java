@@ -748,6 +748,53 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase {
         }
 
         @Test
+        public void testPostScoreToDynamicGroupLeaderboardUsingConfig() throws Exception {
+                TestResult tr = new TestResult(_wrapper);
+
+                _wrapper.getGroupService().createGroup(
+                                "testGroup",
+                                "test",
+                                false,
+                                new GroupACL(GroupACL.Access.ReadWrite, GroupACL.Access.ReadWrite),
+                                Helpers.createJsonPair("testInc", 123),
+                                Helpers.createJsonPair("test", "test"),
+                                Helpers.createJsonPair("test", "test"),
+                                tr);
+
+                tr.Run();
+
+                String leaderboardId = _groupLeaderboardId;
+                JSONObject data = tr.m_response.getJSONObject("data");
+                String groupId = data.getString("groupId");
+                long score = 99;
+                JSONObject scoreDataObject = new JSONObject();
+                scoreDataObject.put("nickname", "Tarnished");
+                String scoreData = scoreDataObject.toString();
+                JSONObject configJsonObject = new JSONObject();
+                configJsonObject.put("leaderboardType", "HIGH_VALUE");
+                configJsonObject.put("rotationType", "DAYS");
+                configJsonObject.put("numDaysToRotate", 4);
+                long date = TimeUtil.UTCDateTimeToUTCMillis(addDays(new Date(), 3));
+                configJsonObject.put("resetAt", date);
+                configJsonObject.put("retainedCount", 2);
+                String configJson = configJsonObject.toString();
+
+                System.out.println("\n\nActual API Test...");
+
+                _wrapper.getLeaderboardService().postScoreToDynamicGroupLeaderboardUsingConfig(leaderboardId, groupId, score,
+                                scoreData, configJson, tr);
+                tr.Run();
+
+                System.out.println("\n\nDeleting Group...");
+
+                _wrapper.getGroupService().deleteGroup(
+                                groupId,
+                                -1,
+                                tr);
+                tr.Run();
+        }
+
+        @Test
         public void testRemoveGroupScore() throws Exception {
                 TestResult tr = new TestResult(_wrapper);
 

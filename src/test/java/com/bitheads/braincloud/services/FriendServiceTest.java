@@ -121,6 +121,18 @@ public class FriendServiceTest extends TestFixtureBase
     }
 
     @Test
+    public void testGetProfileInfoForCredentialIfExists() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        _wrapper.getFriendService().getProfileInfoForCredentialIfExists(
+                getUser(Users.UserA).id,
+                AuthenticationType.Universal,
+                tr);
+
+        tr.Run();
+    }
+
+    @Test
     public void testGetProfileInfoForExternalAuthId() throws Exception
     {
         TestResult tr = new TestResult(_wrapper);
@@ -131,6 +143,19 @@ public class FriendServiceTest extends TestFixtureBase
                 tr);
 
         tr.RunExpectFail(400, ReasonCodes.INVALID_EXT_AUTH_TYPE);
+    }
+
+    @Test
+    public void testGetProfileInfoForExternalAuthIdIfExists() throws Exception
+    {
+        TestResult tr = new TestResult(_wrapper);
+
+        _wrapper.getFriendService().getProfileInfoForExternalAuthIdIfExists(
+                getUser(Users.UserA).id,
+                "testExternal",
+                tr);
+
+        tr.Run();
     }
 
     @Test

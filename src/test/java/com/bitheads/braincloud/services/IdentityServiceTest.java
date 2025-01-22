@@ -91,6 +91,17 @@ public class IdentityServiceTest extends TestFixtureBase {
     }
 
     @Test
+    public void testGetIdentityStatus() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+        AuthenticationType authenticationType = AuthenticationType.Universal;
+        String externalAuthName = "";
+
+        _wrapper.getIdentityService().getIdentityStatus(authenticationType, externalAuthName, tr);
+
+        tr.Run();
+    }
+
+    @Test
     public void testGetExpiredIdentities() throws Exception {
         TestResult tr = new TestResult(_wrapper);
         _wrapper.getIdentityService().getExpiredIdentities(tr);
