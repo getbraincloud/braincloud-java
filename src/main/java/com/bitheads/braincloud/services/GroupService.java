@@ -888,6 +888,32 @@ public class GroupService {
     }
 
     /**
+     * Set a group's access conditions.
+     * 
+     * Service - Group
+     * Operation - UPDATE_GROUP_ACL
+     * 
+     * @param groupId  ID of the group
+     * @param acl      The group's access control list. A null ACL implies default
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void updateGroupAcl(String groupId, GroupACL acl, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+
+            data.put(Parameter.groupId.name(), groupId);
+            if (acl != null) {
+                data.put(Parameter.acl.name(), new JSONObject(acl.toJsonString()));
+            }
+
+            ServerCall sc = new ServerCall(ServiceName.group, ServiceOperation.UPDATE_GROUP_ACL, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
      * Updates a group's data.
      *
      * Service Name - group
@@ -907,6 +933,34 @@ public class GroupService {
 
             ServerCall sc = new ServerCall(ServiceName.group,
                     ServiceOperation.UPDATE_GROUP_DATA, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Update the acl settings for a group entity, enforcing ownership.
+     * 
+     * Service - Group
+     * Operation - UPDATE_GROUP_ENTITY_ACL
+     * 
+     * @param groupId  The id of the group
+     * @param entityId The id of the entity to update
+     * @param acl      Access control list for the group entity
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void updateGroupEntityAcl(String groupId, String entityId, GroupACL acl, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+
+            data.put(Parameter.groupId.name(), groupId);
+            data.put(Parameter.entityId.name(), entityId);
+            if (acl != null) {
+                data.put(Parameter.acl.name(), new JSONObject(acl.toJsonString()));
+            }
+
+            ServerCall sc = new ServerCall(ServiceName.group, ServiceOperation.UPDATE_GROUP_ENTITY_ACL, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();

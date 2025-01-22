@@ -1,5 +1,6 @@
 package com.bitheads.braincloud.services;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
 
@@ -45,9 +46,21 @@ public class MailServiceTest extends TestFixtureBase {
         data.put("categories", new String[]{"unit-test"});
 
         _wrapper.getMailService().sendAdvancedEmailByAddress(
-                getUser(Users.UserC).email,
+                "testemail@email.com",
                 data.toString(),
                 tr);
+
+        tr.Run();
+    }
+
+    @Test
+    public void testSendAdvancedEmailByAddresses() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        String[] emailAddresses = {"testemail@email.com"};
+        String serviceParams =  "{\"fromAddress\":\"testemail@email.com\",\"fromName\":\"BC Client Team\",\"replyToAddress\":\"\",\"replyToName\":\"\",\"categories\":[],\"attachments\":[], \"subject\":\"Plain text email\", \"body\":\"This is a test from Java\"}";
+
+        _wrapper.getMailService().sendAdvancedEmailByAddresses(emailAddresses, serviceParams, tr);
 
         tr.Run();
     }

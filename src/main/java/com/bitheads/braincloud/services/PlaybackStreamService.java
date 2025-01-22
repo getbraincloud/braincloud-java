@@ -12,13 +12,14 @@ import org.json.JSONObject;
 public class PlaybackStreamService {
 
     private enum Parameter {
-        targetPlayerId,
+        eventData,
+        includeSharedData,
         initiatingPlayerId,
         maxNumStreams,
-        includeSharedData,
+        numDays,
         playbackStreamId,
-        eventData,
-        summary
+        summary,
+        targetPlayerId
     }
 
     private BrainCloudClient _client;
@@ -193,6 +194,37 @@ public class PlaybackStreamService {
             ServerCall sc = new ServerCall(ServiceName.playbackStream, ServiceOperation.GET_RECENT_STREAMS_FOR_TARGET_PLAYER, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
+        }
+    }
+
+    /**
+     * Protects a playback stream from being purged (but not deleted) for the given
+     * number of days (from now). If the number of days given is less than the
+     * normal purge interval days (from createdAt), the longer protection date is
+     * applied. Can only be called by users involved in the playback stream.
+     * 
+     * Service - Playback Stream
+     * Operation - PROTECT_STREAM_UNTIL
+     * 
+     * @param playbackStreamId Identifies the stream to protect
+     * @param numDays          The number of days the stream is to be protected
+     *                         (from now)
+     * @param callback         The method to be invoked when the server response is
+     *                         received
+     */
+    public void protectStreamUntil(String playbackStreamId, int numDays, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+
+            data.put(Parameter.playbackStreamId.name(), playbackStreamId);
+            data.put(Parameter.numDays.name(), numDays);
+
+            ServerCall sc = new ServerCall(ServiceName.playbackStream, ServiceOperation.PROTECT_STREAM_UNTIL, data,
+                    callback);
+
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
         }
     }
 

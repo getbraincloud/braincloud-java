@@ -1,5 +1,6 @@
 package com.bitheads.braincloud.services;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.After;
@@ -8,10 +9,6 @@ import org.junit.Test;
 
 import com.bitheads.braincloud.client.IEventCallback;
 
-
-/**
- * Created by prestonjennings on 15-09-02.
- */
 public class EventServiceTest extends TestFixtureBase implements IEventCallback {
     private final String _eventType = "test";
     private final String _eventDataKey = "testData";
@@ -41,6 +38,23 @@ public class EventServiceTest extends TestFixtureBase implements IEventCallback 
         Assert.assertTrue(_callbackRan);
 
         _wrapper.getClient().deregisterEventCallback();
+    }
+
+    @Test
+    public void testSendEventToProfiles() throws Exception{
+        TestResult tr = new TestResult(_wrapper);
+        String profileId = _wrapper.getStoredProfileId();
+        JSONArray toIdsList = new JSONArray();
+        toIdsList.put(profileId);
+        String toIds = toIdsList.toString();
+
+        _wrapper.getEventService().sendEventToProfiles(
+                toIds,
+                _eventType,
+                Helpers.createJsonPair(_eventDataKey, _eventData),
+                tr);
+
+        tr.Run();
     }
 
     @Override

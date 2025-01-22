@@ -118,6 +118,27 @@ public class AuthenticationService {
     }
 
     /**
+     * Get server version.
+     * 
+     * Service - Authentication
+     * Operation - GET_SERVER_VERSION
+     * 
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void getServerVersion(IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.appId.name(), _client.getAppId());
+
+            ServerCall sc = new ServerCall(ServiceName.authenticationV2, ServiceOperation.GET_SERVER_VERSION, data,
+                    callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
      * Authenticate a user anonymously with brainCloud - used for apps that
      * don't want to bother the user to login, or for users who are sensitive to
      * their privacy

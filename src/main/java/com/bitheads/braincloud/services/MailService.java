@@ -14,6 +14,7 @@ public class MailService {
     public enum Parameter {
         profileId,
         emailAddress,
+        emailAddresses,
         subject,
         body,
         serviceParams
@@ -97,6 +98,34 @@ public class MailService {
 
             ServerCall sc = new ServerCall(ServiceName.mail, ServiceOperation.SEND_ADVANCED_EMAIL_BY_ADDRESS, data, callback);
             _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Sends an advanced email to the specified email address.
+     * 
+     * Service Name - Mail
+     * Service Operation - SEND_ADVANCED_EMAIL_BY_ADDRESSES
+     * 
+     * @param emailAddresses The list of addresses to send the email to
+     * @param serviceParams Set of parameters dependant on the mail service configured
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void sendAdvancedEmailByAddresses(String[] emailAddresses, String serviceParams, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            JSONObject jsonServiceParams = new JSONObject(serviceParams);
+
+            data.put(Parameter.emailAddresses.name(), emailAddresses);
+            data.put(Parameter.serviceParams.name(), jsonServiceParams);
+
+            ServerCall sc = new ServerCall(ServiceName.mail, ServiceOperation.SEND_ADVANCED_EMAIL_BY_ADDRESSES, data,
+                    callback);
+
+            _client.sendRequest(sc);
+
         } catch (JSONException je) {
             je.printStackTrace();
         }
