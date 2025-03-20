@@ -65,7 +65,7 @@ public class BrainCloudRestClient implements Runnable {
     private boolean _cacheMessagesOnNetworkError = false;
     private long _lastSendTime;
     private long _lastReceivedPacket;
-    private boolean _useCompresssion = false;
+    private boolean _compressRequests = false;
 
     private int _uploadLowTransferTimeoutSecs = 120;
     private int _uploadLowTransferThresholdSecs = 50;
@@ -127,6 +127,10 @@ public class BrainCloudRestClient implements Runnable {
         _client = client;
         setPacketTimeoutsToDefault();
         resetErrorCache();
+    }
+
+    public void setCompressRequests(boolean compressRequests){
+        _compressRequests = compressRequests;
     }
 
     public void initialize(String serverUrl, String appId, String secretKey) {
@@ -230,14 +234,6 @@ public class BrainCloudRestClient implements Runnable {
 
             runFileUploadCallbacks();
         }
-    }
-
-    public void enableCompression() {
-        this._useCompresssion = true;
-    }
-
-    public void disableCompression() {
-        this._useCompresssion = false;
     }
 
     private void runFileUploadCallbacks() {
@@ -779,6 +775,7 @@ public class BrainCloudRestClient implements Runnable {
     }
 
     private boolean sendBundle() {
+        System.out.println("sending da bundle");
         HttpURLConnection connection = null;
         try {
             connection = (HttpURLConnection) new URL(_serverUrl).openConnection();
@@ -797,7 +794,7 @@ public class BrainCloudRestClient implements Runnable {
 
             connection.setRequestProperty("X-APPID", _appId);
 
-            if (_useCompresssion) {
+            if (_compressRequests) {
                 connection.setRequestProperty("Content-Encoding", "gzip");
                 connection.setRequestProperty("Accept-Encoding", "gzip");
             }
@@ -822,7 +819,7 @@ public class BrainCloudRestClient implements Runnable {
 
             DataOutputStream wr = null;
 
-            if (_useCompresssion) {
+            if (_compressRequests) {
                 GZIPOutputStream gzipOutputStream = new GZIPOutputStream(connection.getOutputStream());
                 wr = new DataOutputStream(gzipOutputStream);
             } else {
@@ -837,12 +834,17 @@ public class BrainCloudRestClient implements Runnable {
             // Get server response
             BufferedReader reader = null;
 
-            if (_useCompresssion) {
+            String encoding = connection.getHeaderField("Content-Encoding");
+            System.out.println("Content-Encoding: " + encoding);
+
+            if (encoding != null && encoding.equals(("gzip"))) {
                 GZIPInputStream gzipInputStream = new GZIPInputStream(connection.getInputStream());
                 reader = new BufferedReader(new InputStreamReader(gzipInputStream));
-            } else {
+            } 
+            else {
                 reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             }
+
             String line;
             StringBuilder builder = new StringBuilder();
             while ((line = reader.readLine()) != null) {

@@ -56,11 +56,13 @@ public class AuthenticationService {
         serverAuthCode,
         googleUserId,
         googleUserAccountEmail,
-        IdToken
+        IdToken,
+        compressResponses
     }
 
     private String _anonymousId;
     private String _profileId;
+    private boolean _compressResponses;
 
     public String getAnonymousId() {
         return _anonymousId;
@@ -76,6 +78,14 @@ public class AuthenticationService {
 
     public void setProfileId(String profileId) {
         _profileId = profileId;
+    }
+
+    public boolean getCompressResponses(){
+        return _compressResponses;
+    }
+
+    public void setCompressResponses(boolean compressResponses){
+        _compressResponses = compressResponses;
     }
 
     public void retryPreviousAuthenticate(IServerCallback callback)
@@ -654,6 +664,7 @@ public class AuthenticationService {
             message.put(Parameter.countryCode.name(), _client.getCountryCode());
             message.put(Parameter.languageCode.name(), _client.getLanguageCode());
             message.put(Parameter.timeZoneOffset.name(), _client.getTimeZoneOffset());
+            message.put(Parameter.compressResponses.name(), _compressResponses);
             message.put("clientLib", "java");
 
             if (StringUtil.IsOptionalParameterValid(extraJson)) {

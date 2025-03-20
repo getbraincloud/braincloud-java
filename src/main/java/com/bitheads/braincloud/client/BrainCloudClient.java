@@ -393,17 +393,27 @@ public class BrainCloudClient {
     }
 
     /**
-     * Enable compression in comms transactions
+     * Sets both compressed requests and responses to enabled/disabled
      */
-    public void enableCompression() {
-        _restClient.enableCompression();
+    public void enableCompression(boolean enableCompression) {
+        compressRequests(enableCompression);
+        compressResponses(enableCompression);
     }
 
     /**
-     * Disable compression in comms transactions
+     * Determines if requests to the brainCloud server should be compressed
+     * @param compressRequests
      */
-    public void disableCompression() {
-        _restClient.disableCompression();
+    public void compressRequests(boolean compressRequests){
+        _restClient.setCompressRequests(compressRequests);
+    }
+
+    /**
+     * Determines if the brainCloud server should compress responses
+     * @param compressResponses If true, responses from the server will be compressed
+     */
+    public void compressResponses(boolean compressResponses){
+        _authenticationService.setCompressResponses(compressResponses);
     }
 
     /**
