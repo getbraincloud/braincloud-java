@@ -834,7 +834,10 @@ public class BrainCloudRestClient implements Runnable {
             BufferedReader reader = null;
 
             String encoding = connection.getHeaderField("Content-Encoding");
-            System.out.println("Content-Encoding: " + encoding);
+
+            if(_loggingEnabled){
+                System.out.println("Content-Encoding: " + encoding);
+            }
 
             if (encoding != null && encoding.equals(("gzip"))) {
                 GZIPInputStream gzipInputStream = new GZIPInputStream(connection.getInputStream());
