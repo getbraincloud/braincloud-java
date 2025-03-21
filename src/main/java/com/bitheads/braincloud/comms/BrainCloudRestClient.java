@@ -775,7 +775,6 @@ public class BrainCloudRestClient implements Runnable {
     }
 
     private boolean sendBundle() {
-        System.out.println("sending da bundle");
         HttpURLConnection connection = null;
         try {
             connection = (HttpURLConnection) new URL(_serverUrl).openConnection();
