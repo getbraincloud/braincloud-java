@@ -129,6 +129,7 @@ public class TestFixtureBase {
 
         _client.initializeWithApps(m_serverUrl, m_appId, m_secretMap, m_appVersion);
         _client.enableLogging(true);
+        _client.enableCompression(true);
 
         if (shouldAuthenticate()) {
             TestResult tr = new TestResult(_wrapper);
