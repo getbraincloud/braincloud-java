@@ -79,7 +79,7 @@ public class RelayComms {
     private final int RELIABLE_BIT = 0x8000;
     private final int ORDERED_BIT  = 0x4000;
 
-    private final long CONNECT_RESEND_INTERVAL_MS = 500;
+    private final long CONNECT_RESEND_INTERVAL_MS = 2000;
 
     private final int MAX_PACKET_ID = 0xFFF;
     private final int PACKET_LOWER_THRESHOLD = MAX_PACKET_ID * 25 / 100;
