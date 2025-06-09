@@ -3,6 +3,7 @@ package com.bitheads.braincloud.services;
 import com.bitheads.braincloud.client.BrainCloudClient;
 import com.bitheads.braincloud.client.IServerCallback;
 import com.bitheads.braincloud.client.Platform;
+import com.bitheads.braincloud.client.ReasonCodes;
 import com.bitheads.braincloud.client.ServiceName;
 import com.bitheads.braincloud.client.ServiceOperation;
 import com.bitheads.braincloud.comms.ServerCall;
@@ -81,6 +82,19 @@ public class PushNotificationService {
      * @param callback The method to be invoked when the server response is received
      */
     public void registerPushNotificationToken(Platform platform, String token, IServerCallback callback) {
+        final int STATUS_CODE = 400;
+
+        if (token == null || token.trim().isEmpty()) {
+            if (callback != null) {
+                String errorJson = String.format(
+                    "{\"status\":%d,\"reason_code\":%d,\"message\":\"Invalid device token: %s\"}",
+                    STATUS_CODE, INVALID_DEVICE_TOKEN, token
+                );
+                callback.serverError(STATUS_CODE, INVALID_DEVICE_TOKEN, errorJson);
+            }
+            return;
+        }
+
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.deviceType.name(), platform.toString());
