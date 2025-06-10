@@ -45,6 +45,18 @@ public class PushNotificationServiceTest extends TestFixtureBase
         tr.Run();
     }
 
+    // TODO:  Test receives expected failure right away, but continues waiting for server response. Must improve TestResult setup to allow this.
+    // @Test
+    // public void testRegisterEmptyPushNotificationToken() throws Exception
+    // {
+    // TestResult tr = new TestResult(_wrapper);
+
+    // _wrapper.getPushNotificationService().registerPushNotificationToken(
+    // Platform.GooglePlayAndroid, "", tr);
+
+    // tr.RunExpectFail(400, ReasonCodes.INVALID_DEVICE_TOKEN);
+    // }
+
     @Test
     public void testSendSimplePushNotification() throws Exception
     {
