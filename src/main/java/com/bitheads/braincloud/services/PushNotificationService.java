@@ -88,9 +88,9 @@ public class PushNotificationService {
             if (callback != null) {
                 String errorJson = String.format(
                     "{\"status\":%d,\"reason_code\":%d,\"message\":\"Invalid device token: %s\"}",
-                    STATUS_CODE, INVALID_DEVICE_TOKEN, token
+                    STATUS_CODE, ReasonCodes.INVALID_DEVICE_TOKEN, token
                 );
-                callback.serverError(STATUS_CODE, INVALID_DEVICE_TOKEN, errorJson);
+                callback.serverError(ServiceName.pushNotification, ServiceOperation.REGISTER, STATUS_CODE, ReasonCodes.INVALID_DEVICE_TOKEN, errorJson);
             }
             return;
         }
