@@ -90,6 +90,10 @@ public class PushNotificationService {
                     "{\"status\":%d,\"reason_code\":%d,\"message\":\"Invalid device token: %s\"}",
                     STATUS_CODE, ReasonCodes.INVALID_DEVICE_TOKEN, token
                 );
+
+                if(_client.getRestClient().getLoggingEnabled()){
+                    System.out.println("Push notification token not registered - empty/null tokens are invalid");
+                }
                 callback.serverError(ServiceName.pushNotification, ServiceOperation.REGISTER, STATUS_CODE, ReasonCodes.INVALID_DEVICE_TOKEN, errorJson);
             }
             return;
