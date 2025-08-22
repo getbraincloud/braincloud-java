@@ -19,7 +19,9 @@ public class AppStoreService {
         userCurrency,
         purchaseData,
         transactionId,
-        transactionData
+        transactionData,
+        iapId,
+        payload
     }
 
     private BrainCloudClient _client;
@@ -190,6 +192,41 @@ public class AppStoreService {
             data.put(Parameter.transactionData.name(), new JSONObject(jsonTransactionData));
 
             ServerCall sc = new ServerCall(ServiceName.appStore, ServiceOperation.FINALIZE_PURCHASE, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+    * Before making a purchase with the IAP store, you will need to store the purchase
+    * payload context on brainCloud so that the purchase can be verified for the proper IAP product.
+    * This payload will be used during the VerifyPurchase method to ensure the
+    * user properly paid for the correct product before awarding them the IAP product.
+    *
+    * Service Name - AppStore
+    * Service Operation - CachePurchasePayloadContext
+    *
+    * @param storeId The store platform. Valid stores are:
+    * - itunes
+    * - facebook
+    * - appworld
+    * - steam
+    * - windows
+    * - windowsPhone
+    * - googlePlay
+    * @param iapId The IAP product Id as configured for the product on brainCloud.
+    * @param payload The payload retrieved for the IAP product after the GetSalesInventory method.
+    * @param callback The method to be invoked when the server response is received
+    */
+    public void cachePurchaseContext(String storeId, String iapId, String payload, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.storeId.name(), storeId);
+            data.put(Parameter.iapId.name(), iapId);
+            data.put(Parameter.payload.name(), payload);
+
+            ServerCall sc = new ServerCall(ServiceName.appStore, ServiceOperation.CACHE_PURCHASE_PAYLOAD_CONTEXT, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
