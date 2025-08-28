@@ -104,32 +104,32 @@ public class TournamentServiceTest extends TestFixtureBase {
     }
 
     @Test
-	 @SuppressWarnings("deprecation")
-    public void postTournamentScore() throws Exception {
+    public void postTournamentScoreUTC() throws Exception {
         joinTestTournament();
         TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getTournamentService().postTournamentScore(
+        _wrapper.getTournamentService().postTournamentScoreUTC(
                 _leaderboardId,
                 200,
                 Helpers.createJsonPair("test", 1),
-                new Date(),
+                new Date().getTime(),
                 tr);
 
         tr.Run();
     }
 
     @Test
-	 @SuppressWarnings("deprecation")
-    public void postTournamentScoreWithResults() throws Exception {
+    public void postTournamentScoreWithResultsUTC() throws Exception {
         joinTestTournament();
         TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getTournamentService().postTournamentScoreWithResults(
+        long score = 200;
+
+        _wrapper.getTournamentService().postTournamentScoreWithResultsUTC(
                 _leaderboardId,
-                200,
+                score,
                 Helpers.createJsonPair("test", 1),
-                new Date(),
+                new Date().getTime(),
                 SocialLeaderboardService.SortOrder.HIGH_TO_LOW,
                 10,
                 10,

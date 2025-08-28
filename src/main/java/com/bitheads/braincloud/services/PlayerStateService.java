@@ -202,28 +202,6 @@ public class PlayerStateService {
      *
      * @param name The name to be picked
      * @param callback The callback handler
-     *
-     * @deprecated Use updateUserName instead - removal September 1, 2021
-     */
-    public void updateName(String name,
-                               IServerCallback callback) {
-        JSONObject data = new JSONObject();
-        try {
-            data.put(Parameter.playerName.name(), name);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        ServerCall sc = new ServerCall(ServiceName.playerState,
-                ServiceOperation.UPDATE_NAME, data, callback);
-        _client.sendRequest(sc);
-    }
-
-    /**
-     * Sets the user's visible name
-     *
-     * @param name The name to be picked
-     * @param callback The callback handler
      */
     public void updateUserName(String name,
                                IServerCallback callback) {
