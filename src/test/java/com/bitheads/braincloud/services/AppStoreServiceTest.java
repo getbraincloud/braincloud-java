@@ -67,10 +67,10 @@ public class AppStoreServiceTest extends TestFixtureBase
     }
 
         @Test
-    public void testCachePurchaseContext() throws Exception {
+    public void testCachePurchasePayloadContext() throws Exception {
         TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getAppStoreService().cachePurchaseContext("_invalid_store_id_", "_invalid_transaction_id_", "{}", tr);
+        _wrapper.getAppStoreService().cachePurchasePayloadContext("_invalid_store_id_", "_invalid_transaction_id_", "{}", tr);
         tr.RunExpectFail(StatusCodes.BAD_REQUEST, ReasonCodes.INVALID_STORE_ID);
     }
 }
