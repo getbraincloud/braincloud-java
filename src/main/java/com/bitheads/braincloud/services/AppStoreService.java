@@ -219,7 +219,7 @@ public class AppStoreService {
     * @param payload The payload retrieved for the IAP product after the GetSalesInventory method.
     * @param callback The method to be invoked when the server response is received
     */
-    public void cachePurchaseContext(String storeId, String iapId, String payload, IServerCallback callback) {
+    public void cachePurchasePayloadContext(String storeId, String iapId, String payload, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.storeId.name(), storeId);
