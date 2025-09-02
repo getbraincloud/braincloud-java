@@ -101,12 +101,11 @@ public class PlayerStateServiceTest extends TestFixtureBase
     }
 
     @Test
-	 @SuppressWarnings("deprecation")
     public void testUpdatePlayerName() throws Exception
     {
         TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getPlayerStateService().updateName(
+        _wrapper.getPlayerStateService().updateUserName(
                 "ABC",
                 tr);
 
@@ -114,12 +113,11 @@ public class PlayerStateServiceTest extends TestFixtureBase
     }
 
     @Test
-	 @SuppressWarnings("deprecation")
     public void testUpdatePlayerNameWithEmoji() throws Exception
     {
         TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getPlayerStateService().updateName(
+        _wrapper.getPlayerStateService().updateUserName(
                 "\uD83D\uDE0A \uD83D\uDE0A \uD83D\uDE0A",
                 tr);
 

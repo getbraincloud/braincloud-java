@@ -725,57 +725,6 @@ public class SocialLeaderboardService {
     }
 
     /**
-     * Post the players score to the given social leaderboard.
-     * You can optionally send a user-defined json string of data with the posted
-     * score.
-     * This string could include information relevant to the posted score.
-     *
-     * @param leaderboardId   The leaderboard to post to
-     * @param score           The score to post
-     * @param jsonData        Optional user-defined data to post with the score
-     * @param leaderboardType Leaderboard type
-     * @param rotationType    Type of rotation
-     * @param rotationReset   Date to next rotate rotation (date in millis UTC)
-     * @param retainedCount   How many previous rotations to keep
-     * @param callback        The callback handler
-     *
-     * @deprecated Use postScoreToDynamicLeaderboardUTC instead - Removal September
-     *             1, 2021
-     */
-    public void postScoreToDynamicLeaderboard(
-            String leaderboardId,
-            long score,
-            String jsonData,
-            String leaderboardType,
-            String rotationType,
-            Date rotationReset,
-            int retainedCount,
-            IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.leaderboardId.name(), leaderboardId);
-            data.put(Parameter.score.name(), score);
-            if (StringUtil.IsOptionalParameterValid(jsonData)) {
-                data.put(Parameter.data.name(), new JSONObject(jsonData));
-            }
-            data.put(Parameter.leaderboardType.name(), leaderboardType);
-            data.put(Parameter.rotationType.name(), rotationType);
-
-            if (rotationReset != null) {
-                data.put(Parameter.rotationResetTime.name(), rotationReset.getTime());
-            }
-
-            data.put(Parameter.retainedCount.name(), retainedCount);
-
-            ServerCall sc = new ServerCall(ServiceName.leaderboard,
-                    ServiceOperation.POST_SCORE_DYNAMIC, data, callback);
-            _client.sendRequest(sc);
-        } catch (JSONException je) {
-            je.printStackTrace();
-        }
-    }
-
-    /**
      * Post the player's score to the given social leaderboard, dynamically creating
      * the leaderboard if it does not exist yet. To create new leaderboard,
      * configJson must specify leaderboardType, rotationType, resetAt, and
@@ -972,58 +921,6 @@ public class SocialLeaderboardService {
             ServerCall sc = new ServerCall(ServiceName.leaderboard,
                     ServiceOperation.POST_GROUP_SCORE_DYNAMIC_USING_CONFIG, data, callback);
 
-            _client.sendRequest(sc);
-        } catch (JSONException je) {
-            je.printStackTrace();
-        }
-    }
-
-    /**
-     * Post the players score to the given social leaderboard. Pass leaderboard
-     * config data to dynamically create if necessary. You can optionally send a
-     * user-defined json String of data with the posted score. This String could
-     * include information relevant to the posted score.
-     *
-     * @param leaderboardId   The leaderboard to post to
-     * @param score           The score to post
-     * @param jsonData        Optional user-defined data to post with the score
-     * @param leaderboardType leaderboard type
-     * @param rotationReset   Date to reset the leaderboard
-     * @param retainedCount   How many rotations to keep
-     * @param numDaysToRotate How many days between each rotation
-     * @param callback        The callback.
-     * 
-     * @deprecated Use postScoreToDynamicLeaderboardDaysUTC instead - Removal
-     *             September 1, 2021
-     */
-    public void postScoreToDynamicLeaderboardDays(
-            String leaderboardId,
-            long score,
-            String jsonData,
-            String leaderboardType,
-            Date rotationReset,
-            int retainedCount,
-            int numDaysToRotate,
-            IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.leaderboardId.name(), leaderboardId);
-            data.put(Parameter.score.name(), score);
-            if (StringUtil.IsOptionalParameterValid(jsonData)) {
-                data.put(Parameter.data.name(), new JSONObject(jsonData));
-            }
-            data.put(Parameter.leaderboardType.name(), leaderboardType);
-            data.put(Parameter.rotationType.name(), "DAYS");
-            data.put(Parameter.numDaysToRotate.name(), numDaysToRotate);
-
-            if (rotationReset != null) {
-                data.put(Parameter.rotationResetTime.name(), rotationReset.getTime());
-            }
-
-            data.put(Parameter.retainedCount.name(), retainedCount);
-
-            ServerCall sc = new ServerCall(ServiceName.leaderboard,
-                    ServiceOperation.POST_SCORE_DYNAMIC, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -1388,56 +1285,6 @@ public class SocialLeaderboardService {
             }
             ServerCall sc = new ServerCall(ServiceName.leaderboard,
                     ServiceOperation.POST_GROUP_SCORE, data, callback);
-            _client.sendRequest(sc);
-        } catch (JSONException je) {
-            je.printStackTrace();
-        }
-    }
-
-    /**
-     * Post the group score to the given group leaderboard and dynamically create if
-     * necessary.
-     * LeaderboardType, rotationType, rotationReset, and retainedCount are required.
-     *
-     * Service Name - leaderboard
-     * Service Operation - POST_GROUP_SCORE_DYNAMIC
-     *
-     * @param leaderboardId   the leaderboard
-     * @param groupId         the groups id
-     * @param score           the score you want to post
-     * @param data            Optional user-defined data to post with the score.
-     * @param leaderboardType the type of leaderboard
-     * @param rotationType    daily, weekly, monthly
-     * @param rotationReset   time that rotation resets
-     * @param retainedCount   times to retain the leaderboard
-     * @param callback        The method to be invoked when the server response is
-     *                        received
-     *
-     * @deprecated Use postScoreToDynamicGroupLeaderboardUTC instead - Removal
-     *             September 1, 2021
-     */
-    public void postScoreToDynamicGroupLeaderboard(String leaderboardId, String groupId, long score, String data,
-            String leaderboardType, String rotationType, Date rotationReset, int retainedCount,
-            IServerCallback callback) {
-        try {
-            JSONObject message = new JSONObject();
-            message.put(Parameter.leaderboardId.name(), leaderboardId);
-            message.put(Parameter.groupId.name(), groupId);
-            message.put(Parameter.score.name(), score);
-            if (StringUtil.IsOptionalParameterValid(data)) {
-                message.put(Parameter.data.name(), new JSONObject(data));
-            }
-            message.put(Parameter.leaderboardType.name(), leaderboardType);
-            message.put(Parameter.rotationType.name(), rotationType);
-
-            if (rotationReset != null) {
-                message.put(Parameter.rotationResetTime.name(), rotationReset.getTime());
-            }
-
-            message.put(Parameter.retainedCount.name(), retainedCount);
-
-            ServerCall sc = new ServerCall(ServiceName.leaderboard,
-                    ServiceOperation.POST_GROUP_SCORE_DYNAMIC, message, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();

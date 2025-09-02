@@ -142,18 +142,6 @@ public class BrainCloudClient {
         return _rttComms.getConnectionId();
     }
 
-    /**
-     * @deprecated Use of the *singleton* has been deprecated. We recommend that you create your own *variable* to hold an instance of the brainCloudWrapper. Explanation here: http://getbraincloud.com/apidocs/wrappers-clients-and-inconvenient-singletons/
-     * @return AssertionError warning of disabled singleton usage
-     */
-    public static BrainCloudClient getInstance() {
-
-        throw new AssertionError(BrainCloudClient.SingletonUseErrorMessage);
-    }
-
-    public static void setInstance(BrainCloudClient client) {
-    }
-
     public BrainCloudRestClient getRestClient() {
         return _restClient;
     }

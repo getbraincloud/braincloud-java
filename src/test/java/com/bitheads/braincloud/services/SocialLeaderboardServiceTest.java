@@ -74,7 +74,7 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase {
 
         @Test
         public void testGetMultiSocialLeaderboard() throws Exception {
-                postScoreToDynamicLeaderboard();
+                postScoreToDynamicLeaderboardUTC();
                 postScoreToNonDynamicLeaderboard();
 
                 TestResult tr = new TestResult(_wrapper);
@@ -273,11 +273,6 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase {
         }
 
         @Test
-        public void testPostScoreToDynamicLeaderboard() throws Exception {
-                postScoreToDynamicLeaderboard();
-        }
-
-        @Test
         public void testPostScoreToDynamicLeaderboardUsingConfig() throws Exception {
                 TestResult tr = new TestResult(_wrapper);
 
@@ -316,24 +311,6 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase {
         }
 
         @Test
-        @SuppressWarnings("deprecation")
-        public void testPostScoreToDynamicLeaderboardDays() throws Exception {
-                TestResult tr = new TestResult(_wrapper);
-
-                _wrapper.getLeaderboardService().postScoreToDynamicLeaderboardDays(
-                                _dynamicLeaderboardId,
-                                100,
-                                Helpers.createJsonPair("testDataKey", 400),
-                                SocialLeaderboardService.SocialLeaderboardType.LOW_VALUE.toString(),
-                                null,
-                                5,
-                                3,
-                                tr);
-
-                tr.Run();
-        }
-
-        @Test
         public void testPostScoreToDynamicLeaderboardDaysUTC() throws Exception {
                 TestResult tr = new TestResult(_wrapper);
 
@@ -351,17 +328,20 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase {
         }
 
         @Test
-        @SuppressWarnings("deprecation")
         public void testPostScoreToDynamicLeaderboardLowValue() throws Exception {
                 TestResult tr = new TestResult(_wrapper);
 
-                _wrapper.getLeaderboardService().postScoreToDynamicLeaderboard(
+                long score = 100;
+                Date rotationReset = new Date(System.currentTimeMillis());
+                long rotationResetUTC = rotationReset.getTime();
+
+                _wrapper.getLeaderboardService().postScoreToDynamicLeaderboardUTC(
                                 _dynamicLeaderboardId,
-                                100,
+                                score,
                                 Helpers.createJsonPair("testDataKey", 400),
                                 SocialLeaderboardService.SocialLeaderboardType.LOW_VALUE.toString(),
                                 SocialLeaderboardService.RotationType.NEVER.toString(),
-                                null,
+                                rotationResetUTC,
                                 5,
                                 tr);
 
@@ -369,17 +349,18 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase {
         }
 
         @Test
-        @SuppressWarnings("deprecation")
         public void testPostScoreToDynamicLeaderboardCumulative() throws Exception {
                 TestResult tr = new TestResult(_wrapper);
 
-                _wrapper.getLeaderboardService().postScoreToDynamicLeaderboard(
+                long score = 100;
+
+                _wrapper.getLeaderboardService().postScoreToDynamicLeaderboardUTC(
                                 _dynamicLeaderboardId,
-                                100,
+                                score,
                                 Helpers.createJsonPair("testDataKey", 400),
                                 SocialLeaderboardService.SocialLeaderboardType.CUMULATIVE.toString(),
                                 SocialLeaderboardService.RotationType.WEEKLY.toString(),
-                                addDays(new Date(), 3),
+                                addDays(new Date(), 3).getTime(),
                                 5,
                                 tr);
 
@@ -387,17 +368,18 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase {
         }
 
         @Test
-        @SuppressWarnings("deprecation")
         public void testPostScoreToDynamicLeaderboardLastValue() throws Exception {
                 TestResult tr = new TestResult(_wrapper);
 
-                _wrapper.getLeaderboardService().postScoreToDynamicLeaderboard(
+                long score = 100;
+
+                _wrapper.getLeaderboardService().postScoreToDynamicLeaderboardUTC(
                                 _dynamicLeaderboardId,
-                                100,
+                                score,
                                 Helpers.createJsonPair("testDataKey", 400),
                                 SocialLeaderboardService.SocialLeaderboardType.LAST_VALUE.toString(),
                                 SocialLeaderboardService.RotationType.DAILY.toString(),
-                                addDays(new Date(), 2),
+                                addDays(new Date(), 2).getTime(),
                                 3,
                                 tr);
 
@@ -406,7 +388,7 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase {
 
         @Test
         public void testPostScoreToDynamicLeaderboardNullRotationTime() throws Exception {
-                postScoreToDynamicLeaderboard();
+                postScoreToDynamicLeaderboardUTC();
         }
 
         @Test
@@ -581,7 +563,7 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase {
 
         @Test
         public void testGetPlayerScoresFromLeaderboards() throws Exception {
-                postScoreToDynamicLeaderboard();
+                postScoreToDynamicLeaderboardUTC();
                 postScoreToNonDynamicLeaderboard();
 
                 TestResult tr = new TestResult(_wrapper);
@@ -621,47 +603,6 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase {
                                 groupId,
                                 0,
                                 Helpers.createJsonPair("test", "stuff"),
-                                tr);
-                tr.Run();
-
-                _wrapper.getGroupService().deleteGroup(
-                                groupId,
-                                -1,
-                                tr);
-                tr.Run();
-        }
-
-        @Test
-        @SuppressWarnings("deprecation")
-        public void testPostScoreToDynamicGroupLeaderboard() throws Exception {
-                TestResult tr = new TestResult(_wrapper);
-
-                _wrapper.getGroupService().createGroup(
-                                "testGroup",
-                                "test",
-                                false,
-                                new GroupACL(GroupACL.Access.ReadWrite, GroupACL.Access.ReadWrite),
-                                Helpers.createJsonPair("testInc", 123),
-                                Helpers.createJsonPair("test", "test"),
-                                Helpers.createJsonPair("test", "test"),
-                                tr);
-
-                tr.Run();
-
-                Date date = new Date();
-                date.setTime(date.getTime() + 120 * 1000);
-
-                JSONObject data = tr.m_response.getJSONObject("data");
-                String groupId = data.getString("groupId");
-                _wrapper.getLeaderboardService().postScoreToDynamicGroupLeaderboard(
-                                _groupLeaderboardId,
-                                groupId,
-                                0,
-                                Helpers.createJsonPair("test", "stuff"),
-                                "HIGH_VALUE",
-                                "WEEKLY",
-                                date,
-                                2,
                                 tr);
                 tr.Run();
 
@@ -906,17 +847,16 @@ public class SocialLeaderboardServiceTest extends TestFixtureBase {
                 tr.Run();
         }
 
-        @SuppressWarnings("deprecation")
-        public void postScoreToDynamicLeaderboard() throws Exception {
+        public void postScoreToDynamicLeaderboardUTC() throws Exception {
                 TestResult tr = new TestResult(_wrapper);
 
-                _wrapper.getLeaderboardService().postScoreToDynamicLeaderboard(
+                _wrapper.getLeaderboardService().postScoreToDynamicLeaderboardUTC(
                                 _dynamicLeaderboardId + "_" + (int) (Math.random() * 10000000),
                                 100,
                                 Helpers.createJsonPair("testDataKey", 400),
                                 SocialLeaderboardService.SocialLeaderboardType.LAST_VALUE.toString(),
                                 SocialLeaderboardService.RotationType.NEVER.toString(),
-                                addDays(new Date(), 3),
+                                addDays(new Date(), 3).getTime(),
                                 5,
                                 tr);
 
