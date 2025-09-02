@@ -87,7 +87,7 @@ public class RelayService {
     /**
      * Set the ping interval. Ping allows to keep the connection
      * alive, but also inform the player of his current ping.
-     * The default is 1000 miliseconds interval. (1 seconds)
+     * The default is 1 second interval.
      *
      * @param intervalSeconds Seconds between pings.
      */

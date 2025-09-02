@@ -1343,7 +1343,7 @@ public class RelayComms {
 
         // Ping. Which also works as a heartbeat
         if (_isConnected) {
-            if ((System.currentTimeMillis() * 1000) - _lastPingTime >= _pingIntervalSeconds) {
+            if (System.currentTimeMillis() - _lastPingTime >= _pingIntervalSeconds * 1000) {
                 sendPing();
             }
         }
