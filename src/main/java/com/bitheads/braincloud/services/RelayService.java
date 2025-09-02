@@ -89,10 +89,10 @@ public class RelayService {
      * alive, but also inform the player of his current ping.
      * The default is 1000 miliseconds interval. (1 seconds)
      *
-     * @param intervalMS Seconds between pings.
+     * @param intervalSeconds Seconds between pings.
      */
-    public void setPingInterval(int intervalMS) {
-        _client.getRelayComms().setPingInterval(intervalMS);
+    public void setPingInterval(int intervalSeconds) {
+        _client.getRelayComms().setPingInterval(intervalSeconds);
     }
 
     /**
