@@ -242,7 +242,7 @@ public class RelayComms {
     private ArrayList<HashMap<Integer, Integer>> _trackedPacketIds = new ArrayList<HashMap<Integer, Integer>>();
     
     private int _ping = 999;
-    private int _pingIntervalMS = 1000;
+    private int _pingIntervalSeconds = 1;
     private long _lastPingTime = 0;
     private long _lastRecvTime = 0;
 
@@ -463,8 +463,12 @@ public class RelayComms {
         return _ping;
     }
 
-    public void setPingInterval(int intervalMS) {
-        _pingIntervalMS = intervalMS;
+    public void setPingInterval(int intervalSeconds) {
+        if (intervalSeconds > 999) {
+            intervalSeconds /= 1000;
+        }
+        
+        _pingIntervalSeconds = intervalSeconds;
     }
 
     public String getOwnerProfileId() {
@@ -1339,7 +1343,7 @@ public class RelayComms {
 
         // Ping. Which also works as a heartbeat
         if (_isConnected) {
-            if (System.currentTimeMillis() - _lastPingTime >= _pingIntervalMS) {
+            if (System.currentTimeMillis() - _lastPingTime >= _pingIntervalSeconds * 1000) {
                 sendPing();
             }
         }
