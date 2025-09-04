@@ -59,7 +59,7 @@ public class TestUser
             {
                 _wrapper.getMatchMakingService().enableMatchMaking(tr);
                 tr.Run();
-                _wrapper.getPlayerStateService().updateName(id, tr);
+                _wrapper.getPlayerStateService().updateUserName(id, tr);
                 tr.Run();
                 _wrapper.getPlayerStateService().updateContactEmail("braincloudunittest@gmail.com", tr);
                 tr.Run();

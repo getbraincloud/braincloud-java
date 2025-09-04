@@ -160,40 +160,6 @@ public class CustomEntityService {
     /**
      * Retrieves first page of custom entities from the server based on the custom entity type and specified query context, enforcing ownership/ACL permissions.
      *
-     * @param entityType The entity type as defined by the user
-     * @param rowsPerPage Quantity of rows per page
-     * @param searchJson Data to look for
-     * @param sortJson Data to sort by
-     * @param doCount For collections with more than 1,000 records, it is recommended that doCount be set to false for better performance.
-     * @param callback Callback.
-     * @deprecated Use getEntityPage instead - removal after October 26 2021
-     */
-    @Deprecated
-    public void getPage(String entityType, int rowsPerPage, String searchJson, String sortJson, Boolean doCount,
-                         IServerCallback callback) {
-
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.entityType.name(), entityType);
-            data.put(Parameter.rowsPerPage.name(), rowsPerPage);
-            JSONObject searchData = new JSONObject(searchJson);
-            data.put(Parameter.searchJson.name(), searchData);
-            JSONObject sortData = new JSONObject(sortJson);
-            data.put(Parameter.sortJson.name(), sortData);
-            data.put(Parameter.doCount.name(), doCount);
-
-            ServerCall serverCall = new ServerCall(ServiceName.customEntity,
-                    ServiceOperation.GET_PAGE, data, callback);
-            _client.sendRequest(serverCall);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Retrieves first page of custom entities from the server based on the custom entity type and specified query context, enforcing ownership/ACL permissions.
-     *
      * @param entityType    The entity type as defined by the user
      * @param context       A context object describing the desired paging behaviour
      * @param callback      Callback.
@@ -217,44 +183,19 @@ public class CustomEntityService {
     }
 
     /**
-     * Gets the page of custom entities from the server based on the encoded context and specified page offset, enforcing ownership/ACL permissions.
+     * Gets the page of custom entities from the server based on the encoded context
+     * and specified page offset, enforcing ownership/ACL permissions.
      *
-     * @param entityType    The entity type as defined by the user
-     * @param context       The context string returned from the server from a previous call to GetPage or GetPageOffse
-     * @param pageOffset    The positive or negative page offset to fetch. Uses the last page retrieved using the context string to determine a starting point.
-     * @param callback      Callback.
-     *
-     * @deprecated Use getEntityPageOffset instead - removal after October 26 2021
-     */
-    @Deprecated
-    public void getPageOffset(String entityType, String context, int pageOffset,
-                         IServerCallback callback) {
-
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.entityType.name(), entityType);
-            data.put(Parameter.context.name(), context);
-            data.put(Parameter.pageOffset.name(), pageOffset);
-
-            ServerCall serverCall = new ServerCall(ServiceName.customEntity,
-                    ServiceOperation.GET_PAGE_BY_OFFSET, data, callback);
-            _client.sendRequest(serverCall);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-        /**
-     * Gets the page of custom entities from the server based on the encoded context and specified page offset, enforcing ownership/ACL permissions.
-     *
-     * @param entityType    The entity type as defined by the user
-     * @param context       The context string returned from the server from a previous call to GetPage or GetPageOffset.
-     * @param pageOffset    The positive or negative page offset to fetch. Uses the last page retrieved using the context string to determine a starting point.
-     * @param callback      Callback.
+     * @param entityType The entity type as defined by the user
+     * @param context    The context string returned from the server from a previous
+     *                   call to GetPage or GetPageOffset.
+     * @param pageOffset The positive or negative page offset to fetch. Uses the
+     *                   last page retrieved using the context string to determine a
+     *                   starting point.
+     * @param callback   Callback.
      */
     public void getEntityPageOffset(String entityType, String context, int pageOffset,
-                         IServerCallback callback) {
+            IServerCallback callback) {
 
         try {
             JSONObject data = new JSONObject();

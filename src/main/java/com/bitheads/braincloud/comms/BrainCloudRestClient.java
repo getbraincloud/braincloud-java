@@ -65,7 +65,7 @@ public class BrainCloudRestClient implements Runnable {
     private boolean _cacheMessagesOnNetworkError = false;
     private long _lastSendTime;
     private long _lastReceivedPacket;
-    private boolean _compressRequests = false;
+    private boolean _compressRequests = true;
 
     private int _uploadLowTransferTimeoutSecs = 120;
     private int _uploadLowTransferThresholdSecs = 50;

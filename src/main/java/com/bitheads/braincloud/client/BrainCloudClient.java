@@ -79,7 +79,7 @@ public class BrainCloudClient {
 
 
 
-    private final static String BRAINCLOUD_VERSION = "5.7.0";
+    private final static String BRAINCLOUD_VERSION = "5.8.0";
 
     private BrainCloudRestClient _restClient;
     private RTTComms _rttComms;
@@ -140,18 +140,6 @@ public class BrainCloudClient {
     public String getRttConnectionId()
     {
         return _rttComms.getConnectionId();
-    }
-
-    /**
-     * @deprecated Use of the *singleton* has been deprecated. We recommend that you create your own *variable* to hold an instance of the brainCloudWrapper. Explanation here: http://getbraincloud.com/apidocs/wrappers-clients-and-inconvenient-singletons/
-     * @return AssertionError warning of disabled singleton usage
-     */
-    public static BrainCloudClient getInstance() {
-
-        throw new AssertionError(BrainCloudClient.SingletonUseErrorMessage);
-    }
-
-    public static void setInstance(BrainCloudClient client) {
     }
 
     public BrainCloudRestClient getRestClient() {

@@ -62,7 +62,7 @@ public class AuthenticationService {
 
     private String _anonymousId;
     private String _profileId;
-    private boolean _compressResponses;
+    private boolean _compressResponses = true;
 
     public String getAnonymousId() {
         return _anonymousId;
