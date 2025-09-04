@@ -873,7 +873,7 @@ public class SocialLeaderboardService {
      * the group leaderboard if it does not exist yet. To create new leaderboard,
      * configJson must specify leaderboardType, rotationType, resetAt, and
      * retainedCount, at a minimum, with support to optionally specify an expiry in
-     * minutes.
+     * minutes
      * 
      * @param leaderboardId The leaderboard to post to.
      * @param groupId       The id of the group.
@@ -926,6 +926,8 @@ public class SocialLeaderboardService {
             je.printStackTrace();
         }
     }
+
+    
 
     /**
      * Post the players score to the given social leaderboard. Pass leaderboard
