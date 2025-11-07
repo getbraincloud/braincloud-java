@@ -5,7 +5,13 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
+import org.junit.Assert;
 import org.junit.Test;
+
+import com.bitheads.braincloud.client.ReasonCodes;
+import com.bitheads.braincloud.client.ServiceName;
+import com.bitheads.braincloud.client.ServiceOperation;
+import com.bitheads.braincloud.client.StatusCodes;
 
 public class BrainCloudWrapperTest extends TestFixtureNoAuth {
     
@@ -133,5 +139,45 @@ public class BrainCloudWrapperTest extends TestFixtureNoAuth {
         // Check stored profile ID
         System.out.println("Verifying that the STORED PROFILE ID was saved (i.e. not forgotten)");
         assertEquals(profileID, _wrapper.getStoredProfileId());
+    }
+
+    @Test
+    public void ReasonCodeAccess(){        
+        int reasonCode = ReasonCodes.MERGE_PROFILES;
+        int expectedValue = 40212;
+
+        System.out.println("Reason Code MERGE_PROFILES = " + reasonCode);
+
+        Assert.assertEquals(expectedValue, reasonCode);
+    }
+
+    @Test
+    public void ServiceNameAccess(){
+        String serviceName = ServiceName.appStore.name();
+        String expectedValue = "appStore";
+
+        System.out.println("Service Name appStore = " + serviceName);
+
+        Assert.assertEquals(expectedValue, serviceName);
+    }
+
+    @Test
+    public void ServiceOperationAccess(){
+        String serviceOperation = ServiceOperation.ABANDON.name();
+        String expectedValue = "ABANDON";
+
+        System.out.println("Service Operation ABANDON = " + serviceOperation);
+
+        Assert.assertEquals(expectedValue, serviceOperation);
+    }
+
+    @Test
+    public void StatusCodeAccess(){
+        int statusCode = StatusCodes.CLIENT_NETWORK_ERROR;
+        int expectedValue = 900;
+
+        System.out.println("Status Code CLIENT_NETWORK_ERROR = " + statusCode);
+
+        Assert.assertEquals(expectedValue, statusCode);
     }
 }
