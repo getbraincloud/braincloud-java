@@ -4,10 +4,6 @@ import org.junit.Test;
 
 import com.bitheads.braincloud.client.ReasonCodes;
 
-/**
- * Created by bradleyh on 1/9/2017.
- */
-
 public class UserItemsServiceTest extends TestFixtureBase {
 
     @Test
@@ -23,6 +19,19 @@ public class UserItemsServiceTest extends TestFixtureBase {
     }
 
     @Test
+    public void awardUserItemWithOptions() throws Exception {
+        
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getUserItemsService().awardUserItemWithOptions(
+                "sword001",
+                5,
+                true,
+                "{\"blockIfExceedItemMaxStackable\": true}",
+                tr);
+        tr.Run();
+    }
+
+    @Test
     public void dropUserItem() throws Exception {
         
         TestResult tr = new TestResult(_wrapper);
@@ -32,6 +41,33 @@ public class UserItemsServiceTest extends TestFixtureBase {
                 true,
                 tr);
         tr.RunExpectFail(400, ReasonCodes.ITEM_NOT_FOUND);
+    }
+
+    @Test
+    public void getItemPromotionDetails() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        String shopId = "";
+        String defId = "sword001";
+        boolean includeDef = true;
+        boolean includePromotionDetails = true;
+
+        _wrapper.getUserItemsService().getItemPromotionDetails(defId, shopId, includeDef, includePromotionDetails, tr);
+
+        tr.Run();
+    }
+
+    @Test
+    public void getItemsOnPromotion() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        String shopId = "";
+        boolean includeDef = true;
+        boolean includePromotionDetails = true;
+
+        _wrapper.getUserItemsService().getItemsOnPromotion(shopId, includeDef, includePromotionDetails, tr);
+
+        tr.Run();
     }
 
     @Test
@@ -87,6 +123,20 @@ public class UserItemsServiceTest extends TestFixtureBase {
                 1,
                 null,
                 true,
+                tr);
+        tr.Run();
+    }
+
+    @Test
+    public void purchaseUserItemWithOptions() throws Exception {
+
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getUserItemsService().purchaseUserItemWithOptions(
+                "sword001",
+                1,
+                null,
+                true,
+                "{\"blockIfExceedItemMaxStackable\": true}",
                 tr);
         tr.Run();
     }
