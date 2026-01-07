@@ -1,4 +1,4 @@
-// Copyright 2025 bitHeads, Inc. All Rights Reserved.
+// Copyright 2026 bitHeads, Inc. All Rights Reserved.
 package com.bitheads.braincloud.client;
 
 import java.util.ArrayList;
@@ -80,7 +80,7 @@ public class BrainCloudClient {
 
 
 
-    private final static String BRAINCLOUD_VERSION = "5.8.0";
+    private final static String BRAINCLOUD_VERSION = "5.9.0";
 
     private BrainCloudRestClient _restClient;
     private RTTComms _rttComms;

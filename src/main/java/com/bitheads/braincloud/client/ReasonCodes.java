@@ -1,4 +1,4 @@
-// Copyright 2025 bitHeads, Inc. All Rights Reserved.
+// Copyright 2026 bitHeads, Inc. All Rights Reserved.
 package com.bitheads.braincloud.client;
 
 
@@ -530,6 +530,10 @@ public interface ReasonCodes {
     int ITEM_IMAGE_EXISTS = 40792;
     int INVALID_SEGMENT_ID_LIST = 40793;
     int I3D_ERROR = 40794;
+    int INVALID_START_TIME = 40795;
+    int ITEM_TYPE_NOT_APPLICABLE = 40796;
+    int ITEM_PURCHASE_LIST_PRICE_DISABLED = 40797;
+    int BUNDLE_DEF_INVALID = 40798;
     int REQUEST_FAILED = 40801;
     int RESET_QUESTS_FAILED = 40802;
     int RESET_ALL_QUESTS_AND_MILESTONES_FAILED = 40803;
@@ -552,6 +556,7 @@ public interface ReasonCodes {
     int VERSION_MISMATCH = 40821;
     int UNSUPPORTED_CRITERIA_FOR_SHARDED_COLLECTIONS = 40822;
     int USER_RATE_LIMIT_EXCEEDED = 40823;
+    int PROMOTION_CONFIG_INCOMPLETE = 40824;
     int STEAM_ERROR = 40830;
     int AZURE_AD_NOT_CONFIGURED = 40831;
     int INVALID_LEADERBOARD_TOURNAMENT_SETTING = 40840;
