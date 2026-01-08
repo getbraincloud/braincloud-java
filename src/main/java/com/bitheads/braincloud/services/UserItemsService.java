@@ -95,7 +95,9 @@ public class UserItemsService {
 			data.put(Parameter.defId.name(), defId);
 			data.put(Parameter.quantity.name(), quantity);
 			data.put(Parameter.includeDef.name(), includeDef);
-			data.put(Parameter.optionsJson.name(), new JSONObject(optionsJson));
+			if(optionsJson != null){
+				data.put(Parameter.optionsJson.name(), new JSONObject(optionsJson));
+			}
 
 			ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.AWARD_USER_ITEM, data, callback);
 			_client.sendRequest(sc);
@@ -213,7 +215,9 @@ public class UserItemsService {
 			data.put(Parameter.shopId.name(), shopId);
 			data.put(Parameter.includeDef.name(), includeDef);
 			data.put(Parameter.includePromotionDetails.name(), includePromotionDetails);
-			data.put(Parameter.optionsJson.name(), new JSONObject(optionsJson));
+			if(optionsJson != null){
+				data.put(Parameter.optionsJson.name(), new JSONObject(optionsJson));
+			}
 
 			ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.GET_ITEMS_ON_PROMOTION, data,
 					callback);
@@ -401,7 +405,9 @@ public class UserItemsService {
 			data.put(Parameter.quantity.name(), quantity);
 			data.put(Parameter.shopId.name(), shopId);
 			data.put(Parameter.includeDef.name(), includeDef);
-			data.put(Parameter.optionsJson.name(), new JSONObject(optionsJson));
+			if(optionsJson != null){
+				data.put(Parameter.optionsJson.name(), new JSONObject(optionsJson));
+			}
 
 			ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.PURCHASE_USER_ITEM, data, callback);
 			_client.sendRequest(sc);
