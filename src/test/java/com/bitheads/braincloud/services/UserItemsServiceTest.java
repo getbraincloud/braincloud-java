@@ -65,7 +65,8 @@ public class UserItemsServiceTest extends TestFixtureBase {
         boolean includeDef = true;
         boolean includePromotionDetails = true;
 
-        _wrapper.getUserItemsService().getItemsOnPromotion(shopId, includeDef, includePromotionDetails, tr);
+        _wrapper.getUserItemsService().getItemsOnPromotion(shopId, includeDef, includePromotionDetails,
+                "{\"blockIfExceedItemMaxStackable\": true}", tr);
 
         tr.Run();
     }
