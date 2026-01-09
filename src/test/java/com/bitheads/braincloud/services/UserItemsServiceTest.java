@@ -1,5 +1,8 @@
 package com.bitheads.braincloud.services;
 
+import static org.junit.Assert.assertTrue;
+
+import org.json.JSONObject;
 import org.junit.Test;
 
 import com.bitheads.braincloud.client.ReasonCodes;
@@ -113,6 +116,31 @@ public class UserItemsServiceTest extends TestFixtureBase {
             getUser(Users.UserB).id, "invalidForNow", 1, 1, true,
                 tr);
         tr.RunExpectFail(400, ReasonCodes.ITEM_NOT_FOUND);
+    }
+
+    @Test
+    public void openBundle() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        String bundleItemId = "equipmentBundle";
+        int quantity = 1;
+        boolean includeDef = true;
+
+        _wrapper.getUserItemsService().awardUserItem(bundleItemId, quantity, includeDef, tr);
+        tr.Run();
+
+        JSONObject items = tr.m_response.optJSONObject("data").optJSONObject("items");
+        System.out.println("Items: " + items.toString());
+
+        assertTrue(items.length() > 0);
+
+        JSONObject item = items.optJSONObject(items.keys().next());
+        String itemId = item.optString("itemId");
+        int version = -1;
+        String optionsJson = "{}";
+
+        _wrapper.getUserItemsService().openBundle(itemId, version, quantity, includeDef, optionsJson, tr);
+        tr.Run();
     }
 
     @Test

@@ -337,6 +337,60 @@ public class UserItemsService {
     }
 
 	/**
+	 * Allows a quantity of a specified bundle user item to be opened. Response
+	 * indicates any items and currency awards configured for the associated bundle
+	 * user item's BUNDLE type item definition, plus any 'items' awarded and any
+	 * 'currencies' awarded, along with the resulting currency balances. If
+	 * includeItemDef is true, the associated item definition will be included in
+	 * the response for any user items awarded and for the bundle user item being
+	 * opened (if any quantity of the bundle user item remains), with language
+	 * fields limited to the current or default language.
+	 * 
+	 * Service Name - User Items
+	 * Service Operation - OPEN_BUNDLE
+	 * 
+	 * @param itemId      The unique id of the bundle user item.
+	 * @param version     The version of the bundle user item being sold. Accepts -1
+	 *                    if any version.
+	 * @param quantity    The quantity of the bundle user item to open.
+	 * @param includeDef  If true, the associated item definition will be included
+	 *                    in the response for any user items awarded and if any
+	 *                    quantity of the bundle user item remains.
+	 * @param optionsJson Optional support for specifying
+	 *                    'blockIfExceedItemMaxStackable' indicating how to process
+	 *                    awarding the bundle content items if the defId for any is
+	 *                    for a stackable item with a max stackable quantity and the
+	 *                    specified quantity to be awarded is too high. If true and
+	 *                    the quantity is too high, the call is blocked and an error
+	 *                    is returned. If false (default) and quantity is too high,
+	 *                    the quantity is adjusted to the allowed maximum and the
+	 *                    quantity not awarded is reported in response key
+	 *                    'itemsNotAwarded' - unless the adjusted quantity would be
+	 *                    0, in which case the call is blocked and an error is
+	 *                    returned.
+	 * @param callback    The method to be invoked when the server response is
+	 *                    received.
+	 */
+	public void openBundle(String itemId, int version, int quantity, boolean includeDef, String optionsJson,
+			IServerCallback callback) {
+		try {
+			JSONObject data = new JSONObject();
+			data.put(Parameter.itemId.name(), itemId);
+			data.put(Parameter.version.name(), version);
+			data.put(Parameter.quantity.name(), quantity);
+			data.put(Parameter.includeDef.name(), includeDef);
+			if (optionsJson != null) {
+				data.put(Parameter.optionsJson.name(), new JSONObject(optionsJson));
+			}
+
+			ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.OPEN_BUNDLE, data, callback);
+			_client.sendRequest(sc);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
 	 * Retrieves the identified user item from the server. 
 	 * If includeDef is true, response includes associated
 	 * itemDef with language fields limited to the current 
