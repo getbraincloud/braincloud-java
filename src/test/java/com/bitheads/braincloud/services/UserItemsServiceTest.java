@@ -1,12 +1,11 @@
 package com.bitheads.braincloud.services;
 
+import static org.junit.Assert.assertTrue;
+
+import org.json.JSONObject;
 import org.junit.Test;
 
 import com.bitheads.braincloud.client.ReasonCodes;
-
-/**
- * Created by bradleyh on 1/9/2017.
- */
 
 public class UserItemsServiceTest extends TestFixtureBase {
 
@@ -23,6 +22,19 @@ public class UserItemsServiceTest extends TestFixtureBase {
     }
 
     @Test
+    public void awardUserItemWithOptions() throws Exception {
+        
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getUserItemsService().awardUserItemWithOptions(
+                "sword001",
+                5,
+                true,
+                "{\"blockIfExceedItemMaxStackable\": true}",
+                tr);
+        tr.Run();
+    }
+
+    @Test
     public void dropUserItem() throws Exception {
         
         TestResult tr = new TestResult(_wrapper);
@@ -32,6 +44,34 @@ public class UserItemsServiceTest extends TestFixtureBase {
                 true,
                 tr);
         tr.RunExpectFail(400, ReasonCodes.ITEM_NOT_FOUND);
+    }
+
+    @Test
+    public void getItemPromotionDetails() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        String shopId = "";
+        String defId = "sword001";
+        boolean includeDef = true;
+        boolean includePromotionDetails = true;
+
+        _wrapper.getUserItemsService().getItemPromotionDetails(defId, shopId, includeDef, includePromotionDetails, tr);
+
+        tr.Run();
+    }
+
+    @Test
+    public void getItemsOnPromotion() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        String shopId = "";
+        boolean includeDef = true;
+        boolean includePromotionDetails = true;
+
+        _wrapper.getUserItemsService().getItemsOnPromotion(shopId, includeDef, includePromotionDetails,
+                "{\"blockIfExceedItemMaxStackable\": true}", tr);
+
+        tr.Run();
     }
 
     @Test
@@ -79,6 +119,31 @@ public class UserItemsServiceTest extends TestFixtureBase {
     }
 
     @Test
+    public void openBundle() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        String bundleItemId = "equipmentBundle";
+        int quantity = 1;
+        boolean includeDef = true;
+
+        _wrapper.getUserItemsService().awardUserItem(bundleItemId, quantity, includeDef, tr);
+        tr.Run();
+
+        JSONObject items = tr.m_response.optJSONObject("data").optJSONObject("items");
+        System.out.println("Items: " + items.toString());
+
+        assertTrue(items.length() > 0);
+
+        JSONObject item = items.optJSONObject(items.keys().next());
+        String itemId = item.optString("itemId");
+        int version = -1;
+        String optionsJson = "{}";
+
+        _wrapper.getUserItemsService().openBundle(itemId, version, quantity, includeDef, optionsJson, tr);
+        tr.Run();
+    }
+
+    @Test
     public void purchaseUserItem() throws Exception {
         
         TestResult tr = new TestResult(_wrapper);
@@ -87,6 +152,20 @@ public class UserItemsServiceTest extends TestFixtureBase {
                 1,
                 null,
                 true,
+                tr);
+        tr.Run();
+    }
+
+    @Test
+    public void purchaseUserItemWithOptions() throws Exception {
+
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getUserItemsService().purchaseUserItemWithOptions(
+                "sword001",
+                1,
+                null,
+                true,
+                "{\"blockIfExceedItemMaxStackable\": true}",
                 tr);
         tr.Run();
     }

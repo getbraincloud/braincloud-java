@@ -1,3 +1,4 @@
+// Copyright 2026 bitHeads, Inc. All Rights Reserved.
 package com.bitheads.braincloud.services;
 
 import org.json.JSONException;
@@ -12,19 +13,21 @@ import com.bitheads.braincloud.comms.ServerCall;
 public class UserItemsService {
 
     private enum Parameter {
-        defId,
-        quantity,
-        includeDef,
-        criteria, 
-        context, 
-        pageOffset,
-        itemId,
-        version,
-        immediate,
-        shopId,
-        newItemData,
-        profileId
-    }
+		context,
+		criteria,
+		defId,
+		immediate,
+		includeDef,
+		includePromotionDetails,
+		itemId,
+		newItemData,
+		optionsJson,
+		pageOffset,
+		profileId,
+		quantity,
+		shopId,
+		version
+	}
 
     private BrainCloudClient _client;
 
@@ -60,6 +63,50 @@ public class UserItemsService {
     }
 
 	/**
+	 * Allows item(s) to be awarded to a user without collecting the purchase
+	 * amount. If includeDef is true, response includes associated itemDef with
+	 * language fields limited to the current or default language.
+	 * 
+	 * Service Name - User Items
+	 * Service Operation - AWARD_USER_ITEM
+	 * 
+	 * @param defId       The unique id of the item definition to award.
+	 * @param quantity    The quantity of the item to award.
+	 * @param includeDef  If true, the associated item definition will be included
+	 *                    in the response.
+	 * @param optionsJson Optional support for specifying
+	 *                    'blockIfExceedItemMaxStackable' indicating how to process
+	 *                    the award if the defId is for a stackable item with a max
+	 *                    stackable quantity and the specified quantity to award is
+	 *                    too high. If true and the quantity is too high, the call
+	 *                    is blocked and an error is returned. If false (default)
+	 *                    and quantity is too high, the quantity is adjusted to the
+	 *                    allowed maximum and the quantity not awarded is reported
+	 *                    in response key 'itemsNotAwarded' - unless the adjusted
+	 *                    quantity would be 0, in which case the call is blocked and
+	 *                    an error is returned.
+	 * @param callback    The method to be invoked when the server response is
+	 *                    received
+	 */
+	public void awardUserItemWithOptions(String defId, int quantity, boolean includeDef, String optionsJson,
+			IServerCallback callback) {
+		try {
+			JSONObject data = new JSONObject();
+			data.put(Parameter.defId.name(), defId);
+			data.put(Parameter.quantity.name(), quantity);
+			data.put(Parameter.includeDef.name(), includeDef);
+			if(optionsJson != null){
+				data.put(Parameter.optionsJson.name(), new JSONObject(optionsJson));
+			}
+
+			ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.AWARD_USER_ITEM, data, callback);
+			_client.sendRequest(sc);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
 	 * Allows a quantity of a specified user item to be dropped, 
 	 * without any recovery of the money paid for the item. 
 	 * If any quantity of the user item remains, it will be returned,
@@ -86,6 +133,99 @@ public class UserItemsService {
         } catch (JSONException ignored) {
         }
     }
+
+	/**
+	 * Returns list of promotional details for the specified item definition, for
+	 * promotions available to the current user.
+	 * 
+	 * Service Name - User items
+	 * Service Operation - GET_ITEM_PROMOTIONAL_DETAILS
+	 * 
+	 * @param defId                   The unique id of the item definition to check.
+	 * @param shopId                  The id identifying the store the item is from,
+	 *                                if
+	 *                                applicable.
+	 * @param includeDef              If true, the associated item definition will
+	 *                                be included in
+	 *                                the response.
+	 * @param includePromotionDetails If true, the promotion details of the eligible
+	 *                                promotions will be included in the response.
+	 * @param callback                The method to be invoked when the server
+	 *                                response is
+	 *                                received.
+	 */
+	public void getItemPromotionDetails(String defId, String shopId, boolean includeDef, boolean includePromotionDetails, IServerCallback callback) {
+		try {
+			JSONObject data = new JSONObject();
+			data.put(Parameter.defId.name(), defId);
+			data.put(Parameter.shopId.name(), shopId);
+			data.put(Parameter.includeDef.name(), includeDef);
+			data.put(Parameter.includePromotionDetails.name(), includePromotionDetails);
+
+			ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.GET_ITEM_PROMOTION_DETAILS, data,
+					callback);
+			_client.sendRequest(sc);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Returns list of promotional details for the specified item definition, for
+	 * promotions available to the current user.
+	 * 
+	 * Service Name - User Items
+	 * Service Operation - GET_ITEMS_ON_PROMOTION
+	 * 
+	 * @param shopId                  The id identifying the store the item is from,
+	 *                                if applicable.
+	 * @param includeDef              If true, the associated item definition info
+	 *                                of the promotional items will be included in
+	 *                                the response.
+	 * @param includePromotionDetails If true, the promotion details of the eligible
+	 *                                promotions will be included in the response.
+	 * @param optionsJson             Optional support for specifying
+	 *                                'blockIfExceedItemMaxStackable' indicating how
+	 *                                to process
+	 *                                the award if the defId is for a stackable item
+	 *                                with a max
+	 *                                stackable quantity and the specified quantity
+	 *                                to award is
+	 *                                too high. If true and the quantity is too
+	 *                                high, the call
+	 *                                is blocked and an error is returned. If false
+	 *                                (default)
+	 *                                and quantity is too high, the quantity is
+	 *                                adjusted to the
+	 *                                allowed maximum and the quantity not awarded
+	 *                                is reported
+	 *                                in response key 'itemsNotAwarded' - unless the
+	 *                                adjusted
+	 *                                quantity would be 0, in which case the call is
+	 *                                blocked and
+	 *                                an error is returned.
+	 * @param callback                The method to be invoked when the server
+	 *                                response is received.
+	 */
+	public void getItemsOnPromotion(String shopId, boolean includeDef, boolean includePromotionDetails,
+			String optionsJson,
+			IServerCallback callback) {
+		try {
+			JSONObject data = new JSONObject();
+			data.put(Parameter.shopId.name(), shopId);
+			data.put(Parameter.includeDef.name(), includeDef);
+			data.put(Parameter.includePromotionDetails.name(), includePromotionDetails);
+			if(optionsJson != null){
+				data.put(Parameter.optionsJson.name(), new JSONObject(optionsJson));
+			}
+
+			ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.GET_ITEMS_ON_PROMOTION, data,
+					callback);
+			_client.sendRequest(sc);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Retrieves the page of user's items from the server 
@@ -197,6 +337,60 @@ public class UserItemsService {
     }
 
 	/**
+	 * Allows a quantity of a specified bundle user item to be opened. Response
+	 * indicates any items and currency awards configured for the associated bundle
+	 * user item's BUNDLE type item definition, plus any 'items' awarded and any
+	 * 'currencies' awarded, along with the resulting currency balances. If
+	 * includeItemDef is true, the associated item definition will be included in
+	 * the response for any user items awarded and for the bundle user item being
+	 * opened (if any quantity of the bundle user item remains), with language
+	 * fields limited to the current or default language.
+	 * 
+	 * Service Name - User Items
+	 * Service Operation - OPEN_BUNDLE
+	 * 
+	 * @param itemId      The unique id of the bundle user item.
+	 * @param version     The version of the bundle user item being sold. Accepts -1
+	 *                    if any version.
+	 * @param quantity    The quantity of the bundle user item to open.
+	 * @param includeDef  If true, the associated item definition will be included
+	 *                    in the response for any user items awarded and if any
+	 *                    quantity of the bundle user item remains.
+	 * @param optionsJson Optional support for specifying
+	 *                    'blockIfExceedItemMaxStackable' indicating how to process
+	 *                    awarding the bundle content items if the defId for any is
+	 *                    for a stackable item with a max stackable quantity and the
+	 *                    specified quantity to be awarded is too high. If true and
+	 *                    the quantity is too high, the call is blocked and an error
+	 *                    is returned. If false (default) and quantity is too high,
+	 *                    the quantity is adjusted to the allowed maximum and the
+	 *                    quantity not awarded is reported in response key
+	 *                    'itemsNotAwarded' - unless the adjusted quantity would be
+	 *                    0, in which case the call is blocked and an error is
+	 *                    returned.
+	 * @param callback    The method to be invoked when the server response is
+	 *                    received.
+	 */
+	public void openBundle(String itemId, int version, int quantity, boolean includeDef, String optionsJson,
+			IServerCallback callback) {
+		try {
+			JSONObject data = new JSONObject();
+			data.put(Parameter.itemId.name(), itemId);
+			data.put(Parameter.version.name(), version);
+			data.put(Parameter.quantity.name(), quantity);
+			data.put(Parameter.includeDef.name(), includeDef);
+			if (optionsJson != null) {
+				data.put(Parameter.optionsJson.name(), new JSONObject(optionsJson));
+			}
+
+			ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.OPEN_BUNDLE, data, callback);
+			_client.sendRequest(sc);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
 	 * Retrieves the identified user item from the server. 
 	 * If includeDef is true, response includes associated
 	 * itemDef with language fields limited to the current 
@@ -226,6 +420,55 @@ public class UserItemsService {
         } catch (JSONException ignored) {
         }
     }
+
+	/**
+	 * Purchases a quantity of an item from the specified store, if the user has
+	 * enough funds and purchasing for listed buy price is not disabled for
+	 * associated catalog item definition. If includeDef is true, response includes
+	 * associated itemDef with language fields limited to the current or default
+	 * language.
+	 * 
+	 * Service Name - User Items
+	 * Service Operation - PURCHASE_USER_ITEM
+	 * 
+	 * @param defId       The unique id of the item definition to purchase.
+	 * @param quantity    The quantity of the item to purchase.
+	 * @param shopId      The id identifying the store the item is being purchased
+	 *                    from, if applicable.
+	 * @param includeDef  If true, the associated item definition will be included
+	 *                    in the response.
+	 * @param optionsJson Optional support for specifying
+	 *                    'blockIfExceedItemMaxStackable' indicating how to process
+	 *                    the purchase if the defId is for a stackable item with a
+	 *                    max stackable quantity and the specified quantity being
+	 *                    purchased is too high. If true and the quantity is too
+	 *                    high, the call is blocked and an error is returned. If
+	 *                    false (default) and quantity is too high, the quantity is
+	 *                    adjusted to the allowed maximum and the quantity not
+	 *                    purchased is reported in response key 'itemsNotPurchased'
+	 *                    - unless the adjusted quantity would be 0, in which case
+	 *                    the call is blocked and an error is returned.
+	 * @param callback    The method to be invoked when the server response is
+	 *                    received
+	 */
+	public void purchaseUserItemWithOptions(String defId, int quantity, String shopId, boolean includeDef,
+			String optionsJson, IServerCallback callback) {
+		try {
+			JSONObject data = new JSONObject();
+			data.put(Parameter.defId.name(), defId);
+			data.put(Parameter.quantity.name(), quantity);
+			data.put(Parameter.shopId.name(), shopId);
+			data.put(Parameter.includeDef.name(), includeDef);
+			if(optionsJson != null){
+				data.put(Parameter.optionsJson.name(), new JSONObject(optionsJson));
+			}
+
+			ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.PURCHASE_USER_ITEM, data, callback);
+			_client.sendRequest(sc);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Retrieves and transfers the gift item from 
