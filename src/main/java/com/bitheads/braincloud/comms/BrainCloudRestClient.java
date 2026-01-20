@@ -67,6 +67,7 @@ public class BrainCloudRestClient implements Runnable {
     private long _lastSendTime;
     private long _lastReceivedPacket;
     private boolean _compressRequests = true;
+    private int _compressionThreshold = 51200;
 
     private int _uploadLowTransferTimeoutSecs = 120;
     private int _uploadLowTransferThresholdSecs = 50;
@@ -794,19 +795,23 @@ public class BrainCloudRestClient implements Runnable {
 
             connection.setRequestProperty("X-APPID", _appId);
 
-            if (_compressRequests) {
+            connection.setRequestProperty("charset", "utf-8");
+            byte[] postData = body.getBytes("UTF-8");
+
+            boolean compress = _compressRequests && _compressionThreshold >= 0
+                    && postData.length >= _compressionThreshold;
+
+            if (compress) {
                 connection.setRequestProperty("Content-Encoding", "gzip");
                 connection.setRequestProperty("Accept-Encoding", "gzip");
             }
-
-            connection.setRequestProperty("charset", "utf-8");
-            byte[] postData = body.getBytes("UTF-8");
 
             // to avoid taking the json parsing hit even when logging is disabled
             if (_loggingEnabled) {
                 try {
                     JSONObject jlog = new JSONObject(body);
-                    LogString("OUTGOING" + (_retryCount > 0 ? " retry(" + _retryCount + "): " : ": ") + jlog.toString(2) + ", t: " + new Date().toString());
+                    LogString("OUTGOING" + (_retryCount > 0 ? " retry(" + _retryCount + "): " : ": ") + jlog.toString(2)
+                            + ", t: " + new Date().toString());
                 } catch (JSONException e) {
                     // should never happen
                     e.printStackTrace();
@@ -819,7 +824,7 @@ public class BrainCloudRestClient implements Runnable {
 
             DataOutputStream wr = null;
 
-            if (_compressRequests) {
+            if (compress) {
                 GZIPOutputStream gzipOutputStream = new GZIPOutputStream(connection.getOutputStream());
                 wr = new DataOutputStream(gzipOutputStream);
             } else {
@@ -1031,8 +1036,13 @@ public class BrainCloudRestClient implements Runnable {
                             _heartbeatIntervalMillis = (long)(sessionExpiry * 850);
                             _maxBundleSize = data.getInt("maxBundleMsgs");
 
-                            if(data.has("maxKillCount"))
+                            if(data.has("maxKillCount")){
                                 _killSwitchThreshold = data.getInt("maxKillCount");
+                            }
+                            if(data.has("compressIfLarger")){
+                                _compressionThreshold = data.getInt("compressIfLarger");
+                            }
+                                
 
                         } else if (sc.getServiceName().equals(ServiceName.playerState)
                                 && sc.getServiceOperation().equals(ServiceOperation.LOGOUT)) {
