@@ -61,7 +61,7 @@ public class GroupService {
      * Service Name - group
      * Service Operation - ACCEPT_GROUP_INVITATION
      *
-     * @param groupId ID of the group.
+     * @param groupId  ID of the group.
      * @param callback The method to be invoked when the server response is received
      */
     public void acceptGroupInvitation(String groupId, IServerCallback callback) {
@@ -83,11 +83,12 @@ public class GroupService {
      * Service Name - group
      * Service Operation - ADD_GROUP_MEMBER
      *
-     * @param groupId ID of the group.
-     * @param profileId Profile ID of the member being added.
-     * @param role Role of the member being added.
+     * @param groupId        ID of the group.
+     * @param profileId      Profile ID of the member being added.
+     * @param role           Role of the member being added.
      * @param jsonAttributes Attributes of the member being added.
-     * @param callback The method to be invoked when the server response is received
+     * @param callback       The method to be invoked when the server response is
+     *                       received
      */
     public void addGroupMember(
             String groupId,
@@ -118,13 +119,14 @@ public class GroupService {
      * Approve an outstanding request to join the group.
      *
      * Service Name - group
-     * Service Operation - APPROVE_GROUP_JOIN_REQUEST
+     * Service Operation - APPROVE_GROUP_JOREQUEST
      *
-     * @param groupId ID of the group.
-     * @param profileId Profile ID of the invitation being deleted.
-     * @param role Role of the member being invited.
+     * @param groupId        ID of the group.
+     * @param profileId      Profile ID of the invitation being deleted.
+     * @param role           Role of the member being invited.
      * @param jsonAttributes Attributes of the member being invited.
-     * @param callback The method to be invoked when the server response is received
+     * @param callback       The method to be invoked when the server response is
+     *                       received
      */
     public void approveGroupJoinRequest(
             String groupId,
@@ -151,17 +153,21 @@ public class GroupService {
     }
 
     /**
-     * Automatically join an open group that matches the search criteria and has space available.
+     * Automatically join an open group that matches the search criteria and has
+     * space available.
      *
      * Service Name - group
-     * Service Operation - AUTO_JOIN_GROUP
+     * Service Operation - AUTO_JOGROUP
      *
-     * @param groupType Name of the associated group type.
-     * @param autoJoinStrategy Selection strategy to employ when there are multiple matches
-     * @param dataQueryJson Query parameters (optional)
-     * @param callback The method to be invoked when the server response is received
+     * @param groupType        Name of the associated group type.
+     * @param autoJoinStrategy Selection strategy to employ when there are multiple
+     *                         matches
+     * @param dataQueryJson    Query parameters (optional)
+     * @param callback         The method to be invoked when the server response is
+     *                         received
      */
-    public void autoJoinGroup(String groupType, AutoJoinStrategy autoJoinStrategy, String dataQueryJson, IServerCallback callback) {
+    public void autoJoinGroup(String groupType, AutoJoinStrategy autoJoinStrategy, String dataQueryJson,
+            IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.groupType.name(), groupType);
@@ -179,16 +185,20 @@ public class GroupService {
     }
 
     /**
-     *Find and join an open group in the pool of groups in multiple group types provided as input arguments.     *
+     * Find and join an open group in the pool of groups in multiple group types
+     * provided as input arguments. *
      * Service Name - group
-     * Service Operation - AUTO_JOIN_GROUP_MULTI
+     * Service Operation - AUTO_JOGROUP_MULTI
      *
-     * @param groupTypes Name of the associated group type.
-     * @param autoJoinStrategy Selection strategy to employ when there are multiple matches
-     * @param where Query parameters (optional)
-     * @param callback The method to be invoked when the server response is received
+     * @param groupTypes       Name of the associated group type.
+     * @param autoJoinStrategy Selection strategy to employ when there are multiple
+     *                         matches
+     * @param where            Query parameters (optional)
+     * @param callback         The method to be invoked when the server response is
+     *                         received
      */
-    public void autoJoinGroupMulti(String[]  groupTypes, AutoJoinStrategy autoJoinStrategy, String where, IServerCallback callback) {
+    public void autoJoinGroupMulti(String[] groupTypes, AutoJoinStrategy autoJoinStrategy, String where,
+            IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             JSONArray jsonData = new JSONArray();
@@ -215,9 +225,10 @@ public class GroupService {
      * Service Name - group
      * Service Operation - CANCEL_GROUP_INVITATION
      *
-     * @param groupId ID of the group.
+     * @param groupId   ID of the group.
      * @param profileId Profile ID of the invitation being deleted.
-     * @param callback The method to be invoked when the server response is received
+     * @param callback  The method to be invoked when the server response is
+     *                  received
      */
     public void cancelGroupInvitation(
             String groupId,
@@ -242,14 +253,17 @@ public class GroupService {
      * Service Name - group
      * Service Operation - CREATE_GROUP
      *
-     * @param name Name of the group.
-     * @param groupType Name of the type of group.
-     * @param isOpenGroup true if group is open; false if closed.
-     * @param acl The group's access control list. A null ACL implies default.
-     * @param jsonOwnerAttributes Attributes for the group owner (current player).
+     * @param name                        Name of the group.
+     * @param groupType                   Name of the type of group.
+     * @param isOpenGroup                 true if group is open; false if closed.
+     * @param acl                         The group's access control list. A null
+     *                                    ACL implies default.
+     * @param jsonOwnerAttributes         Attributes for the group owner (current
+     *                                    user).
      * @param jsonDefaultMemberAttributes Default attributes for group members.
-     * @param jsonData Custom application data.
-     * @param callback The method to be invoked when the server response is received
+     * @param jsonData                    Custom application data.
+     * @param callback                    The method to be invoked when the server
+     *                                    response is received
      */
     public void createGroup(
             String name,
@@ -284,20 +298,23 @@ public class GroupService {
     }
 
     /**
-     * Create a group with summaryData.
+     * Create a group with Summary Data.
      *
      * Service Name - group
      * Service Operation - CREATE_GROUP
      *
-     * @param name Name of the group.
-     * @param groupType Name of the type of group.
-     * @param isOpenGroup true if group is open; false if closed.
-     * @param acl The group's access control list. A null ACL implies default.
-     * @param jsonOwnerAttributes Attributes for the group owner (current player).
+     * @param name                        Name of the group.
+     * @param groupType                   Name of the type of group.
+     * @param isOpenGroup                 true if group is open; false if closed.
+     * @param acl                         The group's access control list. A null
+     *                                    ACL implies default.
+     * @param jsonOwnerAttributes         Attributes for the group owner (current
+     *                                    user).
      * @param jsonDefaultMemberAttributes Default attributes for group members.
-     * @param jsonData Custom application data.
-     * @param summaryData summary
-     * @param callback The method to be invoked when the server response is received
+     * @param jsonSummaryData             the summary.
+     * @param jsonData                    Custom application data.
+     * @param callback                    The method to be invoked when the server
+     *                                    response is received
      */
     public void createGroupWithSummaryData(
             String name,
@@ -340,12 +357,14 @@ public class GroupService {
      * Service Name - group
      * Service Operation - CREATE_GROUP_ENTITY
      *
-     * @param groupId ID of the group.
-     * @param isOwnedByGroupMember true if entity is owned by a member; false if owned by the entire group.
-     * @param entityType Type of the group entity.
-     * @param acl Access control list for the group entity.
-     * @param jsonData Custom application data.
-     * @param callback The method to be invoked when the server response is received
+     * @param groupId              ID of the group.
+     * @param isOwnedByGroupMember true if entity is owned by a member; false if
+     *                             owned by the entire group.
+     * @param entityType           Type of the group entity.
+     * @param acl                  Access control list for the group entity.
+     * @param jsonData             Custom application data.
+     * @param callback             The method to be invoked when the server response
+     *                             is received
      */
     public void createGroupEntity(
             String groupId,
@@ -380,8 +399,8 @@ public class GroupService {
      * Service Name - group
      * Service Operation - DELETE_GROUP
      *
-     * @param groupId ID of the group.
-     * @param version Current version of the group
+     * @param groupId  ID of the group.
+     * @param version  Current version of the group
      * @param callback The method to be invoked when the server response is received
      */
     public void deleteGroup(String groupId, long version, IServerCallback callback) {
@@ -404,9 +423,10 @@ public class GroupService {
      * Service Name - group
      * Service Operation - DELETE_GROUP_ENTITY
      *
-     * @param groupId ID of the group.
+     * @param groupId  ID of the group.
      * @param entityId ID of the entity.
-     * @param version The current version of the group entity (for concurrency checking).
+     * @param version  The current version of the group entity (for concurrency
+     *                 checking).
      * @param callback The method to be invoked when the server response is received
      */
     public void deleteGroupEntity(String groupId, String entityId, long version, IServerCallback callback) {
@@ -425,10 +445,11 @@ public class GroupService {
     }
 
     /**
-     * Read information on groups to which the current player belongs.
+     * Read information on groups to which the current user belongs.
      *
      * Service Name - group
      * Service Operation - GET_MY_GROUPS
+     * 
      * @param callback The method to be invoked when the server response is received
      */
     public void getMyGroups(IServerCallback callback) {
@@ -442,7 +463,7 @@ public class GroupService {
      * Service Name - group
      * Service Operation - INCREMENT_GROUP_DATA
      *
-     * @param groupId ID of the group.
+     * @param groupId  ID of the group.
      * @param jsonData Partial data map with incremental values.
      * @param callback The method to be invoked when the server response is received
      */
@@ -466,7 +487,7 @@ public class GroupService {
      * Service Name - group
      * Service Operation - INCREMENT_GROUP_ENTITY_DATA
      *
-     * @param groupId ID of the group.
+     * @param groupId  ID of the group.
      * @param entityId ID of the entity.
      * @param jsonData Partial data map with incremental values.
      * @param callback The method to be invoked when the server response is received
@@ -492,11 +513,12 @@ public class GroupService {
      * Service Name - group
      * Service Operation - INVITE_GROUP_MEMBER
      *
-     * @param groupId ID of the group.
-     * @param profileId Profile ID of the member being invited.
-     * @param role Role of the member being invited.
+     * @param groupId        ID of the group.
+     * @param profileId      Profile ID of the member being invited.
+     * @param role           Role of the member being invited.
      * @param jsonAttributes Attributes of the member being invited.
-     * @param callback The method to be invoked when the server response is received
+     * @param callback       The method to be invoked when the server response is
+     *                       received
      */
     public void inviteGroupMember(
             String groupId,
@@ -527,9 +549,9 @@ public class GroupService {
      * Join an open group or request to join a closed group.
      *
      * Service Name - group
-     * Service Operation - JOIN_GROUP
+     * Service Operation - JOGROUP
      *
-     * @param groupId ID of the group.
+     * @param groupId  ID of the group.
      * @param callback The method to be invoked when the server response is received
      */
     public void joinGroup(String groupId, IServerCallback callback) {
@@ -546,12 +568,12 @@ public class GroupService {
     }
 
     /**
-     * Delete a request to join the group.
-     * 
+     * Delete an outstanding request to join the group.
+     *
      * Service Name - group
-     * Service Operation - DELETE_GROUP_JOIN_REQUEST
-     * 
-     * @param groupId  ID of the group
+     * Service Operation - DELETE_GROUP_JOREQUEST
+     *
+     * @param groupId  ID of the group.
      * @param callback The method to be invoked when the server response is received
      */
     public void deleteGroupJoinRequest(String groupId, IServerCallback callback) {
@@ -569,12 +591,12 @@ public class GroupService {
     }
 
     /**
-     * Leave a group in which the player is a member.
+     * Leave a group in which the user is a member.
      *
      * Service Name - group
      * Service Operation - LEAVE_GROUP
      *
-     * @param groupId ID of the group.
+     * @param groupId  ID of the group.
      * @param callback The method to be invoked when the server response is received
      */
     public void leaveGroup(String groupId, IServerCallback callback) {
@@ -596,7 +618,7 @@ public class GroupService {
      * Service Name - group
      * Service Operation - LIST_GROUPS_PAGE
      *
-     * @param jsonContext Query context.
+     * @param context  Query context.
      * @param callback The method to be invoked when the server response is received
      */
     public void listGroupsPage(String jsonContext, IServerCallback callback) {
@@ -619,8 +641,9 @@ public class GroupService {
      * Service Operation - LIST_GROUPS_PAGE_BY_OFFSET
      *
      * @param encodedContext Encoded reference query context.
-     * @param pageOffset Number of pages by which to offset the query.
-     * @param callback The method to be invoked when the server response is received
+     * @param offset         Number of pages by which to offset the query.
+     * @param callback       The method to be invoked when the server response is
+     *                       received
      */
     public void listGroupsPageByOffset(String encodedContext, int pageOffset, IServerCallback callback) {
         try {
@@ -637,13 +660,15 @@ public class GroupService {
     }
 
     /**
-     * Read information on groups to which the specified player belongs.  Access is subject to restrictions.
+     * Read information on groups to which the specified user belongs. Access is
+     * subject to restrictions.
      *
      * Service Name - group
      * Service Operation - LIST_GROUPS_WITH_MEMBER
      *
-     * @param profileId ID of the user to search for
-     * @param callback The method to be invoked when the server response is received
+     * @param profileId
+     * @param callback  The method to be invoked when the server response is
+     *                  received
      */
     public void listGroupsWithMember(String profileId, IServerCallback callback) {
         try {
@@ -664,7 +689,7 @@ public class GroupService {
      * Service Name - group
      * Service Operation - READ_GROUP
      *
-     * @param groupId ID of the group.
+     * @param groupId  ID of the group.
      * @param callback The method to be invoked when the server response is received
      */
     public void readGroup(String groupId, IServerCallback callback) {
@@ -686,7 +711,7 @@ public class GroupService {
      * Service Name - group
      * Service Operation - READ_GROUP_ENTITIES_PAGE
      *
-     * @param jsonContext Query context.
+     * @param context  Query context.
      * @param callback The method to be invoked when the server response is received
      */
     public void readGroupEntitiesPage(String jsonContext, IServerCallback callback) {
@@ -709,8 +734,9 @@ public class GroupService {
      * Service Operation - READ_GROUP_ENTITIES_PAGE_BY_OFFSET
      *
      * @param encodedContext Encoded reference query context.
-     * @param pageOffset Number of pages by which to offset the query.
-     * @param callback The method to be invoked when the server response is received
+     * @param offset         Number of pages by which to offset the query.
+     * @param callback       The method to be invoked when the server response is
+     *                       received
      */
     public void readGroupEntitiesPageByOffset(String encodedContext, int pageOffset, IServerCallback callback) {
         try {
@@ -727,12 +753,12 @@ public class GroupService {
     }
 
     /**
-     * Read the data of the specified group.
+     * Read the specified group's data.
      *
      * Service Name - group
      * Service Operation - READ_GROUP_DATA
      *
-     * @param groupId ID of the group.
+     * @param groupId  ID of the group.
      * @param callback The method to be invoked when the server response is received
      */
     public void readGroupData(String groupId, IServerCallback callback) {
@@ -754,7 +780,7 @@ public class GroupService {
      * Service Name - group
      * Service Operation - READ_GROUP_ENTITY
      *
-     * @param groupId ID of the group.
+     * @param groupId  ID of the group.
      * @param entityId ID of the entity.
      * @param callback The method to be invoked when the server response is received
      */
@@ -778,7 +804,7 @@ public class GroupService {
      * Service Name - group
      * Service Operation - READ_MEMBERS_OF_GROUP
      *
-     * @param groupId ID of the group.
+     * @param groupId  ID of the group.
      * @param callback The method to be invoked when the server response is received
      */
     public void readGroupMembers(String groupId, IServerCallback callback) {
@@ -800,7 +826,7 @@ public class GroupService {
      * Service Name - group
      * Service Operation - REJECT_GROUP_INVITATION
      *
-     * @param groupId ID of the group.
+     * @param groupId  ID of the group.
      * @param callback The method to be invoked when the server response is received
      */
     public void rejectGroupInvitation(String groupId, IServerCallback callback) {
@@ -820,11 +846,12 @@ public class GroupService {
      * Reject an outstanding request to join the group.
      *
      * Service Name - group
-     * Service Operation - REJECT_GROUP_JOIN_REQUEST
+     * Service Operation - REJECT_GROUP_JOREQUEST
      *
-     * @param groupId ID of the group.
+     * @param groupId   ID of the group.
      * @param profileId Profile ID of the invitation being deleted.
-     * @param callback The method to be invoked when the server response is received
+     * @param callback  The method to be invoked when the server response is
+     *                  received
      */
     public void rejectGroupJoinRequest(String groupId, String profileId, IServerCallback callback) {
         try {
@@ -846,9 +873,10 @@ public class GroupService {
      * Service Name - group
      * Service Operation - REMOVE_GROUP_MEMBER
      *
-     * @param groupId ID of the group.
+     * @param groupId   ID of the group.
      * @param profileId Profile ID of the member being deleted.
-     * @param callback The method to be invoked when the server response is received
+     * @param callback  The method to be invoked when the server response is
+     *                  received
      */
     public void removeGroupMember(String groupId, String profileId, IServerCallback callback) {
         try {
@@ -865,14 +893,15 @@ public class GroupService {
     }
 
     /**
-     * Set whether a group is open (true) or closed (false).
+     * Set whether a group is open true or false
      *
      * Service Name - group
      * Service Operation - SET_GROUP_OPEN
      *
-     * @param groupId ID of the group.
-     * @param isOpenGroup true if group is open; false if closed
-     * @param callback The method to be invoked when the server response is received
+     * @param groupId     ID of the group.
+     * @param isOpenGroup whether its open or not
+     * @param callback    The method to be invoked when the server response is
+     *                    received
      */
     public void setGroupOpen(String groupId, boolean isOpenGroup, IServerCallback callback) {
         try {
@@ -890,10 +919,10 @@ public class GroupService {
 
     /**
      * Set a group's access conditions.
-     * 
-     * Service - Group
-     * Operation - UPDATE_GROUP_ACL
-     * 
+     *
+     * Service Name - Group
+     * Service Operation - UPDATE_GROUP_ACL
+     *
      * @param groupId  ID of the group
      * @param acl      The group's access control list. A null ACL implies default
      * @param callback The method to be invoked when the server response is received
@@ -920,8 +949,8 @@ public class GroupService {
      * Service Name - group
      * Service Operation - UPDATE_GROUP_DATA
      *
-     * @param groupId ID of the group.
-     * @param version Version to verify.
+     * @param groupId  ID of the group.
+     * @param version  Version to verify.
      * @param jsonData Data to apply.
      * @param callback The method to be invoked when the server response is received
      */
@@ -942,10 +971,10 @@ public class GroupService {
 
     /**
      * Update the acl settings for a group entity, enforcing ownership.
-     * 
-     * Service - Group
-     * Operation - UPDATE_GROUP_ENTITY_ACL
-     * 
+     *
+     * Service Name - Group
+     * Service Operation - UPDATE_GROUP_ENTITY_ACL
+     *
      * @param groupId  The id of the group
      * @param entityId The id of the entity to update
      * @param acl      Access control list for the group entity
@@ -974,9 +1003,10 @@ public class GroupService {
      * Service Name - group
      * Service Operation - UPDATE_GROUP_ENTITY_DATA
      *
-     * @param groupId ID of the group.
+     * @param groupId  ID of the group.
      * @param entityId ID of the entity.
-     * @param version The current version of the group entity (for concurrency checking).
+     * @param version  The current version of the group entity (for concurrency
+     *                 checking).
      * @param jsonData Custom application data.
      * @param callback The method to be invoked when the server response is received
      */
@@ -1007,11 +1037,12 @@ public class GroupService {
      * Service Name - group
      * Service Operation - UPDATE_GROUP_MEMBER
      *
-     * @param groupId ID of the group.
-     * @param profileId Profile ID of the member being updated.
-     * @param role Role of the member being updated (optional).
+     * @param groupId        ID of the group.
+     * @param profileId      Profile ID of the member being updated.
+     * @param role           Role of the member being updated (optional).
      * @param jsonAttributes Attributes of the member being updated (optional).
-     * @param callback The method to be invoked when the server response is received
+     * @param callback       The method to be invoked when the server response is
+     *                       received
      */
     public void updateGroupMember(
             String groupId,
@@ -1023,7 +1054,8 @@ public class GroupService {
             JSONObject data = new JSONObject();
             data.put(Parameter.groupId.name(), groupId);
             data.put(Parameter.profileId.name(), profileId);
-            if (role != null) data.put(Parameter.role.name(), role.name());
+            if (role != null)
+                data.put(Parameter.role.name(), role.name());
             if (StringUtil.IsOptionalParameterValid(jsonAttributes))
                 data.put(Parameter.attributes.name(), new JSONObject(jsonAttributes));
 
@@ -1041,8 +1073,8 @@ public class GroupService {
      * Service Name - group
      * Service Operation - UPDATE_GROUP_NAME
      *
-     * @param groupId ID of the group.
-     * @param name Name to apply.
+     * @param groupId  ID of the group.
+     * @param name     Name to apply.
      * @param callback The method to be invoked when the server response is received
      */
     public void updateGroupName(
@@ -1063,15 +1095,16 @@ public class GroupService {
     }
 
     /**
-     * Updates a group's summaryData
+     * Update a group's summary data
      *
      * Service Name - group
      * Service Operation - UPDATE_GROUP_SUMMARY_DATA
      *
-     * @param groupId ID of the group.
-     * @param version version of the group
-     * @param jsonSummaryData summary
-     * @param callback The method to be invoked when the server response is received
+     * @param groupId         ID of the group.
+     * @param version         the version of the group
+     * @param jsonSummaryData custom application data
+     * @param callback        The method to be invoked when the server response is
+     *                        received
      */
     public void updateGroupSummaryData(
             String groupId,
@@ -1094,14 +1127,16 @@ public class GroupService {
     }
 
     /**
-     * Gets a list of up to maxReturn randomly selected groups from the server based on the where condition
+     * Gets a list of up to maxReturn randomly selected groups from the server based
+     * on the where condition.
      *
      * Service Name - group
      * Service Operation - GET_RANDOM_GROUPS_MATCHING
      *
-     * @param jsonWhere ID of the group.
-     * @param maxReturn max num groups to search
-     * @param callback The method to be invoked when the server response is received
+     * @param jsonWhere where to search
+     * @param maxReturn # of groups to search
+     * @param callback  The method to be invoked when the server response is
+     *                  received
      */
     public void getRandomGroupsMatching(
             String jsonWhere,
@@ -1121,21 +1156,3 @@ public class GroupService {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

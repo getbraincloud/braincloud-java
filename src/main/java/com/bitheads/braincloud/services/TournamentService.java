@@ -45,8 +45,10 @@ public class TournamentService {
      * Service Operation - CLAIM_TOURNAMENT_REWARD
      *
      * @param leaderboardId The leaderboard for the tournament
-     * @param versionId Version of the tournament. Use -1 for the latest version.
-     * @param callback The method to be invoked when the server response is received
+     * @param versionId     Version of the tournament. Use -1 for the latest
+     *                      version.
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
     public void claimTournamentReward(String leaderboardId, int versionId, IServerCallback callback) {
 
@@ -55,7 +57,8 @@ public class TournamentService {
             data.put(Parameter.leaderboardId.name(), leaderboardId);
             data.put(Parameter.versionId.name(), versionId);
 
-            ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.CLAIM_TOURNAMENT_REWARD, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.CLAIM_TOURNAMENT_REWARD, data,
+                    callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -63,38 +66,35 @@ public class TournamentService {
     }
 
     /**
-     * Get my divisions
+     * Get the status of a division
      *
      * Service Name - tournament
-     * Service Operation - GET_DIVISIONS_INFO
+     * Service Operation - GET_DIVISION_INFO
      *
-     * @param divSetId The leaderboard for the tournament
+     * @param divSetId The id for the division
      * @param callback The method to be invoked when the server response is received
      */
-    public void getDivisionInfo(String divSetId, IServerCallback callback)
-    {
-        try{
+    public void getDivisionInfo(String divSetId, IServerCallback callback) {
+        try {
             JSONObject data = new JSONObject();
             data.put(Parameter.divSetId.name(), divSetId);
 
             ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.GET_DIVISION_INFO, data, callback);
             _client.sendRequest(sc);
-        }catch (JSONException je)
-        {
+        } catch (JSONException je) {
             je.printStackTrace();
         }
     }
-    
+
     /**
-     * Get my divisions
+     * Returns list of player's recently active divisions
      *
      * Service Name - tournament
      * Service Operation - GET_MY_DIVISIONS
      *
      * @param callback The method to be invoked when the server response is received
      */
-    public void getMyDivisions(IServerCallback callback)
-    {
+    public void getMyDivisions(IServerCallback callback) {
         ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.GET_MY_DIVISIONS, null, callback);
         _client.sendRequest(sc);
     }
@@ -106,8 +106,10 @@ public class TournamentService {
      * Service Operation - GET_TOURNAMENT_STATUS
      *
      * @param leaderboardId The leaderboard for the tournament
-     * @param versionId Version of the tournament. Use -1 for the latest version.
-     * @param callback The method to be invoked when the server response is received
+     * @param versionId     Version of the tournament. Use -1 for the latest
+     *                      version.
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
     public void getTournamentStatus(String leaderboardId, int versionId, IServerCallback callback) {
 
@@ -116,7 +118,8 @@ public class TournamentService {
             data.put(Parameter.leaderboardId.name(), leaderboardId);
             data.put(Parameter.versionId.name(), versionId);
 
-            ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.GET_TOURNAMENT_STATUS, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.GET_TOURNAMENT_STATUS, data,
+                    callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -125,20 +128,21 @@ public class TournamentService {
 
     /**
      * Join the specified division.
-     * If joining tournament requires a fee, it's possible to fail at joining the division
+     * If joining requires a fee, it is possible to fail at joining the division
      *
      * Service Name - tournament
-     * Service Operation - JOIN_DIVISION
+     * Service Operation - JODIVISION
      *
-     * @param divSetId The leaderboard for the tournament
+     * @param divSetId       The id for the division
      * @param tournamentCode Tournament to join
-     * @param initialScore The initial score for players first joining a division
-     *						  Usually 0, unless leaderboard is LOW_VALUE
-     * @param callback The method to be invoked when the server response is received
+     * @param initialScore   The initial score for players first joining a
+     *                       tournament
+     *                       Usually 0, unless leaderboard is LOW_VALUE
+     * @param callback       The method to be invoked when the server response is
+     *                       received
      */
-    public void joinDivision(String divSetId, String tournamentCode, long initialScore, IServerCallback callback)
-    {
-        try{
+    public void joinDivision(String divSetId, String tournamentCode, long initialScore, IServerCallback callback) {
+        try {
             JSONObject data = new JSONObject();
             data.put(Parameter.divSetId.name(), divSetId);
             data.put(Parameter.tournamentCode.name(), tournamentCode);
@@ -146,8 +150,7 @@ public class TournamentService {
 
             ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.JOIN_DIVISION, data, callback);
             _client.sendRequest(sc);
-        }catch (JSONException je)
-        {
+        } catch (JSONException je) {
             je.printStackTrace();
         }
     }
@@ -157,15 +160,18 @@ public class TournamentService {
      * Any entry fees will be automatically collected.
      *
      * Service Name - tournament
-     * Service Operation - JOIN_TOURNAMENT
+     * Service Operation - JOTOURNAMENT
      *
-     * @param leaderboardId The leaderboard for the tournament
+     * @param leaderboardId  The leaderboard for the tournament
      * @param tournamentCode Tournament to join
-     * @param initialScore The initial score for players first joining a tournament
-     *						  Usually 0, unless leaderboard is LOW_VALUE
-     * @param callback The method to be invoked when the server response is received
+     * @param initialScore   The initial score for players first joining a
+     *                       tournament
+     *                       Usually 0, unless leaderboard is LOW_VALUE
+     * @param callback       The method to be invoked when the server response is
+     *                       received
      */
-    public void joinTournament(String leaderboardId, String tournamentCode, long initialScore, IServerCallback callback) {
+    public void joinTournament(String leaderboardId, String tournamentCode, long initialScore,
+            IServerCallback callback) {
 
         try {
             JSONObject data = new JSONObject();
@@ -180,27 +186,26 @@ public class TournamentService {
         }
     }
 
-
     /**
-     * Leave the specified division.
-     * Removes player score from tournament leaderboard
+     * Removes player from division instance
+     * Also removes division instance from player's division list
      *
      * Service Name - tournament
      * Service Operation - LEAVE_DIVISION_INSTANCE
      *
-     * @param leaderboardId The leaderboard for the division
-     * @param callback The method to be invoked when the server response is received
+     * @param leaderboardId The leaderboard for the tournament
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
-    public void leaveDivisionInstance(String leaderboardId, IServerCallback callback)
-    {
-        try{
+    public void leaveDivisionInstance(String leaderboardId, IServerCallback callback) {
+        try {
             JSONObject data = new JSONObject();
             data.put(Parameter.leaderboardId.name(), leaderboardId);
 
-            ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.LEAVE_DIVISION_INSTANCE, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.LEAVE_DIVISION_INSTANCE, data,
+                    callback);
             _client.sendRequest(sc);
-        }catch (JSONException je)
-        {
+        } catch (JSONException je) {
             je.printStackTrace();
         }
     }
@@ -212,7 +217,8 @@ public class TournamentService {
      * Service Operation - LEAVE_TOURNAMENT
      *
      * @param leaderboardId The leaderboard for the tournament
-     * @param callback The method to be invoked when the server response is received
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
     public void leaveTournament(String leaderboardId, IServerCallback callback) {
 
@@ -228,18 +234,22 @@ public class TournamentService {
     }
 
     /**
-     * Post the users score to the leaderboard
+     * Post the users score to the leaderboard - UTC time
      *
      * Service Name - tournament
      * Service Operation - POST_TOURNAMENT_SCORE
      *
-     * @param leaderboardId The leaderboard for the tournament
-     * @param score The score to post
-     * @param jsonData Optional data attached to the leaderboard entry
-     * @param roundStartedTimeUTC Time the user started the match resulting in the score being posted in UTC mmilliseconds time.
-     * @param callback The method to be invoked when the server response is received
+     * @param leaderboardId       The leaderboard for the tournament
+     * @param score               The score to post
+     * @param jsonData            Optional data attached to the leaderboard entry
+     * @param roundStartedTimeUTC Time the user started the match resulting in the
+     *                            score being posted in UTC. Use UTC time in
+     *                            milliseconds since epoch
+     * @param callback            The method to be invoked when the server response
+     *                            is received
      */
-    public void postTournamentScoreUTC(String leaderboardId, long score, String jsonData, long roundStartedTimeUTC, IServerCallback callback) {
+    public void postTournamentScoreUTC(String leaderboardId, long score, String jsonData, long roundStartedTimeUTC,
+            IServerCallback callback) {
 
         try {
             JSONObject data = new JSONObject();
@@ -253,7 +263,8 @@ public class TournamentService {
 
             data.put(Parameter.roundStartedEpoch.name(), roundStartedTimeUTC);
 
-            ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.POST_TOURNAMENT_SCORE, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.POST_TOURNAMENT_SCORE, data,
+                    callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -261,21 +272,27 @@ public class TournamentService {
     }
 
     /**
-     * Post the users score to the leaderboard
+     * Post the users score to the leaderboard - UTC time
      *
      * Service Name - tournament
      * Service Operation - POST_TOURNAMENT_SCORE_WITH_RESULTS
      *
-     * @param leaderboardId The leaderboard for the tournament
-     * @param score The score to post
-     * @param jsonData Optional data attached to the leaderboard entry
-     * @param roundStartedTimeUTC Time the user started the match resulting in the score being posted in UTC mmilliseconds time.
-     * @param sort Sort key Sort order of page.
-     * @param beforeCount The count of number of players before the current player to include.
-     * @param afterCount The count of number of players after the current player to include.
-     * @param initialScore The initial score for players first joining a tournament
-     *						  Usually 0, unless leaderboard is LOW_VALUE
-     * @param callback The method to be invoked when the server response is received
+     * @param leaderboardId       The leaderboard for the tournament
+     * @param score               The score to post
+     * @param jsonData            Optional data attached to the leaderboard entry
+     * @param roundStartedTimeUTC Time the user started the match resulting in the
+     *                            score being posted in UTC. Use UTC time in
+     *                            milliseconds since epoch
+     * @param sort                Sort key Sort order of page.
+     * @param beforeCount         The count of number of players before the current
+     *                            player to include.
+     * @param afterCount          The count of number of players after the current
+     *                            player to include.
+     * @param initialScore        The initial score for players first joining a
+     *                            tournament
+     *                            Usually 0, unless leaderboard is LOW_VALUE
+     * @param callback            The method to be invoked when the server response
+     *                            is received
      */
     public void postTournamentScoreWithResultsUTC(
             String leaderboardId,
@@ -303,7 +320,8 @@ public class TournamentService {
 
             data.put(Parameter.roundStartedEpoch.name(), roundStartedTimeUTC);
 
-            ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.POST_TOURNAMENT_SCORE_WITH_RESULTS, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.POST_TOURNAMENT_SCORE_WITH_RESULTS,
+                    data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -317,7 +335,8 @@ public class TournamentService {
      * Service Operation - VIEW_CURRENT_REWARD
      *
      * @param leaderboardId The leaderboard for the tournament
-     * @param callback The method to be invoked when the server response is received
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
     public void viewCurrentReward(String leaderboardId, IServerCallback callback) {
 
@@ -325,7 +344,8 @@ public class TournamentService {
             JSONObject data = new JSONObject();
             data.put(Parameter.leaderboardId.name(), leaderboardId);
 
-            ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.VIEW_CURRENT_REWARD, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.VIEW_CURRENT_REWARD, data,
+                    callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -339,8 +359,10 @@ public class TournamentService {
      * Service Operation - VIEW_REWARD
      *
      * @param leaderboardId The leaderboard for the tournament
-     * @param versionId Version of the tournament. Use -1 for the latest version.
-     * @param callback The method to be invoked when the server response is received
+     * @param versionId     Version of the tournament. Use -1 for the latest
+     *                      version.
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
     public void viewReward(String leaderboardId, int versionId, IServerCallback callback) {
 

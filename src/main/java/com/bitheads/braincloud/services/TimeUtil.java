@@ -15,17 +15,20 @@ public class TimeUtil {
         return new Date(utcMillis);
     }
 
-    public static Date LocalTimeToUTCTime(Date localDate)
-    {
+    public static Date LocalTimeToUTCTime(Date localDate) {
         String timeZone = Calendar.getInstance().getTimeZone().getID();
-        Date utcDate = new Date(localDate.getTime() - TimeZone.getTimeZone(timeZone).getOffset(localDate.getTime())); //subtract for utcTime
+        Date utcDate = new Date(localDate.getTime() - TimeZone.getTimeZone(timeZone).getOffset(localDate.getTime())); // subtract
+                                                                                                                      // for
+                                                                                                                      // utcTime
         return utcDate;
     }
 
-    public static Date UTCTimeToLocalTime (Date utcDate)
-    {
+    public static Date UTCTimeToLocalTime(Date utcDate) {
         String timeZone = Calendar.getInstance().getTimeZone().getID();
-        Date localDate = new Date(utcDate.getTime() + TimeZone.getTimeZone(timeZone).getOffset(utcDate.getTime())); //add to get localTime
+        Date localDate = new Date(utcDate.getTime() + TimeZone.getTimeZone(timeZone).getOffset(utcDate.getTime())); // add
+                                                                                                                    // to
+                                                                                                                    // get
+                                                                                                                    // localTime
         return localDate;
     }
 }

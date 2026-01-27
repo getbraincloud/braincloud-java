@@ -12,7 +12,7 @@ import com.bitheads.braincloud.comms.ServerCall;
 
 public class UserItemsService {
 
-    private enum Parameter {
+	private enum Parameter {
 		context,
 		criteria,
 		defId,
@@ -29,62 +29,52 @@ public class UserItemsService {
 		version
 	}
 
-    private BrainCloudClient _client;
+	private BrainCloudClient _client;
 
-    public UserItemsService(BrainCloudClient client) {
-        _client = client;
-    }
+	public UserItemsService(BrainCloudClient client) {
+		_client = client;
+	}
 
 	/**
-	 * Allows item(s) to be awarded to a user without collecting
-	 *  the purchase amount. If includeDef is true, response 
-	 * includes associated itemDef with language fields limited
-	 *  to the current or default language.
+	 * Awards item(s) to a user without collecting the purchase amount.
+	 * If includeDef is true, response includes associated itemDef
+	 * with language fields limited to the current or default language.
 	 *
 	 * Service Name - userItems
 	 * Service Operation - AWARD_USER_ITEM
 	 *
-	 * @param defId	The unique id of the item definition to award.
-	 * @param quantity	The quantity of the item to award.
-	 * @param includeDef	If true, the associated item definition will be included in the response.
-	 * @param callback	The callback handler
+	 * @param defId      The unique id of the item definition to award.
+	 * @param quantity   The quantity of the item to award.
+	 * @param includeDef If true, include associated item definition in the
+	 *                   response.
+	 * @param callback   The method to be invoked when the server response is
+	 *                   received
 	 */
-    public void awardUserItem(String defId, int quantity, boolean includeDef, IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.defId.name(), defId);
-            data.put(Parameter.quantity.name(), quantity);
-            data.put(Parameter.includeDef.name(), includeDef);
+	public void awardUserItem(String defId, int quantity, boolean includeDef, IServerCallback callback) {
+		try {
+			JSONObject data = new JSONObject();
+			data.put(Parameter.defId.name(), defId);
+			data.put(Parameter.quantity.name(), quantity);
+			data.put(Parameter.includeDef.name(), includeDef);
 
-            ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.AWARD_USER_ITEM, data, callback);
-            _client.sendRequest(sc);
-        } catch (JSONException ignored) {
-        }
-    }
+			ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.AWARD_USER_ITEM, data, callback);
+			_client.sendRequest(sc);
+		} catch (JSONException ignored) {
+		}
+	}
 
 	/**
-	 * Allows item(s) to be awarded to a user without collecting the purchase
-	 * amount. If includeDef is true, response includes associated itemDef with
-	 * language fields limited to the current or default language.
-	 * 
-	 * Service Name - User Items
+	 * Awards item(s) to a user with additional options.
+	 *
+	 * Service Name - userItems
 	 * Service Operation - AWARD_USER_ITEM
-	 * 
+	 *
 	 * @param defId       The unique id of the item definition to award.
 	 * @param quantity    The quantity of the item to award.
-	 * @param includeDef  If true, the associated item definition will be included
-	 *                    in the response.
-	 * @param optionsJson Optional support for specifying
-	 *                    'blockIfExceedItemMaxStackable' indicating how to process
-	 *                    the award if the defId is for a stackable item with a max
-	 *                    stackable quantity and the specified quantity to award is
-	 *                    too high. If true and the quantity is too high, the call
-	 *                    is blocked and an error is returned. If false (default)
-	 *                    and quantity is too high, the quantity is adjusted to the
-	 *                    allowed maximum and the quantity not awarded is reported
-	 *                    in response key 'itemsNotAwarded' - unless the adjusted
-	 *                    quantity would be 0, in which case the call is blocked and
-	 *                    an error is returned.
+	 * @param includeDef  If true, include associated item definition in the
+	 *                    response.
+	 * @param optionsJson JSON string specifying additional options (e.g.,
+	 *                    blockIfExceedItemMaxStackable).
 	 * @param callback    The method to be invoked when the server response is
 	 *                    received
 	 */
@@ -95,7 +85,7 @@ public class UserItemsService {
 			data.put(Parameter.defId.name(), defId);
 			data.put(Parameter.quantity.name(), quantity);
 			data.put(Parameter.includeDef.name(), includeDef);
-			if(optionsJson != null){
+			if (optionsJson != null) {
 				data.put(Parameter.optionsJson.name(), new JSONObject(optionsJson));
 			}
 
@@ -107,54 +97,48 @@ public class UserItemsService {
 	}
 
 	/**
-	 * Allows a quantity of a specified user item to be dropped, 
-	 * without any recovery of the money paid for the item. 
-	 * If any quantity of the user item remains, it will be returned,
-	 * potentially with the associated itemDef (with language fields 
-	 * limited to the current or default language).
+	 * Drops a quantity of a specified user item without recovering the purchase
+	 * cost.
+	 * If any quantity remains, it may include the associated itemDef.
 	 *
 	 * Service Name - userItems
 	 * Service Operation - DROP_USER_ITEM
 	 *
-	 * @param itemId		The unique id of the user item.
-	 * @param quantity		The quantity of the user item to drop.
-	 * @param includeDef	If true and any quantity of the user item remains, the associated item definition will be included in the response.
-	 * @param callback		The callback handler
+	 * @param defId      The unique id of the item definition to drop.
+	 * @param quantity   The quantity of the item to drop.
+	 * @param includeDef If true, include associated item definition in the
+	 *                   response.
+	 * @param callback   The method to be invoked when the server response is
+	 *                   received
 	 */
-    public void dropUserItem(String itemId, int quantity, boolean includeDef, IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.itemId.name(), itemId);
-            data.put(Parameter.quantity.name(), quantity);
-            data.put(Parameter.includeDef.name(), includeDef);
+	public void dropUserItem(String itemId, int quantity, boolean includeDef, IServerCallback callback) {
+		try {
+			JSONObject data = new JSONObject();
+			data.put(Parameter.itemId.name(), itemId);
+			data.put(Parameter.quantity.name(), quantity);
+			data.put(Parameter.includeDef.name(), includeDef);
 
-            ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.DROP_USER_ITEM, data, callback);
-            _client.sendRequest(sc);
-        } catch (JSONException ignored) {
-        }
-    }
+			ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.DROP_USER_ITEM, data, callback);
+			_client.sendRequest(sc);
+		} catch (JSONException ignored) {
+		}
+	}
 
 	/**
-	 * Returns list of promotional details for the specified item definition, for
-	 * promotions available to the current user.
-	 * 
-	 * Service Name - User items
-	 * Service Operation - GET_ITEM_PROMOTIONAL_DETAILS
-	 * 
-	 * @param defId                   The unique id of the item definition to check.
-	 * @param shopId                  The id identifying the store the item is from,
-	 *                                if
-	 *                                applicable.
-	 * @param includeDef              If true, the associated item definition will
-	 *                                be included in
-	 *                                the response.
-	 * @param includePromotionDetails If true, the promotion details of the eligible
-	 *                                promotions will be included in the response.
-	 * @param callback                The method to be invoked when the server
-	 *                                response is
+	 * Returns a list of promotional details for a specified item.
+	 *
+	 * Service Name - userItems
+	 * Service Operation - GET_ITEM_PROMOTION_DETAILS
+	 *
+	 * @param defId                   Item definition ID.
+	 * @param shopId                  Store ID.
+	 * @param includeDef              Include associated item definition if true.
+	 * @param includePromotionDetails Include promotion details if true.
+	 * @param callback                Callback invoked when the server response is
 	 *                                received.
 	 */
-	public void getItemPromotionDetails(String defId, String shopId, boolean includeDef, boolean includePromotionDetails, IServerCallback callback) {
+	public void getItemPromotionDetails(String defId, String shopId, boolean includeDef,
+			boolean includePromotionDetails, IServerCallback callback) {
 		try {
 			JSONObject data = new JSONObject();
 			data.put(Parameter.defId.name(), defId);
@@ -171,41 +155,18 @@ public class UserItemsService {
 	}
 
 	/**
-	 * Returns list of promotional details for the specified item definition, for
-	 * promotions available to the current user.
-	 * 
-	 * Service Name - User Items
+	 * Returns a list of items on promotion available to the current user.
+	 *
+	 * Service Name - userItems
 	 * Service Operation - GET_ITEMS_ON_PROMOTION
-	 * 
-	 * @param shopId                  The id identifying the store the item is from,
-	 *                                if applicable.
-	 * @param includeDef              If true, the associated item definition info
-	 *                                of the promotional items will be included in
-	 *                                the response.
-	 * @param includePromotionDetails If true, the promotion details of the eligible
-	 *                                promotions will be included in the response.
-	 * @param optionsJson             Optional support for specifying
-	 *                                'blockIfExceedItemMaxStackable' indicating how
-	 *                                to process
-	 *                                the award if the defId is for a stackable item
-	 *                                with a max
-	 *                                stackable quantity and the specified quantity
-	 *                                to award is
-	 *                                too high. If true and the quantity is too
-	 *                                high, the call
-	 *                                is blocked and an error is returned. If false
-	 *                                (default)
-	 *                                and quantity is too high, the quantity is
-	 *                                adjusted to the
-	 *                                allowed maximum and the quantity not awarded
-	 *                                is reported
-	 *                                in response key 'itemsNotAwarded' - unless the
-	 *                                adjusted
-	 *                                quantity would be 0, in which case the call is
-	 *                                blocked and
-	 *                                an error is returned.
-	 * @param callback                The method to be invoked when the server
-	 *                                response is received.
+	 *
+	 * @param shopId                  Store ID.
+	 * @param includeDef              Include associated item definition if true.
+	 * @param includePromotionDetails Include promotion details if true.
+	 * @param optionsJson             JSON string specifying additional options
+	 *                                (e.g., category).
+	 * @param callback                Callback invoked when the server response is
+	 *                                received.
 	 */
 	public void getItemsOnPromotion(String shopId, boolean includeDef, boolean includePromotionDetails,
 			String optionsJson,
@@ -215,7 +176,7 @@ public class UserItemsService {
 			data.put(Parameter.shopId.name(), shopId);
 			data.put(Parameter.includeDef.name(), includeDef);
 			data.put(Parameter.includePromotionDetails.name(), includePromotionDetails);
-			if(optionsJson != null){
+			if (optionsJson != null) {
 				data.put(Parameter.optionsJson.name(), new JSONObject(optionsJson));
 			}
 
@@ -228,148 +189,125 @@ public class UserItemsService {
 	}
 
 	/**
-	 * Retrieves the page of user's items from the server 
-	 * based on the context. If includeDef is true, response
-	 *  includes associated itemDef with each user item, with 
-	 * language fields limited to the current or default language.
+	 * Retrieves a page of the user's inventory.
 	 *
 	 * Service Name - userItems
-	 * Service Operation - GET_USER_ITEMS_PAGE
+	 * Service Operation - GET_USER_INVENTORY_PAGE
 	 *
-	 * @param context	The json context for the page request.
-	 * @param includeDef	If true, the associated item definition will be included in the response.
-	 * @param callback	The callback handler
+	 * @param context    Context string used to filter inventory.
+	 * @param includeDef If true, include associated item definitions in the
+	 *                   response.
+	 * @param callback   The method to be invoked when the server response is
+	 *                   received
 	 */
-    public void getUserItemsPage(String context, boolean includeDef, IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
+	public void getUserItemsPage(String context, boolean includeDef, IServerCallback callback) {
+		try {
+			JSONObject data = new JSONObject();
 
-            data.put(Parameter.context.name(), new JSONObject(context));
-            data.put(Parameter.includeDef.name(), includeDef);
+			data.put(Parameter.context.name(), new JSONObject(context));
+			data.put(Parameter.includeDef.name(), includeDef);
 
-            ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.GET_USER_ITEMS_PAGE, data, callback);
-            _client.sendRequest(sc);
-        } catch (JSONException ignored) {
-        }
-    }
+			ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.GET_USER_ITEMS_PAGE, data, callback);
+			_client.sendRequest(sc);
+		} catch (JSONException ignored) {
+		}
+	}
 
 	/**
-	 * Retrieves the page of user's items from the server
-	 *  based on the encoded context. If includeDef is true, 
-	 * response includes associated itemDef with each user item, 
-	 * with language fields limited to the current or default
-	 * language.
+	 * Retrieves a page of the user's inventory with an offset.
 	 *
 	 * Service Name - userItems
-	 * Service Operation - GET_USER_ITEMS_PAGE_OFFSET
+	 * Service Operation - GET_USER_INVENTORY_PAGE_OFFSET
 	 *
-	 * @param context		The context string returned from the server from a previous call to SysGetCatalogItemsPage or SysGetCatalogItemsPageOffset.
-	 * @param pageOffset	The positive or negative page offset to fetch. 
-	 						Uses the last page retrieved using the context string to determine a starting point.
-	 * @param includeDef 	If true, the associated item definition will be included in the response.
-	 * @param callback		The callback handler
+	 * @param context    Context string used to filter inventory.
+	 * @param pageOffset Page offset to retrieve.
+	 * @param includeDef If true, include associated item definitions in the
+	 *                   response.
+	 * @param callback   The method to be invoked when the server response is
+	 *                   received
 	 */
-    public void getUserItemsPageOffset(String context, int pageOffset, boolean includeDef, IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.context.name(), context);
-            data.put(Parameter.pageOffset.name(), pageOffset);
-            data.put(Parameter.includeDef.name(), includeDef);
+	public void getUserItemsPageOffset(String context, int pageOffset, boolean includeDef, IServerCallback callback) {
+		try {
+			JSONObject data = new JSONObject();
+			data.put(Parameter.context.name(), context);
+			data.put(Parameter.pageOffset.name(), pageOffset);
+			data.put(Parameter.includeDef.name(), includeDef);
 
-            ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.GET_USER_ITEMS_PAGE_OFFSET, data, callback);
-            _client.sendRequest(sc);
-        } catch (JSONException ignored) {
-        }
-    }
+			ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.GET_USER_ITEMS_PAGE_OFFSET, data,
+					callback);
+			_client.sendRequest(sc);
+		} catch (JSONException ignored) {
+		}
+	}
 
 	/**
-	 * Retrieves the identified user item from the server. 
-	 * If includeDef is true, response includes associated
-	 * itemDef with language fields limited to the current 
-	 * or default language.
+	 * Retrieves a specific user item.
 	 *
 	 * Service Name - userItems
 	 * Service Operation - GET_USER_ITEM
 	 *
-	 * @param itemId	The unique id of the user item.
-	 * @param includeDef	If true, the associated item definition will be included in the response.
-	 * @param callback The method to be invoked when the server response is received
+	 * @param itemId     ID of the user item to retrieve.
+	 * @param includeDef If true, include associated item definition in the
+	 *                   response.
+	 * @param callback   The method to be invoked when the server response is
+	 *                   received
 	 */
-    public void getUserItem(String itemId, boolean includeDef, IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.itemId.name(), itemId);
-            data.put(Parameter.includeDef.name(), includeDef);
+	public void getUserItem(String itemId, boolean includeDef, IServerCallback callback) {
+		try {
+			JSONObject data = new JSONObject();
+			data.put(Parameter.itemId.name(), itemId);
+			data.put(Parameter.includeDef.name(), includeDef);
 
-            ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.GET_USER_ITEM, data, callback);
-            _client.sendRequest(sc);
-        } catch (JSONException ignored) {
-        }
-    }
+			ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.GET_USER_ITEM, data, callback);
+			_client.sendRequest(sc);
+		} catch (JSONException ignored) {
+		}
+	}
 
 	/**
-	 * Gifts item to the specified player.
+	 * Gifts an item to another user.
 	 *
 	 * Service Name - userItems
 	 * Service Operation - GIVE_USER_ITEM_TO
 	 *
-	 * @param profileId	The ID of the recipient's user profile.
-	 * @param itemId	The ID uniquely identifying the user item to be transferred.
-	 * @param version	The version of the user item being transferred.
-	 * @param quantity	The quantity of the user item to transfer.
-	 * @param immediate	Flag set to true if item is to be immediately transferred, 
-	 					otherwise false to have the sender send an event and transfers item(s) only when recipient calls receiveUserItemFrom.
-	 * @param callback	The callback handler
+	 * @param profileId Profile ID of the recipient.
+	 * @param itemId    ID of the item to gift.
+	 * @param version   Version of the item being gifted.
+	 * @param quantity  Quantity of the item to gift.
+	 * @param immediate If true, the gift is delivered immediately.
+	 * @param callback  The method to be invoked when the server response is
+	 *                  received
 	 */
-    public void giveUserItemTo(String profileId, String itemId, int version, int quantity, boolean immediate, IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.profileId.name(), profileId);
-            data.put(Parameter.itemId.name(), itemId);
+	public void giveUserItemTo(String profileId, String itemId, int version, int quantity, boolean immediate,
+			IServerCallback callback) {
+		try {
+			JSONObject data = new JSONObject();
+			data.put(Parameter.profileId.name(), profileId);
+			data.put(Parameter.itemId.name(), itemId);
 			data.put(Parameter.version.name(), version);
 			data.put(Parameter.quantity.name(), quantity);
-            data.put(Parameter.immediate.name(), immediate);
+			data.put(Parameter.immediate.name(), immediate);
 
-            ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.GIVE_USER_ITEM_TO, data, callback);
-            _client.sendRequest(sc);
-        } catch (JSONException ignored) {
-        }
-    }
+			ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.GIVE_USER_ITEM_TO, data, callback);
+			_client.sendRequest(sc);
+		} catch (JSONException ignored) {
+		}
+	}
 
 	/**
-	 * Allows a quantity of a specified bundle user item to be opened. Response
-	 * indicates any items and currency awards configured for the associated bundle
-	 * user item's BUNDLE type item definition, plus any 'items' awarded and any
-	 * 'currencies' awarded, along with the resulting currency balances. If
-	 * includeItemDef is true, the associated item definition will be included in
-	 * the response for any user items awarded and for the bundle user item being
-	 * opened (if any quantity of the bundle user item remains), with language
-	 * fields limited to the current or default language.
-	 * 
-	 * Service Name - User Items
+	 * Opens a quantity of a bundle user item.
+	 * Creates applicable items and awards any currencies.
+	 *
+	 * Service Name - userItems
 	 * Service Operation - OPEN_BUNDLE
-	 * 
-	 * @param itemId      The unique id of the bundle user item.
-	 * @param version     The version of the bundle user item being sold. Accepts -1
-	 *                    if any version.
-	 * @param quantity    The quantity of the bundle user item to open.
-	 * @param includeDef  If true, the associated item definition will be included
-	 *                    in the response for any user items awarded and if any
-	 *                    quantity of the bundle user item remains.
-	 * @param optionsJson Optional support for specifying
-	 *                    'blockIfExceedItemMaxStackable' indicating how to process
-	 *                    awarding the bundle content items if the defId for any is
-	 *                    for a stackable item with a max stackable quantity and the
-	 *                    specified quantity to be awarded is too high. If true and
-	 *                    the quantity is too high, the call is blocked and an error
-	 *                    is returned. If false (default) and quantity is too high,
-	 *                    the quantity is adjusted to the allowed maximum and the
-	 *                    quantity not awarded is reported in response key
-	 *                    'itemsNotAwarded' - unless the adjusted quantity would be
-	 *                    0, in which case the call is blocked and an error is
-	 *                    returned.
+	 *
+	 * @param itemId      ID of the bundle item to open.
+	 * @param version     Version of the bundle item (pass -1 for any version).
+	 * @param quantity    Quantity of the item to open.
+	 * @param includeDef  Include associated item definitions if true.
+	 * @param optionsJson JSON string specifying additional options.
 	 * @param callback    The method to be invoked when the server response is
-	 *                    received.
+	 *                    received
 	 */
 	public void openBundle(String itemId, int version, int quantity, boolean includeDef, String optionsJson,
 			IServerCallback callback) {
@@ -391,35 +329,33 @@ public class UserItemsService {
 	}
 
 	/**
-	 * Retrieves the identified user item from the server. 
-	 * If includeDef is true, response includes associated
-	 * itemDef with language fields limited to the current 
-	 * or default language.
+	 * Purchases a user item from a store.
 	 *
 	 * Service Name - userItems
 	 * Service Operation - PURCHASE_USER_ITEM
 	 *
-	 * @param defId	The unique id of the item definition to purchase.
-	 * @param quantity	The quantity of the item to purchase.
-	 * @param shopId	The id identifying the store the item is being purchased from 
-	 					(not yet supported) 
-						Use null or empty string to specify the default shop price.
-	 * @param includeDef	If true, the associated item definition will be included in the response.
-	 * @param callback	The callback handler
+	 * @param defId      The unique id of the item definition to purchase.
+	 * @param quantity   Quantity of the item to purchase.
+	 * @param shopId     Store ID for the purchase.
+	 * @param includeDef If true, include associated item definition in the
+	 *                   response.
+	 * @param callback   The method to be invoked when the server response is
+	 *                   received
 	 */
-    public void purchaseUserItem(String defId, int quantity, String shopId, boolean includeDef, IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.defId.name(), defId);
-            data.put(Parameter.quantity.name(), quantity);
-            data.put(Parameter.shopId.name(), shopId);
-            data.put(Parameter.includeDef.name(), includeDef);
+	public void purchaseUserItem(String defId, int quantity, String shopId, boolean includeDef,
+			IServerCallback callback) {
+		try {
+			JSONObject data = new JSONObject();
+			data.put(Parameter.defId.name(), defId);
+			data.put(Parameter.quantity.name(), quantity);
+			data.put(Parameter.shopId.name(), shopId);
+			data.put(Parameter.includeDef.name(), includeDef);
 
-            ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.PURCHASE_USER_ITEM, data, callback);
-            _client.sendRequest(sc);
-        } catch (JSONException ignored) {
-        }
-    }
+			ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.PURCHASE_USER_ITEM, data, callback);
+			_client.sendRequest(sc);
+		} catch (JSONException ignored) {
+		}
+	}
 
 	/**
 	 * Purchases a quantity of an item from the specified store, if the user has
@@ -459,7 +395,7 @@ public class UserItemsService {
 			data.put(Parameter.quantity.name(), quantity);
 			data.put(Parameter.shopId.name(), shopId);
 			data.put(Parameter.includeDef.name(), includeDef);
-			if(optionsJson != null){
+			if (optionsJson != null) {
 				data.put(Parameter.optionsJson.name(), new JSONObject(optionsJson));
 			}
 
@@ -471,170 +407,173 @@ public class UserItemsService {
 	}
 
 	/**
-	 * Retrieves and transfers the gift item from 
-	 * the specified player, who must have previously 
-	 * called giveUserItemTo.
+	 * Retrieves and transfers a gift item from another user.
 	 *
 	 * Service Name - userItems
-	 * Service Operation - RECEVIE_USER_ITEM_FROM
+	 * Service Operation - RECEIVE_USER_ITEM_FROM
 	 *
-	 * @param profileId	The profile ID of the user who is giving the item.
-	 * @param itemId	The ID uniquely identifying the user item to be transferred.
-	 * @param callback	The callback handler
+	 * @param profileId Profile ID of the sender.
+	 * @param itemId    ID of the item being received.
+	 * @param callback  The method to be invoked when the server response is
+	 *                  received
 	 */
-    public void receiveUserItemFrom(String profileId, String itemId, IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.profileId.name(), profileId);
-            data.put(Parameter.itemId.name(), itemId);
+	public void receiveUserItemFrom(String profileId, String itemId, IServerCallback callback) {
+		try {
+			JSONObject data = new JSONObject();
+			data.put(Parameter.profileId.name(), profileId);
+			data.put(Parameter.itemId.name(), itemId);
 
-            ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.RECEIVE_USER_ITEM_FROM, data, callback);
-            _client.sendRequest(sc);
-        } catch (JSONException ignored) {
-        }
-    }
+			ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.RECEIVE_USER_ITEM_FROM, data,
+					callback);
+			_client.sendRequest(sc);
+		} catch (JSONException ignored) {
+		}
+	}
 
 	/**
-	 * Allows a quantity of a specified user item to be sold. 
-	 * If any quantity of the user item remains, it will be returned, 
-	 * potentially with the associated itemDef (with language fields 
-	 * limited to the current or default language), along with the 
-	 * currency refunded and currency balances.
+	 * Sells a user item back to the store.
 	 *
 	 * Service Name - userItems
 	 * Service Operation - SELL_USER_ITEM
 	 *
-	 * @param itemId	The unique id of the user item.
-	 * @param version	The version of the user item being sold.
-	 * @param quantity	The quantity of the user item to sell.
-	 * @param shopId	The id identifying the store the item is being purchased from 
-	 					(not yet supported) 
-						Use null or empty string to specify the default shop price.
-	 * @param includeDef 	If true and any quantity of the user item remains, the associated item definition will be included in the response.
-	 * @param callback	The callback handler
+	 * @param itemId     ID of the user item to sell.
+	 * @param version    Version of the item being sold.
+	 * @param quantity   Quantity of the item to sell.
+	 * @param shopId     Store ID for the sale.
+	 * @param includeDef If true, include associated item definition in the
+	 *                   response.
+	 * @param callback   The method to be invoked when the server response is
+	 *                   received
 	 */
-    public void sellUserItem(String itemId, int version, int quantity, String shopId, boolean includeDef, IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.itemId.name(), itemId);
-            data.put(Parameter.version.name(), version);
-            data.put(Parameter.quantity.name(), quantity);
-            data.put(Parameter.shopId.name(), shopId);
-            data.put(Parameter.includeDef.name(), includeDef);
+	public void sellUserItem(String itemId, int version, int quantity, String shopId, boolean includeDef,
+			IServerCallback callback) {
+		try {
+			JSONObject data = new JSONObject();
+			data.put(Parameter.itemId.name(), itemId);
+			data.put(Parameter.version.name(), version);
+			data.put(Parameter.quantity.name(), quantity);
+			data.put(Parameter.shopId.name(), shopId);
+			data.put(Parameter.includeDef.name(), includeDef);
 
-
-            ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.SELL_USER_ITEM, data, callback);
-            _client.sendRequest(sc);
-        } catch (JSONException ignored) {
-        }
-    }
+			ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.SELL_USER_ITEM, data, callback);
+			_client.sendRequest(sc);
+		} catch (JSONException ignored) {
+		}
+	}
 
 	/**
-	 * Updates the item data on the specified user item.
+	 * Updates the data of a specific user item.
 	 *
 	 * Service Name - userItems
 	 * Service Operation - UPDATE_USER_ITEM_DATA
 	 *
-	 * @param itemId	The unique id of the user item.
-	 * @param version	The version of the user item being updated.
-	 * @param newItemData	New item data to replace existing user item data.
-	 * @param callback	The callback handler
+	 * @param itemId      ID of the user item to update.
+	 * @param version     Version of the item being updated.
+	 * @param newItemData JSON string with updated item data.
+	 * @param callback    The method to be invoked when the server response is
+	 *                    received
 	 */
-    public void updateUserItemData(String itemId, int version, String newItemData, IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.itemId.name(), itemId);
-            data.put(Parameter.version.name(), version);
-            data.put(Parameter.newItemData.name(), new JSONObject(newItemData));
+	public void updateUserItemData(String itemId, int version, String newItemData, IServerCallback callback) {
+		try {
+			JSONObject data = new JSONObject();
+			data.put(Parameter.itemId.name(), itemId);
+			data.put(Parameter.version.name(), version);
+			data.put(Parameter.newItemData.name(), new JSONObject(newItemData));
 
-            ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.UPDATE_USER_ITEM_DATA, data, callback);
-            _client.sendRequest(sc);
-        } catch (JSONException ignored) {
-        }
-    }
+			ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.UPDATE_USER_ITEM_DATA, data,
+					callback);
+			_client.sendRequest(sc);
+		} catch (JSONException ignored) {
+		}
+	}
 
 	/**
-	 * Uses the specified item, potentially consuming it.
+	 * Uses a user item, potentially consuming it.
 	 *
 	 * Service Name - userItems
 	 * Service Operation - USE_USER_ITEM
 	 *
-	 * @param itemId	The unique id of the user item.
-	 * @param version	The version of the user item being used.
-	 * @param newItemData	Optional item data to replace existing user item data. 
-	 						Specify null to leave item data unchanged. 
-							Specify empty map to clear item data.
-	 * @param includeDef 	If true, the associated item definition will be included in the response.
-	 * @param callback	The callback handler
+	 * @param itemId      ID of the user item to use.
+	 * @param version     Version of the user item (pass -1 for any version).
+	 * @param newItemData Optional JSON string to update item fields.
+	 * @param includeDef  If true, include associated item definition in the
+	 *                    response.
+	 * @param callback    The method to be invoked when the server response is
+	 *                    received
 	 */
-    public void useUserItem(String itemId, int version, String newItemData, boolean includeDef, IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.itemId.name(), itemId);
-            data.put(Parameter.version.name(), version);
-            data.put(Parameter.newItemData.name(), new JSONObject(newItemData));
-            data.put(Parameter.includeDef.name(), includeDef);
+	public void useUserItem(String itemId, int version, String newItemData, boolean includeDef,
+			IServerCallback callback) {
+		try {
+			JSONObject data = new JSONObject();
+			data.put(Parameter.itemId.name(), itemId);
+			data.put(Parameter.version.name(), version);
+			data.put(Parameter.newItemData.name(), new JSONObject(newItemData));
+			data.put(Parameter.includeDef.name(), includeDef);
 
-            ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.USE_USER_ITEM, data, callback);
-            _client.sendRequest(sc);
-        } catch (JSONException ignored) {
-        }
+			ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.USE_USER_ITEM, data, callback);
+			_client.sendRequest(sc);
+		} catch (JSONException ignored) {
+		}
 	}
-	
+
 	/**
-	 * Publishes the specified item to the item management attached blockchain. Results are reported asynchronously via an RTT event.
+	 * Publishes a user item to the blockchain.
 	 *
 	 * Service Name - userItems
 	 * Service Operation - PUBLISH_USER_ITEM_TO_BLOCKCHAIN
 	 *
-	 * @param itemId	The unique id of the user item.
-	 * @param version	The version of the user item being published.
-	 * @param callback	The callback handler
+	 * @param itemId   ID of the user item to publish.
+	 * @param version  Version of the item to publish.
+	 * @param callback The method to be invoked when the server response is received
 	 */
-    public void publishUserItemToBlockchain(String itemId, int version, IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.itemId.name(), itemId);
-            data.put(Parameter.version.name(), version);
+	public void publishUserItemToBlockchain(String itemId, int version, IServerCallback callback) {
+		try {
+			JSONObject data = new JSONObject();
+			data.put(Parameter.itemId.name(), itemId);
+			data.put(Parameter.version.name(), version);
 
-            ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.PUBLISH_USER_ITEM_TO_BLOCKCHAIN, data, callback);
-            _client.sendRequest(sc);
-        } catch (JSONException ignored) {
-        }
+			ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.PUBLISH_USER_ITEM_TO_BLOCKCHAIN,
+					data, callback);
+			_client.sendRequest(sc);
+		} catch (JSONException ignored) {
+		}
 	}
-	
+
 	/**
-	 * Syncs the caller's user items with the item management attached blockchain. Results are reported asynchronously via an RTT event.
+	 * Refreshes blockchain user items.
 	 *
 	 * Service Name - userItems
-	 * Service Operation - REFRESH_BLOCKCHAIN_USER_ITEMS
+	 * Service Operation - REFRESH_BLOCKCHAUSER_ITEMS
 	 *
-	 * @param callback	The callback handler
+	 * @param callback Callback invoked when the server response is received.
 	 */
-    public void refreshBlockchainUserItems(IServerCallback callback) {
-            JSONObject data = new JSONObject();
-            ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.REFRESH_BLOCKCHAIN_USER_ITEMS, data, callback);
-            _client.sendRequest(sc);
+	public void refreshBlockchainUserItems(IServerCallback callback) {
+		JSONObject data = new JSONObject();
+		ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.REFRESH_BLOCKCHAIN_USER_ITEMS, data,
+				callback);
+		_client.sendRequest(sc);
 	}
-	
+
 	/**
-	 * Removes the specified item from the item management attached blockchain. Results are reported asynchronously via an RTT event.
+	 * Removes a user item from the blockchain.
+	 *
 	 * Service Name - userItems
 	 * Service Operation - REMOVE_USER_ITEM_FROM_BLOCKCHAIN
 	 *
-	 * @param itemId	The unique id of the user item.
-	 * @param version	The version of the user item being removed.
-	 * @param callback	The callback handler
+	 * @param itemId   ID of the user item to remove.
+	 * @param version  Version of the user item to remove.
+	 * @param callback Callback invoked when the server response is received.
 	 */
-    public void removeUserItemFromBlockchain(String itemId, int version, IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.itemId.name(), itemId);
-            data.put(Parameter.version.name(), version);
+	public void removeUserItemFromBlockchain(String itemId, int version, IServerCallback callback) {
+		try {
+			JSONObject data = new JSONObject();
+			data.put(Parameter.itemId.name(), itemId);
+			data.put(Parameter.version.name(), version);
 
-            ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.REMOVE_USER_ITEM_FROM_BLOCKCHAIN, data, callback);
-            _client.sendRequest(sc);
-        } catch (JSONException ignored) {
-        }
+			ServerCall sc = new ServerCall(ServiceName.userItems, ServiceOperation.REMOVE_USER_ITEM_FROM_BLOCKCHAIN,
+					data, callback);
+			_client.sendRequest(sc);
+		} catch (JSONException ignored) {
+		}
 	}
 }

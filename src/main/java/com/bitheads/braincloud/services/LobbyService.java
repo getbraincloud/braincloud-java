@@ -23,8 +23,8 @@ import com.bitheads.braincloud.comms.ServerCall;
 /**
  * Created by David St-Louis on 2018-07-04
  */
-public class LobbyService implements IServerCallback{
- 
+public class LobbyService implements IServerCallback {
+
     private enum Parameter {
         entryId,
         lobbyType,
@@ -76,7 +76,7 @@ public class LobbyService implements IServerCallback{
 
                         // Sort results from faster to slowest
                         pings.sort(null);
-                                
+
                         // Calculate the average, minus the slowest one (MAX_PING_CALLS - 1)
                         int pingResult = 0;
                         for (int i = 0; i < MAX_PING_CALLS - 1; ++i) {
@@ -86,7 +86,7 @@ public class LobbyService implements IServerCallback{
 
                         // Notify
                         _ping = pingResult;
-                        synchronized(_sync) {
+                        synchronized (_sync) {
                             _sync.notify();
                         }
                     } catch (Exception e) {
@@ -142,22 +142,22 @@ public class LobbyService implements IServerCallback{
 
     /**
      * Creates a new lobby.
-     * 
-     * Sends LOBBY_JOIN_SUCCESS message to the user, with full copy of lobby data Sends LOBBY_MEMBER_JOINED to all lobby members, with copy of member data
      *
      * Service Name - Lobby
-     * Service Operation - CREATE_LOBBY
+     * Service Operation - CreateLobby
      *
-     * @param lobbyType The type of lobby to look for. Lobby types are defined in the portal.
-     * @param rating The skill rating to use for finding the lobby. Provided as a separate parameter because it may not exactly match the user's rating (especially in cases where parties are involved).
-     * @param otherUserCxIds Array of other users (i.e. party members) to add to the lobby as well. Will constrain things so that only lobbies with room for all players will be considered.
-     * @param isReady Initial ready-status of this user.
-     * @param extraJson Initial extra-data about this user.
-     * @param teamCode Preferred team for this user, if applicable. Send "" or null for automatic assignment.
-     * @param settings Configuration data for the room.
-     * @param callback  The callback handler
+     * @param lobbyType      The type of lobby to create
+     * @param rating         The skill rating used for matchmaking
+     * @param otherUserCxIds Other users to add to the lobby
+     * @param isReady        Initial ready state of this user
+     * @param extraJson      Initial extra data for this user
+     * @param teamCode       Preferred team code, or empty for auto assignment
+     * @param jsonSettings   Configuration data for the lobby
+     * @param callback       The method to be invoked when the server response is
+     *                       received
      */
-    public void createLobby(String lobbyType, int rating, ArrayList<String> otherUserCxIds, Boolean isReady, String extraJson, String teamCode, String settings, IServerCallback callback) {
+    public void createLobby(String lobbyType, int rating, ArrayList<String> otherUserCxIds, Boolean isReady,
+            String extraJson, String teamCode, String settings, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.lobbyType.name(), lobbyType);
@@ -183,23 +183,23 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Creates a new lobby with ping data 
-     * 
-     * Sends LOBBY_JOIN_SUCCESS message to the user, with full copy of lobby data Sends LOBBY_MEMBER_JOINED to all lobby members, with copy of member data
+     * Creates a new lobby using collected ping data to select the best region.
      *
      * Service Name - Lobby
-     * Service Operation - CREATE_LOBBY_WITH_PING_DATA
+     * Service Operation - CreateLobbyWithPingData
      *
-     * @param lobbyType The type of lobby to look for. Lobby types are defined in the portal.
-     * @param rating The skill rating to use for finding the lobby. Provided as a separate parameter because it may not exactly match the user's rating (especially in cases where parties are involved).
-     * @param otherUserCxIds Array of other users (i.e. party members) to add to the lobby as well. Will constrain things so that only lobbies with room for all players will be considered.
-     * @param isReady Initial ready-status of this user.
-     * @param extraJson Initial extra-data about this user.
-     * @param teamCode Preferred team for this user, if applicable. Send "" or null for automatic assignment.
-     * @param settings Configuration data for the room.
-     * @param callback  The callback handler
+     * @param lobbyType      The type of lobby to create
+     * @param rating         The skill rating used for matchmaking
+     * @param otherUserCxIds Other users to add to the lobby
+     * @param isReady        Initial ready state of this user
+     * @param extraJson      Initial extra data for this user
+     * @param teamCode       Preferred team code, or empty for auto assignment
+     * @param jsonSettings   Configuration data for the lobby
+     * @param callback       The method to be invoked when the server response is
+     *                       received
      */
-    public void createLobbyWithPingData(String lobbyType, int rating, ArrayList<String> otherUserCxIds, Boolean isReady, String extraJson, String teamCode, String settings, IServerCallback callback) {
+    public void createLobbyWithPingData(String lobbyType, int rating, ArrayList<String> otherUserCxIds, Boolean isReady,
+            String extraJson, String teamCode, String settings, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.lobbyType.name(), lobbyType);
@@ -224,23 +224,26 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Finds a lobby matching the specified parameters. Asynchronous - returns 200 to indicate that matchmaking has started.
+     * Begins matchmaking to find a lobby matching the given parameters.
      *
      * Service Name - Lobby
-     * Service Operation - FIND_LOBBY
+     * Service Operation - FindLobby
      *
-     * @param lobbyType The type of lobby to look for. Lobby types are defined in the portal.
-     * @param rating The skill rating to use for finding the lobby. Provided as a separate parameter because it may not exactly match the user's rating (especially in cases where parties are involved).
-     * @param maxSteps The maximum number of steps to wait when looking for an applicable lobby. Each step is ~5 seconds.
-     * @param algo The algorithm to use for increasing the search scope.
-     * @param filterJson Used to help filter the list of rooms to consider. Passed to the matchmaking filter, if configured.
-     * @param otherUserCxIds Array of other users (i.e. party members) to add to the lobby as well. Will constrain things so that only lobbies with room for all players will be considered.
-     * @param isReady Initial ready-status of this user.
-     * @param extraJson Initial extra-data about this user.
-     * @param teamCode Preferred team for this user, if applicable. Send "" or null for automatic assignment
-     * @param callback The callback handler
+     * @param lobbyType      The type of lobby to search for
+     * @param rating         The skill rating used for matchmaking
+     * @param maxSteps       Maximum number of matchmaking steps
+     * @param jsonAlgo       Matchmaking algorithm configuration
+     * @param jsonFilter     Matchmaking filter criteria
+     * @param otherUserCxIds Other users to include in the lobby
+     * @param isReady        Initial ready state of this user
+     * @param extraJson      Initial extra data for this user
+     * @param teamCode       Preferred team code, or empty for auto assignment
+     * @param callback       The method to be invoked when the server response is
+     *                       received
      */
-    public void findLobby(String lobbyType, int rating, int maxSteps, String algo, String filterJson, ArrayList<String> otherUserCxIds, Boolean isReady, String extraJson, String teamCode, IServerCallback callback) {
+    public void findLobby(String lobbyType, int rating, int maxSteps, String algo, String filterJson,
+            ArrayList<String> otherUserCxIds, Boolean isReady, String extraJson, String teamCode,
+            IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.lobbyType.name(), lobbyType);
@@ -269,24 +272,27 @@ public class LobbyService implements IServerCallback{
         }
     }
 
-        /**
-     * Finds a lobby matching the specified parameters. Asynchronous - returns 200 to indicate that matchmaking has started. But adds ping data to the call
+    /**
+     * Begins matchmaking using ping data to select the best region.
      *
      * Service Name - Lobby
-     * Service Operation - FIND_LOBBY
+     * Service Operation - FindLobbyWithPingData
      *
-     * @param lobbyType The type of lobby to look for. Lobby types are defined in the portal.
-     * @param rating The skill rating to use for finding the lobby. Provided as a separate parameter because it may not exactly match the user's rating (especially in cases where parties are involved).
-     * @param maxSteps The maximum number of steps to wait when looking for an applicable lobby. Each step is ~5 seconds.
-     * @param algo The algorithm to use for increasing the search scope.
-     * @param filterJson Used to help filter the list of rooms to consider. Passed to the matchmaking filter, if configured.
-     * @param otherUserCxIds Array of other users (i.e. party members) to add to the lobby as well. Will constrain things so that only lobbies with room for all players will be considered.
-     * @param isReady Initial ready-status of this user.
-     * @param extraJson Initial extra-data about this user.
-     * @param teamCode Preferred team for this user, if applicable. Send "" or null for automatic assignment
-     * @param callback  The callback handler
+     * @param lobbyType      The type of lobby to search for
+     * @param rating         The skill rating used for matchmaking
+     * @param maxSteps       Maximum number of matchmaking steps
+     * @param jsonAlgo       Matchmaking algorithm configuration
+     * @param jsonFilter     Matchmaking filter criteria
+     * @param otherUserCxIds Other users to include in the lobby
+     * @param isReady        Initial ready state of this user
+     * @param extraJson      Initial extra data for this user
+     * @param teamCode       Preferred team code, or empty for auto assignment
+     * @param callback       The method to be invoked when the server response is
+     *                       received
      */
-    public void findLobbyWithPingData(String lobbyType, int rating, int maxSteps, String algo, String filterJson, ArrayList<String> otherUserCxIds, Boolean isReady, String extraJson, String teamCode, IServerCallback callback) {
+    public void findLobbyWithPingData(String lobbyType, int rating, int maxSteps, String algo, String filterJson,
+            ArrayList<String> otherUserCxIds, Boolean isReady, String extraJson, String teamCode,
+            IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.lobbyType.name(), lobbyType);
@@ -315,24 +321,27 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Adds the caller to the lobby entry queue and will create a lobby if none are found.
+     * Finds or creates a lobby if none are available.
      *
      * Service Name - Lobby
-     * Service Operation - FIND_OR_CREATE_LOBBY
+     * Service Operation - FindOrCreateLobby
      *
-     * @param lobbyType The type of lobby to look for. Lobby types are defined in the portal.
-     * @param rating The skill rating to use for finding the lobby. Provided as a separate parameter because it may not exactly match the user's rating (especially in cases where parties are involved).
-     * @param maxSteps The maximum number of steps to wait when looking for an applicable lobby. Each step is ~5 seconds.
-     * @param algo The algorithm to use for increasing the search scope.
-     * @param filterJson Used to help filter the list of rooms to consider. Passed to the matchmaking filter, if configured.
-     * @param otherUserCxIds Array of other users (i.e. party members) to add to the lobby as well. Will constrain things so that only lobbies with room for all players will be considered.
-     * @param settings Configuration data for the room.
-     * @param isReady Initial ready-status of this user.
-     * @param extraJson Initial extra-data about this user.
-     * @param teamCode Preferred team for this user, if applicable. Send "" or null for automatic assignment.
-     * @param callback  The callback handler
+     * @param lobbyType      The type of lobby
+     * @param rating         The skill rating used for matchmaking
+     * @param maxSteps       Maximum number of matchmaking steps
+     * @param jsonAlgo       Matchmaking algorithm configuration
+     * @param jsonFilter     Matchmaking filter criteria
+     * @param otherUserCxIds Other users to include in the lobby
+     * @param jsonSettings   Configuration data for the lobby
+     * @param isReady        Initial ready state of this user
+     * @param extraJson      Initial extra data for this user
+     * @param teamCode       Preferred team code, or empty for auto assignment
+     * @param callback       The method to be invoked when the server response is
+     *                       received
      */
-    public void findOrCreateLobby(String lobbyType, int rating, int maxSteps, String algo, String filterJson, ArrayList<String> otherUserCxIds, String settings, Boolean isReady, String extraJson, String teamCode, IServerCallback callback) {
+    public void findOrCreateLobby(String lobbyType, int rating, int maxSteps, String algo, String filterJson,
+            ArrayList<String> otherUserCxIds, String settings, Boolean isReady, String extraJson, String teamCode,
+            IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.lobbyType.name(), lobbyType);
@@ -365,24 +374,27 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Adds the caller to the lobby entry queue and will create a lobby if none are found.
+     * Finds or creates a lobby using ping data.
      *
      * Service Name - Lobby
-     * Service Operation - FIND_OR_CREATE_LOBBY_WITH_PING_DATA
+     * Service Operation - FindOrCreateLobbyWithPingData
      *
-     * @param lobbyType The type of lobby to look for. Lobby types are defined in the portal.
-     * @param rating The skill rating to use for finding the lobby. Provided as a separate parameter because it may not exactly match the user's rating (especially in cases where parties are involved).
-     * @param maxSteps The maximum number of steps to wait when looking for an applicable lobby. Each step is ~5 seconds.
-     * @param algo The algorithm to use for increasing the search scope.
-     * @param filterJson Used to help filter the list of rooms to consider. Passed to the matchmaking filter, if configured.
-     * @param otherUserCxIds Array of other users (i.e. party members) to add to the lobby as well. Will constrain things so that only lobbies with room for all players will be considered.
-     * @param settings Configuration data for the room.
-     * @param isReady Initial ready-status of this user.
-     * @param extraJson Initial extra-data about this user.
-     * @param teamCode Preferred team for this user, if applicable. Send "" or null for automatic assignment.
-     * @param callback  The callback handler
+     * @param lobbyType      The type of lobby
+     * @param rating         The skill rating used for matchmaking
+     * @param maxSteps       Maximum number of matchmaking steps
+     * @param jsonAlgo       Matchmaking algorithm configuration
+     * @param jsonFilter     Matchmaking filter criteria
+     * @param otherUserCxIds Other users to include in the lobby
+     * @param jsonSettings   Configuration data for the lobby
+     * @param isReady        Initial ready state of this user
+     * @param extraJson      Initial extra data for this user
+     * @param teamCode       Preferred team code, or empty for auto assignment
+     * @param callback       The method to be invoked when the server response is
+     *                       received
      */
-    public void findOrCreateLobbyWithPingData(String lobbyType, int rating, int maxSteps, String algo, String filterJson, ArrayList<String> otherUserCxIds, String settings, Boolean isReady, String extraJson, String teamCode, IServerCallback callback) {
+    public void findOrCreateLobbyWithPingData(String lobbyType, int rating, int maxSteps, String algo,
+            String filterJson, ArrayList<String> otherUserCxIds, String settings, Boolean isReady, String extraJson,
+            String teamCode, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.lobbyType.name(), lobbyType);
@@ -414,13 +426,13 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Returns the data for the specified lobby, including member data.
+     * Retrieves full lobby data for the specified lobby.
      *
      * Service Name - Lobby
-     * Service Operation - GET_LOBBY_DATA
+     * Service Operation - GetLobbyData
      *
-     * @param lobbyId Id of chosen lobby.
-     * @param callback The callback handler
+     * @param lobbyId  The lobby identifier
+     * @param callback The method to be invoked when the server response is received
      */
     public void getLobbyData(String lobbyId, IServerCallback callback) {
         try {
@@ -436,13 +448,13 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Causes the caller to leave the specified lobby. If the user was the owner, a new owner will be chosen. If user was the last member, the lobby will be deleted.
+     * Leaves the specified lobby.
      *
      * Service Name - Lobby
-     * Service Operation - LEAVE_LOBBY
+     * Service Operation - LeaveLobby
      *
-     * @param lobbyId Id of chosen lobby.
-     * @param callback The callback handler
+     * @param lobbyId  The lobby identifier
+     * @param callback The method to be invoked when the server response is received
      */
     public void leaveLobby(String lobbyId, IServerCallback callback) {
         try {
@@ -458,19 +470,21 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Causes the caller to join the specified lobby. 
+     * Joins the specified lobby.
      *
      * Service Name - Lobby
-     * Service Operation - JOIN_LOBBY
-     * 
-     * @param lobbyId Id of chosen lobby.
-     * @param isReady initial ready status of this user
-     * @param extraJson Initial extra-data about this user
-     * @param teamCode specified team code
-     * @param otherUserCxIds Array fo other users (ie party members) to add to the lobby as well. Constrains things so only lobbies with room for all players will be considered. 
-     * @param callback  The callback handler
+     * Service Operation - JoinLobby
+     *
+     * @param lobbyId        The lobby identifier
+     * @param isReady        Initial ready state
+     * @param extraJson      Initial extra data
+     * @param teamCode       Preferred team code
+     * @param otherUserCxIds Other users to include
+     * @param callback       The method to be invoked when the server response is
+     *                       received
      */
-    public void joinLobby(String lobbyId, boolean isReady, String extraJson, String teamCode, ArrayList<String> otherUserCxIds, IServerCallback callback) {
+    public void joinLobby(String lobbyId, boolean isReady, String extraJson, String teamCode,
+            ArrayList<String> otherUserCxIds, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.lobbyId.name(), lobbyId);
@@ -492,19 +506,21 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Causes the caller to join the specified lobby. 
+     * Joins the specified lobby using ping data.
      *
      * Service Name - Lobby
-     * Service Operation - JOIN_LOBBY_WITH_PING_DATA
-     * 
-     * @param lobbyId Id of chosen lobby.
-     * @param isReady initial ready status of this user
-     * @param extraJson Initial extra-data about this user
-     * @param teamCode specified team code
-     * @param otherUserCxIds Array fo other users (ie party members) to add to the lobby as well. Constrains things so only lobbies with room for all players will be considered. 
-     * @param callback  The callback handler
+     * Service Operation - JoinLobbyWithPingData
+     *
+     * @param lobbyId        The lobby identifier
+     * @param isReady        Initial ready state
+     * @param extraJson      Initial extra data
+     * @param teamCode       Preferred team code
+     * @param otherUserCxIds Other users to include
+     * @param callback       The method to be invoked when the server response is
+     *                       received
      */
-    public void joinLobbyWithPingData(String lobbyId, boolean isReady, String extraJson, String teamCode, ArrayList<String> otherUserCxIds, IServerCallback callback) {
+    public void joinLobbyWithPingData(String lobbyId, boolean isReady, String extraJson, String teamCode,
+            ArrayList<String> otherUserCxIds, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.lobbyId.name(), lobbyId);
@@ -525,14 +541,14 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Evicts the specified user from the specified lobby. The caller must be the owner of the lobby.
+     * Removes a member from the lobby. Caller must be the lobby owner.
      *
      * Service Name - Lobby
-     * Service Operation - REMOVE_MEMBER
+     * Service Operation - RemoveMember
      *
-     * @param lobbyId Id of chosen lobby.
-     * @param cxId Specified member to be removed from the lobby.
-     * @param callback  The callback handler
+     * @param lobbyId  The lobby identifier
+     * @param cxId     The cxId of the member to remove
+     * @param callback The method to be invoked when the server response is received
      */
     public void removeMember(String lobbyId, String cxId, IServerCallback callback) {
         try {
@@ -549,14 +565,15 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Sends LOBBY_SIGNAL_DATA message to all lobby members.
+     * Sends a signal to all lobby members.
      *
      * Service Name - Lobby
-     * Service Operation - SEND_SIGNAL
+     * Service Operation - SendSignal
      *
-     * @param lobbyId Id of chosen lobby.
-     * @param signalData Signal data to be sent.
-     * @param callback  The callback handler
+     * @param lobbyId        The lobby identifier
+     * @param jsonSignalData Signal payload to send
+     * @param callback       The method to be invoked when the server response is
+     *                       received
      */
     public void sendSignal(String lobbyId, String signalData, IServerCallback callback) {
         try {
@@ -575,16 +592,15 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Switches to the specified team (if allowed.)
-     * 
-     * Sends LOBBY_MEMBER_UPDATED to all lobby members, with copy of member data
+     * Switches the caller to a different team within the lobby.
      *
      * Service Name - Lobby
-     * Service Operation - SWITCH_TEAM
+     * Service Operation - SwitchTeam
      *
-     * @param lobbyId Id of chosen lobby.
-     * @param toTeamCode Specified team code.
-     * @param callback  The callback handler
+     * @param lobbyId    The lobby identifier
+     * @param toTeamCode Target team code
+     * @param callback   The method to be invoked when the server response is
+     *                   received
      */
     public void switchTeam(String lobbyId, String toTeamCode, IServerCallback callback) {
         try {
@@ -601,15 +617,16 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Updates the ready status and extra json for the given lobby member.
+     * Updates the ready state and extra data for the caller.
      *
      * Service Name - Lobby
-     * Service Operation - UPDATE_READY
+     * Service Operation - UpdateReady
      *
-     * @param lobbyId The type of lobby to look for. Lobby types are defined in the portal.
-     * @param isReady Initial ready-status of this user.
-     * @param extraJson Initial extra-data about this user.
-     * @param callback The callback handler
+     * @param lobbyId   The lobby identifier
+     * @param isReady   Updated ready state
+     * @param extraJson Updated extra data
+     * @param callback  The method to be invoked when the server response is
+     *                  received
      */
     public void updateReady(String lobbyId, Boolean isReady, String extraJson, IServerCallback callback) {
         try {
@@ -629,14 +646,15 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Updates the ready status and extra json for the given lobby member.
+     * Updates the lobby settings.
      *
      * Service Name - Lobby
-     * Service Operation - UPDATE_SETTINGS
+     * Service Operation - UpdateSettings
      *
-     * @param lobbyId Id of the specfified lobby.
-     * @param settings Configuration data for the room.
-     * @param callback The callback handler
+     * @param lobbyId      The lobby identifier
+     * @param jsonSettings Updated lobby settings
+     * @param callback     The method to be invoked when the server response is
+     *                     received
      */
     public void updateSettings(String lobbyId, String settings, IServerCallback callback) {
         try {
@@ -655,14 +673,15 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Gets a map keyed by rating of the visible lobby instances matching the given type and rating range.
+     * Retrieves visible lobby instances matching the given criteria.
      *
      * Service Name - Lobby
      * Service Operation - GET_LOBBY_INSTANCES
      *
-     * @param lobbyType The type of lobby to look for.
-     * @param criteriaJson A JSON string used to describe filter criteria.
-     * @param callback The callback handler
+     * @param lobbyType    The type of lobby
+     * @param criteriaJson JSON filter criteria
+     * @param callback     The method to be invoked when the server response is
+     *                     received
      */
     public void getLobbyInstances(String lobbyType, String criteriaJson, IServerCallback callback) {
         try {
@@ -679,15 +698,16 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Gets a map keyed by rating of the visible lobby instances matching the given type and rating range.
-     * Only lobby instances in the regions that satisfy the ping portion of the criteriaJson (based on the values provided in pingData) will be returned.
+     * Retrieves visible lobby instances matching the given criteria using ping
+     * data.
      *
      * Service Name - Lobby
      * Service Operation - GET_LOBBY_INSTANCES_WITH_PING_DATA
      *
-     * @param lobbyType The type of lobby to look for.
-     * @param criteriaJson A JSON string used to describe filter criteria.
-     * @param callback The callback handler
+     * @param lobbyType    The type of lobby
+     * @param criteriaJson JSON filter criteria
+     * @param callback     The method to be invoked when the server response is
+     *                     received
      */
     public void getLobbyInstancesWithPingData(String lobbyType, String criteriaJson, IServerCallback callback) {
         try {
@@ -702,50 +722,15 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Cancel this members Find, Join and Searching of Lobbies
-     *
-     * @deprecated Use cancelFindRequest with entryId parameter
-     * @param lobbyType Type of lobby being targeted.
-     * @param callback  The callback handler
-     */
-    public void cancelFindRequest(String lobbyType, IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.lobbyType.name(), lobbyType);
-
-            ServerCall sc = new ServerCall(ServiceName.lobby,
-                    ServiceOperation.CANCEL_FIND_REQUEST, data, callback);
-            _client.sendRequest(sc);
-        } catch (JSONException je) {
-            je.printStackTrace();
-        }
-    }
-
-    /**
-     * Cancel this members Find, Join and Searching of Lobbies
-     *
-     * @param lobbyType Type of lobby being targeted.
-     * @param callback  The callback handler
-     */
-    public void cancelFindRequest(String lobbyType, String entryId, IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.lobbyType.name(), lobbyType);
-            data.put(Parameter.entryId.name(), entryId);
-
-            ServerCall sc = new ServerCall(ServiceName.lobby,
-                    ServiceOperation.CANCEL_FIND_REQUEST, data, callback);
-            _client.sendRequest(sc);
-        } catch (JSONException je) {
-            je.printStackTrace();
-        }
-    }
-
-    /**
      * Retrieves the region settings for each of the given lobby types.
+     * Upon success, pingRegions should be called to collect ping data.
      *
-     * @param in_lobbyTypes Types of lobby being queried.
-     * @param callback The callback handler
+     * Service Name - Lobby
+     * Service Operation - GetRegionsForLobbies
+     *
+     * @param roomTypes Ids of the lobby types
+     * @param callback  The method to be invoked when the server response is
+     *                  received
      */
     public void getRegionsForLobbies(String[] in_lobbyTypes, IServerCallback callback) {
         try {
@@ -756,7 +741,7 @@ public class LobbyService implements IServerCallback{
             data.put(Parameter.lobbyTypes.name(), in_lobbyTypes);
 
             ServerCall sc = new ServerCall(ServiceName.lobby,
-            ServiceOperation.GET_REGIONS_FOR_LOBBIES, data, this);
+                    ServiceOperation.GET_REGIONS_FOR_LOBBIES, data, this);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -765,7 +750,7 @@ public class LobbyService implements IServerCallback{
 
     private void startPingThread() {
         _pingData = new JSONObject();
-        
+
         // Run the thread
         _isPingRunning.set(true);
         _pingRegionsThread = new Thread(new Runnable() {
@@ -786,11 +771,11 @@ public class LobbyService implements IServerCallback{
 
                     ArrayList<ActivePing> activePings = new ArrayList<ActivePing>();
 
-                    synchronized(_pingSync) {
+                    synchronized (_pingSync) {
                         while (_isPingRunning.get()) {
                             // Make sure we have the desired active pings count in parrallel
                             while (!regionsToPing.isEmpty() && activePings.size() < NUM_PING_CALLS_IN_PARALLEL) {
-                                String regionName = (String)regionsToPing.keySet().toArray()[0];
+                                String regionName = (String) regionsToPing.keySet().toArray()[0];
                                 String regionURL = regionsToPing.get(regionName);
                                 ActivePing activePing = new ActivePing(regionName, regionURL, _pingSync);
                                 activePings.add(activePing);
@@ -812,8 +797,8 @@ public class LobbyService implements IServerCallback{
                                 _isPingRunning.set(false);
                                 break;
                             }
-				
-				            // Otherwise, wait for an active ping to complete
+
+                            // Otherwise, wait for an active ping to complete
                             if (!activePings.isEmpty()) {
                                 _pingSync.wait();
                             }
@@ -821,7 +806,9 @@ public class LobbyService implements IServerCallback{
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    queueErrorEvent(_pingCallback, ServiceName.lobby, ServiceOperation.PING_REGIONS, StatusCodes.BAD_REQUEST, ReasonCodes.MISSING_REQUIRED_PARAMETER, "Required message parameter 'pingData' is missing. Please ensure PingData exists by first calling GetRegionsForLobbies and PingRegions, and waiting for response before proceeding.");
+                    queueErrorEvent(_pingCallback, ServiceName.lobby, ServiceOperation.PING_REGIONS,
+                            StatusCodes.BAD_REQUEST, ReasonCodes.MISSING_REQUIRED_PARAMETER,
+                            "Required message parameter 'pingData' is missing. Please ensure PingData exists by first calling GetRegionsForLobbies and PingRegions, and waiting for response before proceeding.");
                     return;
                 }
             }
@@ -832,12 +819,13 @@ public class LobbyService implements IServerCallback{
     private void stopPingThread() {
         if (_pingRegionsThread != null) {
             _isPingRunning.set(false);
-            synchronized(_pingSync) {
+            synchronized (_pingSync) {
                 _pingSync.notify();
             }
             try {
                 _pingRegionsThread.join();
-            } catch(InterruptedException e) {}
+            } catch (InterruptedException e) {
+            }
             _pingRegionsThread = null;
         }
     }
@@ -845,34 +833,36 @@ public class LobbyService implements IServerCallback{
     public void pingRegions(IServerCallback callback) {
         if (_pingRegions == null) {
             if (callback != null) {
-                queueErrorEvent(callback, ServiceName.lobby, ServiceOperation.PING_REGIONS, StatusCodes.BAD_REQUEST, ReasonCodes.MISSING_REQUIRED_PARAMETER, "Required message parameter 'pingData' is missing. Please ensure PingData exists by first calling GetRegionsForLobbies and PingRegions, and waiting for response before proceeding.");
+                queueErrorEvent(callback, ServiceName.lobby, ServiceOperation.PING_REGIONS, StatusCodes.BAD_REQUEST,
+                        ReasonCodes.MISSING_REQUIRED_PARAMETER,
+                        "Required message parameter 'pingData' is missing. Please ensure PingData exists by first calling GetRegionsForLobbies and PingRegions, and waiting for response before proceeding.");
             }
             return;
         }
         if (_pingRegionsThread == null) {
             _pingCallback = callback;
             startPingThread();
-        }
-        else if (callback != null) {
-            queueErrorEvent(callback, ServiceName.lobby, ServiceOperation.PING_REGIONS, StatusCodes.BAD_REQUEST, ReasonCodes.MISSING_REQUIRED_PARAMETER, "'pingRegions' is already running. Please wait for callback before calling this again.");
+        } else if (callback != null) {
+            queueErrorEvent(callback, ServiceName.lobby, ServiceOperation.PING_REGIONS, StatusCodes.BAD_REQUEST,
+                    ReasonCodes.MISSING_REQUIRED_PARAMETER,
+                    "'pingRegions' is already running. Please wait for callback before calling this again.");
         }
     }
 
-    private int pingHost(String targetURL)
-    {
+    private int pingHost(String targetURL) {
         // Make http request
         try {
             HttpURLConnection connection = (HttpURLConnection) new URL(targetURL).openConnection();
             try {
                 connection.setRequestMethod("GET");
-            } catch(java.net.ProtocolException pe) {
+            } catch (java.net.ProtocolException pe) {
                 return 999;
             }
 
             long timeStart = System.currentTimeMillis();
             if (connection.getResponseCode() == 200) {
                 long timeEnd = System.currentTimeMillis();
-                int resultPing = (int)(timeEnd - timeStart);
+                int resultPing = (int) (timeEnd - timeStart);
                 if (resultPing > 999) {
                     resultPing = 999;
                 }
@@ -880,76 +870,72 @@ public class LobbyService implements IServerCallback{
             }
 
             return 999;
-        } catch(java.io.IOException io) {
+        } catch (java.io.IOException io) {
             return 999;
         }
     }
 
-    private void attachPingDataAndSend(JSONObject in_data, ServiceOperation in_operation, IServerCallback callback)
-    {
+    private void attachPingDataAndSend(JSONObject in_data, ServiceOperation in_operation, IServerCallback callback) {
         if (_pingData != null && _pingData.length() > 0) {
             try {
                 in_data.put(Parameter.pingData.name(), _pingData);
                 ServerCall sc = new ServerCall(ServiceName.lobby, in_operation, in_data, callback);
                 _client.sendRequest(sc);
-            } catch(JSONException je) {
+            } catch (JSONException je) {
                 je.printStackTrace();
             }
         } else {
-            queueErrorEvent(callback, ServiceName.lobby, in_operation, StatusCodes.BAD_REQUEST, ReasonCodes.MISSING_REQUIRED_PARAMETER, "Required parameter 'pingData' is missing. Please ensure 'pingData' exists by first calling GetRegionsForLobbies, then wait for the response and then call PingRegions");
+            queueErrorEvent(callback, ServiceName.lobby, in_operation, StatusCodes.BAD_REQUEST,
+                    ReasonCodes.MISSING_REQUIRED_PARAMETER,
+                    "Required parameter 'pingData' is missing. Please ensure 'pingData' exists by first calling GetRegionsForLobbies, then wait for the response and then call PingRegions");
         }
     }
 
-    public void serverCallback(ServiceName serviceName, ServiceOperation serviceOperation, JSONObject jsonData)
-    {
-        if(serviceName.toString().equals("lobby") && serviceOperation.toString().equals("GET_REGIONS_FOR_LOBBIES"))
-        {
+    public void serverCallback(ServiceName serviceName, ServiceOperation serviceOperation, JSONObject jsonData) {
+        if (serviceName.toString().equals("lobby") && serviceOperation.toString().equals("GET_REGIONS_FOR_LOBBIES")) {
             try {
                 _pingRegions = jsonData.getJSONObject("data").getJSONObject("regionPingData");
+            } catch (JSONException je) {
             }
-            catch (JSONException je)
-            {}
 
-            if(_getRegionsForLobbiesCallback != null)
-            {
+            if (_getRegionsForLobbiesCallback != null) {
                 _getRegionsForLobbiesCallback.serverCallback(serviceName, serviceOperation, jsonData);
             }
         }
     }
 
-    public void serverError(ServiceName serviceName, ServiceOperation serviceOperation, int statusCode, int reasonCode, String jsonError)
-    {
-        if(serviceName.toString().equals("lobby") && serviceOperation.toString().equals("GET_REGIONS_FOR_LOBBIES"))
-        {
+    public void serverError(ServiceName serviceName, ServiceOperation serviceOperation, int statusCode, int reasonCode,
+            String jsonError) {
+        if (serviceName.toString().equals("lobby") && serviceOperation.toString().equals("GET_REGIONS_FOR_LOBBIES")) {
             _getRegionsForLobbiesCallback.serverError(serviceName, serviceOperation, statusCode, reasonCode, jsonError);
         }
     }
 
     public void runPingCallbacks() {
-		// pingRegions callback
-		if (!_isPingRunning.get() && _pingCallback != null)
-		{
-			if (_loggingEnabled)
-			{
+        // pingRegions callback
+        if (!_isPingRunning.get() && _pingCallback != null) {
+            if (_loggingEnabled) {
                 String dataStr = _pingData.toString();
                 System.out.println("#PING RESULTS " + dataStr);
             }
-			_pingCallback.serverCallback(ServiceName.lobby, ServiceOperation.PING_REGIONS, _pingData);
+            _pingCallback.serverCallback(ServiceName.lobby, ServiceOperation.PING_REGIONS, _pingData);
             _pingCallback = null;
             stopPingThread();
-		}
+        }
 
         // Trigger delayed events
-        synchronized(_errorCallbackQueue) {
+        synchronized (_errorCallbackQueue) {
             for (int i = 0; i < _errorCallbackQueue.size(); ++i) {
                 ErrorCallbackEvent evt = _errorCallbackQueue.get(i);
-                evt.callback.serverError(evt.serviceName, evt.serviceOperation, evt.statusCode, evt.reasonCode, evt.jsonError);
+                evt.callback.serverError(evt.serviceName, evt.serviceOperation, evt.statusCode, evt.reasonCode,
+                        evt.jsonError);
             }
             _errorCallbackQueue.clear();
         }
     }
 
-    private void queueErrorEvent(IServerCallback callback, ServiceName serviceName, ServiceOperation serviceOperation, int statusCode, int reasonCode, String jsonError) {
+    private void queueErrorEvent(IServerCallback callback, ServiceName serviceName, ServiceOperation serviceOperation,
+            int statusCode, int reasonCode, String jsonError) {
         ErrorCallbackEvent evt = new ErrorCallbackEvent();
         evt.callback = callback;
         evt.serviceName = serviceName;
@@ -957,7 +943,7 @@ public class LobbyService implements IServerCallback{
         evt.statusCode = statusCode;
         evt.reasonCode = reasonCode;
         evt.jsonError = jsonError;
-        synchronized(_errorCallbackQueue) {
+        synchronized (_errorCallbackQueue) {
             _errorCallbackQueue.add(evt);
         }
     }

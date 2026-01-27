@@ -41,7 +41,7 @@ public class PushNotificationService {
     }
 
     /**
-     * Deregisters all device tokens currently registered to the player.
+     * Deregisters all device tokens currently registered to the user.
      *
      * @param callback The method to be invoked when the server response is received
      */
@@ -57,8 +57,9 @@ public class PushNotificationService {
      * Deregisters the given device token from the server to disable this device
      * from receiving push notifications.
      *
-     * @param platform The device platform being deregistered.
-     * @param token The platform-dependant device token needed for push notifications.
+     * @param device   The device platform being deregistered.
+     * @param token    The platform-dependent device token needed for push
+     *                 notifications.
      * @param callback The method to be invoked when the server response is received
      */
     public void deregisterPushNotificationDeviceToken(Platform platform, String token, IServerCallback callback) {
@@ -79,7 +80,8 @@ public class PushNotificationService {
      * to receive push notifications.
      *
      * @param platform The device platform
-     * @param token The platform-dependant device token needed for push notifications.
+     * @param token    The platform-dependant device token needed for push
+     *                 notifications.
      * @param callback The method to be invoked when the server response is received
      */
     public void registerPushNotificationToken(Platform platform, String token, IServerCallback callback) {
@@ -88,14 +90,14 @@ public class PushNotificationService {
         if (token == null || token.trim().isEmpty()) {
             if (callback != null) {
                 String errorJson = String.format(
-                    "{\"status\":%d,\"reason_code\":%d,\"message\":\"Invalid device token: %s\"}",
-                    STATUS_CODE, ReasonCodes.INVALID_DEVICE_TOKEN, token
-                );
+                        "{\"status\":%d,\"reason_code\":%d,\"message\":\"Invalid device token: %s\"}",
+                        STATUS_CODE, ReasonCodes.INVALID_DEVICE_TOKEN, token);
 
-                if(_client.getRestClient().getLoggingEnabled()){
+                if (_client.getRestClient().getLoggingEnabled()) {
                     System.out.println("Push notification token not registered - empty/null tokens are invalid");
                 }
-                callback.serverError(ServiceName.pushNotification, ServiceOperation.REGISTER, STATUS_CODE, ReasonCodes.INVALID_DEVICE_TOKEN, errorJson);
+                callback.serverError(ServiceName.pushNotification, ServiceOperation.REGISTER, STATUS_CODE,
+                        ReasonCodes.INVALID_DEVICE_TOKEN, errorJson);
             }
             return;
         }
@@ -115,9 +117,11 @@ public class PushNotificationService {
      * Sends a simple push notification based on the passed in message.
      * NOTE: It is possible to send a push notification to oneself.
      *
-     * @param toProfileId The braincloud profileId of the user to receive the notification
-     * @param message Text of the push notification
-     * @param callback The method to be invoked when the server response is received
+     * @param toProfileId The braincloud profileId of the user to receive the
+     *                    notification
+     * @param message     Text of the push notification
+     * @param callback    The method to be invoked when the server response is
+     *                    received
      */
     public void sendSimplePushNotification(String toProfileId, String message, IServerCallback callback) {
         try {
@@ -132,29 +136,37 @@ public class PushNotificationService {
     }
 
     /**
-     * Sends a notification to a user based on a brainCloud portal configured notification template.
+     * Sends a notification to a user based on a brainCloud portal configured
+     * notification template.
      * NOTE: It is possible to send a push notification to oneself.
      *
-     * @param toProfileId The braincloud profileId of the user to receive the notification
+     * @param toProfileId            The braincloud profileId of the user to receive
+     *                               the notification
      * @param notificationTemplateId Id of the notification template
-     * @param callback The method to be invoked when the server response is received
+     * @param callback               The method to be invoked when the server
+     *                               response is received
      */
     public void sendRichPushNotification(String toProfileId, int notificationTemplateId, IServerCallback callback) {
         sendRichPushNotificationWithParams(toProfileId, notificationTemplateId, null, callback);
     }
 
     /**
-     * Sends a notification to a user based on a brainCloud portal configured notification template.
+     * Sends a notification to a user based on a brainCloud portal configured
+     * notification template.
      * Includes JSON defining the substitution params to use with the template.
      * See the Portal documentation for more info.
      * NOTE: It is possible to send a push notification to oneself.
      *
-     * @param toProfileId The braincloud profileId of the user to receive the notification
+     * @param toProfileId            The braincloud profileId of the user to receive
+     *                               the notification
      * @param notificationTemplateId Id of the notification template
-     * @param substitutionJson JSON defining the substitution params to use with the template
-     * @param callback The method to be invoked when the server response is received
+     * @param substitutionJson       JSON defining the substitution params to use
+     *                               with the template
+     * @param callback               The method to be invoked when the server
+     *                               response is received
      */
-    public void sendRichPushNotificationWithParams(String toProfileId, int notificationTemplateId, String substitutionJson, IServerCallback callback) {
+    public void sendRichPushNotificationWithParams(String toProfileId, int notificationTemplateId,
+            String substitutionJson, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.toPlayerId.name(), toProfileId);
@@ -172,16 +184,19 @@ public class PushNotificationService {
     }
 
     /**
-     * Sends a notification to a "group" of user based on a brainCloud portal configured notification template.
+     * Sends a notification to a "group" of user based on a brainCloud portal
+     * configured notification template.
      * Includes JSON defining the substitution params to use with the template.
      * See the Portal documentation for more info.
      *
-     * @param groupId Target group
+     * @param groupId                Target group
      * @param notificationTemplateId Template to use
-     * @param substitutionsJson Map of substitution positions to strings
-     * @param callback The method to be invoked when the server response is received
+     * @param substitutionsJson      Map of substitution positions to strings
+     * @param callback               The method to be invoked when the server
+     *                               response is received
      */
-    public void sendTemplatedPushNotificationToGroup(String groupId, int notificationTemplateId, String substitutionsJson, IServerCallback callback) {
+    public void sendTemplatedPushNotificationToGroup(String groupId, int notificationTemplateId,
+            String substitutionsJson, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.groupId.name(), groupId);
@@ -190,7 +205,8 @@ public class PushNotificationService {
                 data.put(Parameter.substitutions.name(), new JSONObject(substitutionsJson));
             }
 
-            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_TEMPLATED_TO_GROUP, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_TEMPLATED_TO_GROUP, data,
+                    callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -198,15 +214,18 @@ public class PushNotificationService {
     }
 
     /**
-     * Sends a notification to a "group" of user consisting of alert content and custom data.
+     * Sends a notification to a "group" of user consisting of alert content and
+     * custom data.
      * See the Portal documentation for more info.
      *
-     * @param groupId Target group
+     * @param groupId          Target group
      * @param alertContentJson Body and title of alert
-     * @param customDataJson Optional custom data
-     * @param callback The method to be invoked when the server response is received
+     * @param customDataJson   Optional custom data
+     * @param callback         The method to be invoked when the server response is
+     *                         received
      */
-    public void sendNormalizedPushNotificationToGroup(String groupId, String alertContentJson, String customDataJson, IServerCallback callback) {
+    public void sendNormalizedPushNotificationToGroup(String groupId, String alertContentJson, String customDataJson,
+            IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.groupId.name(), groupId);
@@ -215,25 +234,28 @@ public class PushNotificationService {
                 data.put(Parameter.customData.name(), new JSONObject(customDataJson));
             }
 
-            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_NORMALIZED_TO_GROUP, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_NORMALIZED_TO_GROUP,
+                    data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
         }
     }
 
-
     /**
-     * Schedules raw notifications based on user local time.
+     * Schedules a normalized push notification to a user
      *
-     * @param profileId The profileId of the user to receive the notification
-     * @param fcmContent Valid Fcm data content
-     * @param iosContent Valid ios data content
+     * @param profileId       The profileId of the user to receive the notification
+     * @param fcmContent      Valid Fcm data content
+     * @param iosContent      Valid ios data content
      * @param facebookContent Facebook template string
-     * @param startTimeUTC Start time of sending the push notification - in UTC milliseconds
-     * @param callback The method to be invoked when the server response is received
+     * @param startTimeUTC    Start time of sending the push notification in
+     *                        milliseconds, use UTC time in milliseconds since epoch
+     * @param callback        The method to be invoked when the server response is
+     *                        received
      */
-    public void scheduleRawPushNotificationUTC(String profileId, String fcmContent, String iosContent, String facebookContent, long startTimeUTC, IServerCallback callback) {
+    public void scheduleRawPushNotificationUTC(String profileId, String fcmContent, String iosContent,
+            String facebookContent, long startTimeUTC, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.profileId.name(), profileId);
@@ -242,17 +264,18 @@ public class PushNotificationService {
                 data.put(Parameter.fcmContent.name(), new JSONObject(fcmContent));
             }
 
-            if (StringUtil.IsOptionalParameterValid(iosContent )) {
-                data.put(Parameter.iosContent .name(), new JSONObject(iosContent ));
+            if (StringUtil.IsOptionalParameterValid(iosContent)) {
+                data.put(Parameter.iosContent.name(), new JSONObject(iosContent));
             }
 
-            if (StringUtil.IsOptionalParameterValid(facebookContent )) {
-                data.put(Parameter.facebookContent .name(), new JSONObject(facebookContent ));
+            if (StringUtil.IsOptionalParameterValid(facebookContent)) {
+                data.put(Parameter.facebookContent.name(), new JSONObject(facebookContent));
             }
 
             data.put(Parameter.startDateUTC.name(), startTimeUTC);
 
-            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SCHEDULE_RAW_NOTIFICATION, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SCHEDULE_RAW_NOTIFICATION,
+                    data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -260,16 +283,18 @@ public class PushNotificationService {
     }
 
     /**
-     * Schedules raw notifications based on user local time.
+     * Schedules a normalized push notification to a user
      *
-     * @param profileId The profileId of the user to receive the notification
-     * @param fcmContent Valid Fcm data content
-     * @param iosContent Valid ios data content
+     * @param profileId       The profileId of the user to receive the notification
+     * @param fcmContent      Valid Fcm data content
+     * @param iosContent      Valid ios data content
      * @param facebookContent Facebook template string
-     * @param minutesFromNow Minutes from now to send the push notification
-     * @param callback The method to be invoked when the server response is received
+     * @param minutesFromNow  Minutes from now to send the push notification
+     * @param callback        The method to be invoked when the server response is
+     *                        received
      */
-    public void scheduleRawPushNotificationMinutes(String profileId, String fcmContent, String iosContent, String facebookContent, int minutesFromNow, IServerCallback callback) {
+    public void scheduleRawPushNotificationMinutes(String profileId, String fcmContent, String iosContent,
+            String facebookContent, int minutesFromNow, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.profileId.name(), profileId);
@@ -278,17 +303,18 @@ public class PushNotificationService {
                 data.put(Parameter.fcmContent.name(), new JSONObject(fcmContent));
             }
 
-            if (StringUtil.IsOptionalParameterValid(iosContent )) {
-                data.put(Parameter.iosContent .name(), new JSONObject(iosContent ));
+            if (StringUtil.IsOptionalParameterValid(iosContent)) {
+                data.put(Parameter.iosContent.name(), new JSONObject(iosContent));
             }
 
-            if (StringUtil.IsOptionalParameterValid(facebookContent )) {
-                data.put(Parameter.facebookContent .name(), new JSONObject(facebookContent ));
+            if (StringUtil.IsOptionalParameterValid(facebookContent)) {
+                data.put(Parameter.facebookContent.name(), new JSONObject(facebookContent));
             }
 
             data.put(Parameter.minutesFromNow.name(), minutesFromNow);
 
-            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SCHEDULE_RAW_NOTIFICATION, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SCHEDULE_RAW_NOTIFICATION,
+                    data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -298,13 +324,15 @@ public class PushNotificationService {
     /**
      * Sends a raw push notification to a target user.
      *
-     * @param toProfileId The profileId of the user to receive the notification
-     * @param fcmContent Valid Fcm data content
-     * @param iosContent Valid ios data content
+     * @param toProfileId     The profileId of the user to receive the notification
+     * @param fcmContent      Valid Fcm data content
+     * @param iosContent      Valid ios data content
      * @param facebookContent Facebook template string
-     * @param callback The method to be invoked when the server response is received
+     * @param callback        The method to be invoked when the server response is
+     *                        received
      */
-    public void sendRawPushNotification(String toProfileId, String fcmContent, String iosContent, String facebookContent, IServerCallback callback) {
+    public void sendRawPushNotification(String toProfileId, String fcmContent, String iosContent,
+            String facebookContent, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.toPlayerId.name(), toProfileId);
@@ -313,12 +341,12 @@ public class PushNotificationService {
                 data.put(Parameter.fcmContent.name(), new JSONObject(fcmContent));
             }
 
-            if (StringUtil.IsOptionalParameterValid(iosContent )) {
-                data.put(Parameter.iosContent .name(), new JSONObject(iosContent ));
+            if (StringUtil.IsOptionalParameterValid(iosContent)) {
+                data.put(Parameter.iosContent.name(), new JSONObject(iosContent));
             }
 
-            if (StringUtil.IsOptionalParameterValid(facebookContent )) {
-                data.put(Parameter.facebookContent .name(), new JSONObject(facebookContent ));
+            if (StringUtil.IsOptionalParameterValid(facebookContent)) {
+                data.put(Parameter.facebookContent.name(), new JSONObject(facebookContent));
             }
 
             ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_RAW, data, callback);
@@ -331,13 +359,15 @@ public class PushNotificationService {
     /**
      * Sends a raw push notification to a target list of users.
      *
-     * @param profileIds Collection of profile IDs to send the notification to
-     * @param fcmContent Valid Fcm data content
-     * @param iosContent Valid ios data content
+     * @param profileIds      Collection of profile IDs to send the notification to
+     * @param fcmContent      Valid Fcm data content
+     * @param iosContent      Valid ios data content
      * @param facebookContent Facebook template string
-     * @param callback The method to be invoked when the server response is received
+     * @param callback        The method to be invoked when the server response is
+     *                        received
      */
-    public void sendRawPushNotificationBatch(String[] profileIds, String fcmContent, String iosContent, String facebookContent, IServerCallback callback) {
+    public void sendRawPushNotificationBatch(String[] profileIds, String fcmContent, String iosContent,
+            String facebookContent, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.profileIds.name(), new JSONArray(profileIds));
@@ -346,15 +376,16 @@ public class PushNotificationService {
                 data.put(Parameter.fcmContent.name(), new JSONObject(fcmContent));
             }
 
-            if (StringUtil.IsOptionalParameterValid(iosContent )) {
-                data.put(Parameter.iosContent .name(), new JSONObject(iosContent ));
+            if (StringUtil.IsOptionalParameterValid(iosContent)) {
+                data.put(Parameter.iosContent.name(), new JSONObject(iosContent));
             }
 
-            if (StringUtil.IsOptionalParameterValid(facebookContent )) {
-                data.put(Parameter.facebookContent .name(), new JSONObject(facebookContent ));
+            if (StringUtil.IsOptionalParameterValid(facebookContent)) {
+                data.put(Parameter.facebookContent.name(), new JSONObject(facebookContent));
             }
 
-            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_RAW_BATCH, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_RAW_BATCH, data,
+                    callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -364,13 +395,15 @@ public class PushNotificationService {
     /**
      * Sends a raw push notification to a target group.
      *
-     * @param groupId Target group
-     * @param fcmContent Valid Fcm data content
-     * @param iosContent Valid ios data content
-     * @param facebookContent Facebook template string
-     * @param callback The method to be invoked when the server response is received
+     * @param groupId         Target group
+     * @param fcmContent      Valid Fcm data content
+     * @param iosContent      Valid ios data content
+     * @param facebookContent Facebook template stringn
+     * @param callback        The method to be invoked when the server response is
+     *                        received
      */
-    public void sendRawPushNotificationToGroup(String groupId, String fcmContent, String iosContent, String facebookContent, IServerCallback callback) {
+    public void sendRawPushNotificationToGroup(String groupId, String fcmContent, String iosContent,
+            String facebookContent, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.groupId.name(), groupId);
@@ -379,15 +412,16 @@ public class PushNotificationService {
                 data.put(Parameter.fcmContent.name(), new JSONObject(fcmContent));
             }
 
-            if (StringUtil.IsOptionalParameterValid(iosContent )) {
-                data.put(Parameter.iosContent .name(), new JSONObject(iosContent ));
+            if (StringUtil.IsOptionalParameterValid(iosContent)) {
+                data.put(Parameter.iosContent.name(), new JSONObject(iosContent));
             }
 
-            if (StringUtil.IsOptionalParameterValid(facebookContent )) {
-                data.put(Parameter.facebookContent .name(), new JSONObject(facebookContent ));
+            if (StringUtil.IsOptionalParameterValid(facebookContent)) {
+                data.put(Parameter.facebookContent.name(), new JSONObject(facebookContent));
             }
 
-            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_RAW_TO_GROUP, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_RAW_TO_GROUP, data,
+                    callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -397,14 +431,17 @@ public class PushNotificationService {
     /**
      * Schedules a normalized push notification to a user
      *
-     * @param profileId The profileId of the user to receive the notification
+     * @param toProfileId      The profileId of the user to receive the notification
      * @param alertContentJson Body and title of alert
-     * @param customDataJson Optional custom data
-     * @param startTimeUTC Start time of sending the push notification - in UTC miliseconds
-     * @param callback The method to be invoked when the server response is received
+     * @param customDataJson   Optional custom data
+     * @param startTimeUTC     Start time of sending the push notification in
+     *                         milliseconds, use UTC time in milliseconds since
+     *                         epoch
+     * @param callback         The method to be invoked when the server response is
+     *                         received
      */
     public void scheduleNormalizedPushNotificationUTC(String profileId, String alertContentJson, String customDataJson,
-                                                      long startTimeUTC, IServerCallback callback) {
+            long startTimeUTC, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.profileId.name(), profileId);
@@ -415,7 +452,8 @@ public class PushNotificationService {
 
             data.put(Parameter.startDateUTC.name(), startTimeUTC);
 
-            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SCHEDULE_NORMALIZED_NOTIFICATION, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.pushNotification,
+                    ServiceOperation.SCHEDULE_NORMALIZED_NOTIFICATION, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -425,14 +463,16 @@ public class PushNotificationService {
     /**
      * Schedules a normalized push notification to a user
      *
-     * @param profileId The profileId of the user to receive the notification
+     * @param toProfileId      The profileId of the user to receive the notification
      * @param alertContentJson Body and title of alert
-     * @param customDataJson Optional custom data
-     * @param minutesFromNow Minutes from now to send the push notification
-     * @param callback The method to be invoked when the server response is received
+     * @param customDataJson   Optional custom data
+     * @param minutesFromNow   Minutes from now to send the push notification
+     * @param callback         The method to be invoked when the server response is
+     *                         received
      */
-    public void scheduleNormalizedPushNotificationMinutes(String profileId, String alertContentJson, String customDataJson,
-                                                          int minutesFromNow, IServerCallback callback) {
+    public void scheduleNormalizedPushNotificationMinutes(String profileId, String alertContentJson,
+            String customDataJson,
+            int minutesFromNow, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.profileId.name(), profileId);
@@ -443,7 +483,8 @@ public class PushNotificationService {
 
             data.put(Parameter.minutesFromNow.name(), minutesFromNow);
 
-            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SCHEDULE_NORMALIZED_NOTIFICATION, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.pushNotification,
+                    ServiceOperation.SCHEDULE_NORMALIZED_NOTIFICATION, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -453,14 +494,18 @@ public class PushNotificationService {
     /**
      * Schedules a rich push notification to a user
      *
-     * @param profileId The profileId of the user to receive the notification
+     * @param toProfileId            The profileId of the user to receive the
+     *                               notification
      * @param notificationTemplateId Body and title of alert
-     * @param substitutionsJson Map of substitution positions to strings
-     * @param startTimeUTC Start time of sending the push notification - in UTC milliseconds
-     * @param callback The method to be invoked when the server response is received
+     * @param substitutionsJson      Map of substitution positions to strings
+     * @param startTimeUTC           Start time of sending the push notification in
+     *                               milliseconds, use UTC time in milliseconds
+     *                               since epoch
+     * @param callback               The method to be invoked when the server
+     *                               response is received
      */
     public void scheduleRichPushNotificationUTC(String profileId, int notificationTemplateId, String substitutionsJson,
-                                                long startTimeUTC, IServerCallback callback) {
+            long startTimeUTC, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.profileId.name(), profileId);
@@ -471,7 +516,8 @@ public class PushNotificationService {
 
             data.put(Parameter.startDateUTC.name(), startTimeUTC);
 
-            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SCHEDULE_RICH_NOTIFICATION, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SCHEDULE_RICH_NOTIFICATION,
+                    data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -481,14 +527,17 @@ public class PushNotificationService {
     /**
      * Schedules a rich push notification to a user
      *
-     * @param profileId The profileId of the user to receive the notification
+     * @param toProfileId            The profileId of the user to receive the
+     *                               notification
      * @param notificationTemplateId Body and title of alert
-     * @param substitutionsJson Map of substitution positions to strings
-     * @param minutesFromNow Minutes from now to send the push notification
-     * @param callback The method to be invoked when the server response is received
+     * @param substitutionsJson      Map of substitution positions to strings
+     * @param minutesFromNow         Minutes from now to send the push notification
+     * @param callback               The method to be invoked when the server
+     *                               response is received
      */
-    public void scheduleRichPushNotificationMinutes(String profileId, int notificationTemplateId, String substitutionsJson,
-                                                    int minutesFromNow, IServerCallback callback) {
+    public void scheduleRichPushNotificationMinutes(String profileId, int notificationTemplateId,
+            String substitutionsJson,
+            int minutesFromNow, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.profileId.name(), profileId);
@@ -499,7 +548,8 @@ public class PushNotificationService {
 
             data.put(Parameter.minutesFromNow.name(), minutesFromNow);
 
-            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SCHEDULE_RICH_NOTIFICATION, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SCHEDULE_RICH_NOTIFICATION,
+                    data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -509,12 +559,14 @@ public class PushNotificationService {
     /**
      * Sends a notification to a user consisting of alert content and custom data.
      *
-     * @param toProfileId The profileId of the user to receive the notification
-     * @param alertContentJson Body and title of alert
-     * @param customDataJson Optional custom data
-     * @param callback The method to be invoked when the server response is received
+     * @param toProfileId  The profileId of the user to receive the notification
+     * @param alertContent Body and title of alert
+     * @param customData   Optional custom data
+     * @param callback     The method to be invoked when the server response is
+     *                     received
      */
-    public void sendNormalizedPushNotification(String toProfileId, String alertContentJson, String customDataJson, IServerCallback callback) {
+    public void sendNormalizedPushNotification(String toProfileId, String alertContentJson, String customDataJson,
+            IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.toPlayerId.name(), toProfileId);
@@ -523,7 +575,8 @@ public class PushNotificationService {
                 data.put(Parameter.customData.name(), new JSONObject(customDataJson));
             }
 
-            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_NORMALIZED, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_NORMALIZED, data,
+                    callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -531,14 +584,17 @@ public class PushNotificationService {
     }
 
     /**
-     * Sends a notification to multiple users consisting of alert content and custom data.
+     * Sends a notification to multiple users consisting of alert content and custom
+     * data.
      *
-     * @param profileIds Collection of profile IDs to send the notification to
-     * @param alertContentJson Body and title of alert
-     * @param customDataJson Optional custom data
-     * @param callback The method to be invoked when the server response is received
+     * @param profileIds   Collection of profile IDs to send the notification to
+     * @param alertContent Body and title of alert
+     * @param customData   Optional custom data
+     * @param callback     The method to be invoked when the server response is
+     *                     received
      */
-    public void sendNormalizedPushNotificationBatch(String[] profileIds, String alertContentJson, String customDataJson, IServerCallback callback) {
+    public void sendNormalizedPushNotificationBatch(String[] profileIds, String alertContentJson, String customDataJson,
+            IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.profileIds.name(), new JSONArray(profileIds));
@@ -547,7 +603,8 @@ public class PushNotificationService {
                 data.put(Parameter.customData.name(), new JSONObject(customDataJson));
             }
 
-            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_NORMALIZED_BATCH, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.pushNotification, ServiceOperation.SEND_NORMALIZED_BATCH, data,
+                    callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();

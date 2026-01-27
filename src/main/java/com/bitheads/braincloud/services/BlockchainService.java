@@ -12,32 +12,36 @@ import org.json.JSONObject;
 
 public class BlockchainService {
 
-    private enum Parameter{
+    private enum Parameter {
         integrationId,
         contextJson
     }
 
     private BrainCloudClient _client;
 
-    public BlockchainService(BrainCloudClient client){
+    public BlockchainService(BrainCloudClient client) {
         _client = client;
     }
 
     /**
      * Retrieves the blockchain items owned by the caller.
-     * @param in_integrationID  The blockchain integration id. 
-     *                          Currently only 'default' is supported.
-     * @param in_contextJson    Optional. Reserved for future use.
-     * @param callback          The callback handler
+     *
+     * Service Name - Blockchain
+     * Service Operation - GET_BLOCKCHAITEMS
+     *
+     * @param integrationID The blockchain integration id.
+     *                      Currently only 'default' is supported.
+     * @param contextJson   Optional. Reserved for future use.
+     * @param callback      The callback handler
      */
     public void GetBlockchainItems(String in_integrationID,
-                                   String in_contextJson,
-                                   IServerCallback callback){
+            String in_contextJson,
+            IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.integrationId.name(), in_integrationID);
 
-				@SuppressWarnings("unused")
+            @SuppressWarnings("unused")
             JSONObject jsonData = new JSONObject(in_contextJson);
             data.put(Parameter.contextJson.name(), in_contextJson);
 
@@ -52,19 +56,23 @@ public class BlockchainService {
 
     /**
      * Retrieves the uniqs owned by the caller.
-     * @param in_integrationID  The blockchain integration id. 
-     *                          Currently only 'default' is supported.
-     * @param in_contextJson    Optional. Reserved for future use.
-     * @param callback          The callback handler
+     *
+     * Service Name - Blockchain
+     * Service Operation - GET_UNIQS
+     *
+     * @param integrationID The blockchain integration id.
+     *                      Currently only 'default' is supported.
+     * @param contextJson   Optional. Reserved for future use.
+     * @param callback      The callback handler
      */
     public void GetUniqs(String in_integrationID,
-                         String in_contextJson,
-                         IServerCallback callback){
+            String in_contextJson,
+            IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.integrationId.name(), in_integrationID);
 
-				@SuppressWarnings("unused")
+            @SuppressWarnings("unused")
             JSONObject jsonData = new JSONObject(in_contextJson);
             data.put(Parameter.contextJson.name(), in_contextJson);
 

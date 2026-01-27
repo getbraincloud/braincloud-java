@@ -26,12 +26,14 @@ public class VirtualCurrencyService {
     }
 
     /**
-     * Retrieve the user's currency account. Optional parameters: vcId (if retrieving all currencies).
+     * Retrieve the user's currency account. Optional parameter: `vcId` (if
+     * retrieving a specific currency).
      *
      * Service Name - VirtualCurrency
      * Service Operation - GetCurrency
      *
-     * @param vcId  The currency type to retrieve or null if all currency types are being requested.
+     * @param vcId     Optional currency id to retrieve (pass NULL to get all
+     *                 currencies)
      * @param callback The method to be invoked when the server response is received
      */
     public void getCurrency(String vcId, IServerCallback callback) {
@@ -47,15 +49,18 @@ public class VirtualCurrencyService {
     }
 
     /**
-     * Retrieve the parent user's currency account. Optional parameters: vcId (if retrieving all currencies).
+     * Retrieve the parent user's currency account. Optional parameter: `vcId` (if
+     * retrieving a specific currency).
      *
      * Service Name - VirtualCurrency
      * Service Operation - GetParentCurrency
      *
-     * @param vcId  The currency type to retrieve or null if all currency types are being requested.
-     * @param levelName Name of the parent level.
-     * @param callback The method to be invoked when the server response is received
-    */
+     * @param vcId      Optional currency id to retrieve (pass NULL to get all
+     *                  currencies)
+     * @param levelName The parent level name
+     * @param callback  The method to be invoked when the server response is
+     *                  received
+     */
     public void getParentCurrency(String vcId, String levelName, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -70,15 +75,17 @@ public class VirtualCurrencyService {
     }
 
     /**
-     * Retrieve the peer user's currency account. Optional parameters: vcId (if retrieving all currencies).
+     * Retrieve the peer user's currency account. Optional parameter: `vcId` (if
+     * retrieving a specific currency).
      *
      * Service Name - VirtualCurrency
      * Service Operation - GetPeerCurrency
      *
-     * @param vcId  The currency type to retrieve or null if all currency types are being requested.
-     * @param peerCode  Name of the peer
+     * @param vcId     Optional currency id to retrieve (pass NULL to get all
+     *                 currencies)
+     * @param peerCode The peer code identifying the other user
      * @param callback The method to be invoked when the server response is received
-    */
+     */
     public void getPeerCurrency(String vcId, String peerCode, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -91,35 +98,29 @@ public class VirtualCurrencyService {
             je.printStackTrace();
         }
     }
-    
+
     /**
-     * Resets the player's currency to 0.
+     * Reset player's currency to zero
      *
      * Service Name - VirtualCurrency
      * Service Operation - ResetCurrency
-     * 
+     *
      * @param callback The method to be invoked when the server response is received
      */
     public void resetCurrency(IServerCallback callback) {
-            JSONObject data = new JSONObject();
-            ServerCall sc = new ServerCall(ServiceName.virtualCurrency, ServiceOperation.RESET_PLAYER_VC, data, callback);
-            _client.sendRequest(sc);
+        JSONObject data = new JSONObject();
+        ServerCall sc = new ServerCall(ServiceName.virtualCurrency, ServiceOperation.RESET_PLAYER_VC, data, callback);
+        _client.sendRequest(sc);
     }
 
     /**
-     * Award player the passed-in amount of currency. Returns an object representing the new currency values.
-     *
-     * Note: Awarding 0 or negative currency will return an error. Use ConsumeCurrency to remove currency values.
-     *
-     * Service Name - VirtualCurrency
-     * Service Operation - GetPeerCurrency
-     *
-     * Warning, Method is recommended to be used in Cloud Code only for security
-     * If you need to use it client side, enable 'Allow Currency Calls from Client' on the brainCloud dashboard
-     *
-     * @param vcId  The currency type to award.
-     * @param vcAmount  The amount of currency to award.
-     * @param callback The method to be invoked when the server response is received
+     * @warning Method is recommended to be used in Cloud Code only for security
+     *          If you need to use it client side, enable 'Allow Currency Calls from
+     *          Client' on the brainCloud dashboard
+     * @param currencyType The currency type to award
+     * @param amount       The amount to award
+     * @param callback     The method to be invoked when the server response is
+     *                     received
      */
     public void awardCurrency(String vcId, int vcAmount, IServerCallback callback) {
         try {
@@ -135,19 +136,13 @@ public class VirtualCurrencyService {
     }
 
     /**
-     * Consume the passed-in amount of currency from the player.
-     *
-     * Note: Consuming 0 or negative currency will return an error. Use AwardCurrency to add currency values.
-     *
-     * Service Name - VirtualCurrency
-     * Service Operation - GetPeerCurrency
-     *
-     * Warning, Method is recommended to be used in Cloud Code only for security
-     * If you need to use it client side, enable 'Allow Currency Calls from Client' on the brainCloud dashboard
-     *
-     * @param vcId  The currency type to consume.
-     * @param vcAmount  The amount of currency to consume.
-     * @param callback The method to be invoked when the server response is received
+     * @warning Method is recommended to be used in Cloud Code only for security
+     *          If you need to use it client side, enable 'Allow Currency Calls from
+     *          Client' on the brainCloud dashboard
+     * @param currencyType The currency type to consume
+     * @param amount       The amount to consume
+     * @param callback     The method to be invoked when the server response is
+     *                     received
      */
     public void consumeCurrency(String vcId, int vcAmount, IServerCallback callback) {
         try {

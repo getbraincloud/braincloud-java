@@ -25,16 +25,19 @@ public class S3HandlingService {
         _client = client;
     }
 
-    /**
+    /*
      * Sends an array of file details and returns
      * the details of any of those files that have changed
      *
      * Service Name - S3Handling
      * Service Operation - GetUpdatedFiles
      *
-     * @param category Category of files on server to compare against
-     * @param fileDetailsJson An array of file details
-     * @param callback The callback object
+     * @param in_category Category of files on server to compare against
+     * 
+     * @param in_fileDetailsJson An array of file details
+     * 
+     * @param in_callback Instance of IServerCallback to call when the server
+     * response is received
      */
     public void getUpdatedFiles(
             String category,
@@ -59,15 +62,16 @@ public class S3HandlingService {
         }
     }
 
-
-    /**
-     * Retreives the detailds of custom files stored on the server
+    /*
+     * Retrieves the details of custom files stored on the server
      *
      * Service Name - S3Handling
-     * Server Operation - GetFileList
+     * Service Operation - GetFileList
      *
-     * @param category Category of files to retrieve
-     * @param callback The callback object
+     * @param in_category Category of files to retrieve
+     * 
+     * @param in_callback Instance of IServerCallback to call when the server
+     * response is receieved
      */
     public void getFileList(String category, IServerCallback callback) {
         try {
@@ -88,7 +92,7 @@ public class S3HandlingService {
     /**
      * Returns the CDN url for a file
      *
-     * @param fileId ID of file
+     * @param fileId   ID of file
      * @param callback The method to be invoked when the server response is received
      */
     public void getCDNUrl(String fileId, IServerCallback callback) {

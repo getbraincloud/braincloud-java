@@ -26,12 +26,12 @@ public class GlobalFileService {
     }
 
     /**
-     * Returns information on a file using fileId.
+     * Returns the complete info for the specified file given it’s fileId
      *
-     * Service Name - globalFile
-     * Service Operation - ACCEPT_GROUP_INVITATION
+     * Service Name - GlobalFileV3
+     * Service Operation - GetFileInfo
      *
-     * @param fileId the file's ID.
+     * @param fileId   The fileId of the global file
      * @param callback The method to be invoked when the server response is received
      */
     public void getFileInfo(String fileId, IServerCallback callback) {
@@ -49,14 +49,16 @@ public class GlobalFileService {
     }
 
     /**
-     * Returns information on a file using path and name.
+     * Returns the complete info for the specified file, without having to look up
+     * the fileId first.
      *
-     * Service Name - globalFile
-     * Service Operation - GET_FILE_INFO_SIMPLE
+     * Service Name - GlobalFileV3
+     * Service Operation - GetFileInfoSimple
      *
-     * @param folderPath the folder path the file is stored in.
-     * @param filename the name of the file beign sought
-     * @param callback The method to be invoked when the server response is received
+     * @param folderPath The folder path of the file
+     * @param filename   The name of the file
+     * @param callback   The method to be invoked when the server response is
+     *                   received
      */
     public void getFileInfoSimple(String folderPath, String filename, IServerCallback callback) {
         try {
@@ -74,12 +76,12 @@ public class GlobalFileService {
     }
 
     /**
-     * Return CDN url for file for clients that cannot handle redirect.
+     * Returns the CDN of the specified file.
      *
-     * Service Name - globalFile
-     * Service Operation - GET_GLOBAL_CDN_URL
+     * Service Name - GlobalFileV3
+     * Service Operation - GetGlobalCDNUrl
      *
-     * @param fileId the file's ID.
+     * @param fileId   The fileId of the global file
      * @param callback The method to be invoked when the server response is received
      */
     public void getGlobalCDNUrl(String fileId, IServerCallback callback) {
@@ -96,15 +98,16 @@ public class GlobalFileService {
         }
     }
 
-        /**
-     * Return CDN url for file for clients that cannot handle redirect.
+    /**
+     * Returns files at the current path.
      *
-     * Service Name - globalFile
-     * Service Operation - GET_GLOBAL_FILE_LIST
+     * Service Name - GlobalFileV3
+     * Service Operation - GetGlobalFileList
      *
-     * @param folderPath the folder path the file is stored in.
-     * @param recurse does it recurse?
-     * @param callback The method to be invoked when the server response is received
+     * @param folderPath The folder path to list files from
+     * @param recurse    Whether to recurse into subfolders
+     * @param callback   The method to be invoked when the server response is
+     *                   received
      */
     public void getGlobalFileList(String folderPath, boolean recurse, IServerCallback callback) {
         try {

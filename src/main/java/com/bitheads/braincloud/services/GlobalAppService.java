@@ -15,11 +15,11 @@ import com.bitheads.braincloud.comms.ServerCall;
 
 public class GlobalAppService {
 
-	private enum Parameter
-	{
-		propertyNames,
+    private enum Parameter {
+        propertyNames,
         categories
-	}
+    }
+
     private BrainCloudClient _client;
 
     public GlobalAppService(BrainCloudClient client) {
@@ -27,9 +27,12 @@ public class GlobalAppService {
     }
 
     /**
-     * Method returns all the global properties of a game.
+     * Read game's global properties
      *
-     * @param callback The callback.
+     * Service Name - GlobalApp
+     * Service Operation - ReadProperties
+     *
+     * @param callback The method to be invoked when the server response is received
      */
     public void readProperties(IServerCallback callback) {
         ServerCall sc = new ServerCall(ServiceName.globalApp, ServiceOperation.READ_PROPERTIES, null, callback);
@@ -42,16 +45,18 @@ public class GlobalAppService {
      *
      * Service Name - GlobalApp
      * Service Operation - READ_SELECTED_PROPERTIES
-     * 
+     *
      * @param propertyNames Specifies which properties to return
-     * @param callback The method to be invoked when the server response is received
+     * @param callback      The method to be invoked when the server response is
+     *                      received
      */
     public void readSelectedProperties(ArrayList<String> propertyNames, IServerCallback callback) {
-		try {
+        try {
             JSONObject data = new JSONObject();
             data.put(Parameter.propertyNames.name(), new JSONArray(propertyNames));
 
-            ServerCall sc = new ServerCall(ServiceName.globalApp, ServiceOperation.READ_SELECTED_PROPERTIES, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.globalApp, ServiceOperation.READ_SELECTED_PROPERTIES, data,
+                    callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -63,17 +68,19 @@ public class GlobalAppService {
      * If a category from the list isn't found, it just isn't returned (no error).
      *
      * Service Name - GlobalApp
-     * Service Operation - READ_PROPERTIES_IN_CATEGORIES
-     * 
+     * Service Operation - READ_PROPERTIES_CATEGORIES
+     *
      * @param categories Specifies which category to return
-     * @param callback The method to be invoked when the server response is received
+     * @param callback   The method to be invoked when the server response is
+     *                   received
      */
     public void readPropertiesInCategories(ArrayList<String> categories, IServerCallback callback) {
-		try {
+        try {
             JSONObject data = new JSONObject();
             data.put(Parameter.categories.name(), new JSONArray(categories));
 
-            ServerCall sc = new ServerCall(ServiceName.globalApp, ServiceOperation.READ_PROPERTIES_IN_CATEGORIES, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.globalApp, ServiceOperation.READ_PROPERTIES_IN_CATEGORIES, data,
+                    callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
