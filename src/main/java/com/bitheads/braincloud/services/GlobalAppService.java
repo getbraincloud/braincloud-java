@@ -27,25 +27,28 @@ public class GlobalAppService {
     }
 
     /**
-     * Method returns all the global properties of a game.
-     *
-     * @param callback The callback.
-     */
+         * Read game's global properties
+         *
+         * Service Name - GlobalApp
+         * Service Operation - ReadProperties
+         *
+         * @param in_callback The method to be invoked when the server response is received
+         */
     public void readProperties(IServerCallback callback) {
         ServerCall sc = new ServerCall(ServiceName.globalApp, ServiceOperation.READ_PROPERTIES, null, callback);
         _client.sendRequest(sc);
     }
 
     /**
-     * Returns a list of properties, identified by the property names provided.
-     * If a property from the list isn't found, it just isn't returned (no error).
-     *
-     * Service Name - GlobalApp
-     * Service Operation - READ_SELECTED_PROPERTIES
-     * 
-     * @param propertyNames Specifies which properties to return
-     * @param callback The method to be invoked when the server response is received
-     */
+         * Returns a list of properties, identified by the property names provided.
+         * If a property from the list isn't found, it just isn't returned (no error).
+         *
+         * Service Name - GlobalApp
+         * Service Operation - READ_SELECTED_PROPERTIES
+         * 
+         * @param propertyNames Specifies which properties to return
+         * @param in_callback The method to be invoked when the server response is received
+         */
     public void readSelectedProperties(ArrayList<String> propertyNames, IServerCallback callback) {
 		try {
             JSONObject data = new JSONObject();
@@ -59,15 +62,15 @@ public class GlobalAppService {
     }
 
     /**
-     * Returns a list of properties, identified by the categories provided.
-     * If a category from the list isn't found, it just isn't returned (no error).
-     *
-     * Service Name - GlobalApp
-     * Service Operation - READ_PROPERTIES_IN_CATEGORIES
-     * 
-     * @param categories Specifies which category to return
-     * @param callback The method to be invoked when the server response is received
-     */
+         * Returns a list of properties, identified by the categories provided.
+         * If a category from the list isn't found, it just isn't returned (no error).
+         *
+         * Service Name - GlobalApp
+         * Service Operation - READ_PROPERTIES_IN_CATEGORIES
+         * 
+         * @param categories Specifies which category to return
+         * @param in_callback The method to be invoked when the server response is received
+         */
     public void readPropertiesInCategories(ArrayList<String> categories, IServerCallback callback) {
 		try {
             JSONObject data = new JSONObject();

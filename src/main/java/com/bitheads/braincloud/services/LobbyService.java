@@ -141,22 +141,21 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Creates a new lobby.
-     * 
-     * Sends LOBBY_JOIN_SUCCESS message to the user, with full copy of lobby data Sends LOBBY_MEMBER_JOINED to all lobby members, with copy of member data
-     *
-     * Service Name - Lobby
-     * Service Operation - CREATE_LOBBY
-     *
-     * @param lobbyType The type of lobby to look for. Lobby types are defined in the portal.
-     * @param rating The skill rating to use for finding the lobby. Provided as a separate parameter because it may not exactly match the user's rating (especially in cases where parties are involved).
-     * @param otherUserCxIds Array of other users (i.e. party members) to add to the lobby as well. Will constrain things so that only lobbies with room for all players will be considered.
-     * @param isReady Initial ready-status of this user.
-     * @param extraJson Initial extra-data about this user.
-     * @param teamCode Preferred team for this user, if applicable. Send "" or null for automatic assignment.
-     * @param settings Configuration data for the room.
-     * @param callback  The callback handler
-     */
+		 * Creates a new lobby.
+		 * 
+		 * Sends LOBBY_JOIN_SUCCESS message to the user, with full copy of lobby data Sends LOBBY_MEMBER_JOINED to all lobby members, with copy of member data
+		 *
+		 * Service Name - Lobby
+		 * Service Operation - CreateLobby
+		 *
+		 * @param lobbyType The type of lobby to look for. Lobby types are defined in the portal.
+		 * @param rating The skill rating to use for finding the lobby. Provided as a separate parameter because it may not exactly match the user's rating (especially in cases where parties are involved).
+		 * @param otherUserCxIds Array of other users (i.e. party members) to add to the lobby as well. Will constrain things so that only lobbies with room for all players will be considered.
+		 * @param isReady Initial ready-status of this user.
+		 * @param extraJson Initial extra-data about this user.
+		 * @param teamCode Preferred team for this user, if applicable. Send "" or null for automatic assignment.
+		 * @param settings Configuration data for the room.
+		 */
     public void createLobby(String lobbyType, int rating, ArrayList<String> otherUserCxIds, Boolean isReady, String extraJson, String teamCode, String settings, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -183,22 +182,21 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Creates a new lobby with ping data 
-     * 
-     * Sends LOBBY_JOIN_SUCCESS message to the user, with full copy of lobby data Sends LOBBY_MEMBER_JOINED to all lobby members, with copy of member data
-     *
-     * Service Name - Lobby
-     * Service Operation - CREATE_LOBBY_WITH_PING_DATA
-     *
-     * @param lobbyType The type of lobby to look for. Lobby types are defined in the portal.
-     * @param rating The skill rating to use for finding the lobby. Provided as a separate parameter because it may not exactly match the user's rating (especially in cases where parties are involved).
-     * @param otherUserCxIds Array of other users (i.e. party members) to add to the lobby as well. Will constrain things so that only lobbies with room for all players will be considered.
-     * @param isReady Initial ready-status of this user.
-     * @param extraJson Initial extra-data about this user.
-     * @param teamCode Preferred team for this user, if applicable. Send "" or null for automatic assignment.
-     * @param settings Configuration data for the room.
-     * @param callback  The callback handler
-     */
+		 * Creates a new lobby. Uses attached ping data to resolve best location. GetRegionsForLobbies and PingRegions must be successfully responded to.
+		 * 
+		 * Sends LOBBY_JOIN_SUCCESS message to the user, with full copy of lobby data Sends LOBBY_MEMBER_JOINED to all lobby members, with copy of member data
+		 *
+		 * Service Name - Lobby
+		 * Service Operation - CreateLobbyWithPingData
+		 *
+		 * @param lobbyType The type of lobby to look for. Lobby types are defined in the portal.
+		 * @param rating The skill rating to use for finding the lobby. Provided as a separate parameter because it may not exactly match the user's rating (especially in cases where parties are involved).
+		 * @param otherUserCxIds Array of other users (i.e. party members) to add to the lobby as well. Will constrain things so that only lobbies with room for all players will be considered.
+		 * @param isReady Initial ready-status of this user.
+		 * @param extraJson Initial extra-data about this user.
+		 * @param teamCode Preferred team for this user, if applicable. Send "" or null for automatic assignment.
+		 * @param settings Configuration data for the room.
+		 */
     public void createLobbyWithPingData(String lobbyType, int rating, ArrayList<String> otherUserCxIds, Boolean isReady, String extraJson, String teamCode, String settings, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -224,22 +222,21 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Finds a lobby matching the specified parameters. Asynchronous - returns 200 to indicate that matchmaking has started.
-     *
-     * Service Name - Lobby
-     * Service Operation - FIND_LOBBY
-     *
-     * @param lobbyType The type of lobby to look for. Lobby types are defined in the portal.
-     * @param rating The skill rating to use for finding the lobby. Provided as a separate parameter because it may not exactly match the user's rating (especially in cases where parties are involved).
-     * @param maxSteps The maximum number of steps to wait when looking for an applicable lobby. Each step is ~5 seconds.
-     * @param algo The algorithm to use for increasing the search scope.
-     * @param filterJson Used to help filter the list of rooms to consider. Passed to the matchmaking filter, if configured.
-     * @param otherUserCxIds Array of other users (i.e. party members) to add to the lobby as well. Will constrain things so that only lobbies with room for all players will be considered.
-     * @param isReady Initial ready-status of this user.
-     * @param extraJson Initial extra-data about this user.
-     * @param teamCode Preferred team for this user, if applicable. Send "" or null for automatic assignment
-     * @param callback The callback handler
-     */
+		 * Finds a lobby matching the specified parameters. Asynchronous - returns 200 to indicate that matchmaking has started.
+		 *
+		 * Service Name - Lobby
+		 * Service Operation - FindLobby
+		 *
+		 * @param lobbyType The type of lobby to look for. Lobby types are defined in the portal.
+		 * @param rating The skill rating to use for finding the lobby. Provided as a separate parameter because it may not exactly match the user's rating (especially in cases where parties are involved).
+		 * @param maxSteps The maximum number of steps to wait when looking for an applicable lobby. Each step is ~5 seconds.
+		 * @param algo The algorithm to use for increasing the search scope.
+		 * @param filterJson Used to help filter the list of rooms to consider. Passed to the matchmaking filter, if configured.
+		 * @param otherUserCxIds Array of other users (i.e. party members) to add to the lobby as well. Will constrain things so that only lobbies with room for all players will be considered.
+		 * @param isReady Initial ready-status of this user.
+		 * @param extraJson Initial extra-data about this user.
+		 * @param teamCode Preferred team for this user, if applicable. Send "" or null for automatic assignment
+		 */
     public void findLobby(String lobbyType, int rating, int maxSteps, String algo, String filterJson, ArrayList<String> otherUserCxIds, Boolean isReady, String extraJson, String teamCode, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -270,22 +267,21 @@ public class LobbyService implements IServerCallback{
     }
 
         /**
-     * Finds a lobby matching the specified parameters. Asynchronous - returns 200 to indicate that matchmaking has started. But adds ping data to the call
-     *
-     * Service Name - Lobby
-     * Service Operation - FIND_LOBBY
-     *
-     * @param lobbyType The type of lobby to look for. Lobby types are defined in the portal.
-     * @param rating The skill rating to use for finding the lobby. Provided as a separate parameter because it may not exactly match the user's rating (especially in cases where parties are involved).
-     * @param maxSteps The maximum number of steps to wait when looking for an applicable lobby. Each step is ~5 seconds.
-     * @param algo The algorithm to use for increasing the search scope.
-     * @param filterJson Used to help filter the list of rooms to consider. Passed to the matchmaking filter, if configured.
-     * @param otherUserCxIds Array of other users (i.e. party members) to add to the lobby as well. Will constrain things so that only lobbies with room for all players will be considered.
-     * @param isReady Initial ready-status of this user.
-     * @param extraJson Initial extra-data about this user.
-     * @param teamCode Preferred team for this user, if applicable. Send "" or null for automatic assignment
-     * @param callback  The callback handler
-     */
+		 * Finds a lobby matching the specified parameters. Asynchronous - returns 200 to indicate that matchmaking has started. Uses attached ping data to resolve best location. GetRegionsForLobbies and PingRegions must be successfully responded to.
+		 *
+		 * Service Name - Lobby
+		 * Service Operation - FindLobbyWithPingData
+		 *
+		 * @param lobbyType The type of lobby to look for. Lobby types are defined in the portal.
+		 * @param rating The skill rating to use for finding the lobby. Provided as a separate parameter because it may not exactly match the user's rating (especially in cases where parties are involved).
+		 * @param maxSteps The maximum number of steps to wait when looking for an applicable lobby. Each step is ~5 seconds.
+		 * @param algo The algorithm to use for increasing the search scope.
+		 * @param filterJson Used to help filter the list of rooms to consider. Passed to the matchmaking filter, if configured.
+		 * @param otherUserCxIds Array of other users (i.e. party members) to add to the lobby as well. Will constrain things so that only lobbies with room for all players will be considered.
+		 * @param isReady Initial ready-status of this user.
+		 * @param extraJson Initial extra-data about this user.
+		 * @param teamCode Preferred team for this user, if applicable. Send "" or null for automatic assignment
+		 */
     public void findLobbyWithPingData(String lobbyType, int rating, int maxSteps, String algo, String filterJson, ArrayList<String> otherUserCxIds, Boolean isReady, String extraJson, String teamCode, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -315,23 +311,22 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Adds the caller to the lobby entry queue and will create a lobby if none are found.
-     *
-     * Service Name - Lobby
-     * Service Operation - FIND_OR_CREATE_LOBBY
-     *
-     * @param lobbyType The type of lobby to look for. Lobby types are defined in the portal.
-     * @param rating The skill rating to use for finding the lobby. Provided as a separate parameter because it may not exactly match the user's rating (especially in cases where parties are involved).
-     * @param maxSteps The maximum number of steps to wait when looking for an applicable lobby. Each step is ~5 seconds.
-     * @param algo The algorithm to use for increasing the search scope.
-     * @param filterJson Used to help filter the list of rooms to consider. Passed to the matchmaking filter, if configured.
-     * @param otherUserCxIds Array of other users (i.e. party members) to add to the lobby as well. Will constrain things so that only lobbies with room for all players will be considered.
-     * @param settings Configuration data for the room.
-     * @param isReady Initial ready-status of this user.
-     * @param extraJson Initial extra-data about this user.
-     * @param teamCode Preferred team for this user, if applicable. Send "" or null for automatic assignment.
-     * @param callback  The callback handler
-     */
+		 * Adds the caller to the lobby entry queue and will create a lobby if none are found.
+		 *
+		 * Service Name - Lobby
+		 * Service Operation - FindOrCreateLobby
+		 *
+		 * @param lobbyType The type of lobby to look for. Lobby types are defined in the portal.
+		 * @param rating The skill rating to use for finding the lobby. Provided as a separate parameter because it may not exactly match the user's rating (especially in cases where parties are involved).
+		 * @param maxSteps The maximum number of steps to wait when looking for an applicable lobby. Each step is ~5 seconds.
+		 * @param algo The algorithm to use for increasing the search scope.
+		 * @param filterJson Used to help filter the list of rooms to consider. Passed to the matchmaking filter, if configured.
+		 * @param otherUserCxIds Array of other users (i.e. party members) to add to the lobby as well. Will constrain things so that only lobbies with room for all players will be considered.
+		 * @param settings Configuration data for the room.
+		 * @param isReady Initial ready-status of this user.
+		 * @param extraJson Initial extra-data about this user.
+		 * @param teamCode Preferred team for this user, if applicable. Send "" or null for automatic assignment.
+		 */
     public void findOrCreateLobby(String lobbyType, int rating, int maxSteps, String algo, String filterJson, ArrayList<String> otherUserCxIds, String settings, Boolean isReady, String extraJson, String teamCode, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -365,23 +360,22 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Adds the caller to the lobby entry queue and will create a lobby if none are found.
-     *
-     * Service Name - Lobby
-     * Service Operation - FIND_OR_CREATE_LOBBY_WITH_PING_DATA
-     *
-     * @param lobbyType The type of lobby to look for. Lobby types are defined in the portal.
-     * @param rating The skill rating to use for finding the lobby. Provided as a separate parameter because it may not exactly match the user's rating (especially in cases where parties are involved).
-     * @param maxSteps The maximum number of steps to wait when looking for an applicable lobby. Each step is ~5 seconds.
-     * @param algo The algorithm to use for increasing the search scope.
-     * @param filterJson Used to help filter the list of rooms to consider. Passed to the matchmaking filter, if configured.
-     * @param otherUserCxIds Array of other users (i.e. party members) to add to the lobby as well. Will constrain things so that only lobbies with room for all players will be considered.
-     * @param settings Configuration data for the room.
-     * @param isReady Initial ready-status of this user.
-     * @param extraJson Initial extra-data about this user.
-     * @param teamCode Preferred team for this user, if applicable. Send "" or null for automatic assignment.
-     * @param callback  The callback handler
-     */
+		 * Adds the caller to the lobby entry queue and will create a lobby if none are found. Uses attached ping data to resolve best location. GetRegionsForLobbies and PingRegions must be successfully responded to.
+		 *
+		 * Service Name - Lobby
+		 * Service Operation - FindOrCreateLobbyWithPingData
+		 *
+		 * @param lobbyType The type of lobby to look for. Lobby types are defined in the portal.
+		 * @param rating The skill rating to use for finding the lobby. Provided as a separate parameter because it may not exactly match the user's rating (especially in cases where parties are involved).
+		 * @param maxSteps The maximum number of steps to wait when looking for an applicable lobby. Each step is ~5 seconds.
+		 * @param algo The algorithm to use for increasing the search scope.
+		 * @param filterJson Used to help filter the list of rooms to consider. Passed to the matchmaking filter, if configured.
+		 * @param otherUserCxIds Array of other users (i.e. party members) to add to the lobby as well. Will constrain things so that only lobbies with room for all players will be considered.
+		 * @param settings Configuration data for the room.
+		 * @param isReady Initial ready-status of this user.
+		 * @param extraJson Initial extra-data about this user.
+		 * @param teamCode Preferred team for this user, if applicable. Send "" or null for automatic assignment.
+		 */
     public void findOrCreateLobbyWithPingData(String lobbyType, int rating, int maxSteps, String algo, String filterJson, ArrayList<String> otherUserCxIds, String settings, Boolean isReady, String extraJson, String teamCode, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -414,14 +408,13 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Returns the data for the specified lobby, including member data.
-     *
-     * Service Name - Lobby
-     * Service Operation - GET_LOBBY_DATA
-     *
-     * @param lobbyId Id of chosen lobby.
-     * @param callback The callback handler
-     */
+		 * Returns the data for the specified lobby, including member data.
+		 *
+		 * Service Name - Lobby
+		 * Service Operation - GetLobbyData
+		 *
+		 * @param lobbyId Id of chosen lobby.
+		 */
     public void getLobbyData(String lobbyId, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -436,14 +429,13 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Causes the caller to leave the specified lobby. If the user was the owner, a new owner will be chosen. If user was the last member, the lobby will be deleted.
-     *
-     * Service Name - Lobby
-     * Service Operation - LEAVE_LOBBY
-     *
-     * @param lobbyId Id of chosen lobby.
-     * @param callback The callback handler
-     */
+		 * Causes the caller to leave the specified lobby. If the user was the owner, a new owner will be chosen. If user was the last member, the lobby will be deleted.
+		 *
+		 * Service Name - Lobby
+		 * Service Operation - LeaveLobby
+		 *
+		 * @param lobbyId Id of chosen lobby.
+		 */
     public void leaveLobby(String lobbyId, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -458,18 +450,18 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Causes the caller to join the specified lobby. 
-     *
-     * Service Name - Lobby
-     * Service Operation - JOIN_LOBBY
-     * 
-     * @param lobbyId Id of chosen lobby.
-     * @param isReady initial ready status of this user
-     * @param extraJson Initial extra-data about this user
-     * @param teamCode specified team code
-     * @param otherUserCxIds Array fo other users (ie party members) to add to the lobby as well. Constrains things so only lobbies with room for all players will be considered. 
-     * @param callback  The callback handler
-     */
+		 * Join specified lobby
+		 *
+		 * Service Name - Lobby
+		 * Service Operation - JoinLobby
+		 *
+		 * @param lobbyId Id of the specfified lobby.
+		 * @param isReady Initial ready-status of this user.
+		 * @param extraJson Initial extra-data about this user.
+		 * @param toTeamCode Specified team code.
+		 * @param otherUserCxIds Array of other users (i.e. party members) to add to the lobby as well. Will constrain things so that only lobbies with room for all players will be considered.
+
+		 */
     public void joinLobby(String lobbyId, boolean isReady, String extraJson, String teamCode, ArrayList<String> otherUserCxIds, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -492,18 +484,18 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Causes the caller to join the specified lobby. 
-     *
-     * Service Name - Lobby
-     * Service Operation - JOIN_LOBBY_WITH_PING_DATA
-     * 
-     * @param lobbyId Id of chosen lobby.
-     * @param isReady initial ready status of this user
-     * @param extraJson Initial extra-data about this user
-     * @param teamCode specified team code
-     * @param otherUserCxIds Array fo other users (ie party members) to add to the lobby as well. Constrains things so only lobbies with room for all players will be considered. 
-     * @param callback  The callback handler
-     */
+		 * Join specified lobby. Uses attached ping data to resolve best location. GetRegionsForLobbies and PingRegions must be successfully responded to.
+		 *
+		 * Service Name - Lobby
+		 * Service Operation - JoinLobbyWithPingData
+		 *
+		 * @param lobbyId Id of the specfified lobby.
+		 * @param isReady Initial ready-status of this user.
+		 * @param extraJson Initial extra-data about this user.
+		 * @param toTeamCode Specified team code.
+		 * @param otherUserCxIds Array of other users (i.e. party members) to add to the lobby as well. Will constrain things so that only lobbies with room for all players will be considered.
+
+		 */
     public void joinLobbyWithPingData(String lobbyId, boolean isReady, String extraJson, String teamCode, ArrayList<String> otherUserCxIds, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -525,15 +517,14 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Evicts the specified user from the specified lobby. The caller must be the owner of the lobby.
-     *
-     * Service Name - Lobby
-     * Service Operation - REMOVE_MEMBER
-     *
-     * @param lobbyId Id of chosen lobby.
-     * @param cxId Specified member to be removed from the lobby.
-     * @param callback  The callback handler
-     */
+		 * Evicts the specified user from the specified lobby. The caller must be the owner of the lobby.
+		 *
+		 * Service Name - Lobby
+		 * Service Operation - RemoveMember
+		 *
+		 * @param lobbyId Id of chosen lobby.
+		 * @param cxId Specified member to be removed from the lobby.
+		 */
     public void removeMember(String lobbyId, String cxId, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -549,15 +540,14 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Sends LOBBY_SIGNAL_DATA message to all lobby members.
-     *
-     * Service Name - Lobby
-     * Service Operation - SEND_SIGNAL
-     *
-     * @param lobbyId Id of chosen lobby.
-     * @param signalData Signal data to be sent.
-     * @param callback  The callback handler
-     */
+		 * Sends LOBBY_SIGNAL_DATA message to all lobby members.
+		 *
+		 * Service Name - Lobby
+		 * Service Operation - SendSignal
+		 *
+		 * @param lobbyId Id of chosen lobby.
+		 * @param signalData Signal data to be sent.
+		 */
     public void sendSignal(String lobbyId, String signalData, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -575,17 +565,16 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Switches to the specified team (if allowed.)
-     * 
-     * Sends LOBBY_MEMBER_UPDATED to all lobby members, with copy of member data
-     *
-     * Service Name - Lobby
-     * Service Operation - SWITCH_TEAM
-     *
-     * @param lobbyId Id of chosen lobby.
-     * @param toTeamCode Specified team code.
-     * @param callback  The callback handler
-     */
+		 * Switches to the specified team (if allowed.)
+		 * 
+		 * Sends LOBBY_MEMBER_UPDATED to all lobby members, with copy of member data
+		 *
+		 * Service Name - Lobby
+		 * Service Operation - SwitchTeam
+		 *
+		 * @param lobbyId Id of chosen lobby.
+		 * @param toTeamCode Specified team code.
+		 */
     public void switchTeam(String lobbyId, String toTeamCode, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -601,16 +590,15 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Updates the ready status and extra json for the given lobby member.
-     *
-     * Service Name - Lobby
-     * Service Operation - UPDATE_READY
-     *
-     * @param lobbyId The type of lobby to look for. Lobby types are defined in the portal.
-     * @param isReady Initial ready-status of this user.
-     * @param extraJson Initial extra-data about this user.
-     * @param callback The callback handler
-     */
+		 * Updates the ready status and extra json for the given lobby member.
+		 *
+		 * Service Name - Lobby
+		 * Service Operation - UpdateReady
+		 *
+		 * @param lobbyId The type of lobby to look for. Lobby types are defined in the portal.
+		 * @param isReady Initial ready-status of this user.
+		 * @param extraJson Initial extra-data about this user.
+		 */
     public void updateReady(String lobbyId, Boolean isReady, String extraJson, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -629,15 +617,14 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Updates the ready status and extra json for the given lobby member.
-     *
-     * Service Name - Lobby
-     * Service Operation - UPDATE_SETTINGS
-     *
-     * @param lobbyId Id of the specfified lobby.
-     * @param settings Configuration data for the room.
-     * @param callback The callback handler
-     */
+		 * Updates the ready status and extra json for the given lobby member.
+		 *
+		 * Service Name - Lobby
+		 * Service Operation - UpdateSettings
+		 *
+		 * @param lobbyId Id of the specfified lobby.
+		 * @param settings Configuration data for the room.
+		 */
     public void updateSettings(String lobbyId, String settings, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -655,15 +642,14 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Gets a map keyed by rating of the visible lobby instances matching the given type and rating range.
-     *
-     * Service Name - Lobby
-     * Service Operation - GET_LOBBY_INSTANCES
-     *
-     * @param lobbyType The type of lobby to look for.
-     * @param criteriaJson A JSON string used to describe filter criteria.
-     * @param callback The callback handler
-     */
+		 * Gets a map keyed by rating of the visible lobby instances matching the given type and rating range.
+		 *
+		 * Service Name - Lobby
+		 * Service Operation - GET_LOBBY_INSTANCES
+		 *
+		 * @param lobbyType The type of lobby to look for.
+		 * @param criteriaJson A JSON string used to describe filter criteria.
+		 */
     public void getLobbyInstances(String lobbyType, String criteriaJson, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -679,16 +665,15 @@ public class LobbyService implements IServerCallback{
     }
 
     /**
-     * Gets a map keyed by rating of the visible lobby instances matching the given type and rating range.
-     * Only lobby instances in the regions that satisfy the ping portion of the criteriaJson (based on the values provided in pingData) will be returned.
-     *
-     * Service Name - Lobby
-     * Service Operation - GET_LOBBY_INSTANCES_WITH_PING_DATA
-     *
-     * @param lobbyType The type of lobby to look for.
-     * @param criteriaJson A JSON string used to describe filter criteria.
-     * @param callback The callback handler
-     */
+		 * Gets a map keyed by rating of the visible lobby instances matching the given type and rating range.
+		 * Only lobby instances in the regions that satisfy the ping portion of the criteriaJson (based on the values provided in pingData) will be returned.
+		 *
+		 * Service Name - Lobby
+		 * Service Operation - GET_LOBBY_INSTANCES_WITH_PING_DATA
+		 *
+		 * @param lobbyType The type of lobby to look for.
+		 * @param criteriaJson A JSON string used to describe filter criteria.
+		 */
     public void getLobbyInstancesWithPingData(String lobbyType, String criteriaJson, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -721,32 +706,13 @@ public class LobbyService implements IServerCallback{
         }
     }
 
-    /**
-     * Cancel this members Find, Join and Searching of Lobbies
-     *
-     * @param lobbyType Type of lobby being targeted.
-     * @param callback  The callback handler
-     */
-    public void cancelFindRequest(String lobbyType, String entryId, IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.lobbyType.name(), lobbyType);
-            data.put(Parameter.entryId.name(), entryId);
-
-            ServerCall sc = new ServerCall(ServiceName.lobby,
-                    ServiceOperation.CANCEL_FIND_REQUEST, data, callback);
-            _client.sendRequest(sc);
-        } catch (JSONException je) {
-            je.printStackTrace();
-        }
-    }
-
-    /**
-     * Retrieves the region settings for each of the given lobby types.
-     *
-     * @param in_lobbyTypes Types of lobby being queried.
-     * @param callback The callback handler
-     */
+    /* Retrieves the region settings for each of the given lobby types. Upon success or afterwards, call pingRegions to start retrieving appropriate data.
+		 *
+		 * Service Name - Lobby
+		 * Service Operation - GetRegionsForLobbies
+		 *
+		 * @param roomTypes Ids of the lobby types.
+		 */
     public void getRegionsForLobbies(String[] in_lobbyTypes, IServerCallback callback) {
         try {
             _pingData = null;

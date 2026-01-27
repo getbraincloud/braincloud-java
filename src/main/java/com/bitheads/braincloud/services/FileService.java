@@ -34,23 +34,22 @@ public class FileService {
     }
 
     /**
-     * Prepares a user file upload. On success the file will begin uploading
-     * to the brainCloud server. To be informed of success/failure of the upload
-     * register an IFileUploadCallback with the BrainCloudClient class.
-     *
-     * @param cloudPath The desired cloud path of the file
-     * @param cloudFilename The desired cloud filename of the file
-     * @param shareable True if the file is shareable.
-     * @param replaceIfExists Whether to replace file if it exists
-     * @param localPath The path and filename of the local file
-     * @param callback The method to be invoked when the server response is received
-     * @return False if the file does not exist at the localPath
-     *
-     * Significant error codes:
-     *
-     * 40429 - File maximum file size exceeded
-     * 40430 - File exists, replaceIfExists not set
-     */
+         * Prepares a user file upload. On success the file will begin uploading
+         * to the brainCloud server. To be informed of success/failure of the upload
+         * register an IFileUploadCallback with the BrainCloudClient class.
+         *
+         * @param in_cloudPath The desired cloud path of the file
+         * @param in_cloudFilename The desired cloud filename of the file
+         * @param in_shareable True if the file is shareable.
+         * @param in_replaceIfExists Whether to replace file if it exists
+         * @param in_localPath The path and filename of the local file
+         * @param in_callback The method to be invoked when the server response is received
+         *
+         * Significant error codes:
+         *
+         * 40429 - File maximum file size exceeded
+         * 40430 - File exists, replaceIfExists not set
+         */
     public boolean uploadFile(String cloudPath,
                               String cloudFilename,
                               boolean shareable,
@@ -80,10 +79,12 @@ public class FileService {
     }
 
     /**
-     * List all user files
-     *
-     * @param callback The method to be invoked when the server response is received
-     */
+         * List user files from the given cloud path
+         *
+         * @param in_cloudPath File path
+         * @param in_recurse Whether to recurse into sub-directories
+         * @param in_callback The method to be invoked when the server response is received
+         */
     public void listUserFiles(IServerCallback callback) {
         ServerCall sc = new ServerCall(ServiceName.file, ServiceOperation.LIST_USER_FILES, null, callback);
         _client.sendRequest(sc);
@@ -110,17 +111,18 @@ public class FileService {
     }
 
     /**
-     * Deletes a single user file.
-     *
-     * @param cloudPath File path
-     * @param cloudFilename name of file
-     * @param callback The method to be invoked when the server response is received
-     *
-     * Significant error codes:
-     *
-     * 40431 - Cloud storage service error
-     * 40432 - File does not exist
-     */
+         * Deletes a single user file.
+         *
+         * @param in_cloudPath File path
+         * @param in_cloudFilename name of file
+         * @param in_callback The method to be invoked when the server response is received
+         *
+         * Significant error codes:
+         *
+         * 40431 - Cloud storage service error
+         * 40432 - File does not exist
+         *
+         */
     public void deleteUserFile(String cloudPath, String cloudFilename, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -135,12 +137,12 @@ public class FileService {
     }
 
     /**
-     * Delete multiple user files
-     *
-     * @param cloudPath File path
-     * @param recurse Whether to recurse into sub-directories
-     * @param callback The method to be invoked when the server response is received
-     */
+         * Delete multiple user files
+         *
+         * @param in_cloudPath File path
+         * @param in_recurse Whether to recurse into sub-directories
+         * @param in_callback The method to be invoked when the server response is received
+         */
     public void deleteUserFiles(String cloudPath, boolean recurse, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -155,12 +157,12 @@ public class FileService {
     }
 
     /**
-     * Returns the CDN url for a file object
-     *
-     * @param cloudPath File path
-     * @param cloudFileName Name of file
-     * @param callback The method to be invoked when the server response is received
-     */
+		* Returns the CDN url for a file object
+		*
+		* @param in_cloudPath File path
+		* @param in_cloudFileName File name
+		* @param in_callback The method to be invoked when the server response is received
+		*/
     public void getCDNUrl(String cloudPath, String cloudFileName, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -175,22 +177,22 @@ public class FileService {
     }
 
     /**
-     * Method cancels an upload. If an IFileUploadCallback has been registered with the BrainCloudClient class,
-     * the fileUploadFailed callback method will be called once the upload has been canceled.
-     *
-     * @param uploadId The id of the upload
-     */
+         * Method cancels an upload. If an IFileUploadCallback has been registered with the BrainCloudClient class,
+         * the fileUploadFailed callback method will be called once the upload has been canceled.
+         *
+         * @param in_uploadId The id of the upload
+         */
     public void cancelUpload(String uploadId) {
         _client.getRestClient().cancelUpload(uploadId);
     }
 
     /**
-     * Returns the progress of the given upload from 0.0 to 1.0
-     * or -1 if upload not found.
-     *
-     * @param uploadId The id of the upload
-     * @return A progress from 0.0 to 1.0 or -1 if upload not found.
-     */
+         * Returns the progress of the given upload from 0.0 to 1.0
+         * or -1 if upload not found.
+         *
+         * @param in_uploadId The id of the upload
+         * @return A progress from 0.0 to 1.0 or -1 if upload not found.
+         */
     public double getUploadProgress(String uploadId) {
         return _client.getRestClient().getUploadProgress(uploadId);
     }

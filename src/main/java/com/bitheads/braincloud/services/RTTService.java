@@ -43,10 +43,8 @@ public class RTTService {
     }
 
     /**
-     * Returns true is RTT is enabled
-     *
-     * @return True if RTT is enabled
-     */
+		 *returns true if RTT is enabled 
+		 */
     public boolean getRTTEnabled()
     {
         return _client.getRTTComms().isRTTEnabled();
@@ -72,13 +70,11 @@ public class RTTService {
     }
 
      /**
-     * Listen to real time events.
-     * 
-     * Notes: RTT must be enabled for this app, and enableRTT must have been successfully called.
-     * Only one event callback can be registered at a time. Calling this a second time will override the previous callback.
-     *
-     * @param callback  The callback handler
-     */
+		 * Listen to real time events.
+		 * 
+		 * Notes: RTT must be enabled for this app, and enableRTT must have been successfully called.
+		 * Only one event callback can be registered at a time. Calling this a second time will override the previous callback.
+		 */
     public void registerRTTEventCallback(IRTTCallback callback) {
         _client.getRTTComms().registerRTTCallback(ServiceName.event.toString(), callback);
     }
@@ -91,13 +87,11 @@ public class RTTService {
     }
 
     /**
-     * Listen to real time chat messages.
-     * 
-     * Notes: RTT must be enabled for this app, and enableRTT must have been successfully called.
-     * Only one chat callback can be registered at a time. Calling this a second time will override the previous callback.
-     *
-     * @param callback  The callback handler
-     */
+		 * Listen to real time chat messages.
+		 * 
+		 * Notes: RTT must be enabled for this app, and enableRTT must have been successfully called.
+		 * Only one chat callback can be registered at a time. Calling this a second time will override the previous callback.
+		 */
     public void registerRTTChatCallback(IRTTCallback callback) {
         _client.getRTTComms().registerRTTCallback(ServiceName.chat.toString(), callback);
     }
@@ -110,13 +104,11 @@ public class RTTService {
     }
 
     /**
-     * Listen to real time messaging.
-     * 
-     * Notes: RTT must be enabled for this app, and enableRTT must have been successfully called.
-     * Only one messaging callback can be registered at a time. Calling this a second time will override the previous callback.
-     *
-     * @param callback  The callback handler
-     */
+		 * Listen to real time messaging.
+		 * 
+		 * Notes: RTT must be enabled for this app, and enableRTT must have been successfully called.
+		 * Only one messaging callback can be registered at a time. Calling this a second time will override the previous callback.
+		 */
     public void registerRTTMessagingCallback(IRTTCallback callback) {
         _client.getRTTComms().registerRTTCallback(ServiceName.messaging.toString(), callback);
     }
@@ -129,13 +121,11 @@ public class RTTService {
     }
 
     /**
-     * Listen to real time lobby events.
-     * 
-     * Notes: RTT must be enabled for this app, and enableRTT must have been successfully called.
-     * Only one lobby callback can be registered at a time. Calling this a second time will override the previous callback.
-     *
-     * @param callback  The callback handler
-     */
+		 * Listen to real time lobby events.
+		 * 
+		 * Notes: RTT must be enabled for this app, and enableRTT must have been successfully called.
+		 * Only one lobby callback can be registered at a time. Calling this a second time will override the previous callback.
+		 */
     public void registerRTTLobbyCallback(IRTTCallback callback) {
         _client.getRTTComms().registerRTTCallback(ServiceName.lobby.toString(), callback);
     }
@@ -148,13 +138,11 @@ public class RTTService {
     }
 
     /**
-     * Listen to real time presence events.
-     * 
-     * Notes: RTT must be enabled for this app, and enableRTT must have been successfully called.
-     * Only one presence callback can be registered at a time. Calling this a second time will override the previous callback.
-     * 
-     * @param callback  The callback handler
-     */
+		 * Listen to real time presence events.
+		 * 
+		 * Notes: RTT must be enabled for this app, and enableRTT must have been successfully called.
+		 * Only one presence callback can be registered at a time. Calling this a second time will override the previous callback.
+		 */
     public void registerRTTPresenceCallback(IRTTCallback callback) {
         _client.getRTTComms().registerRTTCallback(ServiceName.presence.toString(), callback);
     }

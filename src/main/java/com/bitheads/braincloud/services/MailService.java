@@ -28,16 +28,16 @@ public class MailService {
     }
 
     /**
-     * Sends a simple text email to the specified player
-     *
-     * Service Name - mail
-     * Service Operation - SEND_BASIC_EMAIL
-     *
-     * @param profileId The user to send the email to
-     * @param subject The email subject
-     * @param body The email body
-     * @param callback The method to be invoked when the server response is received
-     */
+		 * Sends a simple text email to the specified player
+		 *
+		 * Service Name - mail
+		 * Service Operation - SEND_BASIC_EMAIL
+		 *
+		 * @param in_profileId The user to send the email to
+		 * @param in_subject The email subject
+		 * @param in_body The email body
+		 * @param in_callback The method to be invoked when the server response is received
+		 */
     public void sendBasicEmail(String profileId, String subject, String body, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -53,16 +53,16 @@ public class MailService {
     }
 
     /**
-     * Sends an advanced email to the specified player
-     *
-     * Service Name - mail
-     * Service Operation - SEND_ADVANCED_EMAIL
-     *
-     * @param profileId The user to send the email to
-     * @param jsonServiceParams Parameters to send to the email service. See the documentation for
-     *	a full list. http://getbraincloud.com/apidocs/apiref/#capi-mail
-     * @param callback The method to be invoked when the server response is received
-     */
+		 * Sends an advanced email to the specified player
+		 *
+		 * Service Name - mail
+		 * Service Operation - SEND_ADVANCED_EMAIL
+		 *
+		 * @param in_profileId The user to send the email to
+		 * @param in_jsonServiceParams Parameters to send to the email service. See the documentation for
+		 *	a full list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+		 * @param in_callback The method to be invoked when the server response is received
+		 */
     public void sendAdvancedEmail(String profileId, String jsonServiceParams, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -79,16 +79,16 @@ public class MailService {
     }
 
     /**
-     * Sends an advanced email to the specified email address
-     *
-     * Service Name - mail
-     * Service Operation - SEND_ADVANCED_EMAIL_BY_ADDRESS
-     *
-     * @param emailAddress The address to send the email to
-     * @param jsonServiceParams Parameters to send to the email service. See the documentation for
-     *	a full list. http://getbraincloud.com/apidocs/apiref/#capi-mail
-     * @param callback The method to be invoked when the server response is received
-     */
+		 * Sends an advanced email to the specified email address
+		 *
+		 * Service Name - mail
+		 * Service Operation - SEND_ADVANCED_EMAIL_BY_ADDRESS
+		 *
+		 * @param in_emailAddress The address to send the email to
+		 * @param in_jsonServiceParams Parameters to send to the email service. See the documentation for
+		 *	a full list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+		 * @param in_callback The method to be invoked when the server response is received
+		 */
     public void sendAdvancedEmailByAddress(String emailAddress, String jsonServiceParams, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -105,15 +105,15 @@ public class MailService {
     }
 
     /**
-     * Sends an advanced email to the specified email address.
-     * 
-     * Service Name - Mail
-     * Service Operation - SEND_ADVANCED_EMAIL_BY_ADDRESSES
-     * 
-     * @param emailAddresses The list of addresses to send the email to
-     * @param serviceParams Set of parameters dependant on the mail service configured
-     * @param callback The method to be invoked when the server response is received
-     */
+		 * Sends an advanced email to the specified email addresses.
+		 *
+		 * Service Name - Mail
+		 * Service Operation - SEND_ADVANCED_EMAIL_BY_ADDRESSES
+		 *
+		 * @param in_emailAddress The list of addresses to send the email to
+		 * @param in_serviceParams Set of parameters dependant on the mail service configured
+		 * @param in_callback The method to be invoked when the server response is received
+		 */
     public void sendAdvancedEmailByAddresses(String[] emailAddresses, String serviceParams, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();

@@ -31,8 +31,7 @@ public class ItemCatalogService {
 	 * Service Name - itemCatalog
 	 * Service Operation - GET_CATALOG_ITEM_DEFINITION
 	 *
-	 * @param defId The unique id of the item definition.
-     * @param callback  The callback handler
+	 * @param defId
 	 */
     public void getCatalogItemDefinition(String defId, IServerCallback callback) {
         try {
@@ -52,8 +51,7 @@ public class ItemCatalogService {
 	 * Service Name - itemCatalog
 	 * Service Operation - GET_CATALOG_ITEMS_PAGE
 	 *
-	 * @param context   The json context for the page request.
-     * @param callback  The callback handler
+	 * @param context
 	 */
     public void getCatalogItemsPage(String context, IServerCallback callback) {
         try {
@@ -74,11 +72,8 @@ public class ItemCatalogService {
 	 * Service Name - itemCatalog
 	 * Service Operation - GET_CATALOG_ITEMS_PAGE_OFFSET
 	 *
-	 * @param context       The context string returned from the server from a 
-     *                      previous call to GetCatalogItemsPage or GetCatalogItemsPageOffset.
-	 * @param pageOffset    The positive or negative page offset to fetch. 
-     *                      Uses the last page retrieved using the context string to determine a starting point.
-     * @param callback      The callback handler
+	 * @param context
+	 * @param pageOffset
 	 */
     public void getCatalogItemsPageOffset(String context, int pageOffset, IServerCallback callback) {
         try {

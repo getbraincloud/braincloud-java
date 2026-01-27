@@ -26,14 +26,14 @@ public class VirtualCurrencyService {
     }
 
     /**
-     * Retrieve the user's currency account. Optional parameters: vcId (if retrieving all currencies).
-     *
-     * Service Name - VirtualCurrency
-     * Service Operation - GetCurrency
-     *
-     * @param vcId  The currency type to retrieve or null if all currency types are being requested.
-     * @param callback The method to be invoked when the server response is received
-     */
+        * Retrieve the user's currency account. Optional parameters: vcId (if retrieving all currencies).
+        *
+        * Service Name - VirtualCurrency
+        * Service Operation - GetCurrency
+        *
+        * @param vcId
+        * @param in_callback The method to be invoked when the server response is received
+        */
     public void getCurrency(String vcId, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -47,15 +47,15 @@ public class VirtualCurrencyService {
     }
 
     /**
-     * Retrieve the parent user's currency account. Optional parameters: vcId (if retrieving all currencies).
-     *
-     * Service Name - VirtualCurrency
-     * Service Operation - GetParentCurrency
-     *
-     * @param vcId  The currency type to retrieve or null if all currency types are being requested.
-     * @param levelName Name of the parent level.
-     * @param callback The method to be invoked when the server response is received
-    */
+        * Retrieve the parent user's currency account. Optional parameters: vcId (if retrieving all currencies).
+        *
+        * Service Name - VirtualCurrency
+        * Service Operation - GetParentCurrency
+        *
+        * @param vcId
+        * @param levelName
+        * @param in_callback The method to be invoked when the server response is received
+        */
     public void getParentCurrency(String vcId, String levelName, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -70,15 +70,15 @@ public class VirtualCurrencyService {
     }
 
     /**
-     * Retrieve the peer user's currency account. Optional parameters: vcId (if retrieving all currencies).
-     *
-     * Service Name - VirtualCurrency
-     * Service Operation - GetPeerCurrency
-     *
-     * @param vcId  The currency type to retrieve or null if all currency types are being requested.
-     * @param peerCode  Name of the peer
-     * @param callback The method to be invoked when the server response is received
-    */
+        * Retrieve the peer user's currency account. Optional parameters: vcId (if retrieving all currencies).
+        *
+        * Service Name - VirtualCurrency
+        * Service Operation - GetPeerCurrency
+        *
+        * @param vcId
+        * @param peerCode
+        * @param in_callback The method to be invoked when the server response is received
+        */
     public void getPeerCurrency(String vcId, String peerCode, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -93,13 +93,13 @@ public class VirtualCurrencyService {
     }
     
     /**
-     * Resets the player's currency to 0.
-     *
-     * Service Name - VirtualCurrency
-     * Service Operation - ResetCurrency
-     * 
-     * @param callback The method to be invoked when the server response is received
-     */
+        * Reset player's currency to zero
+        *
+        * Service Name - VirtualCurrency
+        * Service Operation - ResetCurrency
+        *
+        * @param in_callback The method to be invoked when the server response is received
+        */
     public void resetCurrency(IServerCallback callback) {
             JSONObject data = new JSONObject();
             ServerCall sc = new ServerCall(ServiceName.virtualCurrency, ServiceOperation.RESET_PLAYER_VC, data, callback);
@@ -107,20 +107,9 @@ public class VirtualCurrencyService {
     }
 
     /**
-     * Award player the passed-in amount of currency. Returns an object representing the new currency values.
-     *
-     * Note: Awarding 0 or negative currency will return an error. Use ConsumeCurrency to remove currency values.
-     *
-     * Service Name - VirtualCurrency
-     * Service Operation - GetPeerCurrency
-     *
-     * Warning, Method is recommended to be used in Cloud Code only for security
-     * If you need to use it client side, enable 'Allow Currency Calls from Client' on the brainCloud dashboard
-     *
-     * @param vcId  The currency type to award.
-     * @param vcAmount  The amount of currency to award.
-     * @param callback The method to be invoked when the server response is received
-     */
+         * @warning Method is recommended to be used in Cloud Code only for security
+         * If you need to use it client side, enable 'Allow Currency Calls from Client' on the brainCloud dashboard
+         */
     public void awardCurrency(String vcId, int vcAmount, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -135,20 +124,9 @@ public class VirtualCurrencyService {
     }
 
     /**
-     * Consume the passed-in amount of currency from the player.
-     *
-     * Note: Consuming 0 or negative currency will return an error. Use AwardCurrency to add currency values.
-     *
-     * Service Name - VirtualCurrency
-     * Service Operation - GetPeerCurrency
-     *
-     * Warning, Method is recommended to be used in Cloud Code only for security
-     * If you need to use it client side, enable 'Allow Currency Calls from Client' on the brainCloud dashboard
-     *
-     * @param vcId  The currency type to consume.
-     * @param vcAmount  The amount of currency to consume.
-     * @param callback The method to be invoked when the server response is received
-     */
+         * @warning Method is recommended to be used in Cloud Code only for security
+         * If you need to use it client side, enable 'Allow Currency Calls from Client' on the brainCloud dashboard
+         */
     public void consumeCurrency(String vcId, int vcAmount, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();

@@ -37,15 +37,14 @@ public class MessagingService {
     }
 
     /**
-     * Deletes specified user messages on the server.
-     *
-     * Service Name - Messaging
-     * Service Operation - DELETE_MESSAGES
-     *
-     * @param msgbox    The msgbox that we are deleting messages from
-     * @param msgIds    Array of message ids to delete.
-     * @param callback  The method to be invoked when the server response is received
-     */
+		 * Deletes specified user messages on the server.
+		 *
+		 * Service Name - Messaging
+		 * Service Operation - DeleteMessages
+		 *
+		 * @param msgIds Arrays of message ids to delete.
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void deleteMessages(String msgbox, ArrayList<String> msgIds, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -63,13 +62,13 @@ public class MessagingService {
     }
 
     /**
-     * Retrieve user's message boxes, including 'inbox', 'sent', etc.
-     *
-     * Service Name - Messaging
-     * Service Operation - GET_MESSAGE_BOXES
-     *
-     * @param callback The method to be invoked when the server response is received
-     */
+		 * Retrieve user's message boxes, including 'inbox', 'sent', etc.
+		 *
+		 * Service Name - Messaging
+		 * Service Operation - GetMessageboxes
+		 *
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void getMessageboxes(IServerCallback callback) {
         JSONObject data = new JSONObject();
 
@@ -79,13 +78,13 @@ public class MessagingService {
     }
 
     /**
-     * Returns count of user's 'total' messages and their 'unread' messages.
-     *
-     * Service Name - Messaging
-     * Service Operation - GET_MESSAGE_COUNTS
-     *
-     * @param callback The method to be invoked when the server response is received
-     */
+		 * Retrieve user's message boxes, including 'inbox', 'sent', etc.
+		 *
+		 * Service Name - Messaging
+		 * Service Operation - GetMessageCounts
+		 *
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void getMessageCounts(IServerCallback callback) {
         JSONObject data = new JSONObject();
 
@@ -95,16 +94,15 @@ public class MessagingService {
     }
 
     /**
-     * Retrieves list of specified messages.
-     *
-     * Service Name - Messaging
-     * Service Operation - GET_MESSAGES
-     *
-     * @param msgbox The messagebox that the messages reside in
-     * @param msgIds Arrays of message ids to get.
-     * @param markAsRead Whether the messages should be marked as read once retrieved.
-     * @param callback The method to be invoked when the server response is received
-     */
+		 * Retrieves list of specified messages.
+		 *
+		 * Service Name - Messaging
+		 * Service Operation - GetMessages
+		 *
+		 * @param msgIds Arrays of message ids to get.
+		 * @param markAsRead mark messages that are read
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void getMessages(String msgbox, ArrayList<String> msgIds, Boolean markAsRead, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -123,14 +121,14 @@ public class MessagingService {
     }
 
     /**
-     * Retrieves a page of messages.
-     *
-     * Service Name - Messaging
-     * Service Operation - GET_MESSAGES_PAGE
-     *
-     * @param context   A context object that controls the searchCriteria, pagination and sorting of the results to be returned.
-     * @param callback  The method to be invoked when the server response is received
-     */
+		 * Retrieves a page of messages.
+		 *
+		 * Service Name - Messaging
+		 * Service Operation - GetMessagesPage
+		 *
+		 * @param context
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void getMessagesPage(String context, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -147,16 +145,15 @@ public class MessagingService {
     }
 
     /**
-     * Gets the page of messages from the server based on the encoded context and specified page offset.
-     *
-     * Service Name - Messaging
-     * Service Operation - GET_MESSAGES_PAGE_OFFSET
-     *
-     * @param context       Encoded context object returned by getMessagesPage   
-     * @param pageOffset    Number of pages to go forward or back
-     * @param callback      The method to be invoked when the server response is received
-     * @see #getMessagesPage(String context, IServerCallback callback)
-     */
+		 * Gets the page of messages from the server based on the encoded context and specified page offset.
+		 *
+		 * Service Name - Messaging
+		 * Service Operation - GetMessagesPageOffset
+		 *
+		 * @param context
+		 * @param pageOffset
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void getMessagesPageOffset(String context, int pageOffset, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -172,15 +169,15 @@ public class MessagingService {
     }
 
     /**
-     * Marks list of user messages as read on the server.
-     *
-     * Service Name - Messaging
-     * Service Operation - SEND_MESSAGE
-     *
-     * @param toProfileIds  An array of recipients of the message.
-     * @param contentJson   The message content.
-     * @param callback      The method to be invoked when the server response is received
-     */
+		 * Sends a message with specified 'subject' and 'text' to list of users.
+		 *
+		 * Service Name - Messaging
+		 * Service Operation - SendMessage
+		 *
+		 * @param toProfileIds
+		 * @param contentJson the message you are sending
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void sendMessage(ArrayList<String> toProfileIds, String contentJson, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -198,15 +195,15 @@ public class MessagingService {
     }
 
     /**
-     * Marks list of user messages as read on the server.
-     *
-     * Service Name - Messaging
-     * Service Operation - SEND_MESSAGE_SIMPLE
-     *
-     * @param toProfileIds  An array of recipients of the message.
-     * @param messageText   The text to send
-     * @param callback      The method to be invoked when the server response is received
-     */
+		 * Sends a simple message to specified list of users.
+		 *
+		 * Service Name - Messaging
+		 * Service Operation - SendMessageSimple
+		 *
+		 * @param toProfileIds
+		 * @param messageText
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void sendMessageSimple(ArrayList<String> toProfileIds, String messageText, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -224,15 +221,15 @@ public class MessagingService {
     }
 
     /**
-     * Marks list of user messages as read on the server.
-     *
-     * Service Name - Messaging
-     * Service Operation - MARK_MESSAGES_READ
-     *
-     * @param msgbox    The box that the messages reside in.
-     * @param msgIds    An array of msgIds.
-     * @param callback  The method to be invoked when the server response is received
-     */
+		 * Marks list of user messages as read on the server.
+		 *
+		 * Service Name - Messaging
+		 * Service Operation - MarkMessagesRead
+		 *
+		 * @param msgbox
+		 * @param msgIds
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void markMessagesRead(String msgbox, ArrayList<String> msgIds, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();

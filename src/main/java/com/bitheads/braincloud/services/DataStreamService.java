@@ -34,12 +34,11 @@ public class DataStreamService {
     }
 
     /**
-     * Creates custom data stream page event
-     *
-     * @param eventName Name of event
-     * @param jsonEventProperties Properties of event
-     * @param callback  The callback handler
-     */
+         * Creates custom data stream page event
+         *
+         * @param eventName Name of event
+         * @param eventProperties Properties of event
+         */
     public void customPageEvent(String eventName, String jsonEventProperties, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -60,12 +59,11 @@ public class DataStreamService {
     }
 
     /**
-     * Creates custom data stream screen event
-     *
-     * @param eventName Name of event
-     * @param jsonEventProperties Properties of event
-     * @param callback  The callback handler
-     */
+         * Creates custom data stream screen event
+         *
+         * @param eventName Name of event
+         * @param eventProperties Properties of event
+         */
     public void customScreenEvent(String eventName, String jsonEventProperties, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -86,12 +84,11 @@ public class DataStreamService {
     }
 
     /**
-     * Creates custom data stream track event
-     *
-     * @param eventName Name of event
-     * @param jsonEventProperties Properties of event
-     * @param callback The callback handler
-     */
+         * Creates custom data stream track event
+         *
+         * @param eventName Name of event
+         * @param eventProperties Properties of event
+         */
     public void customTrackEvent(String eventName, String jsonEventProperties, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -112,18 +109,17 @@ public class DataStreamService {
     }
 
     /**
-     * Send crash report
-     *
-     * @param crashType Identifies the crash category. Developer-defined, can be anything.
-     * @param errorMsg  Short message describing the crash.
-     * @param crashJson Exception data.
-     * @param crashLog  Client log up until the crash (if available.)
-     * @param userName  Name provided by the user (if provided.)
-     * @param userEmail Email address to respond to (if provided.)  
-     * @param userNotes Notes provided by the user (if provided.)
-     * @param userSubmitted User submitted flag.
-     * @param callback The callback handler
-     */
+         * Send crash report
+         *
+         * @param crashType
+         * @param errorMsg
+         * @param crashJson
+         * @param crashLog
+         * @param userName
+         * @param userEmail
+         * @param userNotes
+         * @param userSubmitted
+         */
     public void submitCrashReport(String crashType, String errorMsg, String crashJson, String crashLog, String userName, String userEmail, String userNotes, Boolean userSubmitted, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();

@@ -31,17 +31,15 @@ public class ScriptService {
     }
 
     /**
-     * Executes a script on the server.
-     *
-     * Service Name - Script
-     * Service Operation - Run
-     *
-     * @param scriptName The name of the script to be run
-     * @param jsonScriptData Data to be sent to the script in json format
-     * @param callback  The callback handler
-     *
-     * See The API documentation site for more details on cloud code
-     */
+		 * Executes a script on the server.
+		 *
+		 * Service Name - Script
+		 * Service Operation - Run
+		 *
+		 * @param in_scriptName The name of the script to be run
+		 * @param in_jsonScriptData Data to be sent to the script in json format
+		 * @param in_callback The method to be invoked when the server response is received
+		 */
     public void runScript(String scriptName, String jsonScriptData, IServerCallback callback) {
 
         try {
@@ -61,17 +59,16 @@ public class ScriptService {
     }
 
     /**
-     * Allows cloud script executions to be scheduled
-     *
-     * Service Name - Script
-     * Service Operation - ScheduleCloudScript
-     *
-     * @param scriptName The name of the script to be run
-     * @param jsonScriptData JSON bundle to pass to script
-     * @param startTimeUTC The start date as a Date object
-     * @param callback  The callback handler
-     * See The API documentation site for more details on cloud code
-     */
+		 * Allows cloud script executions to be scheduled - UTC time
+		 *
+		 * Service Name - Script
+		 * Service Operation - ScheduleCloudScript
+		 *
+		 * @param in_scriptName The name of the script to be run
+		 * @param in_jsonScriptData Data to be sent to the script in json format
+		 * @param in_startDateInUTC The start date in UTC
+		 * @param in_callback The method to be invoked when the server response is received
+		 */
     public void scheduleRunScriptMillisUTC(String scriptName, String jsonScriptData, long startTimeUTC, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -92,17 +89,16 @@ public class ScriptService {
     }
 
     /**
-     * Allows cloud script executions to be scheduled
-     *
-     * Service Name - Script
-     * Service Operation - ScheduleCloudScript
-     *
-     * @param scriptName The name of the script to be run
-     * @param jsonScriptData JSON bundle to pass to script
-     * @param minutesFromNow Number of minutes from now to run script
-     * @param callback  The callback handler
-     * See The API documentation site for more details on cloud code
-     */
+		 * Allows cloud script executions to be scheduled
+		 *
+		 * Service Name - Script
+		 * Service Operation - ScheduleCloudScript
+		 *
+		 * @param in_scriptName The name of the script to be run
+		 * @param in_jsonScriptData Data to be sent to the script in json format
+		 * @param in_minutesFromNow Number of minutes from now to run script
+		 * @param in_callback The method to be invoked when the server response is received
+		 */
     public void scheduleRunScriptMinutes(String scriptName, String jsonScriptData, int minutesFromNow, IServerCallback callback) {
 
         try {
@@ -125,17 +121,16 @@ public class ScriptService {
 
 
     /**
-     * Run a cloud script in a parent app
-     *
-     * Service Name - Script
-     * Service Operation - RUN_PARENT_SCRIPT
-     *
-     * @param scriptName The name of the script to be run
-     * @param scriptData Data to be sent to the script in json format
-     * @param parentLevel The level name of the parent to run the script from
-     * @param callback The method to be invoked when the server response is received
-     * See The API documentation site for more details on cloud code
-     */
+		 * Run a cloud script in a parent app
+		 *
+		 * Service Name - Script
+		 * Service Operation - RUN_PARENT_SCRIPT
+		 *
+		 * @param in_scriptName The name of the script to be run
+		 * @param in_scriptData Data to be sent to the script in json format
+		 * @param in_parentLevel The level name of the parent to run the script from
+		 * @param in_callback The method to be invoked when the server response is received
+		 */
     public void runParentScript(String scriptName,
                                 String scriptData,
                                 String parentLevel,
@@ -158,15 +153,14 @@ public class ScriptService {
     }
 
         /**
-     * Allows cloud script executions to be scheduled
-     *
-     * Service Name - Script
-     * Service Operation - ScheduleCloudScript
-     *
-     * @param startTimeUTC The start date as a Date object
-     * @param callback  The method to be invoked when the server response is received
-     * See The API documentation site for more details on cloud code
-     */
+		* Cancels a scheduled cloud code script
+		*
+		* Service Name - Script
+		* Service Operation - CANCEL_SCHEDULED_SCRIPT
+		*
+		* @param in_jobId ID of script job to cancel
+		* @param in_callback The method to be invoked when the server response is received
+		*/
     public void getScheduledCloudScripts(Date startTimeUTC, IServerCallback callback) {
 
         try {
@@ -183,29 +177,27 @@ public class ScriptService {
     }
 
     /**
-     * Allows cloud script executions to be scheduled
-     *
-     * Service Name - Script
-     * Service Operation - ScheduleCloudScript
-     *
-     * @param callback  The method to be invoked when the server response is received
-     *
-     * See The API documentation site for more details on cloud code
-     */
+		* Cancels a scheduled cloud code script
+		*
+		* Service Name - Script
+		* Service Operation - CANCEL_SCHEDULED_SCRIPT
+		*
+		* @param in_callback The method to be invoked when the server response is received
+		*/
     public void getRunningOrQueuedCloudScripts(IServerCallback callback) {
             ServerCall sc = new ServerCall(ServiceName.script, ServiceOperation.GET_RUNNING_OR_QUEUED_CLOUD_SCRIPTS, null, callback);
             _client.sendRequest(sc);
     }
 
     /**
-     * Cancels a scheduled cloud code script
-     *
-     * Service Name - Script
-     * Service Operation - CANCEL_SCHEDULED_SCRIPT
-     *
-     * @param jobId The scheduled script job to cancel
-     * @param callback The method to be invoked when the server response is received
-     */
+		* Cancels a scheduled cloud code script
+		*
+		* Service Name - Script
+		* Service Operation - CANCEL_SCHEDULED_SCRIPT
+		*
+		* @param in_jobId ID of script job to cancel
+		* @param in_callback The method to be invoked when the server response is received
+		*/
     public void cancelScheduledScript(String jobId, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -219,16 +211,15 @@ public class ScriptService {
     }
 
     /**
-     * Runs a script from the context of a peer
-     *
-     * Service Name - Script
-     * Service Operation - RUN_PEER_SCRIPT
-     *
-     * @param scriptName The name of the script to be run
-     * @param jsonScriptData Data to be sent to the script in json format
-     * @param peer Peer the script belongs to
-     * @param callback The method to be invoked when the server response is received
-     */
+		* Runs a script from the context of a peer
+		*
+		* Service Name - Script
+		* Service Operation - RUN_PEER_SCRIPT
+		*
+		* @param in_scriptName The name of the script to be run
+		* @param in_jsonScriptData Data to be sent to the script in json format
+		* @param in_callback The method to be invoked when the server response is received
+		*/
     public void runPeerScript(String scriptName, String jsonScriptData, String peer, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -248,17 +239,16 @@ public class ScriptService {
     }
 
     /**
-     * Runs a script asynchronously from the context of a peer
-     * This method does not wait for the script to complete before returning
-     *
-     * Service Name - Script
-     * Service Operation - RUN_PEER_SCRIPT_ASYNC
-     *
-     * @param scriptName The name of the script to be run
-     * @param jsonScriptData Data to be sent to the script in json format
-     * @param peer Peer the script belongs to
-     * @param callback The method to be invoked when the server response is received
-     */
+		* Runs a script asynchronously from the context of a peer
+		* This method does not wait for the script to complete before returning
+		*
+		* Service Name - Script
+		* Service Operation - RUN_PEER_SCRIPT_ASYNC
+		*
+		* @param in_scriptName The name of the script to be run
+		* @param in_jsonScriptData Data to be sent to the script in json format
+		* @param in_callback The method to be invoked when the server response is received
+		*/
     public void runPeerScriptAsync(String scriptName, String jsonScriptData, String peer, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();

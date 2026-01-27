@@ -32,22 +32,22 @@ public class AppStoreService {
     }
 
     /**
-    * Verifies that purchase was properly made at the store.
-    *
-    * Service Name - AppStore
-    * Service Operation - VerifyPurchase
-    *
-    * @param storeId The store platform. Valid stores are:
-    * - itunes
-    * - facebook
-    * - appworld
-    * - steam
-    * - windows
-    * - windowsPhone
-    * - googlePlay
-    * @param jsonReceiptData    The specific store data required
-    * @param callback           The method to be invoked when the server response is received
-    */
+        * Verifies that purchase was properly made at the store.
+        *
+        * Service Name - AppStore
+        * Service Operation - VerifyPurchase
+        *
+        * @param storeId The store platform. Valid stores are:
+        * - itunes
+        * - facebook
+        * - appworld
+        * - steam
+        * - windows
+        * - windowsPhone
+        * - googlePlay
+        * @param receiptData the specific store data required
+        * @param in_callback The method to be invoked when the server response is received
+        */
     public void verifyPurchase(String storeId, String jsonReceiptData, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -62,13 +62,13 @@ public class AppStoreService {
     }
 
     /**
-    * Returns the eligible promotions for the player.
-    *
-    * Service Name - AppStore
-    * Service Operation - EligiblePromotions
-    *
-    * @param callback The method to be invoked when the server response is received
-    */
+        * Returns the eligible promotions for the player.
+        *
+        * Service Name - AppStore
+        * Service Operation - EligiblePromotions
+        *
+        * @param in_callback The method to be invoked when the server response is received
+        */
     public void getEligiblePromotions(IServerCallback callback) {
         JSONObject data = new JSONObject();
 
@@ -77,46 +77,46 @@ public class AppStoreService {
     }
 
     /**
-    * Method gets the active sales inventory for the passed-in
-    * currency type.
-    *
-    * Service Name - AppStore
-    * Service Operation - GetInventory
-    *
-    * @param storeId The store platform. Valid stores are:
-    * - itunes
-    * - facebook
-    * - appworld
-    * - steam
-    * - windows
-    * - windowsPhone
-    * - googlePlay
-    * @param userCurrency The currency type to retrieve the sales inventory for.
-    * @param callback The method to be invoked when the server response is received
-    */
+        * Method gets the active sales inventory for the passed-in
+        * currency type.
+        *
+        * Service Name - AppStore
+        * Service Operation - GetInventory
+        *
+        * @param platform The store platform. Valid stores are:
+        * - itunes
+        * - facebook
+        * - appworld
+        * - steam
+        * - windows
+        * - windowsPhone
+        * - googlePlay
+        * @param userCurrency The currency type to retrieve the sales inventory for.
+        * @param in_callback The method to be invoked when the server response is received
+        */
     public void getSalesInventory(String storeId, String userCurrency, IServerCallback callback) {
         getSalesInventoryByCategory(storeId, userCurrency, null, callback);
     }
 
     /**
-    * Method gets the active sales inventory for the passed-in
-    * currency type.
-    *
-    * Service Name - AppStore
-    * Service Operation - GetInventory
-    *
-    * @param storeId The store platform. Valid stores are:
-    * - itunes
-    * - facebook
-    * - appworld
-    * - steam
-    * - windows
-    * - windowsPhone
-    * - googlePlay
-    * @param userCurrency The currency type to retrieve the sales inventory for.
-    * @param category The product category
-    * @param callback The method to be invoked when the server response is received
-    */
+        * Method gets the active sales inventory for the passed-in
+        * currency type.
+        *
+        * Service Name - AppStore
+        * Service Operation - GetInventory
+        *
+        * @param storeId The store platform. Valid stores are:
+        * - itunes
+        * - facebook
+        * - appworld
+        * - steam
+        * - windows
+        * - windowsPhone
+        * - googlePlay
+        * @param userCurrency The currency type to retrieve the sales inventory for.
+        * @param category The product category
+        * @param in_callback The method to be invoked when the server response is received
+        */
     public void getSalesInventoryByCategory(String storeId, String userCurrency, String category, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -138,22 +138,22 @@ public class AppStoreService {
     }
 
     /**
-    * Start A Two Staged Purchase Transaction
-    *
-    * Service Name - AppStore
-    * Service Operation - StartPurchase
-    *
-    * @param storeId The store platform. Valid stores are:
-    * - itunes
-    * - facebook
-    * - appworld
-    * - steam
-    * - windows
-    * - windowsPhone
-    * - googlePlay
-    * @param jsonPurchaseData specific data for purchasing 2 staged purchases
-    * @param callback The method to be invoked when the server response is received
-    */
+        * Start A Two Staged Purchase Transaction
+        *
+        * Service Name - AppStore
+        * Service Operation - StartPurchase
+        *
+        * @param storeId The store platform. Valid stores are:
+        * - itunes
+        * - facebook
+        * - appworld
+        * - steam
+        * - windows
+        * - windowsPhone
+        * - googlePlay
+        * @param purchaseData specific data for purchasing 2 staged purchases
+        * @param in_callback The method to be invoked when the server response is received
+        */
     public void startPurchase(String storeId, String jsonPurchaseData, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -167,59 +167,27 @@ public class AppStoreService {
         }
     }
 
-    /**
-    * Finalize A Two Staged Purchase Transaction
-    *
-    * Service Name - AppStore
-    * Service Operation - FinalizePurchase
-    *
-    * @param storeId The store platform. Valid stores are:
-    * - itunes
-    * - facebook
-    * - appworld
-    * - steam
-    * - windows
-    * - windowsPhone
-    * - googlePlay
-    * @param transactionId the transactionId returned from start Purchase
-    * @param jsonTransactionData specific data for purchasing 2 staged purchases
-    * @param callback The method to be invoked when the server response is received
-    */
-    public void finalizePurchase(String storeId, String transactionId, String jsonTransactionData, IServerCallback callback) {
-        try {
-            JSONObject data = new JSONObject();
-            data.put(Parameter.storeId.name(), storeId);
-            data.put(Parameter.transactionId.name(), transactionId);
-            data.put(Parameter.transactionData.name(), new JSONObject(jsonTransactionData));
-
-            ServerCall sc = new ServerCall(ServiceName.appStore, ServiceOperation.FINALIZE_PURCHASE, data, callback);
-            _client.sendRequest(sc);
-        } catch (JSONException je) {
-            je.printStackTrace();
-        }
-    }
-
-    /**
-    * Before making a purchase with the IAP store, you will need to store the purchase
-    * payload context on brainCloud so that the purchase can be verified for the proper IAP product.
-    * This payload will be used during the VerifyPurchase method to ensure the
-    * user properly paid for the correct product before awarding them the IAP product.
-    *
-    * Service Name - AppStore
-    * Service Operation - CachePurchasePayloadContext
-    *
-    * @param storeId The store platform. Valid stores are:
-    * - itunes
-    * - facebook
-    * - appworld
-    * - steam
-    * - windows
-    * - windowsPhone
-    * - googlePlay
-    * @param iapId The IAP product Id as configured for the product on brainCloud.
-    * @param payload The payload retrieved for the IAP product after the GetSalesInventory method.
-    * @param callback The method to be invoked when the server response is received
-    */
+    /*
+        * Before making a purchase with the IAP store, you will need to store the purchase
+        * payload context on brainCloud so that the purchase can be verified for the proper IAP product.
+        * This payload will be used during the VerifyPurchase method to ensure the
+        * user properly paid for the correct product before awarding them the IAP product.
+        *
+        * Service Name - AppStore
+        * Service Operation - CachePurchasePayloadContext
+        *
+        * @param storeId The store platform. Valid stores are:
+        * - itunes
+        * - facebook
+        * - appworld
+        * - steam
+        * - windows
+        * - windowsPhone
+        * - googlePlay
+        * @param transactionId the transactionId returned from start Purchase
+        * @param transactionData specific data for purchasing 2 staged purchases
+        * @param in_callback The method to be invoked when the server response is received
+        */
     public void cachePurchasePayloadContext(String storeId, String iapId, String payload, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -235,15 +203,11 @@ public class AppStoreService {
     }
 
     /**
-    * Returns up-to-date eligible 'promotions' for the user 
-    * and a 'promotionsRefreshed' flag indicating whether the 
-    * user's promotion info required refreshing.
-    *
-    * Service Name - AppStore
-    * Service Operation - RefreshPromotions
-    *
-    * @param callback The method to be invoked when the server response is received
-    */
+        * Returns up-to-date eligible 'promotions' for the user and a 'promotionsRefreshed' flag indicating whether the user's promotion info required refreshing.
+        *
+        * Service Name - AppStore
+        * Service Operation - RefreshPromotions
+        */
     public void refreshPromotions(IServerCallback callback) {
         JSONObject data = new JSONObject();
 

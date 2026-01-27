@@ -26,14 +26,13 @@ public class GlobalFileService {
     }
 
     /**
-     * Returns information on a file using fileId.
-     *
-     * Service Name - globalFile
-     * Service Operation - ACCEPT_GROUP_INVITATION
-     *
-     * @param fileId the file's ID.
-     * @param callback The method to be invoked when the server response is received
-     */
+         * Returns the complete info for the specified file given it’s fileId
+         *
+         * Service Name - GlobalFileV3
+         * Service Operation - GetFileInfo
+         *
+         * @param in_callback The method to be invoked when the server response is received
+         */
     public void getFileInfo(String fileId, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -49,15 +48,13 @@ public class GlobalFileService {
     }
 
     /**
-     * Returns information on a file using path and name.
-     *
-     * Service Name - globalFile
-     * Service Operation - GET_FILE_INFO_SIMPLE
-     *
-     * @param folderPath the folder path the file is stored in.
-     * @param filename the name of the file beign sought
-     * @param callback The method to be invoked when the server response is received
-     */
+         * Returns the complete info for the specified file, without having to look up the fileId first.
+         *
+         * Service Name - GlobalFileV3
+         * Service Operation - GetFileInfoSimple
+         *
+         * @param in_callback The method to be invoked when the server response is received
+         */
     public void getFileInfoSimple(String folderPath, String filename, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -74,14 +71,13 @@ public class GlobalFileService {
     }
 
     /**
-     * Return CDN url for file for clients that cannot handle redirect.
-     *
-     * Service Name - globalFile
-     * Service Operation - GET_GLOBAL_CDN_URL
-     *
-     * @param fileId the file's ID.
-     * @param callback The method to be invoked when the server response is received
-     */
+         * Returns the CDN of the specified file.
+         *
+         * Service Name - GlobalFileV3
+         * Service Operation - GetGlobalCDNUrl
+         *
+         * @param in_callback The method to be invoked when the server response is received
+         */
     public void getGlobalCDNUrl(String fileId, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -97,15 +93,13 @@ public class GlobalFileService {
     }
 
         /**
-     * Return CDN url for file for clients that cannot handle redirect.
-     *
-     * Service Name - globalFile
-     * Service Operation - GET_GLOBAL_FILE_LIST
-     *
-     * @param folderPath the folder path the file is stored in.
-     * @param recurse does it recurse?
-     * @param callback The method to be invoked when the server response is received
-     */
+         * Returns files at the current path.
+         *
+         * Service Name - GlobalFileV3
+         * Service Operation - GetGlobalFileList
+         *
+         * @param in_callback The method to be invoked when the server response is received
+         */
     public void getGlobalFileList(String folderPath, boolean recurse, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();

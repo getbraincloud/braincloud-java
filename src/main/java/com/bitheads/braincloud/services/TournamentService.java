@@ -39,15 +39,15 @@ public class TournamentService {
     }
 
     /**
-     * Processes any outstanding rewards for the given player
-     *
-     * Service Name - tournament
-     * Service Operation - CLAIM_TOURNAMENT_REWARD
-     *
-     * @param leaderboardId The leaderboard for the tournament
-     * @param versionId Version of the tournament. Use -1 for the latest version.
-     * @param callback The method to be invoked when the server response is received
-     */
+		 * Processes any outstanding rewards for the given player
+		 *
+		 * Service Name - tournament
+		 * Service Operation - CLAIM_TOURNAMENT_REWARD
+		 *
+		 * @param in_leaderboardId The leaderboard for the tournament
+		 * @param in_versionId Version of the tournament. Use -1 for the latest version.
+		 * @param in_callback The method to be invoked when the server response is received
+		 */
     public void claimTournamentReward(String leaderboardId, int versionId, IServerCallback callback) {
 
         try {
@@ -63,14 +63,14 @@ public class TournamentService {
     }
 
     /**
-     * Get my divisions
-     *
-     * Service Name - tournament
-     * Service Operation - GET_DIVISIONS_INFO
-     *
-     * @param divSetId The leaderboard for the tournament
-     * @param callback The method to be invoked when the server response is received
-     */
+		 * Get the status of a division
+		 *
+		 * Service Name - tournament
+		 * Service Operation - GET_DIVISION_INFO
+		 *
+		 * @param in_divSetId The id for the division
+		 * @param in_callback The method to be invoked when the server response is received
+		 */
     public void getDivisionInfo(String divSetId, IServerCallback callback)
     {
         try{
@@ -86,13 +86,13 @@ public class TournamentService {
     }
     
     /**
-     * Get my divisions
-     *
-     * Service Name - tournament
-     * Service Operation - GET_MY_DIVISIONS
-     *
-     * @param callback The method to be invoked when the server response is received
-     */
+		 * Returns list of player's recently active divisions
+		 *
+		 * Service Name - tournament
+		 * Service Operation - GET_MY_DIVISIONS
+		 *
+		 * @param in_callback The method to be invoked when the server response is received
+		 */
     public void getMyDivisions(IServerCallback callback)
     {
         ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.GET_MY_DIVISIONS, null, callback);
@@ -100,15 +100,15 @@ public class TournamentService {
     }
 
     /**
-     * Get tournament status associated with a leaderboard
-     *
-     * Service Name - tournament
-     * Service Operation - GET_TOURNAMENT_STATUS
-     *
-     * @param leaderboardId The leaderboard for the tournament
-     * @param versionId Version of the tournament. Use -1 for the latest version.
-     * @param callback The method to be invoked when the server response is received
-     */
+		 * Get tournament status associated with a leaderboard
+		 *
+		 * Service Name - tournament
+		 * Service Operation - GET_TOURNAMENT_STATUS
+		 *
+		 * @param in_leaderboardId The leaderboard for the tournament
+		 * @param in_versionId Version of the tournament. Use -1 for the latest version.
+		 * @param in_callback The method to be invoked when the server response is received
+		 */
     public void getTournamentStatus(String leaderboardId, int versionId, IServerCallback callback) {
 
         try {
@@ -124,18 +124,18 @@ public class TournamentService {
     }
 
     /**
-     * Join the specified division.
-     * If joining tournament requires a fee, it's possible to fail at joining the division
-     *
-     * Service Name - tournament
-     * Service Operation - JOIN_DIVISION
-     *
-     * @param divSetId The leaderboard for the tournament
-     * @param tournamentCode Tournament to join
-     * @param initialScore The initial score for players first joining a division
-     *						  Usually 0, unless leaderboard is LOW_VALUE
-     * @param callback The method to be invoked when the server response is received
-     */
+		 * Join the specified division.
+		 * If joining requires a fee, it is possible to fail at joining the division
+		 *
+		 * Service Name - tournament
+		 * Service Operation - JOIN_DIVISION
+		 *
+		 * @param in_divSetId The id for the division
+		 * @param in_tournamentCode Tournament to join
+		 * @param in_initialScore The initial score for players first joining a tournament
+		 *						 Usually 0, unless leaderboard is LOW_VALUE
+		 * @param in_callback The method to be invoked when the server response is received
+		 */
     public void joinDivision(String divSetId, String tournamentCode, long initialScore, IServerCallback callback)
     {
         try{
@@ -153,18 +153,18 @@ public class TournamentService {
     }
 
     /**
-     * Join the specified tournament.
-     * Any entry fees will be automatically collected.
-     *
-     * Service Name - tournament
-     * Service Operation - JOIN_TOURNAMENT
-     *
-     * @param leaderboardId The leaderboard for the tournament
-     * @param tournamentCode Tournament to join
-     * @param initialScore The initial score for players first joining a tournament
-     *						  Usually 0, unless leaderboard is LOW_VALUE
-     * @param callback The method to be invoked when the server response is received
-     */
+		 * Join the specified tournament.
+		 * Any entry fees will be automatically collected.
+		 *
+		 * Service Name - tournament
+		 * Service Operation - JOIN_TOURNAMENT
+		 *
+		 * @param in_leaderboardId The leaderboard for the tournament
+		 * @param in_tournamentCode Tournament to join
+		 * @param in_initialScore The initial score for players first joining a tournament
+         *						  Usually 0, unless leaderboard is LOW_VALUE
+		 * @param in_callback The method to be invoked when the server response is received
+		 */
     public void joinTournament(String leaderboardId, String tournamentCode, long initialScore, IServerCallback callback) {
 
         try {
@@ -182,15 +182,15 @@ public class TournamentService {
 
 
     /**
-     * Leave the specified division.
-     * Removes player score from tournament leaderboard
-     *
-     * Service Name - tournament
-     * Service Operation - LEAVE_DIVISION_INSTANCE
-     *
-     * @param leaderboardId The leaderboard for the division
-     * @param callback The method to be invoked when the server response is received
-     */
+		 * Removes player from division instance
+		 * Also removes division instance from player's division list
+		 *
+		 * Service Name - tournament
+		 * Service Operation - LEAVE_DIVISION_INSTANCE
+		 *
+		 * @param in_leaderboardId The leaderboard for the tournament
+		 * @param in_callback The method to be invoked when the server response is received
+		 */
     public void leaveDivisionInstance(String leaderboardId, IServerCallback callback)
     {
         try{
@@ -206,14 +206,14 @@ public class TournamentService {
     }
 
     /**
-     * Removes player's score from tournament leaderboard
-     *
-     * Service Name - tournament
-     * Service Operation - LEAVE_TOURNAMENT
-     *
-     * @param leaderboardId The leaderboard for the tournament
-     * @param callback The method to be invoked when the server response is received
-     */
+		 * Removes player's score from tournament leaderboard
+		 *
+		 * Service Name - tournament
+		 * Service Operation - LEAVE_TOURNAMENT
+		 *
+		 * @param in_leaderboardId The leaderboard for the tournament
+		 * @param in_callback The method to be invoked when the server response is received
+		 */
     public void leaveTournament(String leaderboardId, IServerCallback callback) {
 
         try {
@@ -228,17 +228,17 @@ public class TournamentService {
     }
 
     /**
-     * Post the users score to the leaderboard
-     *
-     * Service Name - tournament
-     * Service Operation - POST_TOURNAMENT_SCORE
-     *
-     * @param leaderboardId The leaderboard for the tournament
-     * @param score The score to post
-     * @param jsonData Optional data attached to the leaderboard entry
-     * @param roundStartedTimeUTC Time the user started the match resulting in the score being posted in UTC mmilliseconds time.
-     * @param callback The method to be invoked when the server response is received
-     */
+		 * Post the users score to the leaderboard - UTC time
+		 *
+		 * Service Name - tournament
+		 * Service Operation - POST_TOURNAMENT_SCORE
+		 *
+		 * @param in_leaderboardId The leaderboard for the tournament
+		 * @param in_score The score to post
+		 * @param in_jsonData Optional data attached to the leaderboard entry
+		 * @param in_roundStartedTimeUTC Time the user started the match resulting in the score being posted in UTC. Use UTC time in milliseconds since epoch
+		 * @param in_callback The method to be invoked when the server response is received
+		 */
     public void postTournamentScoreUTC(String leaderboardId, long score, String jsonData, long roundStartedTimeUTC, IServerCallback callback) {
 
         try {
@@ -261,22 +261,22 @@ public class TournamentService {
     }
 
     /**
-     * Post the users score to the leaderboard
-     *
-     * Service Name - tournament
-     * Service Operation - POST_TOURNAMENT_SCORE_WITH_RESULTS
-     *
-     * @param leaderboardId The leaderboard for the tournament
-     * @param score The score to post
-     * @param jsonData Optional data attached to the leaderboard entry
-     * @param roundStartedTimeUTC Time the user started the match resulting in the score being posted in UTC mmilliseconds time.
-     * @param sort Sort key Sort order of page.
-     * @param beforeCount The count of number of players before the current player to include.
-     * @param afterCount The count of number of players after the current player to include.
-     * @param initialScore The initial score for players first joining a tournament
-     *						  Usually 0, unless leaderboard is LOW_VALUE
-     * @param callback The method to be invoked when the server response is received
-     */
+		* Post the users score to the leaderboard - UTC time
+		*
+		* Service Name - tournament
+		* Service Operation - POST_TOURNAMENT_SCORE_WITH_RESULTS
+		*
+		* @param in_leaderboardId The leaderboard for the tournament
+		* @param in_score The score to post
+		* @param in_jsonData Optional data attached to the leaderboard entry
+		* @param in_roundStartedTimeUTC Time the user started the match resulting in the score being posted in UTC. Use UTC time in milliseconds since epoch
+		* @param in_sort Sort key Sort order of page.
+		* @param in_beforeCount The count of number of players before the current player to include.
+		* @param in_afterCount The count of number of players after the current player to include.
+		* @param in_initialScore The initial score for players first joining a tournament
+        *						 Usually 0, unless leaderboard is LOW_VALUE
+		* @param in_callback The method to be invoked when the server response is received
+		*/
     public void postTournamentScoreWithResultsUTC(
             String leaderboardId,
             long score,
@@ -311,14 +311,14 @@ public class TournamentService {
     }
 
     /**
-     * Returns the user's expected reward based on the current scores
-     *
-     * Service Name - tournament
-     * Service Operation - VIEW_CURRENT_REWARD
-     *
-     * @param leaderboardId The leaderboard for the tournament
-     * @param callback The method to be invoked when the server response is received
-     */
+		 * Returns the user's expected reward based on the current scores
+		 *
+		 * Service Name - tournament
+		 * Service Operation - VIEW_CURRENT_REWARD
+		 *
+		 * @param in_leaderboardId The leaderboard for the tournament
+		 * @param in_callback The method to be invoked when the server response is received
+		 */
     public void viewCurrentReward(String leaderboardId, IServerCallback callback) {
 
         try {
@@ -333,15 +333,15 @@ public class TournamentService {
     }
 
     /**
-     * Returns the user's reward from a finished tournament
-     *
-     * Service Name - tournament
-     * Service Operation - VIEW_REWARD
-     *
-     * @param leaderboardId The leaderboard for the tournament
-     * @param versionId Version of the tournament. Use -1 for the latest version.
-     * @param callback The method to be invoked when the server response is received
-     */
+		 * Returns the user's reward from a finished tournament
+		 *
+		 * Service Name - tournament
+		 * Service Operation - VIEW_REWARD
+		 *
+		 * @param in_leaderboardId The leaderboard for the tournament
+		 * @param in_versionId Version of the tournament. Use -1 for the latest version.
+		 * @param in_callback The method to be invoked when the server response is received
+		 */
     public void viewReward(String leaderboardId, int versionId, IServerCallback callback) {
 
         try {
