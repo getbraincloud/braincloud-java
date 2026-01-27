@@ -171,6 +171,41 @@ public class AppStoreService {
         }
     }
 
+    /**
+     * Finalize A Two Staged Purchase Transaction
+     *
+     * Service Name - AppStore
+     * Service Operation - FinalizePurchase
+     *
+     * @param storeId             The store platform. Valid stores are:
+     *                            - itunes
+     *                            - facebook
+     *                            - appworld
+     *                            - steam
+     *                            - windows
+     *                            - windowsPhone
+     *                            - googlePlay
+     * @param transactionId       the transactionId returned from start Purchase
+     * @param jsonTransactionData specific data for purchasing 2 staged purchases
+     * @param callback            The method to be invoked when the server response
+     *                            is received
+     */
+    public void finalizePurchase(String storeId, String transactionId, String jsonTransactionData,
+            IServerCallback callback) {
+
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.storeId.name(), storeId);
+            data.put(Parameter.transactionId.name(), transactionId);
+            data.put(Parameter.transactionData.name(), new JSONObject(jsonTransactionData));
+
+            ServerCall sc = new ServerCall(ServiceName.appStore, ServiceOperation.FINALIZE_PURCHASE, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
     /*
      * Before making a purchase with the IAP store, you will need to store the
      * purchase
