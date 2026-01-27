@@ -26,14 +26,14 @@ public class GlobalFileService {
     }
 
     /**
-         * Returns the complete info for the specified file given it’s fileId
-         *
-         * Service Name - GlobalFileV3
-         * Service Operation - GetFileInfo
-         *
-         * @param fileId The fileId of the global file
-         * @param callback The method to be invoked when the server response is received
-         */
+     * Returns the complete info for the specified file given it’s fileId
+     *
+     * Service Name - GlobalFileV3
+     * Service Operation - GetFileInfo
+     *
+     * @param fileId   The fileId of the global file
+     * @param callback The method to be invoked when the server response is received
+     */
     public void getFileInfo(String fileId, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -49,15 +49,17 @@ public class GlobalFileService {
     }
 
     /**
-         * Returns the complete info for the specified file, without having to look up the fileId first.
-         *
-         * Service Name - GlobalFileV3
-         * Service Operation - GetFileInfoSimple
-         *
-         * @param folderPath The folder path of the file
-         * @param filename The name of the file
-         * @param callback The method to be invoked when the server response is received
-         */
+     * Returns the complete info for the specified file, without having to look up
+     * the fileId first.
+     *
+     * Service Name - GlobalFileV3
+     * Service Operation - GetFileInfoSimple
+     *
+     * @param folderPath The folder path of the file
+     * @param filename   The name of the file
+     * @param callback   The method to be invoked when the server response is
+     *                   received
+     */
     public void getFileInfoSimple(String folderPath, String filename, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -74,14 +76,14 @@ public class GlobalFileService {
     }
 
     /**
-         * Returns the CDN of the specified file.
-         *
-         * Service Name - GlobalFileV3
-         * Service Operation - GetGlobalCDNUrl
-         *
-         * @param fileId The fileId of the global file
-         * @param callback The method to be invoked when the server response is received
-         */
+     * Returns the CDN of the specified file.
+     *
+     * Service Name - GlobalFileV3
+     * Service Operation - GetGlobalCDNUrl
+     *
+     * @param fileId   The fileId of the global file
+     * @param callback The method to be invoked when the server response is received
+     */
     public void getGlobalCDNUrl(String fileId, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -96,16 +98,17 @@ public class GlobalFileService {
         }
     }
 
-        /**
-         * Returns files at the current path.
-         *
-         * Service Name - GlobalFileV3
-         * Service Operation - GetGlobalFileList
-         *
-         * @param folderPath The folder path to list files from
-         * @param recurse Whether to recurse into subfolders
-         * @param callback The method to be invoked when the server response is received
-         */
+    /**
+     * Returns files at the current path.
+     *
+     * Service Name - GlobalFileV3
+     * Service Operation - GetGlobalFileList
+     *
+     * @param folderPath The folder path to list files from
+     * @param recurse    Whether to recurse into subfolders
+     * @param callback   The method to be invoked when the server response is
+     *                   received
+     */
     public void getGlobalFileList(String folderPath, boolean recurse, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();

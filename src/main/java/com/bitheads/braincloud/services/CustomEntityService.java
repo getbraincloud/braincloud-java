@@ -40,19 +40,22 @@ public class CustomEntityService {
     }
 
     /**
-		 * Creates new custom entity.
-		 *
-		 * Service Name - CustomEntity
-		 * Service Operation - CreateEntity
-		 *
-		 * @param entityType The entity type as defined by the user
-		 * @param jsonEntityData The entity's data as a json string
-		 * @param jsonEntityAcl The entity's access control list as json. A null acl implies default
-		 * permissions which make the entity readable/writeable by only the user.
-		 * @param timeToLive
-		 * @param isOwned
-		 * @param callback The method to be invoked when the server response is received
-		 */
+     * Creates new custom entity.
+     *
+     * Service Name - CustomEntity
+     * Service Operation - CreateEntity
+     *
+     * @param entityType     The entity type as defined by the user
+     * @param jsonEntityData The entity's data as a json string
+     * @param jsonEntityAcl  The entity's access control list as json. A null acl
+     *                       implies default
+     *                       permissions which make the entity readable/writeable by
+     *                       only the user.
+     * @param timeToLive
+     * @param isOwned
+     * @param callback       The method to be invoked when the server response is
+     *                       received
+     */
     public void createEntity(String entityType, String dataJson,
             String acl, long timeToLive, Boolean isOwned, IServerCallback callback) {
 
@@ -82,16 +85,17 @@ public class CustomEntityService {
     }
 
     /**
-		 * Deletes the specified custom entity on the server.
-		 *
-		 * Service Name - CustomEntity
-		 * Service Operation - DeleteEntity
-		 *
-		 * @param entityType The entity type as defined by the user
-		 * @param jsonEntityData The entity's data as a json string
-		 * @param version
-		 * @param callback The method to be invoked when the server response is received
-		 */
+     * Deletes the specified custom entity on the server.
+     *
+     * Service Name - CustomEntity
+     * Service Operation - DeleteEntity
+     *
+     * @param entityType     The entity type as defined by the user
+     * @param jsonEntityData The entity's data as a json string
+     * @param version
+     * @param callback       The method to be invoked when the server response is
+     *                       received
+     */
     public void deleteEntity(String entityType, String entityId,
             int version, IServerCallback callback) {
 
@@ -111,15 +115,16 @@ public class CustomEntityService {
     }
 
     /**
-		 * Deletes the specified custom entity on the server.
-		 *
-		 * Service Name - CustomEntity
-		 * Service Operation - GetCount
-		 *
-		 * @param entityType The entity type as defined by the user
-		 * @param whereJson
-		 * @param callback The method to be invoked when the server response is received
-		 */
+     * Deletes the specified custom entity on the server.
+     *
+     * Service Name - CustomEntity
+     * Service Operation - GetCount
+     *
+     * @param entityType The entity type as defined by the user
+     * @param whereJson
+     * @param callback   The method to be invoked when the server response is
+     *                   received
+     */
     public void getCount(String entityType, String whereJson,
             IServerCallback callback) {
 
@@ -139,17 +144,18 @@ public class CustomEntityService {
     }
 
     /**
-		 * Gets a list of up to maxReturn randomly selected custom entities from the
-		 * server based on the entity type and where condition.
-		 *
-		 * Service Name - CustomEntity
-		 * Service Operation - GetRandomEntitiesMatching
-		 *
-		 * @param entityType The entity type as defined by the user
-		 * @param whereJson Mongo style query string
-		 * @param maxReturn Max number of returns
-		 * @param callback The method to be invoked when the server response is received
-		 */
+     * Gets a list of up to maxReturn randomly selected custom entities from the
+     * server based on the entity type and where condition.
+     *
+     * Service Name - CustomEntity
+     * Service Operation - GetRandomEntitiesMatching
+     *
+     * @param entityType The entity type as defined by the user
+     * @param whereJson  Mongo style query string
+     * @param maxReturn  Max number of returns
+     * @param callback   The method to be invoked when the server response is
+     *                   received
+     */
     public void getRandomEntitiesMatching(String entityType, String whereJson, int maxReturn,
             IServerCallback callback) {
 
@@ -170,18 +176,18 @@ public class CustomEntityService {
     }
 
     /**
-		 * Method uses a paging system to iterate through Custom Entities
-		 * After retrieving a page of Custom Entities with this method,
-		 * use GetEntityPageOffset() to retrieve previous or next pages.
-		 *
-		 * Service Name - CustomEntity
-		 * Service Operation - GetCustomEntityPage
-		 *
-		 * @param entityType The entity type as defined by the user
-		 * @param context The json context for the page request.
-		 *                   See the portal appendix documentation for format.
-		 * @param callback The callback object
-		 */
+     * Method uses a paging system to iterate through Custom Entities
+     * After retrieving a page of Custom Entities with this method,
+     * use GetEntityPageOffset() to retrieve previous or next pages.
+     *
+     * Service Name - CustomEntity
+     * Service Operation - GetCustomEntityPage
+     *
+     * @param entityType The entity type as defined by the user
+     * @param context    The json context for the page request.
+     *                   See the portal appendix documentation for format.
+     * @param callback   The callback object
+     */
     public void getEntityPage(String entityType, String context,
             IServerCallback callback) {
 
@@ -201,19 +207,21 @@ public class CustomEntityService {
     }
 
     /**
-		 * Gets the page of custom entities from the server based on the encoded context and specified page offset.
-		 *
-		 * Service Name - CustomEntity
-		 * Service Operation - GetEntityPageOffset
-		 *
-		 * @param entityType The entity type as defined by the user
-		 * @param context The context string returned from the server from a previous
-		 *                   call to GetPage or GetPageOffset.
-		 * @param pageOffset The positive or negative page offset to fetch. Uses the
-		 *                   last page retrieved using the context string to determine a
-		 *                   starting point.
-		 * @param callback The method to be invoked when the server response is received
-		 */
+     * Gets the page of custom entities from the server based on the encoded context
+     * and specified page offset.
+     *
+     * Service Name - CustomEntity
+     * Service Operation - GetEntityPageOffset
+     *
+     * @param entityType The entity type as defined by the user
+     * @param context    The context string returned from the server from a previous
+     *                   call to GetPage or GetPageOffset.
+     * @param pageOffset The positive or negative page offset to fetch. Uses the
+     *                   last page retrieved using the context string to determine a
+     *                   starting point.
+     * @param callback   The method to be invoked when the server response is
+     *                   received
+     */
     public void getEntityPageOffset(String entityType, String context, int pageOffset,
             IServerCallback callback) {
 
@@ -233,15 +241,16 @@ public class CustomEntityService {
     }
 
     /**
-		 * Reads the specified custom entity from the server.
-		 *
-		 * Service Name - CustomEntity
-		 * Service Operation - ReadEntity
-		 *
-		 * @param entityType The entity type as defined by the user
-		 * @param entityId The entity id as defined by the system
-		 * @param callback The method to be invoked when the server response is received
-		 */
+     * Reads the specified custom entity from the server.
+     *
+     * Service Name - CustomEntity
+     * Service Operation - ReadEntity
+     *
+     * @param entityType The entity type as defined by the user
+     * @param entityId   The entity id as defined by the system
+     * @param callback   The method to be invoked when the server response is
+     *                   received
+     */
     public void readEntity(String entityType, String entityId,
             IServerCallback callback) {
 
@@ -260,20 +269,24 @@ public class CustomEntityService {
     }
 
     /**
-		 * Replaces the specified custom entity's data, and optionally updates the acl and expiry, on the server.
-		 *
-		 * Service Name - CustomEntity
-		 * Service Operation - UpdateEntity
-		 *
-		 * @param entityType The entity type as defined by the user
-		 * @param entityId The id of custom entity being updated.
-		 * @param version Version of the custom entity being updated.
-		 * @param jsonEntityData The entity's data as a json string
-		 * @param jsonEntityAcl The entity's access control list as json. A null acl implies default
-		 * permissions which make the entity readable/writeable by only the user.
-		 * @param timeToLive
-		 * @param callback The method to be invoked when the server response is received
-		 */
+     * Replaces the specified custom entity's data, and optionally updates the acl
+     * and expiry, on the server.
+     *
+     * Service Name - CustomEntity
+     * Service Operation - UpdateEntity
+     *
+     * @param entityType     The entity type as defined by the user
+     * @param entityId       The id of custom entity being updated.
+     * @param version        Version of the custom entity being updated.
+     * @param jsonEntityData The entity's data as a json string
+     * @param jsonEntityAcl  The entity's access control list as json. A null acl
+     *                       implies default
+     *                       permissions which make the entity readable/writeable by
+     *                       only the user.
+     * @param timeToLive
+     * @param callback       The method to be invoked when the server response is
+     *                       received
+     */
     public void updateEntity(String entityType, String entityId, int version, String dataJson, String acl,
             long timeToLive,
             IServerCallback callback) {
@@ -305,17 +318,20 @@ public class CustomEntityService {
     }
 
     /**
-		 * Replaces the specified custom entity's data, and optionally updates the acl and expiry, on the server.
-		 *
-		 * Service Name - CustomEntity
-		 * Service Operation - UpdateEntityFields
-		 *
-		 * @param entityType The entity type as defined by the user
-		 * @param entityId The id of custom entity being updated.
-		 * @param version Version of the custom entity being updated.
-		 * @param fieldsJson Specific fields, as JSON, to set within entity's custom data.
-		 * @param callback The method to be invoked when the server response is received
-		 */
+     * Replaces the specified custom entity's data, and optionally updates the acl
+     * and expiry, on the server.
+     *
+     * Service Name - CustomEntity
+     * Service Operation - UpdateEntityFields
+     *
+     * @param entityType The entity type as defined by the user
+     * @param entityId   The id of custom entity being updated.
+     * @param version    Version of the custom entity being updated.
+     * @param fieldsJson Specific fields, as JSON, to set within entity's custom
+     *                   data.
+     * @param callback   The method to be invoked when the server response is
+     *                   received
+     */
     public void updateEntityFields(String entityType, String entityId, int version, String fieldsJson,
             IServerCallback callback) {
 
@@ -338,18 +354,22 @@ public class CustomEntityService {
     }
 
     /**
-		 * For sharded custom collection entities. Sets the specified fields within custom entity data on the server, enforcing ownership/ACL permissions.
-		 *
-		 * Service Name - CustomEntity
-		 * Service Operation - UpdateEntityFieldsSharded
-		 *
-		 * @param entityType The entity type as defined by the user
-		 * @param entityId The id of custom entity being updated.
-		 * @param version Version of the custom entity being updated.
-		 * @param fieldsJson Specific fields, as JSON, to set within entity's custom data.
-		 * @param shardKeyJson The shard key field(s) and value(s), as JSON, applicable to the entity being updated.
-		 * @param callback The method to be invoked when the server response is received
-		 */
+     * For sharded custom collection entities. Sets the specified fields within
+     * custom entity data on the server, enforcing ownership/ACL permissions.
+     *
+     * Service Name - CustomEntity
+     * Service Operation - UpdateEntityFieldsSharded
+     *
+     * @param entityType   The entity type as defined by the user
+     * @param entityId     The id of custom entity being updated.
+     * @param version      Version of the custom entity being updated.
+     * @param fieldsJson   Specific fields, as JSON, to set within entity's custom
+     *                     data.
+     * @param shardKeyJson The shard key field(s) and value(s), as JSON, applicable
+     *                     to the entity being updated.
+     * @param callback     The method to be invoked when the server response is
+     *                     received
+     */
     public void updateEntityFieldsSharded(String entityType, String entityId, int version, String fieldsJson,
             String shardKeyJson, IServerCallback callback) {
 
@@ -375,15 +395,16 @@ public class CustomEntityService {
     }
 
     /**
-		 * deletes entities based on the delete criteria.
-		 *
-		 * Service Name - CustomEntity
-		 * Service Operation - DeleteEntities
-		 *
-		 * @param entityType The entity type as defined by the user
-		 * @param deleteCriteria Json string of criteria wanted for deletion
-		 * @param callback The method to be invoked when the server response is received
-		 */
+     * deletes entities based on the delete criteria.
+     *
+     * Service Name - CustomEntity
+     * Service Operation - DeleteEntities
+     *
+     * @param entityType     The entity type as defined by the user
+     * @param deleteCriteria Json string of criteria wanted for deletion
+     * @param callback       The method to be invoked when the server response is
+     *                       received
+     */
     public void deleteEntities(String entityType, String deleteCriteria,
             IServerCallback callback) {
 
@@ -403,16 +424,17 @@ public class CustomEntityService {
     }
 
     /**
-		 * Deletes the specified custom entity singleton, owned by the session's user,
-		 * for the specified entity type, on the server.
-		 *
-		 * Service Name - CustomEntity
-		 * Service Operation - DeleteSingleton
-		 *
-		 * @param entityType The entity type as defined by the user
-		 * @param version Version of the singleton being deleted.
-		 * @param callback The method to be invoked when the server response is received
-		 */
+     * Deletes the specified custom entity singleton, owned by the session's user,
+     * for the specified entity type, on the server.
+     *
+     * Service Name - CustomEntity
+     * Service Operation - DeleteSingleton
+     *
+     * @param entityType The entity type as defined by the user
+     * @param version    Version of the singleton being deleted.
+     * @param callback   The method to be invoked when the server response is
+     *                   received
+     */
     public void deleteSingleton(String entityType, int version,
             IServerCallback callback) {
 
@@ -432,22 +454,28 @@ public class CustomEntityService {
     }
 
     /**
-		 * Updates the singleton owned by the user for the specified custom entity type on the server,
-		 * creating the singleton if it does not exist.
-		 * This operation results in the owned singleton's data being completely replaced by the passed in JSON object.
-		 *
-		 * Service Name - CustomEntity
-		 * Service Operation - UpdateSingleton
-		 *
-		 * @param entityType The entity type as defined by the user
-		 * @param version Version of the singleton being updated.
-		 * @param dataJson The full data for the singleton as a json string
-		 * @param acl The singleton entity's Access Control List as an object.
-		 * 				 A null ACL implies default permissions which make the entity readable by others.
-		 * @param timeToLive The duration of time, in milliseconds, the singleton custom entity should live
-		 * 				before being expired. Null indicates never expires. Value of -1 indicates no change for updates.
-		 * @param callback The method to be invoked when the server response is received
-		 */
+     * Updates the singleton owned by the user for the specified custom entity type
+     * on the server,
+     * creating the singleton if it does not exist.
+     * This operation results in the owned singleton's data being completely
+     * replaced by the passed in JSON object.
+     *
+     * Service Name - CustomEntity
+     * Service Operation - UpdateSingleton
+     *
+     * @param entityType The entity type as defined by the user
+     * @param version    Version of the singleton being updated.
+     * @param dataJson   The full data for the singleton as a json string
+     * @param acl        The singleton entity's Access Control List as an object.
+     *                   A null ACL implies default permissions which make the
+     *                   entity readable by others.
+     * @param timeToLive The duration of time, in milliseconds, the singleton custom
+     *                   entity should live
+     *                   before being expired. Null indicates never expires. Value
+     *                   of -1 indicates no change for updates.
+     * @param callback   The method to be invoked when the server response is
+     *                   received
+     */
     public void updateSingleton(String entityType, int version, String dataJson, String acl, long timeToLive,
             IServerCallback callback) {
 
@@ -478,17 +506,20 @@ public class CustomEntityService {
     }
 
     /**
-		 * Partially updates the data, of the singleton owned by the user for the specified custom entity type,
-		 * with the specified fields, on the server
-		 *
-		 * Service Name - CustomEntity
-		 * Service Operation - UpdateSingletonFields
-		 *
-		 * @param entityType The entity type as defined by the user
-		 * @param version Version of the singleton being updated.
-		 * @param fieldsJson Specific fields, as JSON, within entity's custom data to be updated.
-		 * @param callback The method to be invoked when the server response is received
-		 */
+     * Partially updates the data, of the singleton owned by the user for the
+     * specified custom entity type,
+     * with the specified fields, on the server
+     *
+     * Service Name - CustomEntity
+     * Service Operation - UpdateSingletonFields
+     *
+     * @param entityType The entity type as defined by the user
+     * @param version    Version of the singleton being updated.
+     * @param fieldsJson Specific fields, as JSON, within entity's custom data to be
+     *                   updated.
+     * @param callback   The method to be invoked when the server response is
+     *                   received
+     */
     public void updateSingletonFields(String entityType, int version, String fieldsJson,
             IServerCallback callback) {
 
@@ -510,16 +541,19 @@ public class CustomEntityService {
     }
 
     /**
-		 * Increments fields on the specified custom entity owned by the user on the server.
-		 *
-		 * Service Name - CustomEntity
-		 * Service Operation - IncrementData
-		 *
-		 * @param entityType The entity type as defined by the user
-		 * @param entityId The entity id as defined by the system
-		 * @param fieldsJson Specific fields, as JSON, within entity's custom data, with respective increment amount.
-		 * @param callback The method to be invoked when the server response is received
-		 */
+     * Increments fields on the specified custom entity owned by the user on the
+     * server.
+     *
+     * Service Name - CustomEntity
+     * Service Operation - IncrementData
+     *
+     * @param entityType The entity type as defined by the user
+     * @param entityId   The entity id as defined by the system
+     * @param fieldsJson Specific fields, as JSON, within entity's custom data, with
+     *                   respective increment amount.
+     * @param callback   The method to be invoked when the server response is
+     *                   received
+     */
     public void incrementData(String entityType, String entityId, String fieldsJson,
             IServerCallback callback) {
 
@@ -541,14 +575,15 @@ public class CustomEntityService {
     }
 
     /**
-		 * Reads the custom entity singleton owned by the session's user.
-		 *
-		 * Service Name - CustomEntity
-		 * Service Operation - ReadSingleton
-		 *
-		 * @param entityType The entity type as defined by the user
-		 * @param callback The method to be invoked when the server response is received
-		 */
+     * Reads the custom entity singleton owned by the session's user.
+     *
+     * Service Name - CustomEntity
+     * Service Operation - ReadSingleton
+     *
+     * @param entityType The entity type as defined by the user
+     * @param callback   The method to be invoked when the server response is
+     *                   received
+     */
     public void readSingleton(String entityType,
             IServerCallback callback) {
 
@@ -566,15 +601,18 @@ public class CustomEntityService {
     }
 
     /**
-		 * Increments the specified fields, of the singleton owned by the user, by the specified amount within the custom entity data on the server.
-		 *
-		 * Service Name - CustomEntity
-		 * Service Operation - IncrementSingletonData
-		 *
-		 * @param entityType The type of custom entity being updated.
-		 * @param fieldsJson Specific fields, as JSON, within entity's custom data, with respective increment amount.
-		 * @param callback The method to be invoked when the server response is received
-		 */
+     * Increments the specified fields, of the singleton owned by the user, by the
+     * specified amount within the custom entity data on the server.
+     *
+     * Service Name - CustomEntity
+     * Service Operation - IncrementSingletonData
+     *
+     * @param entityType The type of custom entity being updated.
+     * @param fieldsJson Specific fields, as JSON, within entity's custom data, with
+     *                   respective increment amount.
+     * @param callback   The method to be invoked when the server response is
+     *                   received
+     */
     public void incrementSingletonData(String entityType, String fieldsJson, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();

@@ -24,16 +24,16 @@ public class BlockchainService {
     }
 
     /**
-         * Retrieves the blockchain items owned by the caller.
-         *
-         * Service Name - Blockchain
-         * Service Operation - GET_BLOCKCHAITEMS
-         *
-         * @param integrationID  The blockchain integration id.
-         *                          Currently only 'default' is supported.
-         * @param contextJson    Optional. Reserved for future use.
-         * @param callback          The callback handler
-         */
+     * Retrieves the blockchain items owned by the caller.
+     *
+     * Service Name - Blockchain
+     * Service Operation - GET_BLOCKCHAITEMS
+     *
+     * @param integrationID The blockchain integration id.
+     *                      Currently only 'default' is supported.
+     * @param contextJson   Optional. Reserved for future use.
+     * @param callback      The callback handler
+     */
     public void GetBlockchainItems(String in_integrationID,
             String in_contextJson,
             IServerCallback callback) {
@@ -55,32 +55,33 @@ public class BlockchainService {
     }
 
     /**
-         * Retrieves the uniqs owned by the caller.
-         *
-         * Service Name - Blockchain
-         * Service Operation - GET_UNIQS
-         *
-         * @param integrationID  The blockchain integration id.
-         *                          Currently only 'default' is supported.
-         * @param contextJson    Optional. Reserved for future use.
-         * @param callback          The callback handler
-         */
-    public void GetUniqs(String in_integrationID,
+     * Retrieves the uniqs owned by the caller.
+     *
+     * Service Name - Blockchain
+     * Service Operation - GET_UNIQS
+     *
+     * @param integrationID The blockchain integration id.
+     *                      Currently only 'default' is supported.
+     * @param contextJson   Optional. Reserved for future use.
+     * @param callback      The callback handler
+     */
+    i voidGetUniqs(String i
+    _integrationID,
             String in_contextJson,
             IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-            data.put(Parameter.integrationId.name(), in_integrationID);
-
-            @SuppressWarnings("unused")
-            JSONObject jsonData = new JSONObject(in_contextJson);
-            data.put(Parameter.contextJson.name(), in_contextJson);
-
-            ServerCall serverCall = new ServerCall(ServiceName.blockchain,
-                    ServiceOperation.GET_UNIQS, data, callback);
-            _client.sendRequest(serverCall);
-
-        } catch (JSONException e) {
+       
+     
+      
+        JSONObject jsonData = ne
+        data.put(Parameter.contextJs
+     
+        ServerCall serverCa  = new ServerCall(ServiceName.
+                            .GET_UNIQS, data, callback);
+        _client.sendReque   erverCall);
+           
+      catch (JSONException e) {
             e.printStackTrace();
         }
     }

@@ -29,19 +29,20 @@ public class RelayService {
     }
 
     /**
-         * Start a connection, based on connection type to 
-         * brainClouds Relay Servers. Connect options come in
-         * from ROOM_ASSIGNED lobby callback.
-         * 
-         * @param connectionType
-         * @param host
-         * @param port
-         * @param passcode
-         * @param lobbyId
-         * @param callback Callback objects that report Success or Failure|Disconnect.
-         *
-         * @note SSL option will only work with WEBSOCKET connetion type.
-         */
+     * Start a connection, based on connection type to
+     * brainClouds Relay Servers. Connect options come in
+     * from ROOM_ASSIGNED lobby callback.
+     * 
+     * @param connectionType
+     * @param host
+     * @param port
+     * @param passcode
+     * @param lobbyId
+     * @param callback       Callback objects that report Success or
+     *                       Failure|Disconnect.
+     *
+     * @note SSL option will only work with WEBSOCKET connetion type.
+     */
     public void connect(RelayConnectionType connectionType, JSONObject options, IRelayConnectCallback callback) {
         _client.getRelayComms().connect(connectionType, options, callback);
     }
@@ -54,9 +55,9 @@ public class RelayService {
     }
 
     /**
-         * Requests to end the current match on the relay server
-         */
-    public void endMatch(JSONObject json){
+     * Requests to end the current match on the relay server
+     */
+    public void endMatch(JSONObject json) {
         _client.getRelayComms().endMatch(json);
     }
 
@@ -82,10 +83,10 @@ public class RelayService {
     }
 
     /**
-         * Set the ping interval. Ping allows to keep the connection
-         * alive, but also inform the player of his current ping.
-         * The default is 1 second interval.
-         */
+     * Set the ping interval. Ping allows to keep the connection
+     * alive, but also inform the player of his current ping.
+     * The default is 1 second interval.
+     */
     public void setPingInterval(int intervalSeconds) {
         _client.getRelayComms().setPingInterval(intervalSeconds);
     }
@@ -112,7 +113,7 @@ public class RelayService {
     /**
      * Returns the netId associated with a profileId.
      *
-     * @param profileId  The profileId the netId is associated with
+     * @param profileId The profileId the netId is associated with
      * @return The netId associated with a profileId
      */
     public int getNetIdForProfileId(String profileId) {
@@ -121,6 +122,7 @@ public class RelayService {
 
     /**
      * Get the lobby's owner connection Id.
+     * 
      * @return The lobby owner's connection Id
      */
     public String getOwnerCxId() {
@@ -157,8 +159,8 @@ public class RelayService {
     }
 
     /**
-    * Deregisters callback for relay messages coming from peers.
-    */
+     * Deregisters callback for relay messages coming from peers.
+     */
     public void deregisterRelayCallback() {
         _client.getRelayComms().deregisterRelayCallback();
     }
@@ -168,103 +170,110 @@ public class RelayService {
      *
      * @param callback Called whenever a system message was received. function(json)
      *
-     * # CONNECT
-     * Received when a new member connects to the server.
-     * {
-     *   op: "CONNECT",
-     *   profileId: "...",
-     *   ownerId: "...",
-     *   netId: #
-     * }
+     *                 # CONNECT
+     *                 Received when a new member connects to the server.
+     *                 {
+     *                 op: "CONNECT",
+     *                 profileId: "...",
+     *                 ownerId: "...",
+     *                 netId: #
+     *                 }
      *
-     * # NET_ID
-     * Receive the Net Id assossiated with a profile Id. This is
-     * sent for each already connected members once you
-     * successfully connected.
-     * {
-     *   op: "NET_ID",
-     *   profileId: "...",
-     *   netId: #
-     * }
+     *                 # NET_ID
+     *                 Receive the Net Id assossiated with a profile Id. This is
+     *                 sent for each already connected members once you
+     *                 successfully connected.
+     *                 {
+     *                 op: "NET_ID",
+     *                 profileId: "...",
+     *                 netId: #
+     *                 }
      *
-     * # DISCONNECT
-     * Received when a member disconnects from the server.
-     * {
-     *   op: "DISCONNECT",
-     *   profileId: "..."
-     * }
+     *                 # DISCONNECT
+     *                 Received when a member disconnects from the server.
+     *                 {
+     *                 op: "DISCONNECT",
+     *                 profileId: "..."
+     *                 }
      *
-     * # MIGRATE_OWNER
-     * If the owner left or never connected in a timely manner,
-     * the relay-server will migrate the role to the next member
-     * with the best ping. If no one else is currently connected
-     * yet, it will be transferred to the next member in the
-     * lobby members' list. This last scenario can only occur if
-     * the owner connected first, then quickly disconnected.
-     * Leaving only unconnected lobby members.
-     * {
-     *   op: "MIGRATE_OWNER",
-     *   profileId: "..."
-     * }
+     *                 # MIGRATE_OWNER
+     *                 If the owner left or never connected in a timely manner,
+     *                 the relay-server will migrate the role to the next member
+     *                 with the best ping. If no one else is currently connected
+     *                 yet, it will be transferred to the next member in the
+     *                 lobby members' list. This last scenario can only occur if
+     *                 the owner connected first, then quickly disconnected.
+     *                 Leaving only unconnected lobby members.
+     *                 {
+     *                 op: "MIGRATE_OWNER",
+     *                 profileId: "..."
+     *                 }
      */
     public void registerSystemCallback(IRelaySystemCallback callback) {
         _client.getRelayComms().registerSystemCallback(callback);
     }
 
     /**
-    * Deregister callback for RelayServer system messages.
-    */
+     * Deregister callback for RelayServer system messages.
+     */
     public void deregisterSystemCallback() {
         _client.getRelayComms().deregisterSystemCallback();
     }
 
     /**
-         * Send a packet to peer(s)
-         *
-         * @param data Byte array for the data to send
-         * @param size Size of data in bytes
-         * @param toNetId The net id to send to, TO_ALL_PLAYERS to relay to all.
-         * @param reliable Send this reliable or not.
-         * @param ordered Receive this ordered or not.
-         * @param channel One of: (CHANNEL_HIGH_PRIORITY_1, CHANNEL_HIGH_PRIORITY_2, CHANNEL_NORMAL_PRIORITY, CHANNEL_LOW_PRIORITY)
-         */
+     * Send a packet to peer(s)
+     *
+     * @param data     Byte array for the data to send
+     * @param size     Size of data in bytes
+     * @param toNetId  The net id to send to, TO_ALL_PLAYERS to relay to all.
+     * @param reliable Send this reliable or not.
+     * @param ordered  Receive this ordered or not.
+     * @param channel  One of: (CHANNEL_HIGH_PRIORITY_1, CHANNEL_HIGH_PRIORITY_2,
+     *                 CHANNEL_NORMAL_PRIORITY, CHANNEL_LOW_PRIORITY)
+     */
     public void send(byte[] data, long toNetId, boolean reliable, boolean ordered, int channel) {
         if (toNetId == TO_ALL_PLAYERS) {
             sendToAll(data, reliable, ordered, channel);
         } else {
-            long playerMask = (long)1 << toNetId;
+            long playerMask = (long) 1 << toNetId;
             _client.getRelayComms().sendRelay(data, playerMask, reliable, ordered, channel);
         }
     }
 
     /**
-         * Send a packet to any players by using a mask
-         *
-         * @param data Byte array for the data to send
-         * @param size Size of data in bytes
-         * @param playerMask Mask of the players to send to. 0001 = netId 0, 0010 = netId 1, etc. If you pass ALL_PLAYER_MASK you will be included and you will get an echo for your message. Use sendToAll instead, you will be filtered out. You can manually filter out by : ALL_PLAYER_MASK &= ~(1 << myNetId)
-         * @param reliable Send this reliable or not.
-         * @param ordered Receive this ordered or not.
-         * @param channel One of: (CHANNEL_HIGH_PRIORITY_1, CHANNEL_HIGH_PRIORITY_2, CHANNEL_NORMAL_PRIORITY, CHANNEL_LOW_PRIORITY)
-         */
+     * Send a packet to any players by using a mask
+     *
+     * @param data       Byte array for the data to send
+     * @param size       Size of data in bytes
+     * @param playerMask Mask of the players to send to. 0001 = netId 0, 0010 =
+     *                   netId 1, etc. If you pass ALL_PLAYER_MASK you will be
+     *                   included and you will get an echo for your message. Use
+     *                   sendToAll instead, you will be filtered out. You can
+     *                   manually filter out by : ALL_PLAYER_MASK &= ~(1 << myNetId)
+     * @param reliable   Send this reliable or not.
+     * @param ordered    Receive this ordered or not.
+     * @param channel    One of: (CHANNEL_HIGH_PRIORITY_1, CHANNEL_HIGH_PRIORITY_2,
+     *                   CHANNEL_NORMAL_PRIORITY, CHANNEL_LOW_PRIORITY)
+     */
     public void sendToPlayers(byte[] data, long playerMask, boolean reliable, boolean ordered, int channel) {
         _client.getRelayComms().sendRelay(data, playerMask, reliable, ordered, channel);
     }
 
     /**
-         * Send a packet to all except yourself
-         *
-         * @param data Byte array for the data to send
-         * @param size Size of data in bytes
-         * @param reliable Send this reliable or not.
-         * @param ordered Receive this ordered or not.
-         * @param channel One of: (CHANNEL_HIGH_PRIORITY_1, CHANNEL_HIGH_PRIORITY_2, CHANNEL_NORMAL_PRIORITY, CHANNEL_LOW_PRIORITY)
-         */
+     * Send a packet to all except yourself
+     *
+     * @param data     Byte array for the data to send
+     * @param size     Size of data in bytes
+     * @param reliable Send this reliable or not.
+     * @param ordered  Receive this ordered or not.
+     * @param channel  One of: (CHANNEL_HIGH_PRIORITY_1, CHANNEL_HIGH_PRIORITY_2,
+     *                 CHANNEL_NORMAL_PRIORITY, CHANNEL_LOW_PRIORITY)
+     */
     public void sendToAll(byte[] data, boolean reliable, boolean ordered, int channel) {
         String myProfileId = _client.getAuthenticationService().getProfileId();
         int myNetId = _client.getRelayComms().getNetIdForProfileId(myProfileId);
 
-        long myBit = 1L << (long)myNetId;
+        long myBit = 1L << (long) myNetId;
         long myInvertedBits = ~myBit;
         long playerMask = TO_ALL_PLAYERS & myInvertedBits;
         _client.getRelayComms().sendRelay(data, playerMask, reliable, ordered, channel);

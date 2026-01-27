@@ -17,20 +17,25 @@ public class RTTService {
     public RTTService(BrainCloudClient client) {
         _client = client;
     }
+
     /**
      * Enables Real Time event for this session.
      * Real Time events are disabled by default. Usually events
      * need to be polled using GET_EVENTS. By enabling this, events will
-     * be received instantly when they happen through a TCP connection to an Event Server.
+     * be received instantly when they happen through a TCP connection to an Event
+     * Server.
      *
-     * This function will first call requestClientConnection, then connect to the address
+     * This function will first call requestClientConnection, then connect to the
+     * address
      *
-     * @param callback The callback.
-     * @param useWebSocket Use web sockets instead of TCP for the internal connections. Default is true
+     * @param callback     The callback.
+     * @param useWebSocket Use web sockets instead of TCP for the internal
+     *                     connections. Default is true
      */
     public void enableRTT(IRTTConnectCallback callback, boolean useWebSocket) {
         _client.getRTTComms().enableRTT(callback, useWebSocket);
     }
+
     public void enableRTT(IRTTConnectCallback callback) {
         enableRTT(callback, true);
     }
@@ -43,10 +48,9 @@ public class RTTService {
     }
 
     /**
-		 *returns true if RTT is enabled 
-		 */
-    public boolean getRTTEnabled()
-    {
+     * returns true if RTT is enabled
+     */
+    public boolean getRTTEnabled() {
         return _client.getRTTComms().isRTTEnabled();
     }
 
@@ -55,120 +59,131 @@ public class RTTService {
      * 
      * @return RTT connection status
      */
-    public RTTComms.RttConnectionStatus getConnectionStatus()
-    {
+    public RTTComms.RttConnectionStatus getConnectionStatus() {
         return _client.getRTTComms().getConnectionStatus();
     }
-    
+
     /**
-    * Returns RTT connectionId
-    *
-    * @return RTT connectionId
-    */
+     * Returns RTT connectionId
+     *
+     * @return RTT connectionId
+     */
     public String getRTTConnectionId() {
         return _client.getRTTComms().getConnectionId();
     }
 
-     /**
-		 * Listen to real time events.
-		 * 
-		 * Notes: RTT must be enabled for this app, and enableRTT must have been successfully called.
-		 * Only one event callback can be registered at a time. Calling this a second time will override the previous callback.
-		 */
+    /**
+     * Listen to real time events.
+     * 
+     * Notes: RTT must be enabled for this app, and enableRTT must have been
+     * successfully called.
+     * Only one event callback can be registered at a time. Calling this a second
+     * time will override the previous callback.
+     */
     public void registerRTTEventCallback(IRTTCallback callback) {
         _client.getRTTComms().registerRTTCallback(ServiceName.event.toString(), callback);
     }
 
     /**
-    * Deregisters the RTT Event callback.
-    */
+     * Deregisters the RTT Event callback.
+     */
     public void deregisterRTTEventCallback() {
         _client.getRTTComms().deregisterRTTCallback(ServiceName.event.toString());
     }
 
     /**
-		 * Listen to real time chat messages.
-		 * 
-		 * Notes: RTT must be enabled for this app, and enableRTT must have been successfully called.
-		 * Only one chat callback can be registered at a time. Calling this a second time will override the previous callback.
-		 */
+     * Listen to real time chat messages.
+     * 
+     * Notes: RTT must be enabled for this app, and enableRTT must have been
+     * successfully called.
+     * Only one chat callback can be registered at a time. Calling this a second
+     * time will override the previous callback.
+     */
     public void registerRTTChatCallback(IRTTCallback callback) {
         _client.getRTTComms().registerRTTCallback(ServiceName.chat.toString(), callback);
     }
 
     /**
-    * Deregisters the RTT Chat callback.
-    */
+     * Deregisters the RTT Chat callback.
+     */
     public void deregisterRTTChatCallback() {
         _client.getRTTComms().deregisterRTTCallback(ServiceName.chat.toString());
     }
 
     /**
-		 * Listen to real time messaging.
-		 * 
-		 * Notes: RTT must be enabled for this app, and enableRTT must have been successfully called.
-		 * Only one messaging callback can be registered at a time. Calling this a second time will override the previous callback.
-		 */
+     * Listen to real time messaging.
+     * 
+     * Notes: RTT must be enabled for this app, and enableRTT must have been
+     * successfully called.
+     * Only one messaging callback can be registered at a time. Calling this a
+     * second time will override the previous callback.
+     */
     public void registerRTTMessagingCallback(IRTTCallback callback) {
         _client.getRTTComms().registerRTTCallback(ServiceName.messaging.toString(), callback);
     }
 
     /**
-    * Deregisters the RTT Messaging callback.
-    */
+     * Deregisters the RTT Messaging callback.
+     */
     public void deregisterRTTMessagingCallback() {
         _client.getRTTComms().deregisterRTTCallback(ServiceName.messaging.toString());
     }
 
     /**
-		 * Listen to real time lobby events.
-		 * 
-		 * Notes: RTT must be enabled for this app, and enableRTT must have been successfully called.
-		 * Only one lobby callback can be registered at a time. Calling this a second time will override the previous callback.
-		 */
+     * Listen to real time lobby events.
+     * 
+     * Notes: RTT must be enabled for this app, and enableRTT must have been
+     * successfully called.
+     * Only one lobby callback can be registered at a time. Calling this a second
+     * time will override the previous callback.
+     */
     public void registerRTTLobbyCallback(IRTTCallback callback) {
         _client.getRTTComms().registerRTTCallback(ServiceName.lobby.toString(), callback);
     }
 
     /**
-    * Deregisters the RTT Lobby callback.
-    */
+     * Deregisters the RTT Lobby callback.
+     */
     public void deregisterRTTLobbyCallback() {
         _client.getRTTComms().deregisterRTTCallback(ServiceName.lobby.toString());
     }
 
     /**
-		 * Listen to real time presence events.
-		 * 
-		 * Notes: RTT must be enabled for this app, and enableRTT must have been successfully called.
-		 * Only one presence callback can be registered at a time. Calling this a second time will override the previous callback.
-		 */
+     * Listen to real time presence events.
+     * 
+     * Notes: RTT must be enabled for this app, and enableRTT must have been
+     * successfully called.
+     * Only one presence callback can be registered at a time. Calling this a second
+     * time will override the previous callback.
+     */
     public void registerRTTPresenceCallback(IRTTCallback callback) {
         _client.getRTTComms().registerRTTCallback(ServiceName.presence.toString(), callback);
     }
 
     /**
-    * Deregisters the RTT Presence callback.
-    */
+     * Deregisters the RTT Presence callback.
+     */
     public void deregisterRTTPresenceCallback() {
         _client.getRTTComms().deregisterRTTCallback(ServiceName.presence.toString());
     }
 
-        /**
+    /**
      * Listen to real time blockchain events.
      * 
-     * Notes: RTT must be enabled for this app, and enableRTT must have been successfully called.
-     * Only one presence callback can be registered at a time. Calling this a second time will override the previous callback.
+     * Notes: RTT must be enabled for this app, and enableRTT must have been
+     * successfully called.
+     * Only one presence callback can be registered at a time. Calling this a second
+     * time will override the previous callback.
      *
-     * @param callback  The callback handler
+     * @param callback The callback handler
      */
     public void registerRTTBlockchainRefreshCallback(IRTTCallback callback) {
         _client.getRTTComms().registerRTTCallback(ServiceName.userItems.toString(), callback);
     }
 
     /**
-    * Deregisters the blockchain callback.
-    */
+     * Deregisters the blockchain callback.
+     */
     public void deregisterRTTBlockchainRefreshCallback() {
         _client.getRTTComms().deregisterRTTCallback(ServiceName.userItems.toString());
     }
@@ -186,7 +201,8 @@ public class RTTService {
      * @param callback The callback.
      */
     public void requestClientConnection(IServerCallback callback) {
-        ServerCall sc = new ServerCall(ServiceName.rttRegistration, ServiceOperation.REQUEST_CLIENT_CONNECTION, null, callback);
+        ServerCall sc = new ServerCall(ServiceName.rttRegistration, ServiceOperation.REQUEST_CLIENT_CONNECTION, null,
+                callback);
         _client.sendRequest(sc);
     }
 }

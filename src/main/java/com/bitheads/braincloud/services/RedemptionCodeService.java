@@ -28,17 +28,20 @@ public class RedemptionCodeService {
     }
 
     /**
-         * Redeem a code.
-         *
-         * Service Name - RedemptionCode
-         * Service Operation - REDEEM_CODE
-         *
-         * @param scanCode The code to redeem
-         * @param codeType The type of code
-         * @param jsonCustomRedemptionInfo Optional - A JSON string containing custom redemption data
-         * @param callback The method to be invoked when the server response is received
-         */
-    public void redeemCode(String scanCode, String codeType, String jsonCustomRedemptionInfo, IServerCallback callback) {
+     * Redeem a code.
+     *
+     * Service Name - RedemptionCode
+     * Service Operation - REDEEM_CODE
+     *
+     * @param scanCode                 The code to redeem
+     * @param codeType                 The type of code
+     * @param jsonCustomRedemptionInfo Optional - A JSON string containing custom
+     *                                 redemption data
+     * @param callback                 The method to be invoked when the server
+     *                                 response is received
+     */
+    public void redeemCode(String scanCode, String codeType, String jsonCustomRedemptionInfo,
+            IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.scanCode.name(), scanCode);
@@ -56,14 +59,15 @@ public class RedemptionCodeService {
     }
 
     /**
-         * Retrieve the codes already redeemed by player.
-         *
-         * Service Name - RedemptionCode
-         * Service Operation - GET_REDEEMED_CODES
-         *
-         * @param codeType Optional - The type of codes to retrieve. Returns all codes if left unspecified.
-         * @param callback The method to be invoked when the server response is received
-         */
+     * Retrieve the codes already redeemed by player.
+     *
+     * Service Name - RedemptionCode
+     * Service Operation - GET_REDEEMED_CODES
+     *
+     * @param codeType Optional - The type of codes to retrieve. Returns all codes
+     *                 if left unspecified.
+     * @param callback The method to be invoked when the server response is received
+     */
     public void getRedeemedCodes(String codeType, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -71,7 +75,8 @@ public class RedemptionCodeService {
                 data.put(Parameter.codeType.name(), codeType);
             }
 
-            ServerCall sc = new ServerCall(ServiceName.redemptionCode, ServiceOperation.GET_REDEEMED_CODES, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.redemptionCode, ServiceOperation.GET_REDEEMED_CODES, data,
+                    callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
