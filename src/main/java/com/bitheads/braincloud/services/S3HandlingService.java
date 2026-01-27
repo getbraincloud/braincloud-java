@@ -92,6 +92,9 @@ public class S3HandlingService {
     /**
      * Returns the CDN url for a file
      *
+     * Service Name - s3Handling
+     * Service Operation - GET_CDN_URL
+     *
      * @param fileId   ID of file
      * @param callback The method to be invoked when the server response is received
      */

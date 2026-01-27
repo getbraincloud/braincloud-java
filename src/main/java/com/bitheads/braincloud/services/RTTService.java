@@ -74,7 +74,7 @@ public class RTTService {
 
     /**
      * Listen to real time events.
-     * 
+     *
      * Notes: RTT must be enabled for this app, and enableRTT must have been
      * successfully called.
      * Only one event callback can be registered at a time. Calling this a second
@@ -93,7 +93,7 @@ public class RTTService {
 
     /**
      * Listen to real time chat messages.
-     * 
+     *
      * Notes: RTT must be enabled for this app, and enableRTT must have been
      * successfully called.
      * Only one chat callback can be registered at a time. Calling this a second
@@ -112,7 +112,7 @@ public class RTTService {
 
     /**
      * Listen to real time messaging.
-     * 
+     *
      * Notes: RTT must be enabled for this app, and enableRTT must have been
      * successfully called.
      * Only one messaging callback can be registered at a time. Calling this a
@@ -131,7 +131,7 @@ public class RTTService {
 
     /**
      * Listen to real time lobby events.
-     * 
+     *
      * Notes: RTT must be enabled for this app, and enableRTT must have been
      * successfully called.
      * Only one lobby callback can be registered at a time. Calling this a second
@@ -150,7 +150,7 @@ public class RTTService {
 
     /**
      * Listen to real time presence events.
-     * 
+     *
      * Notes: RTT must be enabled for this app, and enableRTT must have been
      * successfully called.
      * Only one presence callback can be registered at a time. Calling this a second

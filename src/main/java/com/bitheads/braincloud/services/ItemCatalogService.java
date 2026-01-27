@@ -28,7 +28,7 @@ public class ItemCatalogService {
      * Reads an existing item definition from the server, with language fields
      * limited to the current or default language.
      *
-     * Service Name - ItemCatalog
+     * Service Name - itemCatalog
      * Service Operation - GET_CATALOG_ITEM_DEFINITION
      *
      * @param defId    The identifier of the catalog item definition to retrieve
@@ -50,7 +50,7 @@ public class ItemCatalogService {
      * Retrieve a page of catalog items from the server, with language fields
      * limited to the text for the current or default language.
      *
-     * Service Name - ItemCatalog
+     * Service Name - itemCatalog
      * Service Operation - GET_CATALOG_ITEMS_PAGE
      *
      * @param context  The pagination context returned from a previous catalog page
@@ -74,7 +74,7 @@ public class ItemCatalogService {
      * context and specified page offset, with language fields limited to the
      * text for the current or default language.
      *
-     * Service Name - ItemCatalog
+     * Service Name - itemCatalog
      * Service Operation - GET_CATALOG_ITEMS_PAGE_OFFSET
      *
      * @param context    The pagination context returned from a previous catalog

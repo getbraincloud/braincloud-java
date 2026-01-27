@@ -143,8 +143,8 @@ public class LobbyService implements IServerCallback {
     /**
      * Creates a new lobby.
      *
-     * Service Name - Lobby
-     * Service Operation - CreateLobby
+     * Service Name - lobby
+     * Service Operation - CREATE_LOBBY
      *
      * @param lobbyType      The type of lobby to create
      * @param rating         The skill rating used for matchmaking
@@ -185,8 +185,8 @@ public class LobbyService implements IServerCallback {
     /**
      * Creates a new lobby using collected ping data to select the best region.
      *
-     * Service Name - Lobby
-     * Service Operation - CreateLobbyWithPingData
+     * Service Name - lobby
+     * Service Operation - CREATE_LOBBY_WITH_PING_DATA
      *
      * @param lobbyType      The type of lobby to create
      * @param rating         The skill rating used for matchmaking
@@ -226,7 +226,7 @@ public class LobbyService implements IServerCallback {
     /**
      * Begins matchmaking to find a lobby matching the given parameters.
      *
-     * Service Name - Lobby
+     * Service Name - lobby
      * Service Operation - FindLobby
      *
      * @param lobbyType      The type of lobby to search for
@@ -275,8 +275,8 @@ public class LobbyService implements IServerCallback {
     /**
      * Begins matchmaking using ping data to select the best region.
      *
-     * Service Name - Lobby
-     * Service Operation - FindLobbyWithPingData
+     * Service Name - lobby
+     * Service Operation - FIND_LOBBY_WITH_PING_DATA
      *
      * @param lobbyType      The type of lobby to search for
      * @param rating         The skill rating used for matchmaking
@@ -323,8 +323,8 @@ public class LobbyService implements IServerCallback {
     /**
      * Finds or creates a lobby if none are available.
      *
-     * Service Name - Lobby
-     * Service Operation - FindOrCreateLobby
+     * Service Name - lobby
+     * Service Operation - FIND_OR_CREATE_LOBBY
      *
      * @param lobbyType      The type of lobby
      * @param rating         The skill rating used for matchmaking
@@ -376,8 +376,8 @@ public class LobbyService implements IServerCallback {
     /**
      * Finds or creates a lobby using ping data.
      *
-     * Service Name - Lobby
-     * Service Operation - FindOrCreateLobbyWithPingData
+     * Service Name - lobby
+     * Service Operation - FIND_OR_CREATE_LOBBY_WITH_PING_DATA
      *
      * @param lobbyType      The type of lobby
      * @param rating         The skill rating used for matchmaking
@@ -428,8 +428,8 @@ public class LobbyService implements IServerCallback {
     /**
      * Retrieves full lobby data for the specified lobby.
      *
-     * Service Name - Lobby
-     * Service Operation - GetLobbyData
+     * Service Name - lobby
+     * Service Operation - GET_LOBBY_DATA
      *
      * @param lobbyId  The lobby identifier
      * @param callback The method to be invoked when the server response is received
@@ -450,8 +450,8 @@ public class LobbyService implements IServerCallback {
     /**
      * Leaves the specified lobby.
      *
-     * Service Name - Lobby
-     * Service Operation - LeaveLobby
+     * Service Name - lobby
+     * Service Operation - LEAVE_LOBBY
      *
      * @param lobbyId  The lobby identifier
      * @param callback The method to be invoked when the server response is received
@@ -472,8 +472,8 @@ public class LobbyService implements IServerCallback {
     /**
      * Joins the specified lobby.
      *
-     * Service Name - Lobby
-     * Service Operation - JoinLobby
+     * Service Name - lobby
+     * Service Operation - JOIN_LOBBY
      *
      * @param lobbyId        The lobby identifier
      * @param isReady        Initial ready state
@@ -508,8 +508,8 @@ public class LobbyService implements IServerCallback {
     /**
      * Joins the specified lobby using ping data.
      *
-     * Service Name - Lobby
-     * Service Operation - JoinLobbyWithPingData
+     * Service Name - lobby
+     * Service Operation - JOIN_LOBBY_WITH_PING_DATA
      *
      * @param lobbyId        The lobby identifier
      * @param isReady        Initial ready state
@@ -543,8 +543,8 @@ public class LobbyService implements IServerCallback {
     /**
      * Removes a member from the lobby. Caller must be the lobby owner.
      *
-     * Service Name - Lobby
-     * Service Operation - RemoveMember
+     * Service Name - lobby
+     * Service Operation - REMOVE_MEMBER
      *
      * @param lobbyId  The lobby identifier
      * @param cxId     The cxId of the member to remove
@@ -567,8 +567,8 @@ public class LobbyService implements IServerCallback {
     /**
      * Sends a signal to all lobby members.
      *
-     * Service Name - Lobby
-     * Service Operation - SendSignal
+     * Service Name - lobby
+     * Service Operation - SEND_SIGNAL
      *
      * @param lobbyId        The lobby identifier
      * @param jsonSignalData Signal payload to send
@@ -594,8 +594,8 @@ public class LobbyService implements IServerCallback {
     /**
      * Switches the caller to a different team within the lobby.
      *
-     * Service Name - Lobby
-     * Service Operation - SwitchTeam
+     * Service Name - lobby
+     * Service Operation - SWITCH_TEAM
      *
      * @param lobbyId    The lobby identifier
      * @param toTeamCode Target team code
@@ -619,8 +619,8 @@ public class LobbyService implements IServerCallback {
     /**
      * Updates the ready state and extra data for the caller.
      *
-     * Service Name - Lobby
-     * Service Operation - UpdateReady
+     * Service Name - lobby
+     * Service Operation - UPDATE_READY
      *
      * @param lobbyId   The lobby identifier
      * @param isReady   Updated ready state
@@ -648,8 +648,8 @@ public class LobbyService implements IServerCallback {
     /**
      * Updates the lobby settings.
      *
-     * Service Name - Lobby
-     * Service Operation - UpdateSettings
+     * Service Name - lobby
+     * Service Operation - UPDATE_SETTINGS
      *
      * @param lobbyId      The lobby identifier
      * @param jsonSettings Updated lobby settings
@@ -675,7 +675,7 @@ public class LobbyService implements IServerCallback {
     /**
      * Retrieves visible lobby instances matching the given criteria.
      *
-     * Service Name - Lobby
+     * Service Name - lobby
      * Service Operation - GET_LOBBY_INSTANCES
      *
      * @param lobbyType    The type of lobby
@@ -701,7 +701,7 @@ public class LobbyService implements IServerCallback {
      * Retrieves visible lobby instances matching the given criteria using ping
      * data.
      *
-     * Service Name - Lobby
+     * Service Name - lobby
      * Service Operation - GET_LOBBY_INSTANCES_WITH_PING_DATA
      *
      * @param lobbyType    The type of lobby
@@ -725,8 +725,8 @@ public class LobbyService implements IServerCallback {
      * Retrieves the region settings for each of the given lobby types.
      * Upon success, pingRegions should be called to collect ping data.
      *
-     * Service Name - Lobby
-     * Service Operation - GetRegionsForLobbies
+     * Service Name - lobby
+     * Service Operation - GET_REGIONS_FOR_LOBBIES
      *
      * @param roomTypes Ids of the lobby types
      * @param callback  The method to be invoked when the server response is

@@ -37,8 +37,8 @@ public class AsyncMatchService {
     /**
      * Creates an instance of an asynchronous match.
      *
-     * Service Name - AsyncMatch
-     * Service Operation - Create
+     * Service Name - asyncMatch
+     * Service Operation - CREATE
      *
      * @param jsonOpponentIds         JSON string identifying the opponent platform
      *                                and id for this match.
@@ -76,8 +76,8 @@ public class AsyncMatchService {
     /**
      * Creates an instance of an asynchronous match with an initial turn.
      *
-     * Service Name - AsyncMatch
-     * Service Operation - Create
+     * Service Name - asyncMatch
+     * Service Operation - CREATE
      *
      * @param jsonOpponentIds         JSON string identifying the opponent platform
      *                                and id for this match.
@@ -149,8 +149,8 @@ public class AsyncMatchService {
     /**
      * Submits a turn for the given match.
      *
-     * Service Name - AsyncMatch
-     * Service Operation - SubmitTurn
+     * Service Name - asyncMatch
+     * Service Operation - SUBMIT_TURN
      *
      * @param ownerId                 Match owner identfier
      * @param matchId                 Match identifier
@@ -214,8 +214,8 @@ public class AsyncMatchService {
      * Allows the current player (only) to update Summary data without having to
      * submit a whole turn.
      *
-     * Service Name - AsyncMatch
-     * Service Operation - UpdateMatchSummary
+     * Service Name - asyncMatch
+     * Service Operation - UPDATE_SUMMARY
      *
      * @param ownerId     Match owner identfier
      * @param matchId     Match identifier
@@ -249,8 +249,8 @@ public class AsyncMatchService {
     /**
      * Marks the given match as complete.
      *
-     * Service Name - AsyncMatch
-     * Service Operation - Complete
+     * Service Name - asyncMatch
+     * Service Operation - COMPLETE
      *
      * @param ownerId  Match owner identifier
      * @param matchId  Match identifier
@@ -274,8 +274,8 @@ public class AsyncMatchService {
     /**
      * Returns the current state of the given match.
      *
-     * Service Name - AsyncMatch
-     * Service Operation - ReadMatch
+     * Service Name - asyncMatch
+     * Service Operation - READ_MATCH
      *
      * @param ownerId  Match owner identifier
      * @param matchId  Match identifier
@@ -299,8 +299,8 @@ public class AsyncMatchService {
     /**
      * Returns the match history of the given match.
      *
-     * Service Name - AsyncMatch
-     * Service Operation - ReadMatchHistory
+     * Service Name - asyncMatch
+     * Service Operation - READ_MATCH_HISTORY
      *
      * @param ownerId  Match owner identifier
      * @param matchId  Match identifier
@@ -325,8 +325,8 @@ public class AsyncMatchService {
      * Returns all matches that are NOT in a COMPLETE state for which the player is
      * involved.
      *
-     * Service Name - AsyncMatch
-     * Service Operation - FindMatches
+     * Service Name - asyncMatch
+     * Service Operation - FIND_MATCHES
      *
      * @param callback Optional instance of IServerCallback to call when the server
      *                 response is received.
@@ -342,8 +342,8 @@ public class AsyncMatchService {
      * Returns all matches that are in a COMPLETE state for which the player is
      * involved.
      *
-     * Service Name - AsyncMatch
-     * Service Operation - FindMatchesCompleted
+     * Service Name - asyncMatch
+     * Service Operation - FIND_MATCHES_COMPLETED
      *
      * @param callback Optional instance of IServerCallback to call when the server
      *                 response is received.
@@ -358,8 +358,8 @@ public class AsyncMatchService {
     /**
      * Marks the given match as abandoned.
      *
-     * Service Name - AsyncMatch
-     * Service Operation - Abandon
+     * Service Name - asyncMatch
+     * Service Operation - ABANDON
      *
      * @param ownerId  Match owner identifier
      * @param matchId  Match identifier
@@ -386,8 +386,8 @@ public class AsyncMatchService {
      * production it is recommended
      * the user leave it as completed.
      *
-     * Service Name - AsyncMatch
-     * Service Operation - Delete
+     * Service Name - asyncMatch
+     * Service Operation - DELETE_MATCH
      *
      * @param ownerId  Match owner identifier
      * @param matchId  Match identifier
@@ -411,8 +411,8 @@ public class AsyncMatchService {
     /**
      * Marks the given match as complete. This call can send a notification message.
      *
-     * Service Name - AsyncMatch
-     * Service Operation - CompleteMatchWithSumamryData
+     * Service Name - asyncMatch
+     * Service Operation - COMPLETE_MATCH_WITH_SUMMARY_DATA
      *
      * @param ownerId     Match owner identifier
      * @param matchId     Match identifier
@@ -448,8 +448,8 @@ public class AsyncMatchService {
      * Marks the given match as abandoned. This call can send a notification
      * message.
      *
-     * Service Name - AsyncMatch
-     * Service Operation - AbandonMatchWithSumamryData
+     * Service Name - asyncMatch
+     * Service Operation - ABANDON_MATCH_WITH_SUMMARY_DATA
      *
      * @param ownerId     Match owner identifier
      * @param matchId     Match identifier
@@ -485,8 +485,8 @@ public class AsyncMatchService {
      * Allows the current player in the game to overwrite the matchState and
      * statistics without completing their turn or adding to matchHistory.
      *
-     * Service Name - AsyncMatch
-     * Service Operation - UpdateMatchStateCurrentTurn
+     * Service Name - asyncMatch
+     * Service Operation - UPDATE_MATCH_STATE_CURRENT_TURN
      *
      * @param ownerId        Match owner identifier
      * @param matchId        Match identifier

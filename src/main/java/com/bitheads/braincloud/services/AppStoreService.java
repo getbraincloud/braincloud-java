@@ -34,8 +34,8 @@ public class AppStoreService {
     /**
      * Verifies that purchase was properly made at the store.
      *
-     * Service Name - AppStore
-     * Service Operation - VerifyPurchase
+     * Service Name - appStore
+     * Service Operation - VERIFY_PURCHASE
      *
      * @param storeId         The store platform. Valid stores are:
      *                        - itunes
@@ -65,8 +65,8 @@ public class AppStoreService {
     /**
      * Returns the eligible promotions for the player.
      *
-     * Service Name - AppStore
-     * Service Operation - EligiblePromotions
+     * Service Name - appStore
+     * Service Operation - ELIGIBLE_PROMOTIONS
      *
      * @param callback The method to be invoked when the server response is received
      */
@@ -81,8 +81,8 @@ public class AppStoreService {
      * Method gets the active sales inventory for the passed-in
      * currency type.
      *
-     * Service Name - AppStore
-     * Service Operation - GetInventory
+     * Service Name - appStore
+     * Service Operation - GET_INVENTORY
      *
      * @param storeId      The store platform. Valid stores are:
      *                     - itunes
@@ -104,8 +104,8 @@ public class AppStoreService {
      * Method gets the active sales inventory for the passed-in
      * currency type.
      *
-     * Service Name - AppStore
-     * Service Operation - GetInventory
+     * Service Name - appStore
+     * Service Operation - GET_INVENTORY
      *
      * @param storeId      The store platform. Valid stores are:
      *                     - itunes
@@ -143,8 +143,8 @@ public class AppStoreService {
     /**
      * Start A Two Staged Purchase Transaction
      *
-     * Service Name - AppStore
-     * Service Operation - StartPurchase
+     * Service Name - appStore
+     * Service Operation - START_PURCHASE
      *
      * @param storeId          The store platform. Valid stores are:
      *                         - itunes
@@ -174,8 +174,8 @@ public class AppStoreService {
     /**
      * Finalize A Two Staged Purchase Transaction
      *
-     * Service Name - AppStore
-     * Service Operation - FinalizePurchase
+     * Service Name - appStore
+     * Service Operation - FINALIZE_PURCHASE
      *
      * @param storeId             The store platform. Valid stores are:
      *                            - itunes
@@ -185,8 +185,8 @@ public class AppStoreService {
      *                            - windows
      *                            - windowsPhone
      *                            - googlePlay
-     * @param transactionId       the transactionId returned from start Purchase
-     * @param jsonTransactionData specific data for purchasing 2 staged purchases
+     * @param transactionId       The transaction id returned from startPurchase
+     * @param jsonTransactionData Specific transaction data for finalizing purchase
      * @param callback            The method to be invoked when the server response
      *                            is received
      */
@@ -254,8 +254,8 @@ public class AppStoreService {
      * 'promotionsRefreshed' flag indicating whether the user's promotion info
      * required refreshing.
      *
-     * Service Name - AppStore
-     * Service Operation - RefreshPromotions
+     * Service Name - appStore
+     * Service Operation - REFRESH_PROMOTIONS
      * 
      * @param callback The method to be invoked when the server response is received
      */

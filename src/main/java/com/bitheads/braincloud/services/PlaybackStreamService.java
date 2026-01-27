@@ -32,8 +32,8 @@ public class PlaybackStreamService {
     /**
      * Starts a stream
      *
-     * Service Name - PlaybackStream
-     * Service Operation - StartStream
+     * Service Name - playbackStream
+     * Service Operation - START_STREAM
      *
      * @param targetPlayerId    The player to start a stream with
      * @param includeSharedData Whether to include shared data in the stream
@@ -58,8 +58,8 @@ public class PlaybackStreamService {
     /**
      * Reads a stream
      *
-     * Service Name - PlaybackStream
-     * Service Operation - ReadStream
+     * Service Name - playbackStream
+     * Service Operation - READ_STREAM
      *
      * @param playbackStreamId Identifies the stream to read
      * @param callback         The method to be invoked when the server response is
@@ -81,8 +81,8 @@ public class PlaybackStreamService {
     /**
      * Ends a stream
      *
-     * Service Name - PlaybackStream
-     * Service Operation - EndStream
+     * Service Name - playbackStream
+     * Service Operation - END_STREAM
      *
      * @param playbackStreamId Identifies the stream to read
      * @param callback         The method to be invoked when the server response is
@@ -104,8 +104,8 @@ public class PlaybackStreamService {
     /**
      * Deletes a stream
      *
-     * Service Name - PlaybackStream
-     * Service Operation - DeleteStream
+     * Service Name - playbackStream
+     * Service Operation - DELETE_STREAM
      *
      * @param playbackStreamId Identifies the stream to read
      * @param callback         The method to be invoked when the server response is
@@ -127,8 +127,8 @@ public class PlaybackStreamService {
     /**
      * Adds a stream event
      *
-     * Service Name - PlaybackStream
-     * Service Operation - AddEvent
+     * Service Name - playbackStream
+     * Service Operation - ADD_EVENT
      *
      * @param playbackStreamId Identifies the stream to read
      * @param jsonEventData    Describes the event
@@ -156,8 +156,8 @@ public class PlaybackStreamService {
     /**
      * Gets recent stream summaries for initiating player
      *
-     * Service Name - PlaybackStream
-     * Service Operation - GetRecentStreamsForInitiatingPlayer
+     * Service Name - playbackStream
+     * Service Operation - GET_RECENT_STREAMS_FOR_INITIATING_PLAYER
      *
      * @param targetPlayerId The player that started the stream
      * @param maxNumStreams  The max number of streams to query
@@ -182,8 +182,8 @@ public class PlaybackStreamService {
     /**
      * Gets recent stream summaries for target player
      *
-     * Service Name - PlaybackStream
-     * Service Operation - GetRecentStreamsForTargetPlayer
+     * Service Name - playbackStream
+     * Service Operation - GET_RECENT_STREAMS_FOR_TARGET_PLAYER
      *
      * @param targetPlayerId The player that was target of the stream
      * @param maxNumStreams  The max number of streams to query
@@ -212,7 +212,7 @@ public class PlaybackStreamService {
      * createdAt), the longer protection date is applied.
      * Can only be called by users involved in the playback stream.
      *
-     * Service Name - PlaybackStream
+     * Service Name - playbackStream
      * Service Operation - PROTECT_STREAM_UNTIL
      *
      * @param playbackStreamId Identifies the stream to protect
