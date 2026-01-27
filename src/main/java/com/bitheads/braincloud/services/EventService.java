@@ -37,7 +37,7 @@ public class EventService {
     /**
 		 * Sends an event to the designated user id with the attached json data.
 		 * Any events that have been sent to a user will show up in their
-		 * incoming event mailbox. If the in_recordLocally flag is set to true,
+		 * incoming event mailbox. If the recordLocally flag is set to true,
 		 * a copy of this event (with the exact same event id) will be stored
 		 * in the sending user's "sent" event mailbox.
 		 *
@@ -47,10 +47,10 @@ public class EventService {
 		 * Service Name - event
 		 * Service Operation - SEND
 		 *
-		 * @param in_toProfileId The id of the user who is being sent the event
-		 * @param in_eventType The user-defined type of the event.
-		 * @param in_jsonEventData The user-defined data for this event encoded in JSON.
-		 * @param in_callback The method to be invoked when the server response is received
+		 * @param toProfileId The id of the user who is being sent the event
+		 * @param eventType The user-defined type of the event.
+		 * @param jsonEventData The user-defined data for this event encoded in JSON.
+		 * @param callback The method to be invoked when the server response is received
 		 */
     public void sendEvent(String toProfileId, String eventType, String jsonEventData, IServerCallback callback) {
         try {
@@ -75,10 +75,10 @@ public class EventService {
 		 * Service Name - Event
 		 * Service Operation - SEND_EVENT_TO_PROFILES
 		 *
-		 * @param in_toIds The profile ids of the users to send the event
-		 * @param in_eventType The user-defined type of the event
-		 * @param in_eventData The user-defined data for this event encoded in JSON
-		 * @param in_callback The method to be invoked when the server response is received
+		 * @param toIds The profile ids of the users to send the event
+		 * @param eventType The user-defined type of the event
+		 * @param eventData The user-defined data for this event encoded in JSON
+		 * @param callback The method to be invoked when the server response is received
 		 */
     public void sendEventToProfiles(String toIds, String eventType, String eventData, IServerCallback callback) {
         try {
@@ -102,9 +102,9 @@ public class EventService {
 		 * Service Name - event
 		 * Service Operation - UPDATE_EVENT_DATA
 		 *
-		 * @param in_evId The event id
-		 * @param in_jsonEventData The user-defined data for this event encoded in JSON.
-		 * @param in_callback The method to be invoked when the server response is received
+		 * @param evId The event id
+		 * @param jsonEventData The user-defined data for this event encoded in JSON.
+		 * @param callback The method to be invoked when the server response is received
 		 */
     public void updateIncomingEventData(String evId, String jsonEventData, IServerCallback callback) {
         try {
@@ -128,9 +128,9 @@ public class EventService {
 		 * Service Name - event
 		 * Service Operation - UPDATE_EVENT_DATA
 		 *
-		 * @param in_evId The event id
-		 * @param in_jsonEventData The user-defined data for this event encoded in JSON.
-		 * @param in_callback The method to be invoked when the server response is received
+		 * @param evId The event id
+		 * @param jsonEventData The user-defined data for this event encoded in JSON.
+		 * @param callback The method to be invoked when the server response is received
 		 */
     public void updateIncomingEventDataIfExists(String evId, String jsonEventData, IServerCallback callback) {
         try {
@@ -154,8 +154,8 @@ public class EventService {
 		 * Service Name - event
 		 * Service Operation - DELETE_INCOMING
 		 *
-		 * @param in_evId The event id
-		 * @param in_callback The method to be invoked when the server response is received
+		 * @param evId The event id
+		 * @param callback The method to be invoked when the server response is received
 		 */
     public void deleteIncomingEvent(String evId, IServerCallback callback) {
         try {
@@ -175,8 +175,8 @@ public class EventService {
 		 * Service Name - event
 		 * Service Operation - DELETE_INCOMING_EVENTS
 		 *
-		 * @param in_eventIds Collection of event ids
-		 * @param in_callback The method to be invoked when the server response is received
+		 * @param eventIds Collection of event ids
+		 * @param callback The method to be invoked when the server response is received
 		 */
     public void deleteIncomingEvents(String[] evIds, IServerCallback callback)
     {
@@ -198,9 +198,9 @@ public class EventService {
 		 * Service Name - event
 		 * Service Operation - DELETE_INCOMING_EVENTS_BY_TYPE_OLDER_THAN
 		 *
-		 * @param in_eventType The user-defined type of the event
-		 * @param in_dateMillis createdAt cut-off time whereby older events will be deleted (In UTC since Epoch)
-		 * @param in_callback The method to be invoked when the server response is received
+		 * @param eventType The user-defined type of the event
+		 * @param dateMillis createdAt cut-off time whereby older events will be deleted (In UTC since Epoch)
+		 * @param callback The method to be invoked when the server response is received
 		 */
     public void deleteIncomingEventsByTypeOlderThan(String eventType, long dateMillis, IServerCallback callback)
     {
@@ -223,8 +223,8 @@ public class EventService {
 		 * Service Name - event
 		 * Service Operation - DELETE_INCOMING_EVENTS_OLDER_THAN
 		 *
-		 * @param in_dateMillis createdAt cut-off time whereby older events will be deleted (In UTC since Epoch)
-		 * @param in_callback The method to be invoked when the server response is received
+		 * @param dateMillis createdAt cut-off time whereby older events will be deleted (In UTC since Epoch)
+		 * @param callback The method to be invoked when the server response is received
 		 */
     public void deleteIncomingEventsOlderThan(long dateMillis, IServerCallback callback)
     {
@@ -246,7 +246,7 @@ public class EventService {
 		 * Service Name - event
 		 * Service Operation - GET_EVENTS
 		 *
-		 * @param in_callback The method to be invoked when the server response is received
+		 * @param callback The method to be invoked when the server response is received
 		 */
     public void getEvents(IServerCallback callback) {
         ServerCall sc = new ServerCall(ServiceName.event, ServiceOperation.GET_EVENTS, null, callback);

@@ -45,7 +45,8 @@ public class GamificationService {
          * Service Name - Gamification
          * Service Operation - Read
          *
-         * @param in_callback Method to be invoked when the server response is received.
+         * @param includeMetaData   Whether to return meta data as well
+         * @param callback Method to be invoked when the server response is received.
          */
     public void readAllGamification(
             boolean includeMetaData,
@@ -66,7 +67,8 @@ public class GamificationService {
          * Service Name - Gamification
          * Service Operation - ReadMilestones
          *
-         * @param in_callback Method to be invoked when the server response is received.
+         * @param includeMetaData   Whether to return meta data as well
+         * @param callback Method to be invoked when the server response is received.
          */
     public void readMilestones(
             boolean includeMetaData,
@@ -87,7 +89,8 @@ public class GamificationService {
          * Service Name - Gamification
          * Service Operation - ReadAchievements
          *
-         * @param in_callback Method to be invoked when the server response is received.
+         * @param includeMetaData   Whether to return meta data as well
+         * @param callback Method to be invoked when the server response is received.
          */
     public void readAchievements(
             boolean includeMetaData,
@@ -120,13 +123,14 @@ public class GamificationService {
     }
 
     /**
-        * Method retrives the list of achieved achievements.
-        *
-        * Service Name - Gamification
-        * Service Operation - ReadAchievedAchievements
-        *
-        * @param in_callback Method to be invoked when the server response is received.
-        */
+         * Method retrives the list of achieved achievements.
+         *
+         * Service Name - Gamification
+         * Service Operation - ReadAchievedAchievements
+         *
+         * @param includeMetaData   Whether to return meta data as well
+         * @param callback Method to be invoked when the server response is received.
+         */
     public void readAchievedAchievements(
             boolean includeMetaData,
             IServerCallback callback) {
@@ -149,7 +153,8 @@ public class GamificationService {
          * Service Name - Gamification
          * Service Operation - ReadCompleteMilestones
          *
-         * @param in_callback Method to be invoked when the server response is received.
+         * @param includeMetaData   Whether to return meta data as well
+         * @param callback Method to be invoked when the server response is received.
          */
     public void readCompletedMilestones(
             boolean includeMetaData,
@@ -172,7 +177,8 @@ public class GamificationService {
          * Service Name - Gamification
          * Service Operation - ReadInProgressMilestones
          *
-         * @param in_callback Method to be invoked when the server response is received.
+         * @param includeMetaData   Whether to return meta data as well
+         * @param callback Method to be invoked when the server response is received.
          */
     public void readInProgressMilestones(
             boolean includeMetaData,
@@ -189,14 +195,15 @@ public class GamificationService {
     }
 
     /**
-        * Method retrieves milestones of the given category.
-        *
-        * Service Name - Gamification
-        * Service Operation - ReadMilestonesByCategory
-        *
-        * @param in_category The milestone category
-        * @param in_callback Method to be invoked when the server response is received.
-        */
+         * Method retrieves milestones of the given category.
+         *
+         * Service Name - Gamification
+         * Service Operation - ReadMilestonesByCategory
+         *
+         * @param category The milestone category
+         * @param includeMetaData   Whether to return meta data as well
+         * @param callback Method to be invoked when the server response is received.
+         */
     public void readMilestonesByCategory(
             String category,
             boolean includeMetaData,
@@ -214,14 +221,14 @@ public class GamificationService {
     }
 
     /**
-        * Method will award the achievements specified.
-        *
-        * Service Name - Gamification
-        * Service Operation - AwardAchievements
-        *
-        * @param in_achievementIds Collection of achievement ids to award
-        * @param in_callback Method to be invoked when the server response is received.
-        */
+         * Method will award the achievements specified.
+         *
+         * Service Name - Gamification
+         * Service Operation - AwardAchievements
+         *
+         * @param achievementIds Collection of achievement ids to award
+         * @param callback Method to be invoked when the server response is received.
+         */
     public void awardAchievements(String[] achievementIds, IServerCallback callback) {
         try {
             JSONArray achievements = new JSONArray();
@@ -270,7 +277,8 @@ public class GamificationService {
          * Service Name - Gamification
          * Service Operation - ReadQuests
          *
-         * @param in_callback Method to be invoked when the server response is received.
+         * @param includeMetaData   Whether to return meta data as well
+         * @param callback Method to be invoked when the server response is received.
          */
     public void readQuests(
             boolean includeMetaData,
@@ -364,7 +372,8 @@ public class GamificationService {
          * Service Name - Gamification
          * Service Operation - ReadQuestsWithStatus
          *
-         * @param in_callback Method to be invoked when the server response is received.
+         * @param includeMetaData   Whether to return meta data as well
+         * @param callback Method to be invoked when the server response is received.
          */
     public void readQuestsWithStatus(
             boolean includeMetaData,
@@ -386,7 +395,8 @@ public class GamificationService {
          * Service Name - Gamification
          * Service Operation - ReadQuestsWithBasicPercentage
          *
-         * @param in_callback Method to be invoked when the server response is received.
+         * @param includeMetaData   Whether to return meta data as well
+         * @param callback Method to be invoked when the server response is received.
          */
     public void readQuestsWithBasicPercentage(
             boolean includeMetaData,
@@ -410,7 +420,8 @@ public class GamificationService {
          * Service Name - Gamification
          * Service Operation - ReadQuestsWithComplexPercentage
          *
-         * @param in_callback Method to be invoked when the server response is received.
+         * @param includeMetaData   Whether to return meta data as well
+         * @param callback Method to be invoked when the server response is received.
          */
     public void readQuestsWithComplexPercentage(
             boolean includeMetaData,
@@ -432,8 +443,9 @@ public class GamificationService {
          * Service Name - Gamification
          * Service Operation - ReadQuestsByCategory
          *
-         * @param in_category The quest category
-         * @param in_callback Method to be invoked when the server response is received.
+         * @param category The quest category
+         * @param includeMetaData   Whether to return meta data as well
+         * @param callback Method to be invoked when the server response is received.
          */
     public void readQuestsByCategory(
             String category,

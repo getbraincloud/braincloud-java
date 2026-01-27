@@ -26,21 +26,23 @@ public class PlayerStatisticsEventService {
     }
 
     /**
-         * Trigger an event server side that will increase the user's statistics.
-         * This may cause one or more awards to be sent back to the user -
-         * could be achievements, experience, etc. Achievements will be sent by this
-         * client library to the appropriate awards service (Apple Game Center, etc).
+         * Trigger a server-side event that will update the user's statistics.
+         * This may cause one or more awards to be sent back to the user,
+         * such as achievements, experience, or other rewards. Achievements
+         * will be sent by this client library to the appropriate awards service
+         * (e.g., Apple Game Center, Google Play Games, etc.).
          *
-         * This mechanism supercedes the PlayerStatisticsService API methods, since
-         * PlayerStatisticsService API method only update the raw statistics without
-         * triggering the rewards.
+         * This mechanism supersedes the PlayerStatisticsService API methods,
+         * which only update raw statistics without triggering rewards.
          *
          * Service Name - PlayerStatisticsEvent
          * Service Operation - Trigger
          *
+         * @param eventName Name of the statistics event to trigger.
+         * @param eventMultiplier Optional multiplier to apply to the event.
+         * @param callback Callback invoked when the server response is received.
+         *                    Defaults to nullptr if no callback is needed.
          * @see BrainCloudPlayerStatistics
-         *
-         * @param in_callback The method to be invoked when the server response is received
          */
     public void triggerStatsEvent(String eventName, int eventMultiplier, IServerCallback callback) {
         try {
@@ -62,7 +64,7 @@ public class PlayerStatisticsEventService {
          * Service Name - PlayerStatisticsEvent
          * Service Operation - TriggerMultiple
          *
-         * @param in_jsonData
+         * @param jsonData
          *   [
          *     {
          *       "eventName": "event1",
@@ -73,6 +75,7 @@ public class PlayerStatisticsEventService {
          *       "eventMultiplier": 1
          *     }
          *   ]
+         * @param callback The method to be invoked when the server response is received
          */
     public void triggerStatsEvents(String jsonData, IServerCallback callback) {
         try {

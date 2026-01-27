@@ -33,10 +33,10 @@ public class RedemptionCodeService {
          * Service Name - RedemptionCode
          * Service Operation - REDEEM_CODE
          *
-         * @param in_scanCode The code to redeem
-         * @param in_codeType The type of code
-         * @param in_jsonCustomRedemptionInfo Optional - A JSON string containing custom redemption data
-         * @param in_callback The method to be invoked when the server response is received
+         * @param scanCode The code to redeem
+         * @param codeType The type of code
+         * @param jsonCustomRedemptionInfo Optional - A JSON string containing custom redemption data
+         * @param callback The method to be invoked when the server response is received
          */
     public void redeemCode(String scanCode, String codeType, String jsonCustomRedemptionInfo, IServerCallback callback) {
         try {
@@ -61,8 +61,8 @@ public class RedemptionCodeService {
          * Service Name - RedemptionCode
          * Service Operation - GET_REDEEMED_CODES
          *
-         * @param in_codeType Optional - The type of codes to retrieve. Returns all codes if left unspecified.
-         * @param in_callback The method to be invoked when the server response is received
+         * @param codeType Optional - The type of codes to retrieve. Returns all codes if left unspecified.
+         * @param callback The method to be invoked when the server response is received
          */
     public void getRedeemedCodes(String codeType, IServerCallback callback) {
         try {

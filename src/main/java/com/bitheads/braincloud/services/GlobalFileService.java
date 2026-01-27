@@ -31,7 +31,8 @@ public class GlobalFileService {
          * Service Name - GlobalFileV3
          * Service Operation - GetFileInfo
          *
-         * @param in_callback The method to be invoked when the server response is received
+         * @param fileId The fileId of the global file
+         * @param callback The method to be invoked when the server response is received
          */
     public void getFileInfo(String fileId, IServerCallback callback) {
         try {
@@ -53,7 +54,9 @@ public class GlobalFileService {
          * Service Name - GlobalFileV3
          * Service Operation - GetFileInfoSimple
          *
-         * @param in_callback The method to be invoked when the server response is received
+         * @param folderPath The folder path of the file
+         * @param filename The name of the file
+         * @param callback The method to be invoked when the server response is received
          */
     public void getFileInfoSimple(String folderPath, String filename, IServerCallback callback) {
         try {
@@ -76,7 +79,8 @@ public class GlobalFileService {
          * Service Name - GlobalFileV3
          * Service Operation - GetGlobalCDNUrl
          *
-         * @param in_callback The method to be invoked when the server response is received
+         * @param fileId The fileId of the global file
+         * @param callback The method to be invoked when the server response is received
          */
     public void getGlobalCDNUrl(String fileId, IServerCallback callback) {
         try {
@@ -98,7 +102,9 @@ public class GlobalFileService {
          * Service Name - GlobalFileV3
          * Service Operation - GetGlobalFileList
          *
-         * @param in_callback The method to be invoked when the server response is received
+         * @param folderPath The folder path to list files from
+         * @param recurse Whether to recurse into subfolders
+         * @param callback The method to be invoked when the server response is received
          */
     public void getGlobalFileList(String folderPath, boolean recurse, IServerCallback callback) {
         try {

@@ -38,6 +38,7 @@ public class DataStreamService {
          *
          * @param eventName Name of event
          * @param eventProperties Properties of event
+         * @param callback The method to be invoked when the server response is received
          */
     public void customPageEvent(String eventName, String jsonEventProperties, IServerCallback callback) {
         try {
@@ -63,6 +64,7 @@ public class DataStreamService {
          *
          * @param eventName Name of event
          * @param eventProperties Properties of event
+         * @param callback The method to be invoked when the server response is received
          */
     public void customScreenEvent(String eventName, String jsonEventProperties, IServerCallback callback) {
         try {
@@ -88,6 +90,7 @@ public class DataStreamService {
          *
          * @param eventName Name of event
          * @param eventProperties Properties of event
+         * @param callback The method to be invoked when the server response is received
          */
     public void customTrackEvent(String eventName, String jsonEventProperties, IServerCallback callback) {
         try {
@@ -111,14 +114,15 @@ public class DataStreamService {
     /**
          * Send crash report
          *
-         * @param crashType
-         * @param errorMsg
-         * @param crashJson
-         * @param crashLog
-         * @param userName
-         * @param userEmail
-         * @param userNotes
-         * @param userSubmitted
+         * @param crashType Identifies the crash category. Developer-defined, can be anything.
+         * @param errorMsg  Short message describing the crash.
+         * @param crashJson Exception data.
+         * @param crashLog  Client log up until the crash (if available.)
+         * @param userName  Name provided by the user (if provided.)
+         * @param userEmail Email address to respond to (if provided.)
+         * @param userNotes Notes provided by the user (if provided.)
+         * @param userSubmitted User submitted flag.
+         * @param callback The callback handler
          */
     public void submitCrashReport(String crashType, String errorMsg, String crashJson, String crashLog, String userName, String userEmail, String userNotes, Boolean userSubmitted, IServerCallback callback) {
         try {

@@ -86,11 +86,11 @@ public class S3HandlingService {
     }
 
     /**
-		* Returns the CDN url for a file
-		*
-		* @param in_fileId ID of file
-		* @param in_callback The method to be invoked when the server response is received
-		*/
+         * Returns the CDN url for a file
+         *
+         * @param fileId ID of file
+         * @param callback The method to be invoked when the server response is received
+         */
     public void getCDNUrl(String fileId, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();

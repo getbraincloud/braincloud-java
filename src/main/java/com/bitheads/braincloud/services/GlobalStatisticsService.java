@@ -30,7 +30,7 @@ public class GlobalStatisticsService {
          * Service Name - GlobalStatistics
          * Service Operation - Read
          *
-         * @param in_callback Method to be invoked when the server response is received.
+         * @param callback Method to be invoked when the server response is received.
          */
     public void readAllGlobalStats(IServerCallback callback) {
         ServerCall sc = new ServerCall(ServiceName.globalGameStatistics,
@@ -44,12 +44,12 @@ public class GlobalStatisticsService {
          * Service Name - GlobalStatistics
          * Service Operation - ReadSubset
          *
-         * @param in_statistics A collection containing the statistics to read:
+         * @param statistics A collection containing the statistics to read:
          * [
          *   "Level01_TimesBeaten",
          *   "Level02_TimesBeaten"
          * ]
-         * @param in_callback Method to be invoked when the server response is received.
+         * @param callback Method to be invoked when the server response is received.
          */
     public void readGlobalStatsSubset(String[] globalStats,
                                       IServerCallback callback) {
@@ -75,8 +75,8 @@ public class GlobalStatisticsService {
          * Service Name - GlobalStatistics
          * Service Operation - READ_FOR_CATEGORY
          *
-         * @param in_category The global statistics category
-         * @param in_callback Method to be invoked when the server response is received.
+         * @param category The global statistics category
+         * @param callback Method to be invoked when the server response is received.
          */
     public void readGlobalStatsForCategory(
             String category,
@@ -116,21 +116,21 @@ public class GlobalStatisticsService {
     }
 
     /**
-		* Apply statistics grammar to a partial set of statistics.
-		*
-		* Service Name - GlobalStatistics
-		* Service Operation - PROCESS_STATISTICS
-		*
-		* @param in_jsonData The JSON format is as follows:
-		* {
-		*     "DEAD_CATS": "RESET",
-		*     "LIVES_LEFT": "SET#9",
-		*     "MICE_KILLED": "INC#2",
-		*     "DOG_SCARE_BONUS_POINTS": "INC#10",
-		*     "TREES_CLIMBED": 1
-		* }
-		* @param in_callback Method to be invoked when the server response is received.
-		*/
+         * Apply statistics grammar to a partial set of statistics.
+         *
+         * Service Name - GlobalStatistics
+         * Service Operation - PROCESS_STATISTICS
+         *
+         * @param jsonData The JSON format is as follows:
+         * {
+         *     "DEAD_CATS": "RESET",
+         *     "LIVES_LEFT": "SET#9",
+         *     "MICE_KILLED": "INC#2",
+         *     "DOG_SCARE_BONUS_POINTS": "INC#10",
+         *     "TREES_CLIMBED": 1
+         * }
+         * @param callback Method to be invoked when the server response is received.
+         */
     public void processStatistics(String jsonData, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();

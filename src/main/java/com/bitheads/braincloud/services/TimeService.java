@@ -24,9 +24,8 @@ public class TimeService {
          * Service Name - Time
          * Service Operation - Read
          *
-         * Server API reference: ServiceName.Time, ServiceOperation.Read
-         *
-         * @param in_callback The method to be invoked when the server response is received
+         * @param callback The method to be invoked when the server response is received
+         * @see Server API reference: ServiceName.Time, ServiceOperation.Read
          */
     public void readServerTime(IServerCallback callback) {
 

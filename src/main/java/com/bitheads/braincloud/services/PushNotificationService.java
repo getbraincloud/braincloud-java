@@ -41,10 +41,10 @@ public class PushNotificationService {
     }
 
     /**
-         * Deregisters all device tokens currently registered to the user.
-         *
-         * @param in_callback The method to be invoked when the server response is received
-         */
+		 * Deregisters all device tokens currently registered to the user.
+		 *
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void deregisterAllPushNotificationDeviceTokens(IServerCallback callback) {
 
         JSONObject data = new JSONObject();
@@ -54,13 +54,13 @@ public class PushNotificationService {
     }
 
     /**
-         * Deregisters the given device token from the server to disable this device
-         * from receiving push notifications.
-         *
-         * @param in_device The device platform being deregistered.
-         * @param in_token The platform-dependent device token needed for push notifications.
-         * @param in_callback The method to be invoked when the server response is received
-         */
+		 * Deregisters the given device token from the server to disable this device
+		 * from receiving push notifications.
+		 *
+		 * @param device The device platform being deregistered.
+		 * @param token The platform-dependent device token needed for push notifications.
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void deregisterPushNotificationDeviceToken(Platform platform, String token, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -112,13 +112,13 @@ public class PushNotificationService {
     }
 
     /**
-         * Sends a simple push notification based on the passed in message.
-         * NOTE: It is possible to send a push notification to oneself.
-         *
-         * @param in_toProfileId The braincloud profileId of the user to receive the notification
-         * @param in_message Text of the push notification
-         * @param in_callback The method to be invoked when the server response is received
-         */
+		 * Sends a simple push notification based on the passed in message.
+		 * NOTE: It is possible to send a push notification to oneself.
+		 *
+		 * @param toProfileId The braincloud profileId of the user to receive the notification
+		 * @param message Text of the push notification
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void sendSimplePushNotification(String toProfileId, String message, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -132,28 +132,28 @@ public class PushNotificationService {
     }
 
     /**
-         * Sends a notification to a user based on a brainCloud portal configured notification template.
-         * NOTE: It is possible to send a push notification to oneself.
-         *
-         * @param in_toProfileId The braincloud profileId of the user to receive the notification
-         * @param in_notificationTemplateId Id of the notification template
-         * @param in_callback The method to be invoked when the server response is received
-         */
+		 * Sends a notification to a user based on a brainCloud portal configured notification template.
+		 * NOTE: It is possible to send a push notification to oneself.
+		 *
+		 * @param toProfileId The braincloud profileId of the user to receive the notification
+		 * @param notificationTemplateId Id of the notification template
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void sendRichPushNotification(String toProfileId, int notificationTemplateId, IServerCallback callback) {
         sendRichPushNotificationWithParams(toProfileId, notificationTemplateId, null, callback);
     }
 
     /**
-         * Sends a notification to a user based on a brainCloud portal configured notification template.
-         * Includes JSON defining the substitution params to use with the template.
-         * See the Portal documentation for more info.
-         * NOTE: It is possible to send a push notification to oneself.
-         *
-         * @param in_toProfileId The braincloud profileId of the user to receive the notification
-         * @param in_notificationTemplateId Id of the notification template
-         * @param in_substitutionJson JSON defining the substitution params to use with the template
-         * @param in_callback The method to be invoked when the server response is received
-         */
+		 * Sends a notification to a user based on a brainCloud portal configured notification template.
+		 * Includes JSON defining the substitution params to use with the template.
+		 * See the Portal documentation for more info.
+		 * NOTE: It is possible to send a push notification to oneself.
+		 *
+		 * @param toProfileId The braincloud profileId of the user to receive the notification
+		 * @param notificationTemplateId Id of the notification template
+		 * @param substitutionJson JSON defining the substitution params to use with the template
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void sendRichPushNotificationWithParams(String toProfileId, int notificationTemplateId, String substitutionJson, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -172,15 +172,15 @@ public class PushNotificationService {
     }
 
     /**
-        * Sends a notification to a "group" of user based on a brainCloud portal configured notification template.
-        * Includes JSON defining the substitution params to use with the template.
-        * See the Portal documentation for more info.
-        *
-        * @param in_groupId Target group
-        * @param in_notificationTemplateId Template to use
-        * @param in_substitutionsJson Map of substitution positions to strings
-        * @param in_callback The method to be invoked when the server response is received
-        */
+		 * Sends a notification to a "group" of user based on a brainCloud portal configured notification template.
+		 * Includes JSON defining the substitution params to use with the template.
+		 * See the Portal documentation for more info.
+		 *
+		 * @param groupId Target group
+		 * @param notificationTemplateId Template to use
+		 * @param substitutionsJson Map of substitution positions to strings
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void sendTemplatedPushNotificationToGroup(String groupId, int notificationTemplateId, String substitutionsJson, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -198,14 +198,14 @@ public class PushNotificationService {
     }
 
     /**
-        * Sends a notification to a "group" of user consisting of alert content and custom data.
-        * See the Portal documentation for more info.
-        *
-        * @param in_groupId Target group
-        * @param in_alertContentJson Body and title of alert
-        * @param in_customDataJson Optional custom data
-        * @param in_callback The method to be invoked when the server response is received
-        */
+		 * Sends a notification to a "group" of user consisting of alert content and custom data.
+		 * See the Portal documentation for more info.
+		 *
+		 * @param groupId Target group
+		 * @param alertContentJson Body and title of alert
+		 * @param customDataJson Optional custom data
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void sendNormalizedPushNotificationToGroup(String groupId, String alertContentJson, String customDataJson, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -224,15 +224,15 @@ public class PushNotificationService {
 
 
     /**
-     	* Schedules a normalized push notification to a user
-     	*
-     	* @param in_profileId The profileId of the user to receive the notification
-     	* @param in_fcmContent Valid Fcm data content
-     	* @param in_iosContent Valid ios data content
-     	* @param in_facebookContent Facebook template string
-     	* @param in_startTimeUTC Start time of sending the push notification in milliseconds, use UTC time in milliseconds since epoch
-     	* @param in_callback The method to be invoked when the server response is received
-     	*/
+		 * Schedules a normalized push notification to a user
+		 *
+		 * @param profileId The profileId of the user to receive the notification
+		 * @param fcmContent Valid Fcm data content
+		 * @param iosContent Valid ios data content
+		 * @param facebookContent Facebook template string
+		 * @param startTimeUTC Start time of sending the push notification in milliseconds, use UTC time in milliseconds since epoch
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void scheduleRawPushNotificationUTC(String profileId, String fcmContent, String iosContent, String facebookContent, long startTimeUTC, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -260,15 +260,15 @@ public class PushNotificationService {
     }
 
     /**
-     	* Schedules a normalized push notification to a user
-     	*
-     	* @param in_profileId The profileId of the user to receive the notification
-     	* @param in_fcmContent Valid Fcm data content
-     	* @param in_iosContent Valid ios data content
-     	* @param in_facebookContent Facebook template string
-     	* @param minutesFromNow Minutes from now to send the push notification
-		* @param callback The method to be invoked when the server response is received
-     	*/
+		 * Schedules a normalized push notification to a user
+		 *
+		 * @param profileId The profileId of the user to receive the notification
+		 * @param fcmContent Valid Fcm data content
+		 * @param iosContent Valid ios data content
+		 * @param facebookContent Facebook template string
+		 * @param minutesFromNow Minutes from now to send the push notification
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void scheduleRawPushNotificationMinutes(String profileId, String fcmContent, String iosContent, String facebookContent, int minutesFromNow, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -329,14 +329,14 @@ public class PushNotificationService {
     }
 
     /**
-     	* Sends a raw push notification to a target list of users.
-     	*
-     	* @param in_profileIds Collection of profile IDs to send the notification to
-     	* @param in_fcmContent Valid Fcm data content
-     	* @param in_iosContent Valid ios data content
-     	* @param in_facebookContent Facebook template string
-     	* @param in_callback The method to be invoked when the server response is received
-     	*/
+		 * Sends a raw push notification to a target list of users.
+		 *
+		 * @param profileIds Collection of profile IDs to send the notification to
+		 * @param fcmContent Valid Fcm data content
+		 * @param iosContent Valid ios data content
+		 * @param facebookContent Facebook template string
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void sendRawPushNotificationBatch(String[] profileIds, String fcmContent, String iosContent, String facebookContent, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -362,14 +362,14 @@ public class PushNotificationService {
     }
 
     /**
-     	* Sends a raw push notification to a target group.
-     	*
-     	* @param in_groupId Target group
-     	* @param in_fcmContent Valid Fcm data content
-     	* @param in_iosContent Valid ios data content
-     	* @param in_facebookContent Facebook template stringn
-     	* @param in_callback The method to be invoked when the server response is received
-     	*/
+		 * Sends a raw push notification to a target group.
+		 *
+		 * @param groupId Target group
+		 * @param fcmContent Valid Fcm data content
+		 * @param iosContent Valid ios data content
+		 * @param facebookContent Facebook template stringn
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void sendRawPushNotificationToGroup(String groupId, String fcmContent, String iosContent, String facebookContent, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -395,14 +395,14 @@ public class PushNotificationService {
     }
 
     /**
-		* Schedules a normalized push notification to a user
-	    *
-		* @param in_toProfileId The profileId of the user to receive the notification
-		* @param in_alertContentJson Body and title of alert
-		* @param in_customDataJson Optional custom data
-		* @param in_startTimeUTC Start time of sending the push notification in milliseconds, use UTC time in milliseconds since epoch
-		* @param in_callback The method to be invoked when the server response is received
-		*/
+		 * Schedules a normalized push notification to a user
+		 *
+		 * @param toProfileId The profileId of the user to receive the notification
+		 * @param alertContentJson Body and title of alert
+		 * @param customDataJson Optional custom data
+		 * @param startTimeUTC Start time of sending the push notification in milliseconds, use UTC time in milliseconds since epoch
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void scheduleNormalizedPushNotificationUTC(String profileId, String alertContentJson, String customDataJson,
                                                       long startTimeUTC, IServerCallback callback) {
         try {
@@ -423,14 +423,14 @@ public class PushNotificationService {
     }
 
     /**
-		* Schedules a normalized push notification to a user
-		*
-		* @param in_toProfileId The profileId of the user to receive the notification
-		* @param in_alertContentJson Body and title of alert
-		* @param in_customDataJson Optional custom data
-		* @param in_minutesFromNow Minutes from now to send the push notification
-		* @param in_callback The method to be invoked when the server response is received
-		*/
+		 * Schedules a normalized push notification to a user
+		 *
+		 * @param toProfileId The profileId of the user to receive the notification
+		 * @param alertContentJson Body and title of alert
+		 * @param customDataJson Optional custom data
+		 * @param minutesFromNow Minutes from now to send the push notification
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void scheduleNormalizedPushNotificationMinutes(String profileId, String alertContentJson, String customDataJson,
                                                           int minutesFromNow, IServerCallback callback) {
         try {
@@ -451,14 +451,14 @@ public class PushNotificationService {
     }
 
     /**
-		* Schedules a rich push notification to a user
-		*
-		* @param in_toProfileId The profileId of the user to receive the notification
-		* @param in_notificationTemplateId Body and title of alert
-		* @param in_substitutionsJson Map of substitution positions to strings
-		* @param in_startTimeUTC Start time of sending the push notification in milliseconds, use UTC time in milliseconds since epoch
-		* @param in_callback The method to be invoked when the server response is received
-		*/
+		 * Schedules a rich push notification to a user
+		 *
+		 * @param toProfileId The profileId of the user to receive the notification
+		 * @param notificationTemplateId Body and title of alert
+		 * @param substitutionsJson Map of substitution positions to strings
+		 * @param startTimeUTC Start time of sending the push notification in milliseconds, use UTC time in milliseconds since epoch
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void scheduleRichPushNotificationUTC(String profileId, int notificationTemplateId, String substitutionsJson,
                                                 long startTimeUTC, IServerCallback callback) {
         try {
@@ -479,14 +479,14 @@ public class PushNotificationService {
     }
 
     /**
-		* Schedules a rich push notification to a user
-		*
-		* @param in_toProfileId The profileId of the user to receive the notification
-		* @param in_notificationTemplateId Body and title of alert
-		* @param in_substitutionsJson Map of substitution positions to strings
-		* @param in_minutesFromNow Minutes from now to send the push notification
-		* @param in_callback The method to be invoked when the server response is received
-		*/
+		 * Schedules a rich push notification to a user
+		 *
+		 * @param toProfileId The profileId of the user to receive the notification
+		 * @param notificationTemplateId Body and title of alert
+		 * @param substitutionsJson Map of substitution positions to strings
+		 * @param minutesFromNow Minutes from now to send the push notification
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void scheduleRichPushNotificationMinutes(String profileId, int notificationTemplateId, String substitutionsJson,
                                                     int minutesFromNow, IServerCallback callback) {
         try {
@@ -507,13 +507,13 @@ public class PushNotificationService {
     }
 
     /**
-		* Sends a notification to a user consisting of alert content and custom data.
-		*
-		* @param in_toProfileId The profileId of the user to receive the notification
-		* @param in_alertContent Body and title of alert
-		* @param in_customData Optional custom data
-		* @param in_callback The method to be invoked when the server response is received
-		*/
+		 * Sends a notification to a user consisting of alert content and custom data.
+		 *
+		 * @param toProfileId The profileId of the user to receive the notification
+		 * @param alertContent Body and title of alert
+		 * @param customData Optional custom data
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void sendNormalizedPushNotification(String toProfileId, String alertContentJson, String customDataJson, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
@@ -531,13 +531,13 @@ public class PushNotificationService {
     }
 
     /**
-		* Sends a notification to multiple users consisting of alert content and custom data.
-		*
-		* @param in_profileIds Collection of profile IDs to send the notification to
-		* @param in_alertContent Body and title of alert
-		* @param in_customData Optional custom data
-		* @param in_callback The method to be invoked when the server response is received
-		*/
+		 * Sends a notification to multiple users consisting of alert content and custom data.
+		 *
+		 * @param profileIds Collection of profile IDs to send the notification to
+		 * @param alertContent Body and title of alert
+		 * @param customData Optional custom data
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void sendNormalizedPushNotificationBatch(String[] profileIds, String alertContentJson, String customDataJson, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();

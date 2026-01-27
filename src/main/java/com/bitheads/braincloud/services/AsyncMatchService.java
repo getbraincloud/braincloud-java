@@ -40,7 +40,7 @@ public class AsyncMatchService {
          * Service Name - AsyncMatch
          * Service Operation - Create
          *
-         * @param in_jsonOpponentIds  JSON string identifying the opponent platform and id for this match.
+         * @param jsonOpponentIds  JSON string identifying the opponent platform and id for this match.
          *
          * Platforms are identified as:
          * BC - a brainCloud profile id
@@ -58,9 +58,9 @@ public class AsyncMatchService {
          *     }
          * ]
          *
-         * @param in_pushNotificationMessage Optional push notification message to send to the other party.
+         * @param pushNotificationMessage Optional push notification message to send to the other party.
          *  Refer to the Push Notification functions for the syntax required.
-         * @param in_callback Optional instance of IServerCallback to call when the server response is received.
+         * @param callback Optional instance of IServerCallback to call when the server response is received.
          */
     public void createMatch(String jsonOpponentIds,
                             String pushNotificationMessage,
@@ -75,7 +75,7 @@ public class AsyncMatchService {
          * Service Name - AsyncMatch
          * Service Operation - Create
          *
-         * @param in_jsonOpponentIds  JSON string identifying the opponent platform and id for this match.
+         * @param jsonOpponentIds  JSON string identifying the opponent platform and id for this match.
          *
          * Platforms are identified as:
          * BC - a brainCloud profile id
@@ -93,12 +93,12 @@ public class AsyncMatchService {
          *     }
          * ]
          *
-         * @param in_jsonMatchState    JSON string blob provided by the caller
-         * @param in_pushNotificationMessage Optional push notification message to send to the other party.
-         * Refer to the Push Notification functions for the syntax required.
-         * @param in_nextPlayer Optionally, force the next player player to be a specific player
-         * @param in_jsonSummary Optional JSON string defining what the other player will see as a summary of the game when listing their games
-         * @param in_callback Optional instance of IServerCallback to call when the server response is received.
+         * @param jsonMatchState    JSON string blob provided by the caller
+         * @param pushNotificationMessage Optional push notification message to send to the other party.
+         *      Refer to the Push Notification functions for the syntax required.
+         * @param nextPlayer Optionally, force the next player player to be a specific player
+         * @param jsonSummary Optional JSON string defining what the other player will see as a summary of the game when listing their games
+         * @param callback Optional instance of IServerCallback to call when the server response is received.
          */
     public void createMatchWithInitialTurn(String jsonOpponentIds, String jsonMatchState, String pushNotificationMessage,
                                            String nextPlayer, String jsonSummary, IServerCallback callback) {
@@ -140,16 +140,16 @@ public class AsyncMatchService {
          * Service Name - AsyncMatch
          * Service Operation - SubmitTurn
          *
-         * @param in_ownerId Match owner identfier
-         * @param in_matchId Match identifier
-         * @param in_version Game state version to ensure turns are submitted once and in order
-         * @param in_jsonMatchState JSON string provided by the caller
-         * @param in_pushNotificationMessage Optional push notification message to send to the other party.
-         *  Refer to the Push Notification functions for the syntax required.
-         * @param in_nextPlayer Optionally, force the next player player to be a specific player
-         * @param in_jsonSummary Optional JSON string that other players will see as a summary of the game when listing their games
-         * @param in_jsonStatistics Optional JSON string blob provided by the caller
-         * @param in_callback Optional instance of IServerCallback to call when the server response is received.
+         * @param ownerId Match owner identfier
+         * @param matchId Match identifier
+         * @param version Game state version to ensure turns are submitted once and in order
+         * @param jsonMatchState JSON string provided by the caller
+         * @param pushNotificationMessage Optional push notification message to send to the other party.
+         *          Refer to the Push Notification functions for the syntax required.
+         * @param nextPlayer Optionally, force the next player player to be a specific player
+         * @param jsonSummary Optional JSON string that other players will see as a summary of the game when listing their games
+         * @param jsonStatistics Optional JSON string blob provided by the caller
+         * @param callback Optional instance of IServerCallback to call when the server response is received.
          */
     public void submitTurn(String ownerId, String matchId, BigInteger version, String jsonMatchState, String pushNotificationMessage,
                            String nextPlayer, String jsonSummary, String jsonStatistics,
@@ -195,11 +195,11 @@ public class AsyncMatchService {
          * Service Name - AsyncMatch
          * Service Operation - UpdateMatchSummary
          *
-         * @param in_ownerId Match owner identfier
-         * @param in_matchId Match identifier
-         * @param in_version Game state version to ensure turns are submitted once and in order
-         * @param in_jsonSummary JSON string that other players will see as a summary of the game when listing their games
-         * @param in_callback Optional instance of IServerCallback to call when the server response is received.
+         * @param ownerId Match owner identfier
+         * @param matchId Match identifier
+         * @param version Game state version to ensure turns are submitted once and in order
+         * @param jsonSummary JSON string that other players will see as a summary of the game when listing their games
+         * @param callback Optional instance of IServerCallback to call when the server response is received.
          */
     public void updateMatchSummaryData(String ownerId, String matchId, BigInteger version, String jsonSummary,
                                        IServerCallback callback) {
@@ -227,9 +227,9 @@ public class AsyncMatchService {
          * Service Name - AsyncMatch
          * Service Operation - Complete
          *
-         * @param in_ownerId Match owner identifier
-         * @param in_matchId Match identifier
-         * @param in_callback Optional instance of IServerCallback to call when the server response is received.
+         * @param ownerId Match owner identifier
+         * @param matchId Match identifier
+         * @param callback Optional instance of IServerCallback to call when the server response is received.
          */
     public void completeMatch(String ownerId, String matchId, IServerCallback callback) {
         try {
@@ -251,9 +251,9 @@ public class AsyncMatchService {
          * Service Name - AsyncMatch
          * Service Operation - ReadMatch
          *
-         * @param in_ownerId   Match owner identifier
-         * @param in_matchId   Match identifier
-         * @param in_callback  Optional instance of IServerCallback to call when the server response is received.
+         * @param ownerId   Match owner identifier
+         * @param matchId   Match identifier
+         * @param callback  Optional instance of IServerCallback to call when the server response is received.
          */
     public void readMatch(String ownerId, String matchId, IServerCallback callback) {
         try {
@@ -275,9 +275,9 @@ public class AsyncMatchService {
          * Service Name - AsyncMatch
          * Service Operation - ReadMatchHistory
          *
-         * @param in_ownerId   Match owner identifier
-         * @param in_matchId   Match identifier
-         * @param in_callback  Optional instance of IServerCallback to call when the server response is received.
+         * @param ownerId   Match owner identifier
+         * @param matchId   Match identifier
+         * @param callback  Optional instance of IServerCallback to call when the server response is received.
          */
     public void readMatchHistory(String ownerId, String matchId, IServerCallback callback) {
         try {
@@ -299,7 +299,7 @@ public class AsyncMatchService {
          * Service Name - AsyncMatch
          * Service Operation - FindMatches
          *
-         * @param in_callback  Optional instance of IServerCallback to call when the server response is received.
+         * @param callback  Optional instance of IServerCallback to call when the server response is received.
          */
     public void findMatches(IServerCallback callback) {
         JSONObject data = new JSONObject();
@@ -314,7 +314,7 @@ public class AsyncMatchService {
          * Service Name - AsyncMatch
          * Service Operation - FindMatchesCompleted
          *
-         * @param in_callback  Optional instance of IServerCallback to call when the server response is received.
+         * @param callback  Optional instance of IServerCallback to call when the server response is received.
          */
     public void findCompleteMatches(IServerCallback callback) {
         JSONObject data = new JSONObject();
@@ -329,9 +329,9 @@ public class AsyncMatchService {
          * Service Name - AsyncMatch
          * Service Operation - Abandon
          *
-         * @param in_ownerId   Match owner identifier
-         * @param in_matchId   Match identifier
-         * @param in_callback  Optional instance of IServerCallback to call when the server response is received.
+         * @param ownerId   Match owner identifier
+         * @param matchId   Match identifier
+         * @param callback  Optional instance of IServerCallback to call when the server response is received.
          */
     public void abandonMatch(String ownerId, String matchId, IServerCallback callback) {
         try {
@@ -355,9 +355,9 @@ public class AsyncMatchService {
          * Service Name - AsyncMatch
          * Service Operation - Delete
          *
-         * @param in_ownerId   Match owner identifier
-         * @param in_matchId   Match identifier
-         * @param in_callback  Optional instance of IServerCallback to call when the server response is received.
+         * @param ownerId   Match owner identifier
+         * @param matchId   Match identifier
+         * @param callback  Optional instance of IServerCallback to call when the server response is received.
          */
     public void deleteMatch(String ownerId, String matchId, IServerCallback callback) {
         try {
@@ -379,11 +379,11 @@ public class AsyncMatchService {
          * Service Name - AsyncMatch
          * Service Operation - CompleteMatchWithSumamryData
          *
-         * @param in_ownerId   Match owner identifier
-         * @param in_matchId   Match identifier
-         * @param in_pushContent
-         * @param in_summary
-         * @param in_callback  Optional instance of IServerCallback to call when the server response is received.
+         * @param ownerId   Match owner identifier
+         * @param matchId   Match identifier
+         * @param pushContent Optional push notification message to send to the other party when completing the match.
+         * @param summary Optional JSON string summary that other players will see when listing their games
+         * @param callback  Optional instance of IServerCallback to call when the server response is received.
          */
     public void completeMatchWithSummaryData(String ownerId, String matchId, String pushContent, String summary, IServerCallback callback) {
         try {
@@ -411,11 +411,11 @@ public class AsyncMatchService {
          * Service Name - AsyncMatch
          * Service Operation - AbandonMatchWithSumamryData
          *
-         * @param in_ownerId   Match owner identifier
-         * @param in_matchId   Match identifier
-         * @param in_pushContent
-         * @param in_summary
-         * @param in_callback  Optional instance of IServerCallback to call when the server response is received.
+         * @param ownerId   Match owner identifier
+         * @param matchId   Match identifier
+         * @param pushContent Optional push notification message to send to the other party when abandoning the match.
+         * @param summary Optional JSON string summary that other players will see when listing their games
+         * @param callback  Optional instance of IServerCallback to call when the server response is received.
          */
     public void abandonMatchWithSummaryData(String ownerId, String matchId, String pushContent, String summary, IServerCallback callback) {
         try {
@@ -440,16 +440,16 @@ public class AsyncMatchService {
     /**
          * Allows the current player in the game to overwrite the matchState and
          * statistics without completing their turn or adding to matchHistory.
-         * 
+         *
          * Service Name - AsyncMatch
          * Service Operation - UpdateMatchStateCurrentTurn
-         *          *
-         * @param in_ownerId   Match owner identifier
-         * @param in_matchId   Match identifier
-         * @param in_version Game state version being updated, to ensure data integrity
-         * @param in_jsonMatchState JSON string provided by the caller Required.
-         * @param in_jsonStatistics Optional JSON string provided by the caller.
-         * @param in_callback
+         *
+         * @param ownerId   Match owner identifier
+         * @param matchId   Match identifier
+         * @param version Game state version being updated, to ensure data integrity
+         * @param jsonMatchState JSON string provided by the caller Required.
+         * @param jsonStatistics Optional JSON string provided by the caller.
+         * @param callback Optional instance of IServerCallback to call when the server response is received.
          */
     public void updateMatchStateCurrentTurn(String ownerId, String matchId, BigInteger version, String jsonMatchState,
             String jsonStatistics, IServerCallback callback) {

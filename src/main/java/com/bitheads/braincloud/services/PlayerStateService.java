@@ -43,7 +43,7 @@ public class PlayerStateService {
          * Service Name - PlayerState
          * Service Operation - FullReset
          *
-         * @param in_callback The method to be invoked when the server response is received
+         * @param callback The method to be invoked when the server response is received
          */
     public void deleteUser(IServerCallback callback) {
 
@@ -55,13 +55,13 @@ public class PlayerStateService {
     }
 
     /**
-        * Retrieve the user's attributes.
-        *
-        * Service Name - PlayerState
-        * Service Operation - GetAttributes
-        *
-        * @param in_callback The method to be invoked when the server response is received
-        */
+         * Retrieve the user's attributes.
+         *
+         * Service Name - PlayerState
+         * Service Operation - GetAttributes
+         *
+         * @param callback The method to be invoked when the server response is received
+         */
     public void getAttributes(IServerCallback callback) {
         ServerCall sc = new ServerCall(ServiceName.playerState,
                 ServiceOperation.GET_ATTRIBUTES, null, callback);
@@ -74,7 +74,7 @@ public class PlayerStateService {
          * Service Name - PlayerState
          * Service Operation - Logout
          *
-         * @param in_callback The method to be invoked when the server response is received
+         * @param callback The method to be invoked when the server response is received
          */
     public void logout(IServerCallback callback) {
         ServerCall sc = new ServerCall(ServiceName.playerState,
@@ -92,7 +92,7 @@ public class PlayerStateService {
          * Service Name - PlayerState
          * Service Operation - Read
          *
-         * @param in_callback The method to be invoked when the server response is received
+         * @param callback The method to be invoked when the server response is received
          */
     public void readUserState(IServerCallback callback) {
 
@@ -104,14 +104,14 @@ public class PlayerStateService {
     }
 
     /**
-        * Remove user's attributes.
-        *
-        * Service Name - PlayerState
-        * Service Operation - RemoveAttributes
-        *
-        * @param in_attributeNames Collection of attribute names.
-        * @param in_callback The method to be invoked when the server response is received
-        */
+         * Remove user's attributes.
+         *
+         * Service Name - PlayerState
+         * Service Operation - RemoveAttributes
+         *
+         * @param attributeNames Collection of attribute names.
+         * @param callback The method to be invoked when the server response is received
+         */
     public void removeAttributes(String[] attributeNames,
                                  IServerCallback callback) {
         try {
@@ -147,15 +147,15 @@ public class PlayerStateService {
     }
 
     /**
-        * Update user's attributes.
-        *
-        * Service Name - PlayerState
-        * Service Operation - UpdateAttributes
-        *
-        * @param in_jsonAttributes Single layer json string that is a set of key-value pairs
-        * @param in_wipeExisting Whether to wipe existing attributes prior to update.
-        * @param in_callback The method to be invoked when the server response is received
-        */
+         * Update user's attributes.
+         *
+         * Service Name - PlayerState
+         * Service Operation - UpdateAttributes
+         *
+         * @param jsonAttributes Single layer json string that is a set of key-value pairs
+         * @param wipeExisting Whether to wipe existing attributes prior to update.
+         * @param callback The method to be invoked when the server response is received
+         */
     public void updateAttributes(String jsonAttributes, boolean wipeExisting,
                                  IServerCallback callback) {
         try {
@@ -175,14 +175,14 @@ public class PlayerStateService {
     }
 
     /**
-        * Remove user's attributes.
-        *
-        * Service Name - PlayerState
-        * Service Operation - RemoveAttributes
-        *
-        * @param in_attributeNames Collection of attribute names.
-        * @param in_callback The method to be invoked when the server response is received
-        */
+         * Remove user's attributes.
+         *
+         * Service Name - PlayerState
+         * Service Operation - RemoveAttributes
+         *
+         * @param attributeNames Collection of attribute names.
+         * @param callback The method to be invoked when the server response is received
+         */
     public void updateTimeZoneOffset(int timeZoneOffset,
                                  IServerCallback callback) {
         try {
@@ -199,14 +199,14 @@ public class PlayerStateService {
     }
 
      /**
-        * Remove user's attributes.
-        *
-        * Service Name - PlayerState
-        * Service Operation - RemoveAttribute
-        *
-        * @param in_attributeNames Collection of attribute names.
-        * @param in_callback The method to be invoked when the server response is received
-        */
+         * Remove user's attributes.
+         *
+         * Service Name - PlayerState
+         * Service Operation - RemoveAttribute
+         *
+         * @param attributeNames Collection of attribute names.
+         * @param callback The method to be invoked when the server response is received
+         */
     public void updateLanguageCode(String languageCode,
                                  IServerCallback callback) {
         try {
@@ -223,14 +223,14 @@ public class PlayerStateService {
     }
 
     /**
-        * Sets the user's name.
-        *
-        * Service Name - playerState
-        * Service Operation - UPDATE_NAME
-        *
-        * @param in_userName The name of the user
-        * @param in_callback The method to be invoked when the server response is received
-        */
+         * Sets the user's name.
+         *
+         * Service Name - playerState
+         * Service Operation - UPDATE_NAME
+         *
+         * @param userName The name of the user
+         * @param callback The method to be invoked when the server response is received
+         */
     public void updateUserName(String name,
                                IServerCallback callback) {
         JSONObject data = new JSONObject();
@@ -256,14 +256,14 @@ public class PlayerStateService {
          * Service Name - PlayerState
          * Service Operation - UpdateSummary
          *
-         * @param in_jsonSummaryData A JSON string defining the summary data.
+         * @param jsonSummaryData A JSON string defining the summary data.
          * For example:
          * {
          *   "xp":123,
          *   "level":12,
          *   "highScore":45123
          * }
-         * @param in_callback Method to be invoked when the server response is received.
+         * @param callback Method to be invoked when the server response is received.
          */
     public void updateSummaryFriendData(String jsonFriendSummaryData, IServerCallback callback) {
 
@@ -285,8 +285,8 @@ public class PlayerStateService {
          * Service Name - PlayerState
          * Service Operation - UPDATE_PICTURE_URL
          *
-         * @param in_pictureUrl URL to apply
-         * @param in_callback The method to be invoked when the server response is received
+         * @param pictureUrl URL to apply
+         * @param callback The method to be invoked when the server response is received
          */
     public void updateUserPictureUrl(
             String pictureUrl,
@@ -310,8 +310,8 @@ public class PlayerStateService {
          * Service Name - PlayerState
          * Service Operation - UPDATE_CONTACT_EMAIL
          *
-         * @param in_contactEmail Updated email
-         * @param in_callback The method to be invoked when the server response is received
+         * @param contactEmail Updated email
+         * @param callback The method to be invoked when the server response is received
          */
     public void updateContactEmail(
             String contactEmail,
@@ -334,8 +334,8 @@ public class PlayerStateService {
          * Service Name - PlayerState
          * Service Operation - CLEAR_USER_STATUS
          *
-         * @param in_statusName Updated email
-         * @param in_callback The method to be invoked when the server response is received
+         * @param statusName Updated email
+         * @param callback The method to be invoked when the server response is received
          */
     public void clearUserStatus(
             String statusName,
@@ -358,10 +358,10 @@ public class PlayerStateService {
          * Service Name - PlayerState
          * Service Operation - EXTEND_USER_STATUS
          *
-         * @param in_statusName Updated email
+         * @param statusName Updated email
          * @param additionalSecs
          * @param details
-         * @param in_callback The method to be invoked when the server response is received
+         * @param callback The method to be invoked when the server response is received
          */
     public void extendUserStatus(
             String statusName,
@@ -389,8 +389,8 @@ public class PlayerStateService {
          * Service Name - PlayerState
          * Service Operation - GET_USER_STATUS
          *
-         * @param in_statusName Updated email
-         * @param in_callback The method to be invoked when the server response is received
+         * @param statusName Updated email
+         * @param callback The method to be invoked when the server response is received
          */
     public void getUserStatus(
             String statusName,
@@ -413,10 +413,10 @@ public class PlayerStateService {
          * Service Name - PlayerState
          * Service Operation - SET_USER_STATUS
          *
-         * @param in_statusName Updated email
-         * @param in_durationSecs
-         * @param in_details
-         * @param in_callback The method to be invoked when the server response is received
+         * @param statusName Updated email
+         * @param durationSecs
+         * @param details
+         * @param callback The method to be invoked when the server response is received
          */
     public void setUserStatus(
             String statusName,

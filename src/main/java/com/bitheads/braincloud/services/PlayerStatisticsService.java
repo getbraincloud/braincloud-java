@@ -31,7 +31,7 @@ public class PlayerStatisticsService {
          * Service Name - PlayerStatistics
          * Service Operation - Read
          *
-         * @param in_callback The method to be invoked when the server response is received
+         * @param callback The method to be invoked when the server response is received
          */
     public void readAllUserStats(IServerCallback callback) {
         ServerCall sc = new ServerCall(ServiceName.playerStatistics,
@@ -45,9 +45,9 @@ public class PlayerStatisticsService {
          * Service Name - PlayerStatistics
          * Service Operation - ReadSubset
          *
-         * @param in_statistics A collection containing the subset of statistics to read:
+         * @param statistics A collection containing the subset of statistics to read:
          * ex. [ "pantaloons", "minions" ]
-         * @param in_callback The method to be invoked when the server response is received
+         * @param callback The method to be invoked when the server response is received
          */
     public void readUserStatsSubset(String[] statistics, IServerCallback callback) {
         try {
@@ -73,8 +73,8 @@ public class PlayerStatisticsService {
          * Service Name - PlayerStatistics
          * Service Operation - READ_FOR_CATEGORY
          *
-         * @param in_category The user statistics category
-         * @param in_callback Method to be invoked when the server response is received.
+         * @param category The user statistics category
+         * @param callback Method to be invoked when the server response is received.
          */
     public void readUserStatsForCategory(String category, IServerCallback callback) {
         try {
@@ -94,7 +94,7 @@ public class PlayerStatisticsService {
          * Service Name - PlayerStatistics
          * Service Operation - Reset
          *
-         * @param in_callback The method to be invoked when the server response is received
+         * @param callback The method to be invoked when the server response is received
          */
     public void resetAllUserStats(IServerCallback callback) {
         ServerCall sc = new ServerCall(ServiceName.playerStatistics,
@@ -112,7 +112,7 @@ public class PlayerStatisticsService {
          * Service Name - PlayerStatistics
          * Service Operation - Update
          *
-         * @param in_jsonData The JSON encoded data to be sent to the server as follows:
+         * @param jsonData The JSON encoded data to be sent to the server as follows:
          * {
          *   stat1: 10,
          *   stat2: -5.5,
@@ -125,7 +125,7 @@ public class PlayerStatisticsService {
          * }
          * which increments stat1 by 9 up to a limit of 30.
          *
-         * @param in_callback The method to be invoked when the server response is received
+         * @param callback The method to be invoked when the server response is received
          */
     public void incrementUserStats(String jsonData, IServerCallback callback) {
         try {
@@ -156,8 +156,8 @@ public class PlayerStatisticsService {
          * Service Name - PlayerStatistics
          * Service Operation - UpdateIncrement
          *
-         * @param in_xpValue The amount to increase the user's experience by
-         * @param in_callback The method to be invoked when the server response is received
+         * @param xpValue The amount to increase the user's experience by
+         * @param callback The method to be invoked when the server response is received
          */
     public void incrementExperiencePoints(
             int xpValue,
@@ -188,7 +188,7 @@ public class PlayerStatisticsService {
          * Service Name - PlayerStatistics
          * Service Operation - ReadNextXpLevel
          *
-         * @param in_callback The method to be invoked when the server response is received
+         * @param callback The method to be invoked when the server response is received
          */
     public void getNextExperienceLevel(IServerCallback callback) {
         ServerCall sc = new ServerCall(ServiceName.playerStatistics,
@@ -204,8 +204,8 @@ public class PlayerStatisticsService {
          * Service Name - PlayerStatistics
          * Service Operation - SetXpPoints
          *
-         * @param in_xpValue The amount to set the the user's experience to
-         * @param in_callback The method to be invoked when the server response is received
+         * @param xpValue The amount to set the the user's experience to
+         * @param callback The method to be invoked when the server response is received
          */
     public void setExperiencePoints(int xpValue,
                                     IServerCallback callback) {
@@ -222,21 +222,21 @@ public class PlayerStatisticsService {
     }
 
     /**
-		* Apply statistics grammar to a partial set of statistics.
-		*
-		* Service Name - PlayerStatistics
-		* Service Operation - PROCESS_STATISTICS
-		*
-		* @param in_jsonData The JSON format is as follows:
-		* {
-		*     "DEAD_CATS": "RESET",
-		*     "LIVES_LEFT": "SET#9",
-		*     "MICE_KILLED": "INC#2",
-		*     "DOG_SCARE_BONUS_POINTS": "INC#10",
-		*     "TREES_CLIMBED": 1
-		* }
-		* @param in_callback Method to be invoked when the server response is received.
-		*/
+         * Apply statistics grammar to a partial set of statistics.
+         *
+         * Service Name - PlayerStatistics
+         * Service Operation - PROCESS_STATISTICS
+         *
+         * @param jsonData The JSON format is as follows:
+         * {
+         *     "DEAD_CATS": "RESET",
+         *     "LIVES_LEFT": "SET#9",
+         *     "MICE_KILLED": "INC#2",
+         *     "DOG_SCARE_BONUS_POINTS": "INC#10",
+         *     "TREES_CLIMBED": 1
+         * }
+         * @param callback Method to be invoked when the server response is received.
+         */
     public void processStatistics(String jsonData, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();

@@ -34,13 +34,13 @@ public class PresenceService
 	}
 
  	/**
-	* Force an RTT presence update to all listeners of the caller.
-	*
-	* Service Name - Presence
-	* Service Operation - ForcePush
-	*
-	* @param callback The method to be invoked when the server response is received
-	*/
+		 * Force an RTT presence update to all listeners of the caller.
+		 *
+		 * Service Name - Presence
+		 * Service Operation - ForcePush
+		 *
+		 * @param callback The callback invoked when the server response is received.
+		 */
 	public void forcePush(IServerCallback callback)
 	{
 		ServerCall sc = new ServerCall(ServiceName.presence, ServiceOperation.FORCE_PUSH, null, callback);
@@ -48,9 +48,11 @@ public class PresenceService
 	}
 
 	/**
-		 * Gets the presence data for the given <platform>. Can be one of "all",
-		 * "brainCloud", or "facebook". Will not include offline profiles
-		 * unless <includeOffline> is set to true.
+		 * Retrieves the presence data for friends on the specified platform.
+		 *
+		 * @param platform One of "all", "brainCloud", or "facebook".
+		 * @param includeOffline If true, includes offline profiles.
+		 * @param callback Callback invoked when the server response is received.
 		 */
 	public void getPresenceOfFriends(String platform, boolean includeOffline, IServerCallback callback)
 	{
@@ -67,8 +69,11 @@ public class PresenceService
 	}
 
 	/**
-		 * Gets the presence data for the given <groupId>. Will not include
-		 * offline profiles unless <includeOffline> is set to true.
+		 * Retrieves the presence data for members of a given group.
+		 *
+		 * @param groupId Group ID to query.
+		 * @param includeOffline If true, includes offline profiles.
+		 * @param callback Callback invoked when the server response is received.
 		 */
 	public void getPresenceOfGroup(String groupId, boolean includeOffline, IServerCallback callback)
 	{
@@ -85,8 +90,11 @@ public class PresenceService
 	}
 
 	/**
-		 * Gets the presence data for the given <profileIds>. Will not include
-		 * offline profiles unless <includeOffline> is set to true.
+		 * Retrieves the presence data for the specified users.
+		 *
+		 * @param profileIds Vector of profile IDs to query.
+		 * @param includeOffline If true, includes offline profiles.
+		 * @param callback Callback invoked when the server response is received.
 		 */
 	public void getPresenceOfUsers(ArrayList<String> profileIds, boolean includeOffline, IServerCallback callback)
 	{
@@ -103,10 +111,11 @@ public class PresenceService
 	}
 
 	/**
-		 * Registers the caller for RTT presence updates from friends for the
-		 * given <platform>. Can be one of "all", "brainCloud", or "facebook".
-		 * If <bidirectional> is set to true, then also registers the targeted
-		 * users for presence updates from the caller.
+		 * Registers the caller for RTT presence updates from friends on a given platform.
+		 *
+		 * @param platform One of "all", "brainCloud", or "facebook".
+		 * @param bidirectional If true, also registers targeted users for updates from the caller.
+		 * @param callback Callback invoked when the server response is received.
 		 */
 	public void registerListenersForFriends(String platform, boolean bidirectional, IServerCallback callback)
 	{
@@ -123,10 +132,11 @@ public class PresenceService
 	}
 
 	/**
-		 * Registers the caller for RTT presence updates from the members of
-		 * the given <groupId>. Caller must be a member of said group. If
-		 * <bidirectional> is set to true, then also registers the targeted
-		 * users for presence updates from the caller.
+		 * Registers the caller for RTT presence updates from members of a given group.
+		 *
+		 * @param groupId Group ID to listen to. Caller must be a member.
+		 * @param bidirectional If true, also registers targeted users for updates from the caller.
+		 * @param callback Callback invoked when the server response is received.
 		 */
 	public void registerListenersForGroup(String groupId, boolean bidirectional, IServerCallback callback)
 	{
@@ -143,9 +153,11 @@ public class PresenceService
 	}
 
 	/**
-		 * Registers the caller for RTT presence updates for the given
-		 * <profileIds>. If <bidirectional> is set to true, then also registers
-		 * the targeted users for presence updates from the caller.
+		 * Registers the caller for RTT presence updates from specific profiles.
+		 *
+		 * @param profileIds Vector of profile IDs to listen to.
+		 * @param bidirectional If true, also registers targeted users for updates from the caller.
+		 * @param callback Callback invoked when the server response is received.
 		 */
 	public void registerListenersForProfiles(ArrayList<String> profileIds, boolean bidirectional, IServerCallback callback)
 	{
@@ -162,7 +174,10 @@ public class PresenceService
 	}
 
 	/**
-		 * Update the presence data visible field for the caller.
+		 * Updates the visibility field of the caller's presence data.
+		 *
+		 * @param visible True to make the caller visible, false to hide.
+		 * @param callback Callback invoked when the server response is received.
 		 */
 	public void setVisibility(boolean visible, IServerCallback callback)
 	{
@@ -178,9 +193,10 @@ public class PresenceService
 	}
 
 	/**
-		 * Stops the caller from receiving RTT presence updates. Does not
-		 * affect the broadcasting of *their* presence updates to other
-		 * listeners.
+		 * Stops the caller from receiving RTT presence updates.
+		 * Does not affect broadcasting of the caller's own presence updates.
+		 *
+		 * @param callback Callback invoked when the server response is received.
 		 */
 	public void stopListening(IServerCallback callback)
 	{
@@ -189,7 +205,10 @@ public class PresenceService
 	}
 
 	/**
-		 * Update the presence data activity field for the caller.
+		 * Updates the activity field of the caller's presence data.
+		 *
+		 * @param jsonActivity JSON string representing activity information.
+		 * @param callback Callback invoked when the server response is received.
 		 */
 	public void updateActivity(String activity, IServerCallback callback)
 	{

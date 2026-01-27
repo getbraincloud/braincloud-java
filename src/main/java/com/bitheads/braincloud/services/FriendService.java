@@ -44,15 +44,15 @@ public class FriendService {
     }
 
     /**
-		* Retrieves profile information for the specified user.
-		*
-		* Service Name - friend
-		* Service Operation - GET_PROFILE_INFO_FOR_CREDENTIAL
-		*
-		* @param in_externalId The users's external ID
-		* @param in_authenticationType The authentication type of the user ID
-		* @param in_callback Method to be invoked when the server response is received.
-		*/
+		 * Retrieves profile information for the specified user.
+		 *
+		 * Service Name - friend
+		 * Service Operation - GET_PROFILE_INFO_FOR_CREDENTIAL
+		 *
+		 * @param externalId The users's external ID
+		 * @param authenticationType The authentication type of the user ID
+		 * @param callback Method to be invoked when the server response is received.
+		 */
     public void getProfileInfoForCredential(String externalId, AuthenticationType authenticationType, IServerCallback callback) {
         JSONObject data = new JSONObject();
         try {
@@ -73,9 +73,9 @@ public class FriendService {
 		* Service Name - friend
 		* Service Operation - GET_PROFILE_INFO_FOR_CREDENTIAL_IF_EXISTS
 		*
-		* @param in_externalId The users's external ID
-		* @param in_authenticationType The authentication type of the user ID
-		* @param in_callback Method to be invoked when the server response is received.
+		* @param externalId The users's external ID
+		* @param authenticationType The authentication type of the user ID
+		* @param callback Method to be invoked when the server response is received.
 		*/
     public void getProfileInfoForCredentialIfExists(String externalId, AuthenticationType authenticationType,
             IServerCallback callback) {
@@ -94,15 +94,15 @@ public class FriendService {
     }
 
     /**
-		* Retrieves profile information for the specified external auth user.
-		*
-		* Service Name - friend
-		* Service Operation - GET_PROFILE_INFO_FOR_EXTERNAL_AUTH_ID
-		*
-		* @param in_externalId External ID of the friend to find
-		* @param in_externalAuthType The external authentication type used for this friend's external ID
-		* @param in_callback Method to be invoked when the server response is received.
-		*/
+		 * Retrieves profile information for the specified external auth user.
+		 *
+		 * Service Name - friend
+		 * Service Operation - GET_PROFILE_INFO_FOR_EXTERNAL_AUTH_ID
+		 *
+		 * @param externalId External ID of the friend to find
+		 * @param externalAuthType The external authentication type used for this friend's external ID
+		 * @param callback Method to be invoked when the server response is received.
+		 */
     public void getProfileInfoForExternalAuthId(String externalId, String externalAuthType, IServerCallback callback) {
         JSONObject data = new JSONObject();
         try {
@@ -122,9 +122,9 @@ public class FriendService {
 		 * Service Name - Friend
 		 * Service Operation - GET_PROFILE_INFO_FOR_EXTERNAL_AUTH_ID_IF_EXISTS
 		 *
-		 * @param in_externalId External ID of the friend to find
-		 * @param in_externalAuthType The external authentication type used for this friend's external ID
-		 * @param in_callback Method to be invoked when the server response is received.
+		 * @param externalId External ID of the friend to find
+		 * @param externalAuthType The external authentication type used for this friend's external ID
+		 * @param callback Method to be invoked when the server response is received.
 		 */
     public void getProfileInfoForExternalAuthIdIfExists(String externalId, String externalAuthType,
             IServerCallback callback) {
@@ -145,8 +145,9 @@ public class FriendService {
     /**
 		 * Retrieves the external ID for the specified user profile ID on the specified social platform.
 		 *
-		 * @param in_profileId Profile (user) ID.
-		 * @param in_authenticationType Associated authentication type.
+		 * @param profileId Profile (user) ID.
+		 * @param authenticationType Associated authentication type.
+		 * @param callback The method to be invoked when the server response is received
 		 */
     public void getExternalIdForProfileId(String profileId, String authenticationType, IServerCallback callback) {
         JSONObject data = new JSONObject();
@@ -162,15 +163,15 @@ public class FriendService {
     }
 
     /**
-     * Finds a list of users matching the search text by performing an exact match search
-     *
-     * Service Name - friend
-     * Service Operation - FIND_USERS_BY_EXACT_NAME
-     *
-     * @param searchText The string to search for.
-     * @param maxResults  Maximum number of results to return.
-     * @param callback Method to be invoked when the server response is received.
-     */
+		 * Finds a list of users matching the search text by performing an exact match search
+		 *
+		 * Service Name - friend
+		 * Service Operation - FIND_USERS_BY_EXACT_NAME
+		 *
+		 * @param searchText The string to search for.
+		 * @param maxResults  Maximum number of results to return.
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void findUsersByExactName(String searchText, int maxResults, IServerCallback callback) {
         JSONObject data = new JSONObject();
         try {
@@ -185,16 +186,16 @@ public class FriendService {
     }
 
     /**
-     * Finds a list of users matching the search text by performing a substring
-     * search of all user names.
-     *
-     * Service Name - friend
-     * Service Operation - FIND_USERS_BY_SUBSTR_NAME
-     *
-     * @param searchText The substring to search for. Minimum length of 3 characters.
-     * @param maxResults  Maximum number of results to return. If there are more the message
-     * @param callback Method to be invoked when the server response is received.
-     */
+		 * Finds a list of users matching the search text by performing a substring
+		 * search of all user names.
+		 *
+		 * Service Name - friend
+		 * Service Operation - FIND_USERS_BY_SUBSTR_NAME
+		 *
+		 * @param searchText The substring to search for. Minimum length of 3 characters.
+		 * @param maxResults  Maximum number of results to return. If there are more the message
+		 * @param callback The method to be invoked when the server response is received
+		 */
     public void findUsersBySubstrName(String searchText, int maxResults, IServerCallback callback) {
         JSONObject data = new JSONObject();
         try {
@@ -211,7 +212,11 @@ public class FriendService {
     /**
 		 * Retrieves profile information of the specified universal Id.
 		 *
-		 * @param in_searchText Universal ID text on which to search.
+		 * Service Name - friend
+		 * Service Operation - FIND_USER_BY_EXACT_UNIVERSAL_ID
+		 *
+		 * @param searchText Universal ID text on which to search.
+		 * @param callback The method to be invoked when the server response is received
 		 */
     public void findUserByExactUniversalId(String searchText, IServerCallback callback) {
         JSONObject data = new JSONObject();
@@ -226,15 +231,15 @@ public class FriendService {
     }
 
     /**
-		* Returns a particular entity of a particular friend.
-		*
-		* Service Name - Friend
-		* Service Operation - ReadFriendEntity
-		*
-		* @param in_entityId Id of entity to retrieve.
-		* @param in_friendId Profile Id of friend who owns entity.
-		* @param in_callback Method to be invoked when the server response is received.
-		*/
+		 * Returns a particular entity of a particular friend.
+		 *
+		 * Service Name - Friend
+		 * Service Operation - ReadFriendEntity
+		 *
+		 * @param entityId Id of entity to retrieve.
+		 * @param friendId Profile Id of friend who owns entity.
+		 * @param callback Method to be invoked when the server response is received.
+		 */
     public void readFriendEntity(String friendId, String entityId, IServerCallback callback) {
         JSONObject data = new JSONObject();
         try {
@@ -249,14 +254,14 @@ public class FriendService {
     }
 
     /**
-		* Returns entities of all friends optionally based on type.
-		*
-		* Service Name - Friend
-		* Service Operation - ReadFriendsEntities
-		*
-		* @param in_entityType Types of entities to retrieve.
-		* @param in_callback Method to be invoked when the server response is received.
-		*/
+		 * Returns entities of all friends optionally based on type.
+		 *
+		 * Service Name - Friend
+		 * Service Operation - ReadFriendsEntities
+		 *
+		 * @param entityType Types of entities to retrieve.
+		 * @param callback Method to be invoked when the server response is received.
+		 */
     public void readFriendsEntities(String entityType, IServerCallback callback) {
         JSONObject data = new JSONObject();
         try {
@@ -273,14 +278,14 @@ public class FriendService {
 
     /**
 		 * Read a friend's user state.
-         * If you are not friend with this user, you will get an error
-         * with NOT_FRIENDS reason code.
+		 * If you are not friend with this user, you will get an error
+		 * with NOT_FRIENDS reason code.
 		 *
 		 * Service Name - Friend
 		 * Service Operation - ReadFriendsPlayerState
 		 *
-		 * @param in_friendId Target friend
-		 * @param in_callback Method to be invoked when the server response is received.
+		 * @param friendId Target friend
+		 * @param callback Method to be invoked when the server response is received.
 		 */
     public void readFriendUserState(String friendId, IServerCallback callback) {
         JSONObject data = new JSONObject();
@@ -300,9 +305,9 @@ public class FriendService {
 		 * Service Name - Friend
 		 * Service Operation - LIST_FRIENDS
 		 *
-		 * @param in_friendPlatform Friend platform to query.
-		 * @param in_includeSummaryData  True if including summary data; false otherwise.
-		 * @param in_callback Method to be invoked when the server response is received.
+		 * @param friendPlatform Friend platform to query.
+		 * @param includeSummaryData  True if including summary data; false otherwise.
+		 * @param callback Method to be invoked when the server response is received.
 		 */
     public void listFriends(FriendPlatform friendPlatform, Boolean includeSummaryData, IServerCallback callback) {
         JSONObject data = new JSONObject();
@@ -347,8 +352,8 @@ public class FriendService {
 		 * Service Name - Friend
 		 * Service Operation - ADD_FRIENDS
 		 *
-		 * @param in_profileIds Collection of profile IDs.
-		 * @param in_callback Method to be invoked when the server response is received.
+		 * @param profileIds Collection of profile IDs.
+		 * @param callback Method to be invoked when the server response is received.
 		 */
     public void addFriends(String[] profileIds, IServerCallback callback) {
         JSONArray profiles = new JSONArray();
@@ -373,10 +378,10 @@ public class FriendService {
 		 * Service Name - Friend
 		 * Service Operation - ADD_FRIENDS_FROM_PLATFORM
 		 *
-		 * @param in_friendPlatform Platform to add from (i.e: FriendPlatform::Facebook)
-		 * @param in_mode ADD or SYNC
-		 * @param in_externalIds Collection of external IDs from the friend platform.
-		 * @param in_callback Method to be invoked when the server response is received.
+		 * @param friendPlatform Platform to add from (i.e: FriendPlatform::Facebook)
+		 * @param mode ADD or SYNC
+		 * @param externalIds Collection of external IDs from the friend platform.
+		 * @param callback Method to be invoked when the server response is received.
 		 */
     public void addFriendsFromPlatform(FriendPlatform friendPlatform, String mode, String[] externalIds, IServerCallback callback) {
         JSONArray externals = new JSONArray();
@@ -398,14 +403,14 @@ public class FriendService {
     }
 
     /**
-		* Unlinks the current user and the specified users as brainCloud friends.
-		*
-		* Service Name - Friend
-		* Service Operation - REMOVE_FRIENDS
-		*
-		* @param in_profileIds Collection of profile IDs.
-		* @param in_callback Method to be invoked when the server response is received.
-		*/
+		 * Unlinks the current user and the specified users as brainCloud friends.
+		 *
+		 * Service Name - Friend
+		 * Service Operation - REMOVE_FRIENDS
+		 *
+		 * @param profileIds Collection of profile IDs.
+		 * @param callback Method to be invoked when the server response is received.
+		 */
     public void removeFriends(String[] profileIds, IServerCallback callback) {
         JSONArray profiles = new JSONArray();
         for (String achId : profileIds) {
@@ -424,14 +429,14 @@ public class FriendService {
     }
 
     /**
-		* Returns user state of a particular user.
-		*
-		* Service Name - Friend
-		* Service Operation - GET_SUMMARY_DATA_FOR_PROFILE_ID
-		*
-		* @param in_profileId Profile Id of user to retrieve user state for.
-		* @param in_callback Method to be invoked when the server response is received.
-		*/
+		 * Returns user state of a particular user.
+		 *
+		 * Service Name - Friend
+		 * Service Operation - GET_SUMMARY_DATA_FOR_PROFILE_ID
+		 *
+		 * @param profileId Profile Id of user to retrieve user state for.
+		 * @param callback Method to be invoked when the server response is received.
+		 */
     public void getSummaryDataForProfileId(String profileId, IServerCallback callback) {
         JSONObject data = new JSONObject();
         try {
@@ -445,14 +450,14 @@ public class FriendService {
     }
 
     /**
-		* Get users online status
-		*
-		* Service Name - Friend
-		* Service Operation - GET_USERS_ONLINE_STATUS
-		*
-		* @param in_profileIds Collection of profile IDs.
-		* @param in_callback Method to be invoked when the server response is received.
-		*/
+		 * Get users online status
+		 *
+		 * Service Name - Friend
+		 * Service Operation - GET_USERS_ONLINE_STATUS
+		 *
+		 * @param profileIds Collection of profile IDs.
+		 * @param callback Method to be invoked when the server response is received.
+		 */
     public void getUsersOnlineStatus(String[] profileIds, IServerCallback callback) {
         JSONArray profiles = new JSONArray();
         for (String achId : profileIds) {
@@ -473,8 +478,12 @@ public class FriendService {
     /**
 		 * Retrieves profile information for the users whos names start with search text.
 		 *
-		 * @param in_searchText Name text on which to search.
-		 * @param in_maxResults Maximum number of results to return.
+		 * Service Name - friend
+		 * Service Operation - FIND_USERS_BY_NAME_STARTING_WITH
+		 *
+		 * @param searchText Name text on which to search.
+		 * @param maxResults Maximum number of results to return.
+		 * @param callback The method to be invoked when the server response is received
 		 */
     public void findUsersByNameStartingWith(String searchText, int maxResults, IServerCallback callback) {
         JSONObject data = new JSONObject();
@@ -491,8 +500,12 @@ public class FriendService {
     /**
 		 * Retrieves profile information for the users whos UniversalId start with search text.
 		 *
-		 * @param in_searchText Universal ID text on which to search.
-		 * @param in_maxResults Maximum number of results to return.
+		 * Service Name - friend
+		 * Service Operation - FIND_USERS_BY_UNIVERSAL_ID_STARTING_WITH
+		 *
+		 * @param searchText Universal ID text on which to search.
+		 * @param maxResults Maximum number of results to return.
+		 * @param callback The method to be invoked when the server response is received
 		 */
     public void findUsersByUniversalIdStartingWith(String searchText, int maxResults, IServerCallback callback) {
         JSONObject data = new JSONObject();
