@@ -121,6 +121,15 @@ public class AuthenticationService {
     }
 
     /**
+     * Used to create the anonymous installation id for the brainCloud profile.
+     * 
+     * @returns A unique Anonymous ID
+     */
+    public String generateAnonymousId() {
+        return java.util.UUID.randomUUID().toString();
+    }
+
+    /**
      * Get server version.
      * 
      * @param callback The method to be invoked when the server response is received
