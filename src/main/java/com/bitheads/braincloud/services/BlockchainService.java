@@ -65,23 +65,22 @@ public class BlockchainService {
      * @param contextJson   Optional. Reserved for future use.
      * @param callback      The callback handler
      */
-    i voidGetUniqs(String i
-    _integrationID,
+    public void GetUniqs(String in_integrationID,
             String in_contextJson,
             IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
-       
-     
-      
-        JSONObject jsonData = ne
-        data.put(Parameter.contextJs
-     
-        ServerCall serverCa  = new ServerCall(ServiceName.
-                            .GET_UNIQS, data, callback);
-        _client.sendReque   erverCall);
-           
-      catch (JSONException e) {
+            data.put(Parameter.integrationId.name(), in_integrationID);
+
+            @SuppressWarnings("unused")
+            JSONObject jsonData = new JSONObject(in_contextJson);
+            data.put(Parameter.contextJson.name(), in_contextJson);
+
+            ServerCall serverCall = new ServerCall(ServiceName.blockchain,
+                    ServiceOperation.GET_UNIQS, data, callback);
+            _client.sendRequest(serverCall);
+
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
