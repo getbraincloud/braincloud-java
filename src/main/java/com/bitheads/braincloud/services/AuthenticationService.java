@@ -129,8 +129,10 @@ public class AuthenticationService {
         return java.util.UUID.randomUUID().toString();
     }
 
-    /*
+    /**
      * Get server version.
+     * 
+     * @param callback The method to be invoked when the server response is received
      */
     public void getServerVersion(IServerCallback callback) {
         try {
@@ -150,8 +152,8 @@ public class AuthenticationService {
      * want to bother
      * the user to login, or for users who are sensitive to their privacy
      *
-     * Service Name - Authenticate
-     * Service Operation - Authenticate
+     * Service Name - authenticationV2
+     * Service Operation - AUTHENTICATE
      *
      * @param forceCreate Should a new profile be created if it does not exist?
      * @param callback    The method to be invoked when the server response is
@@ -190,8 +192,8 @@ public class AuthenticationService {
      * Note that the password sent from the client to the server is protected via
      * SSL.
      *
-     * Service Name - Authenticate
-     * Service Operation - Authenticate
+     * Service Name - authenticationV2
+     * Service Operation - AUTHENTICATE
      *
      * @param email       The e-mail address of the user
      * @param password    The password of the user
@@ -236,8 +238,8 @@ public class AuthenticationService {
     /**
      * Authenticate the user with brainCloud using their Facebook Credentials
      *
-     * Service Name - Authenticate
-     * Service Operation - Authenticate
+     * Service Name - authenticationV2
+     * Service Operation - AUTHENTICATE
      *
      * @param fbUserId    The facebook id of the user
      * @param fbAuthToken The validated token from the Facebook SDK
@@ -275,8 +277,8 @@ public class AuthenticationService {
     /**
      * Authenticate the user with brainCloud using their Oculus Credentials
      *
-     * Service Name - Authenticate
-     * Service Operation - Authenticate
+     * Service Name - authenticationV2
+     * Service Operation - AUTHENTICATE
      *
      * @param oculusUserId The oculus id of the user
      * @param oculusNonce  Oculus token from the Oculus SDK
@@ -408,8 +410,8 @@ public class AuthenticationService {
     /**
      * Authenticate the user for Ultra.
      *
-     * Service Name - Authenticate
-     * Server Operation - Authenticate
+     * Service Name - authenticationV2
+     * Service Operation - AUTHENTICATE
      *
      * @param ultraUsername it's what the user uses to log into the Ultra endpoint
      *                      initially
@@ -431,8 +433,8 @@ public class AuthenticationService {
      * features to
      * allow for e-mail validation, password resets, etc.
      *
-     * Service Name - Authenticate
-     * Service Operation - Authenticate
+     * Service Name - authenticationV2
+     * Service Operation - AUTHENTICATE
      *
      * @param email       The e-mail address of the user
      * @param password    The password of the user
@@ -528,8 +530,8 @@ public class AuthenticationService {
     /**
      * Reset Email password - Sends a password reset email to the specified address
      *
-     * Service Name - Authenticate
-     * Operation - ResetEmailPassword
+     * Service Name - authenticationV2
+     * Service Operation - RESET_EMAIL_PASSWORD
      *
      * @param externalId The email address to send the reset email to.
      * @param callback   The method to be invoked when the server response is
@@ -560,8 +562,8 @@ public class AuthenticationService {
      * to
      * the specified address
      *
-     * Service Name - Authenticate
-     * Operation - ResetEmailPasswordAdvanced
+     * Service Name - authenticationV2
+     * Service Operation - RESET_EMAIL_PASSWORD_ADVANCED
      *
      * @param appId         the applicationId
      * @param emailAddress  The email address to send the reset email to.
@@ -598,8 +600,8 @@ public class AuthenticationService {
     /**
      * Reset Email password - Sends a password reset email to the specified address
      *
-     * Service Name - Authenticate
-     * Operation - ResetEmailPassword
+     * Service Name - authenticationV2
+     * Service Operation - RESET_EMAIL_PASSWORD_WITH_EXPIRY
      *
      * @param externalId The email address to send the reset email to.
      * @param callback   The method to be invoked when the server response is
@@ -631,8 +633,8 @@ public class AuthenticationService {
      * to
      * the specified address
      *
-     * Service Name - Authenticate
-     * Operation - ResetEmailPasswordAdvanced
+     * Service Name - authenticationV2
+     * Service Operation - RESET_EMAIL_PASSWORD_ADVANCED
      *
      * @param appId         the applicationId
      * @param emailAddress  The email address to send the reset email to.
@@ -671,8 +673,8 @@ public class AuthenticationService {
     /**
      * Resets Universal ID password
      *
-     * Service Name - Authenticate
-     * Operation - ResetUniversalIdPassword
+     * Service Name - authenticationV2
+     * Service Operation - RESET_UNIVERSAL_ID_PASSWORD
      *
      * @param appId       the applicationId
      * @param universalId the universal Id in question
@@ -698,8 +700,8 @@ public class AuthenticationService {
     /**
      * Advanced Universal ID password reset using templates
      *
-     * Service Name - Authenticate
-     * Operation - ResetUniversalIdPassword
+     * Service Name - authenticationV2
+     * Service Operation - RESET_UNIVERSAL_ID_PASSWORD_ADVANCED
      *
      * @param appId         the applicationId
      * @param universalId   the universal Id in question
@@ -729,8 +731,8 @@ public class AuthenticationService {
     /**
      * Resets Universal ID password
      *
-     * Service Name - Authenticate
-     * Operation - ResetUniversalIdPassword
+     * Service Name - authenticationV2
+     * Service Operation - RESET_UNIVERSAL_ID_PASSWORD_WITH_EXPIRY
      *
      * @param appId       the applicationId
      * @param universalId the universal Id in question
@@ -758,8 +760,8 @@ public class AuthenticationService {
     /**
      * Advanced Universal ID password reset using templates
      *
-     * Service Name - Authenticate
-     * Operation - ResetUniversalIdPassword
+     * Service Name - authenticationV2
+     * Service Operation - RESET_UNIVERSAL_ID_PASSWORD_ADVANCED_WITH_EXPIRY
      *
      * @param appId         the applicationId
      * @param universalId   the universal Id in question

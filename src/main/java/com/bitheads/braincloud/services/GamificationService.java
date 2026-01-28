@@ -42,8 +42,8 @@ public class GamificationService {
     /**
      * Method retrieves all gamification data for the player.
      *
-     * Service Name - Gamification
-     * Service Operation - Read
+     * Service Name - gamification
+     * Service Operation - READ
      *
      * @param includeMetaData Whether to return meta data as well
      * @param callback        Method to be invoked when the server response is
@@ -65,8 +65,8 @@ public class GamificationService {
     /**
      * Method retrieves all milestones defined for the game.
      *
-     * Service Name - Gamification
-     * Service Operation - ReadMilestones
+     * Service Name - gamification
+     * Service Operation - READ_MILESTONES
      *
      * @param includeMetaData Whether to return meta data as well
      * @param callback        Method to be invoked when the server response is
@@ -88,8 +88,8 @@ public class GamificationService {
     /**
      * Read all of the achievements defined for the game.
      *
-     * Service Name - Gamification
-     * Service Operation - ReadAchievements
+     * Service Name - gamification
+     * Service Operation - READ_ACHIEVEMENTS
      *
      * @param includeMetaData Whether to return meta data as well
      * @param callback        Method to be invoked when the server response is
@@ -129,8 +129,8 @@ public class GamificationService {
     /**
      * Method retrives the list of achieved achievements.
      *
-     * Service Name - Gamification
-     * Service Operation - ReadAchievedAchievements
+     * Service Name - gamification
+     * Service Operation - READ_ACHIEVED_ACHIEVEMENTS
      *
      * @param includeMetaData Whether to return meta data as well
      * @param callback        Method to be invoked when the server response is
@@ -155,8 +155,8 @@ public class GamificationService {
     /**
      * Method retrieves the list of completed milestones.
      *
-     * Service Name - Gamification
-     * Service Operation - ReadCompleteMilestones
+     * Service Name - gamification
+     * Service Operation - READ_COMPLETED_MILESTONES
      *
      * @param includeMetaData Whether to return meta data as well
      * @param callback        Method to be invoked when the server response is
@@ -181,8 +181,8 @@ public class GamificationService {
     /**
      * Method retrieves the list of in progress milestones
      *
-     * Service Name - Gamification
-     * Service Operation - ReadInProgressMilestones
+     * Service Name - gamification
+     * Service Operation - READ_IN_PROGRESS_MILESTONES
      *
      * @param includeMetaData Whether to return meta data as well
      * @param callback        Method to be invoked when the server response is
@@ -206,8 +206,8 @@ public class GamificationService {
     /**
      * Method retrieves milestones of the given category.
      *
-     * Service Name - Gamification
-     * Service Operation - ReadMilestonesByCategory
+     * Service Name - gamification
+     * Service Operation - READ_MILESTONES_BY_CATEGORY
      *
      * @param category        The milestone category
      * @param includeMetaData Whether to return meta data as well
@@ -234,8 +234,8 @@ public class GamificationService {
     /**
      * Method will award the achievements specified.
      *
-     * Service Name - Gamification
-     * Service Operation - AwardAchievements
+     * Service Name - gamification
+     * Service Operation - AWARD_ACHIEVEMENTS
      *
      * @param achievementIds Collection of achievement ids to award
      * @param callback       Method to be invoked when the server response is
@@ -287,8 +287,8 @@ public class GamificationService {
     /**
      * Method retrieves all of the quests defined for the game.
      *
-     * Service Name - Gamification
-     * Service Operation - ReadQuests
+     * Service Name - gamification
+     * Service Operation - READ_QUESTS
      *
      * @param includeMetaData Whether to return meta data as well
      * @param callback        Method to be invoked when the server response is
@@ -384,8 +384,8 @@ public class GamificationService {
     /**
      * Method returns quests with a status.
      *
-     * Service Name - Gamification
-     * Service Operation - ReadQuestsWithStatus
+     * Service Name - gamification
+     * Service Operation - READ_QUESTS_WITH_STATUS
      *
      * @param includeMetaData Whether to return meta data as well
      * @param callback        Method to be invoked when the server response is
@@ -409,8 +409,8 @@ public class GamificationService {
     /**
      * Method returns quests with a basic percentage.
      *
-     * Service Name - Gamification
-     * Service Operation - ReadQuestsWithBasicPercentage
+     * Service Name - gamification
+     * Service Operation - READ_QUESTS_WITH_BASIC_PERCENTAGE
      *
      * @param includeMetaData Whether to return meta data as well
      * @param callback        Method to be invoked when the server response is
@@ -435,8 +435,8 @@ public class GamificationService {
     /**
      * Method returns quests with a complex percentage.
      *
-     * Service Name - Gamification
-     * Service Operation - ReadQuestsWithComplexPercentage
+     * Service Name - gamification
+     * Service Operation - READ_QUESTS_WITH_COMPLEX_PERCENTAGE
      *
      * @param includeMetaData Whether to return meta data as well
      * @param callback        Method to be invoked when the server response is
@@ -460,8 +460,8 @@ public class GamificationService {
     /**
      * Method returns quests for the given category.
      *
-     * Service Name - Gamification
-     * Service Operation - ReadQuestsByCategory
+     * Service Name - gamification
+     * Service Operation - READ_QUESTS_BY_CATEGORY
      *
      * @param category        The quest category
      * @param includeMetaData Whether to return meta data as well

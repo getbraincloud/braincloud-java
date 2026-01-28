@@ -27,8 +27,8 @@ public class GlobalStatisticsService {
     /**
      * Method returns all of the global statistics.
      *
-     * Service Name - GlobalStatistics
-     * Service Operation - Read
+     * Service Name - globalGameStatistics
+     * Service Operation - READ
      *
      * @param callback Method to be invoked when the server response is received.
      */
@@ -41,8 +41,8 @@ public class GlobalStatisticsService {
     /**
      * Reads a subset of global statistics as defined by the input collection.
      *
-     * Service Name - GlobalStatistics
-     * Service Operation - ReadSubset
+     * Service Name - globalGameStatistics
+     * Service Operation - READ_SUBSET
      *
      * @param statistics A collection containing the statistics to read:
      *                   [
@@ -72,7 +72,7 @@ public class GlobalStatisticsService {
     /**
      * Method retrieves the global statistics for the given category.
      *
-     * Service Name - GlobalStatistics
+     * Service Name - globalGameStatistics
      * Service Operation - READ_FOR_CATEGORY
      *
      * @param category The global statistics category
@@ -120,7 +120,7 @@ public class GlobalStatisticsService {
     /**
      * Apply statistics grammar to a partial set of statistics.
      *
-     * Service Name - GlobalStatistics
+     * Service Name - globalGameStatistics
      * Service Operation - PROCESS_STATISTICS
      *
      * @param jsonData The JSON format is as follows:

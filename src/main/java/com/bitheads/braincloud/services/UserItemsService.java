@@ -295,8 +295,14 @@ public class UserItemsService {
 	}
 
 	/**
-	 * Opens a quantity of a bundle user item.
-	 * Creates applicable items and awards any currencies.
+	 * Allows a quantity of a specified bundle user item to be opened. Response
+	 * indicates any items and currency awards configured for the associated bundle
+	 * user item's BUNDLE type item definition, plus any 'items' awarded and any
+	 * 'currencies' awarded, along with the resulting currency balances. If
+	 * includeItemDef is true, the associated item definition will be included in
+	 * the response for any user items awarded and for the bundle user item being
+	 * opened (if any quantity of the bundle user item remains), with language
+	 * fields limited to the current or default language.
 	 *
 	 * Service Name - userItems
 	 * Service Operation - OPEN_BUNDLE
@@ -431,7 +437,11 @@ public class UserItemsService {
 	}
 
 	/**
-	 * Sells a user item back to the store.
+	 * Allows a quantity of a specified user item to be sold.
+	 * If any quantity of the user item remains, it will be returned,
+	 * potentially with the associated itemDef (with language fields
+	 * limited to the current or default language), along with the
+	 * currency refunded and currency balances.
 	 *
 	 * Service Name - userItems
 	 * Service Operation - SELL_USER_ITEM

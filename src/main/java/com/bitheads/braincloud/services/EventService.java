@@ -73,7 +73,7 @@ public class EventService {
     /**
      * Sends an event to multiple users with the attached json data.
      *
-     * Service Name - Event
+     * Service Name - event
      * Service Operation - SEND_EVENT_TO_PROFILES
      *
      * @param toIds     The profile ids of the users to send the event

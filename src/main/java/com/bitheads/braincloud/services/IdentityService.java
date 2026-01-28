@@ -52,7 +52,7 @@ public class IdentityService {
 	 * Attach the user's Facebook credentials to the current profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Attach
+	 * Service Operation - ATTACH
 	 *
 	 * @param facebookId          The facebook id of the user
 	 * @param authenticationToken The validated token from the Facebook SDK
@@ -80,7 +80,7 @@ public class IdentityService {
 	 * current profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Merge
+	 * Service Operation - MERGE
 	 *
 	 * @param facebookId          The facebook id of the user
 	 * @param authenticationToken The validated token from the Facebook SDK
@@ -98,7 +98,7 @@ public class IdentityService {
 	 * Detach the Facebook identity from this profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Detach
+	 * Service Operation - DETACH
 	 *
 	 * @param facebookId   The facebook id of the user
 	 * @param continueAnon Proceed even if the profile will revert to anonymous?
@@ -120,7 +120,7 @@ public class IdentityService {
 	 * Attach the user's credentials to the current profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Attach
+	 * Service Operation - ATTACH
 	 *
 	 * @param authenticationType Universal, Email, Facebook, etc
 	 * @param ids                Auth IDs structure
@@ -168,7 +168,7 @@ public class IdentityService {
 	 * current profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Merge
+	 * Service Operation - MERGE
 	 *
 	 * @param authenticationType Universal, Email, Facebook, etc
 	 * @param ids                Auth IDs structure
@@ -206,7 +206,7 @@ public class IdentityService {
 	 * Detach the identity from this profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Detach
+	 * Service Operation - DETACH
 	 *
 	 * @param authenticationType Universal, Email, Facebook, etc
 	 * @param externalId         User ID
@@ -323,7 +323,7 @@ public class IdentityService {
 	 * Attach the user's Oculus credentials to the current profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Attach
+	 * Service Operation - ATTACH
 	 *
 	 * @param oculusId    The oculus id of the user
 	 * @param oculusNonce The validated token from the Oculus SDK
@@ -349,7 +349,7 @@ public class IdentityService {
 	 * current profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Merge
+	 * Service Operation - MERGE
 	 *
 	 * @param oculusId    The oculus id of the user
 	 * @param oculusNonce The validated token from the Oculus SDK
@@ -365,7 +365,7 @@ public class IdentityService {
 	 * Detach the Oculus identity from this profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Detach
+	 * Service Operation - DETACH
 	 *
 	 * @param oculusId     The oculus id of the user
 	 * @param continueAnon Proceed even if the profile will revert to anonymous?
@@ -389,7 +389,7 @@ public class IdentityService {
 	 * Attach a Game Center identity to the current profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Attach
+	 * Service Operation - ATTACH
 	 *
 	 * @param gameCenterId The player's game center id (use the playerID property
 	 *                     from the local GKPlayer object)
@@ -416,7 +416,7 @@ public class IdentityService {
 	 * current profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Merge
+	 * Service Operation - MERGE
 	 *
 	 * @param gameCenterId The player's game center id (use the playerID property
 	 *                     from the local GKPlayer object)
@@ -431,7 +431,7 @@ public class IdentityService {
 	 * Detach the Game Center identity from the current profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Detach
+	 * Service Operation - DETACH
 	 *
 	 * @param gameCenterId The player's game center id (use the playerID property
 	 *                     from the local GKPlayer object)
@@ -456,7 +456,7 @@ public class IdentityService {
 	 * Attach the user's Google credentials to the current profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Attach
+	 * Service Operation - ATTACH
 	 *
 	 * @param googleId            The Google id of the user
 	 * @param authenticationToken The validated token from the Google SDK
@@ -506,7 +506,7 @@ public class IdentityService {
 	 * Attach the user's Google credentials to the current profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Attach
+	 * Service Operation - ATTACH
 	 *
 	 * @param googleId            The Google id of the user
 	 * @param authenticationToken The validated token from the Google SDK
@@ -556,7 +556,7 @@ public class IdentityService {
 	 * Attach the user's Apple credentials to the current profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Attach
+	 * Service Operation - ATTACH
 	 *
 	 * @param appleId             The appleid of the user
 	 * @param authenticationToken The validated token from the Apple SDK
@@ -584,7 +584,7 @@ public class IdentityService {
 	 * current profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Merge
+	 * Service Operation - MERGE
 	 *
 	 * @param appleId             The apple id of the user
 	 * @param authenticationToken The validated token from the Apple SDK
@@ -602,7 +602,7 @@ public class IdentityService {
 	 * Detach the Apple identity from this profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Detach
+	 * Service Operation - DETACH
 	 *
 	 * @param appleId      The apple id of the user
 	 * @param continueAnon Proceed even if the profile will revert to anonymous?
@@ -626,7 +626,7 @@ public class IdentityService {
 	 * Attach a Email and Password identity to the current profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Attach
+	 * Service Operation - ATTACH
 	 *
 	 * @param email    The user's e-mail address
 	 * @param password The user's password
@@ -650,7 +650,7 @@ public class IdentityService {
 	 * profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Merge
+	 * Service Operation - MERGE
 	 *
 	 * @param email    The user's e-mail address
 	 * @param password The user's password
@@ -665,7 +665,7 @@ public class IdentityService {
 	 * Detach the e-mail identity from the current profile
 	 *
 	 * Service Name - identity
-	 * Service Operation - Detach
+	 * Service Operation - DETACH
 	 *
 	 * @param email        The user's e-mail address
 	 * @param continueAnon Proceed even if the profile will revert to anonymous?
@@ -689,7 +689,7 @@ public class IdentityService {
 	 * Attach a Universal (userid + password) identity to the current profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Attach
+	 * Service Operation - ATTACH
 	 *
 	 * @param userId   The user's userid
 	 * @param password The user's password
@@ -713,7 +713,7 @@ public class IdentityService {
 	 * profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Merge
+	 * Service Operation - MERGE
 	 *
 	 * @param userId   The user's userid
 	 * @param password The user's password
@@ -727,7 +727,7 @@ public class IdentityService {
 	 * Detach the universal identity from the current profile
 	 *
 	 * Service Name - identity
-	 * Service Operation - Detach
+	 * Service Operation - DETACH
 	 *
 	 * @param userId       The user's userid
 	 * @param continueAnon Proceed even if the profile will revert to anonymous?
@@ -751,7 +751,7 @@ public class IdentityService {
 	 * Attach a Steam (userid + steamsessionticket) identity to the current profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Attach
+	 * Service Operation - ATTACH
 	 *
 	 * @param steamId       String representation of 64 bit steam id
 	 * @param sessionTicket The user's session ticket (hex encoded)
@@ -777,7 +777,7 @@ public class IdentityService {
 	 * profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Merge
+	 * Service Operation - MERGE
 	 *
 	 * @param steamId       String representation of 64 bit steam id
 	 * @param sessionTicket The user's session ticket (hex encoded)
@@ -793,7 +793,7 @@ public class IdentityService {
 	 * Detach the steam identity from the current profile
 	 *
 	 * Service Name - identity
-	 * Service Operation - Detach
+	 * Service Operation - DETACH
 	 *
 	 * @param steamId      String representation of 64 bit steam id
 	 * @param continueAnon Proceed even if the profile will revert to anonymous?
@@ -815,7 +815,7 @@ public class IdentityService {
 	 * Attach the user's Ultra credentials to the current profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Attach
+	 * Service Operation - ATTACH
 	 *
 	 * @param ultraUsername it's what the user uses to log into the Ultra endpoint
 	 *                      initially
@@ -842,7 +842,7 @@ public class IdentityService {
 	 * current profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Merge
+	 * Service Operation - MERGE
 	 *
 	 * @param ultraUsername it's what the user uses to log into the Ultra endpoint
 	 *                      initially
@@ -859,7 +859,7 @@ public class IdentityService {
 	 * Detach the Ultra identity from this profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Detach
+	 * Service Operation - DETACH
 	 *
 	 * @param ultraUsername it's what the user uses to log into the Ultra endpoint
 	 *                      initially
@@ -882,7 +882,7 @@ public class IdentityService {
 	 * Attach the user's Twitter credentials to the current profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Attach
+	 * Service Operation - ATTACH
 	 *
 	 * @param twitterId           The Twitter id of the user
 	 * @param authenticationToken The authentication token derived from the twitter
@@ -916,7 +916,7 @@ public class IdentityService {
 	 * current profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Merge
+	 * Service Operation - MERGE
 	 *
 	 * @param twitterId           The Twitter id of the user
 	 * @param authenticationToken The authentication token derived from the twitter
@@ -940,7 +940,7 @@ public class IdentityService {
 	 * Detach the Twitter identity from this profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Detach
+	 * Service Operation - DETACH
 	 *
 	 * @param twitterId    The Twitter id of the user
 	 * @param continueAnon Proceed even if the profile will revert to anonymous?
@@ -964,7 +964,7 @@ public class IdentityService {
 	 * Attach the user's Parse credentials to the current profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Attach
+	 * Service Operation - ATTACH
 	 *
 	 * @param parseId             The Parse id of the user
 	 * @param authenticationToken The validated token from Parse
@@ -1049,7 +1049,7 @@ public class IdentityService {
 	 * Attaches a univeral id to the current profile with no login capability.
 	 *
 	 * Service Name - identity
-	 * Service Operation - AttachNonLoginUniversalId
+	 * Service Operation - ATTACH_NONLOGIN_UNIVERSAL
 	 *
 	 * @param externalId the id that's been connected with
 	 * @param callback   The method to be invoked when the server response is
@@ -1072,7 +1072,7 @@ public class IdentityService {
 	 * Updates univeral id of the current profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - UpdateUniversalIdLogin
+	 * Service Operation - UPDATE_UNIVERSAL_LOGIN
 	 *
 	 * @param externalId the id that's been connected with
 	 * @param callback   The method to be invoked when the server response is

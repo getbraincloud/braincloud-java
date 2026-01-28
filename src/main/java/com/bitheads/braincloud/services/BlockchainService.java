@@ -26,8 +26,8 @@ public class BlockchainService {
     /**
      * Retrieves the blockchain items owned by the caller.
      *
-     * Service Name - Blockchain
-     * Service Operation - GET_BLOCKCHAITEMS
+     * Service Name - blockchain
+     * Service Operation - GET_BLOCKCHAIN_ITEMS
      *
      * @param integrationID The blockchain integration id.
      *                      Currently only 'default' is supported.
@@ -57,7 +57,7 @@ public class BlockchainService {
     /**
      * Retrieves the uniqs owned by the caller.
      *
-     * Service Name - Blockchain
+     * Service Name - blockchain
      * Service Operation - GET_UNIQS
      *
      * @param integrationID The blockchain integration id.

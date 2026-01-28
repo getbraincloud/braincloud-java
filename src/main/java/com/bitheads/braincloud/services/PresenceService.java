@@ -33,8 +33,8 @@ public class PresenceService {
 	/**
 	 * Force an RTT presence update to all listeners of the caller.
 	 *
-	 * Service Name - Presence
-	 * Service Operation - ForcePush
+	 * Service Name - presence
+	 * Service Operation - FORCE_PUSH
 	 *
 	 * @param callback The callback invoked when the server response is received.
 	 */
@@ -45,6 +45,9 @@ public class PresenceService {
 
 	/**
 	 * Retrieves the presence data for friends on the specified platform.
+	 *
+	 * Service Name - presence
+	 * Service Operation - GET_PRESENCE_OF_FRIENDS
 	 *
 	 * @param platform       One of "all", "brainCloud", or "facebook".
 	 * @param includeOffline If true, includes offline profiles.
@@ -67,6 +70,9 @@ public class PresenceService {
 	/**
 	 * Retrieves the presence data for members of a given group.
 	 *
+	 * Service Name - presence
+	 * Service Operation - GET_PRESENCE_OF_GROUP
+	 *
 	 * @param groupId        Group ID to query.
 	 * @param includeOffline If true, includes offline profiles.
 	 * @param callback       Callback invoked when the server response is received.
@@ -87,6 +93,9 @@ public class PresenceService {
 
 	/**
 	 * Retrieves the presence data for the specified users.
+	 *
+	 * Service Name - presence
+	 * Service Operation - GET_PRESENCE_OF_USERS
 	 *
 	 * @param profileIds     Vector of profile IDs to query.
 	 * @param includeOffline If true, includes offline profiles.
@@ -110,6 +119,9 @@ public class PresenceService {
 	 * Registers the caller for RTT presence updates from friends on a given
 	 * platform.
 	 *
+	 * Service Name - presence
+	 * Service Operation - REGISTER_LISTENERS_FOR_FRIENDS
+	 *
 	 * @param platform      One of "all", "brainCloud", or "facebook".
 	 * @param bidirectional If true, also registers targeted users for updates from
 	 *                      the caller.
@@ -132,6 +144,9 @@ public class PresenceService {
 	/**
 	 * Registers the caller for RTT presence updates from members of a given group.
 	 *
+	 * Service Name - presence
+	 * Service Operation - REGISTER_LISTENERS_FOR_GROUP
+	 *
 	 * @param groupId       Group ID to listen to. Caller must be a member.
 	 * @param bidirectional If true, also registers targeted users for updates from
 	 *                      the caller.
@@ -153,6 +168,9 @@ public class PresenceService {
 
 	/**
 	 * Registers the caller for RTT presence updates from specific profiles.
+	 *
+	 * Service Name - presence
+	 * Service Operation - REGISTER_LISTENERS_FOR_PROFILES
 	 *
 	 * @param profileIds    Vector of profile IDs to listen to.
 	 * @param bidirectional If true, also registers targeted users for updates from
@@ -177,6 +195,9 @@ public class PresenceService {
 	/**
 	 * Updates the visibility field of the caller's presence data.
 	 *
+	 * Service Name - presence
+	 * Service Operation - SET_VISIBILITY
+	 *
 	 * @param visible  True to make the caller visible, false to hide.
 	 * @param callback Callback invoked when the server response is received.
 	 */
@@ -196,6 +217,9 @@ public class PresenceService {
 	 * Stops the caller from receiving RTT presence updates.
 	 * Does not affect broadcasting of the caller's own presence updates.
 	 *
+	 * Service Name - presence
+	 * Service Operation - STOP_LISTENING
+	 *
 	 * @param callback Callback invoked when the server response is received.
 	 */
 	public void stopListening(IServerCallback callback) {
@@ -205,6 +229,9 @@ public class PresenceService {
 
 	/**
 	 * Updates the activity field of the caller's presence data.
+	 *
+	 * Service Name - presence
+	 * Service Operation - UPDATE_ACTIVITY
 	 *
 	 * @param jsonActivity JSON string representing activity information.
 	 * @param callback     Callback invoked when the server response is received.

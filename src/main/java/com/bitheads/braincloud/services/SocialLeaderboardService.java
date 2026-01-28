@@ -80,6 +80,9 @@ public class SocialLeaderboardService {
      * Note: If no friends have played the game, the bestScore, createdAt, updatedAt
      * will contain NULL.
      *
+     * Service Name - leaderboard
+     * Service Operation - GET_SOCIAL_LEADERBOARD
+     *
      * @param leaderboardId The id of the leaderboard to retrieve
      * @param replaceName   If true, the currently logged in player's name will be
      *                      replaced
@@ -123,6 +126,9 @@ public class SocialLeaderboardService {
      * Note: If no friends have played the game, the bestScore, createdAt, updatedAt
      * will contain NULL.
      *
+     * Service Name - leaderboard
+     * Service Operation - GET_SOCIAL_LEADERBOARD_IF_EXISTS
+     *
      * @param leaderboardId The id of the leaderboard to retrieve
      * @param replaceName   If true, the currently logged in player's name will be
      *                      replaced
@@ -163,6 +169,9 @@ public class SocialLeaderboardService {
      *
      * Note: If no friends have played the game, the bestScore, createdAt, updatedAt
      * will contain NULL.
+     *
+     * Service Name - leaderboard
+     * Service Operation - GET_SOCIAL_LEADERBOARD_BY_VERSION
      *
      * @param leaderboardId The id of the leaderboard to retrieve
      * @param replaceName   If true, the currently logged in player's name will be
@@ -210,6 +219,9 @@ public class SocialLeaderboardService {
      * Note: If no friends have played the game, the bestScore, createdAt, updatedAt
      * will contain NULL.
      *
+     * Service Name - leaderboard
+     * Service Operation - GET_SOCIAL_LEADERBOARD_BY_VERSION_IF_EXISTS
+     *
      * @param leaderboardId The id of the leaderboard to retrieve
      * @param replaceName   If true, the currently logged in player's name will be
      *                      replaced
@@ -237,6 +249,9 @@ public class SocialLeaderboardService {
 
     /**
      * Reads multiple social leaderboards.
+     *
+     * Service Name - leaderboard
+     * Service Operation - GET_MULTI_SOCIAL_LEADERBOARD
      *
      * @param leaderboardIds         Collection of leaderboard IDs.
      * @param leaderboardResultCount Maximum count of entries to return for each
@@ -275,8 +290,8 @@ public class SocialLeaderboardService {
      * Note: This method allows the client to retrieve pages from within the global
      * leaderboard list
      *
-     * Service Name - SocialLeaderboard
-     * Service Operation - GetGlobalLeaderboardPage
+     * Service Name - leaderboard
+     * Service Operation - GET_GLOBAL_LEADERBOARD_PAGE
      *
      * @param leaderboardId The id of the leaderboard to retrieve.
      * @param sort          Sort key Sort order of page.
@@ -319,7 +334,7 @@ public class SocialLeaderboardService {
      * Note: This method allows the client to retrieve pages from within the global
      * leaderboard list
      *
-     * Service Name - SocialLeaderboard
+     * Service Name - leaderboard
      * Service Operation - GET_GLOBAL_LEADERBOARD_PAGE_IF_EXISTS
      *
      * @param leaderboardId The id of the leaderboard to retrieve.
@@ -358,7 +373,7 @@ public class SocialLeaderboardService {
      * leaderboard.
      * See GetGlobalLeaderboardVersions method to retrieve the version id.
      *
-     * Service Name - SocialLeaderboard
+     * Service Name - leaderboard
      * Service Operation - GET_GLOBAL_LEADERBOARD_PAGE_BY_VERSION
      *
      * @param leaderboardId The id of the leaderboard to retrieve.
@@ -402,7 +417,7 @@ public class SocialLeaderboardService {
      * This method returns the same data as getGlobalLeaderboardPageByVersion, but
      * it will not return an error if the leaderboard does not exist
      *
-     * Service Name - SocialLeaderboard
+     * Service Name - leaderboard
      * Service Operation - GET_GLOBAL_LEADERBOARD_PAGE_BY_VERSION_IF_EXISTS
      *
      * @param leaderboardId The id of the leaderboard to retrieve.
@@ -446,8 +461,8 @@ public class SocialLeaderboardService {
      * user-defined
      * data associated with the score.
      *
-     * Service Name - SocialLeaderboard
-     * Service Operation - GetGlobalLeaderboardView
+     * Service Name - leaderboard
+     * Service Operation - GET_GLOBAL_LEADERBOARD_VIEW
      *
      * @param leaderboardId The id of the leaderboard to retrieve.
      * @param sort          Sort key Sort order of page.
@@ -490,7 +505,7 @@ public class SocialLeaderboardService {
      * user-defined
      * data associated with the score.
      *
-     * Service Name - SocialLeaderboard
+     * Service Name - leaderboard
      * Service Operation - GET_GLOBAL_LEADERBOARD_VIEW_IF_EXISTS
      *
      * @param leaderboardId The id of the leaderboard to retrieve.
@@ -532,8 +547,8 @@ public class SocialLeaderboardService {
      * leaderboard.
      * See GetGlobalLeaderboardVersions method to retrieve the version id.
      *
-     * Service Name - SocialLeaderboard
-     * Service Operation - GetGlobalLeaderboardView
+     * Service Name - leaderboard
+     * Service Operation - GET_GLOBAL_LEADERBOARD_VIEW_BY_VERSION
      *
      * @param leaderboardId The id of the leaderboard to retrieve.
      * @param sort          Sort key Sort order of page.
@@ -579,7 +594,7 @@ public class SocialLeaderboardService {
      * This method returns the same data as getGlobalLeaderboardViewByVersion, but
      * it will not return an error if the leaderboard does not exist.
      *
-     * Service Name - SocialLeaderboard
+     * Service Name - leaderboard
      * Service Operation - GET_GLOBAL_LEADERBOARD_VIEW_IF_EXISTS
      *
      * @param leaderboardId The id of the leaderboard to retrieve.
@@ -620,8 +635,8 @@ public class SocialLeaderboardService {
     /**
      * Gets the global leaderboard versions.
      *
-     * Service Name - SocialLeaderboard
-     * Service Operation - GetGlobalLeaderboardVersions
+     * Service Name - leaderboard
+     * Service Operation - GET_GLOBAL_LEADERBOARD_VERSIONS
      *
      * @param leaderboardId The leaderboard
      * @param callback      The method to be invoked when the server response is
@@ -740,7 +755,7 @@ public class SocialLeaderboardService {
      * rotationType, resetAt, and retainedCount, at a minimum, with support to
      * optionally specify an expiry in minutes.
      *
-     * Service Name - SocialLeaderboard
+     * Service Name - leaderboard
      * Service Operation - POST_SCORE_DYNAMIC_USING_CONFIG
      *
      * @param leaderboardId The leaderboard to post to.
@@ -802,8 +817,8 @@ public class SocialLeaderboardService {
      * with the posted score. This string could include information
      * relevant to the posted score. Uses UTC time in milliseconds since epoch
      *
-     * Service Name - SocialLeaderboard
-     * Service Operation - PostScoreDynamic
+     * Service Name - leaderboard
+     * Service Operation - POST_SCORE_DYNAMIC
      *
      * @param leaderboardId    The leaderboard to post to
      * @param score            The score to post
@@ -907,16 +922,39 @@ public class SocialLeaderboardService {
      * rotationType, resetAt, and retainedCount, at a minimum, with support to
      * optionally specify an expiry in minutes.
      *
-     * Service Name - Leaderboard
+     * Service Name - leaderboard
      * Service Operation - POST_GROUP_SCORE_DYNAMIC_USING_CONFIG
      *
      * @param leaderboard The leaderboard to post to
      * @param groupId     The ID of the group
      * @param score       A score to post
-     * @param configJson  Configuration for the leaderboard if it does not exist
-     *                    yet, specified as JSON object. The supporting
-     *                    configuration fields are listed in the following table of
-     *                    configJson fields.
+     * @param configJson  Configuration for the group leaderboard if it does not
+     *                    exist yet, specified as JSON object.
+     *                    Configuration fields supported are:
+     *                    leaderboardType': Required. Type of leaderboard.
+     *                    Valid values are:
+     *                    'LAST_VALUE',
+     *                    'HIGH_VALUE',
+     *                    'LOW_VALUE',
+     *                    'CUMULATIVE',
+     *                    'ARCADE_HIGH',
+     *                    'ARCADE_LOW';
+     *                    'rotationType': Required. Type ofrotation.
+     *                    Valid values are:
+     *                    'NEVER',
+     *                    'DAILY',
+     *                    'DAYS',
+     *                    'WEEKLY',
+     *                    'MONTHLY',
+     *                    'YEARLY';
+     *                    'numDaysToRotate': Required if 'DAYS' rotation type, with
+     *                    valid values between 2 and 14; otherwise, null;
+     *                    'resetAt': UTC timestamp, in milliseconds, at which to
+     *                    rotate the period. Always null if 'NEVER' rotation type;
+     *                    'retainedCount': Required. Number of rotations (versions)
+     *                    of the leaderboard to retain;
+     *                    'expireInMins': Optional. Duration, in minutes, before the
+     *                    leaderboard is to automatically expire.
      * @param callback    The method to be invoked when the server response is
      *                    received
      */
@@ -949,8 +987,8 @@ public class SocialLeaderboardService {
      * with the posted score. This string could include information
      * relevant to the posted score. uses UTC time in milliseconds since epoch
      *
-     * Service Name - SocialLeaderboard
-     * Service Operation - PostScoreDynamic
+     * Service Name - leaderboard
+     * Service Operation - POST_SCORE_DYNAMIC
      *
      * @param leaderboardId    The leaderboard to post to
      * @param score            The score to post
@@ -1051,7 +1089,7 @@ public class SocialLeaderboardService {
      * Retrieve the social leaderboard for a group by its version.
      *
      * Service Name - leaderboard
-     * Service Operation - GET_GROUP_SOCIAL_LEADERBOARD
+     * Service Operation - GET_PLAYERS_SOCIAL_LEADERBOARD_BY_VERSION
      *
      * @param leaderboardId The leaderboard to retrieve
      * @param groupId       The ID of the group
@@ -1381,7 +1419,7 @@ public class SocialLeaderboardService {
     }
 
     /**
-     * Retrieve a view of the group leaderboardsurrounding the current group.
+     * Retrieve a view of the group leaderboard surrounding the current group.
      *
      * Service Name - leaderboard
      * Service Operation - GET_GROUP_LEADERBOARD_VIEW

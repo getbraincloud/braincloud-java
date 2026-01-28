@@ -128,7 +128,7 @@ public class FriendService {
      * Retrieves profile information for the specified user. Silently fails, if
      * profile does not exist, just returns null and success, instead of an error.
      *
-     * Service Name - Friend
+     * Service Name - friend
      * Service Operation - GET_PROFILE_INFO_FOR_EXTERNAL_AUTH_ID_IF_EXISTS
      *
      * @param externalId       External ID of the friend to find
@@ -254,8 +254,8 @@ public class FriendService {
     /**
      * Returns a particular entity of a particular friend.
      *
-     * Service Name - Friend
-     * Service Operation - ReadFriendEntity
+     * Service Name - friend
+     * Service Operation - READ_FRIEND_ENTITY
      *
      * @param entityId Id of entity to retrieve.
      * @param friendId Profile Id of friend who owns entity.
@@ -277,8 +277,8 @@ public class FriendService {
     /**
      * Returns entities of all friends optionally based on type.
      *
-     * Service Name - Friend
-     * Service Operation - ReadFriendsEntities
+     * Service Name - friend
+     * Service Operation - READ_FRIENDS_ENTITIES
      *
      * @param entityType Types of entities to retrieve.
      * @param callback   Method to be invoked when the server response is received.
@@ -302,8 +302,8 @@ public class FriendService {
      * If you are not friend with this user, you will get an error
      * with NOT_FRIENDS reason code.
      *
-     * Service Name - Friend
-     * Service Operation - ReadFriendsPlayerState
+     * Service Name - friend
+     * Service Operation - READ_FRIEND_PLAYER_STATE
      *
      * @param friendId Target friend
      * @param callback Method to be invoked when the server response is received.
@@ -324,7 +324,7 @@ public class FriendService {
      * Retrieves a list of user and friend platform information for all friends of
      * the current user.
      *
-     * Service Name - Friend
+     * Service Name - friend
      * Service Operation - LIST_FRIENDS
      *
      * @param friendPlatform     Friend platform to query.
@@ -373,7 +373,7 @@ public class FriendService {
     /**
      * Links the current user and the specified users as brainCloud friends.
      *
-     * Service Name - Friend
+     * Service Name - friend
      * Service Operation - ADD_FRIENDS
      *
      * @param profileIds Collection of profile IDs.
@@ -400,7 +400,7 @@ public class FriendService {
      * Links the profiles for the specified externalIds for the given friend
      * platform as internal friends.
      *
-     * Service Name - Friend
+     * Service Name - friend
      * Service Operation - ADD_FRIENDS_FROM_PLATFORM
      *
      * @param friendPlatform Platform to add from (i.e: FriendPlatform::Facebook)
@@ -432,7 +432,7 @@ public class FriendService {
     /**
      * Unlinks the current user and the specified users as brainCloud friends.
      *
-     * Service Name - Friend
+     * Service Name - friend
      * Service Operation - REMOVE_FRIENDS
      *
      * @param profileIds Collection of profile IDs.
@@ -458,7 +458,7 @@ public class FriendService {
     /**
      * Returns user state of a particular user.
      *
-     * Service Name - Friend
+     * Service Name - friend
      * Service Operation - GET_SUMMARY_DATA_FOR_PROFILE_ID
      *
      * @param profileId Profile Id of user to retrieve user state for.
@@ -480,7 +480,7 @@ public class FriendService {
     /**
      * Get users online status
      *
-     * Service Name - Friend
+     * Service Name - friend
      * Service Operation - GET_USERS_ONLINE_STATUS
      *
      * @param profileIds Collection of profile IDs.

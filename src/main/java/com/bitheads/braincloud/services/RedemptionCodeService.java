@@ -30,7 +30,7 @@ public class RedemptionCodeService {
     /**
      * Redeem a code.
      *
-     * Service Name - RedemptionCode
+     * Service Name - redemptionCode
      * Service Operation - REDEEM_CODE
      *
      * @param scanCode                 The code to redeem
@@ -61,7 +61,7 @@ public class RedemptionCodeService {
     /**
      * Retrieve the codes already redeemed by player.
      *
-     * Service Name - RedemptionCode
+     * Service Name - redemptionCode
      * Service Operation - GET_REDEEMED_CODES
      *
      * @param codeType Optional - The type of codes to retrieve. Returns all codes

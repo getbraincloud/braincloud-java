@@ -283,7 +283,7 @@ public class PushNotificationService {
     }
 
     /**
-     * Schedules a normalized push notification to a user
+     * Schedules raw notifications based on user local time.
      *
      * @param profileId       The profileId of the user to receive the notification
      * @param fcmContent      Valid Fcm data content

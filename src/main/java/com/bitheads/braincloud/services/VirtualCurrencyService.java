@@ -29,8 +29,8 @@ public class VirtualCurrencyService {
      * Retrieve the user's currency account. Optional parameter: `vcId` (if
      * retrieving a specific currency).
      *
-     * Service Name - VirtualCurrency
-     * Service Operation - GetCurrency
+     * Service Name - virtualCurrency
+     * Service Operation - GET_PLAYER_VC
      *
      * @param vcId     Optional currency id to retrieve (pass NULL to get all
      *                 currencies)
@@ -52,8 +52,8 @@ public class VirtualCurrencyService {
      * Retrieve the parent user's currency account. Optional parameter: `vcId` (if
      * retrieving a specific currency).
      *
-     * Service Name - VirtualCurrency
-     * Service Operation - GetParentCurrency
+     * Service Name - virtualCurrency
+     * Service Operation - GET_PARENT_VC
      *
      * @param vcId      Optional currency id to retrieve (pass NULL to get all
      *                  currencies)
@@ -78,8 +78,8 @@ public class VirtualCurrencyService {
      * Retrieve the peer user's currency account. Optional parameter: `vcId` (if
      * retrieving a specific currency).
      *
-     * Service Name - VirtualCurrency
-     * Service Operation - GetPeerCurrency
+     * Service Name - virtualCurrency
+     * Service Operation - GET_PEER_VC
      *
      * @param vcId     Optional currency id to retrieve (pass NULL to get all
      *                 currencies)
@@ -102,8 +102,8 @@ public class VirtualCurrencyService {
     /**
      * Reset player's currency to zero
      *
-     * Service Name - VirtualCurrency
-     * Service Operation - ResetCurrency
+     * Service Name - virtualCurrency
+     * Service Operation - RESET_PLAYER_VC
      *
      * @param callback The method to be invoked when the server response is received
      */

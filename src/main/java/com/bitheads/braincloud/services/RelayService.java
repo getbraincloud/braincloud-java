@@ -32,14 +32,17 @@ public class RelayService {
      * Start a connection, based on connection type to
      * brainClouds Relay Servers. Connect options come in
      * from ROOM_ASSIGNED lobby callback.
-     * 
-     * @param connectionType
-     * @param host
-     * @param port
-     * @param passcode
-     * @param lobbyId
-     * @param callback       Callback objects that report Success or
-     *                       Failure|Disconnect.
+     *
+     * @param connectionType The connection type. WEBSOCKET, TCP, UDP
+     * @param options        {
+     *                       ssl: false,
+     *                       host: "168.0.1.192"
+     *                       port: 9000,
+     *                       passcode: "somePasscode",
+     *                       lobbyId: "55555:v5v:001"
+     *                       }
+     * @param callback       The method to be invoked when the server response is
+     *                       received
      *
      * @note SSL option will only work with WEBSOCKET connetion type.
      */
@@ -55,7 +58,10 @@ public class RelayService {
     }
 
     /**
-     * Requests to end the current match on the relay server
+     * Terminate the match instance by the owner.
+     * 
+     * @param json Payload data sent in JSON format. It will be relayed to other
+     *             connnected players
      */
     public void endMatch(JSONObject json) {
         _client.getRelayComms().endMatch(json);
