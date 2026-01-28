@@ -1139,6 +1139,19 @@ public class IdentityService {
 		}
 	}
 
+	/**
+	 * Retrieve list of identities
+	 *
+	 * Service Name - Identity
+	 * Service Operation - GET_IDENTITIES
+	 *
+	 * @param callback The method to be invoked when the server response is received
+	 */
+	public void getIdentities(IServerCallback callback) {
+		ServerCall sc = new ServerCall(ServiceName.identity, ServiceOperation.GET_IDENTITIES, null, callback);
+		_client.sendRequest(sc);
+	}
+
 	/*
 	 * Retrieves identity status for given identity type for this profile.
 	 */
