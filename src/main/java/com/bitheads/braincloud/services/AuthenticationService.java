@@ -208,6 +208,33 @@ public class AuthenticationService {
         authenticate(email, password, AuthenticationType.Email, null, forceCreate, null, callback);
     }
 
+     /**
+     * Authenticate the user via cloud code (which in turn validates the supplied
+     * credentials against an external system).
+     * This allows the developer to extend brainCloud authentication to support
+     * other backend authentication systems.
+     * 
+     * Service Name - Authenticate
+     * Server Operation - Authenticate
+     *
+     * @param userId           The user id
+     * @param token            The user token (password etc)
+     * @param externalAuthName The name of the cloud script to call for external
+     *                         authentication
+     * @param forceCreate      Should a new profile be created for this user if the
+     *                         account
+     *                         does not exist?
+     * @param callback         The callback handler
+     */
+    public void authenticateExternal(
+            String userId,
+            String token,
+            String externalAuthName,
+            boolean forceCreate,
+            IServerCallback callback) {
+        authenticate(userId, token, AuthenticationType.External, externalAuthName, forceCreate, null, callback);
+    }
+
     /**
      * Authenticate the user with brainCloud using their Facebook Credentials
      *
@@ -227,6 +254,24 @@ public class AuthenticationService {
     public void authenticateFacebook(String fbUserId, String fbAuthToken, boolean forceCreate,
             IServerCallback callback) {
         authenticate(fbUserId, fbAuthToken, AuthenticationType.Facebook, null, forceCreate, null, callback);
+    }
+
+    /**
+     * Authenticate the user with brainCloud using their FacebookLimited Credentials
+     *
+     * @param fbLimitedUserId The facebookLimited id of the user
+     * @param fbAuthToken     The validated token from the Facebook SDK (that will
+     *                        be
+     *                        further validated when sent to the bC service)
+     * @param forceCreate     Should a new profile be created for this user if the
+     *                        account
+     *                        does not exist?
+     * @param callback        The callback handler
+     */
+    public void authenticateFacebookLimited(String fbLimitedUserId, String fbAuthToken, boolean forceCreate,
+            IServerCallback callback) {
+        authenticate(fbLimitedUserId, fbAuthToken, AuthenticationType.FacebookLimited, null, forceCreate, null,
+                callback);
     }
 
     /**
@@ -337,6 +382,29 @@ public class AuthenticationService {
     public void authenticateSteam(String steamUserId, String steamSessionTicket, boolean forceCreate,
             IServerCallback callback) {
         authenticate(steamUserId, steamSessionTicket, AuthenticationType.Steam, null, forceCreate, null, callback);
+    }
+
+    /**
+     * Authenticate the user using a Twitter userid, authentication token, and
+     * secret from Twitter.
+     * 
+     * Service Name - Authenticate
+     * Service Operation - Authenticate
+     *
+     * @param userId      String representation of Twitter userid
+     * @param token       The authentication token derived via the Twitter apis.
+     * @param secret      The secret given when attempting to link with Twitter
+     * @param forceCreate Should a new profile be created for this user if the
+     *                    account does not exist?
+     * @param callback    The callback handler
+     */
+    public void authenticateTwitter(String userId,
+            String token,
+            String secret,
+            boolean forceCreate,
+            IServerCallback callback) {
+        String tokenSecretCombo = token + ":" + secret;
+        authenticate(userId, tokenSecretCombo, AuthenticationType.Twitter, null, forceCreate, null, callback);
     }
 
     /**

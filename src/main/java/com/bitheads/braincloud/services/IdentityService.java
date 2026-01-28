@@ -1117,6 +1117,42 @@ public class IdentityService {
 	}
 
 	/**
+	 * Returns a list of all child profiles in child Apps
+	 *
+	 * Service Name - identity
+	 * Service Operation - GET_CHILD_PROFILES
+	 *
+	 * @param includeSummaryData Whether to return the summary friend data along
+	 *                           with this call
+	 * @param callback           The method to be invoked when the server response
+	 *                           is received
+	 */
+	public void getChildProfiles(boolean includeSummaryData, IServerCallback callback) {
+		try {
+			JSONObject data = new JSONObject();
+			data.put(Parameter.includePlayerSummaryData.name(), includeSummaryData);
+
+			ServerCall sc = new ServerCall(ServiceName.identity, ServiceOperation.GET_CHILD_PROFILES, data, callback);
+			_client.sendRequest(sc);
+		} catch (JSONException je) {
+			je.printStackTrace();
+		}
+	}
+
+	/**
+	 * Retrieve list of identities
+	 *
+	 * Service Name - Identity
+	 * Service Operation - GET_IDENTITIES
+	 *
+	 * @param callback The method to be invoked when the server response is received
+	 */
+	public void getIdentities(IServerCallback callback) {
+		ServerCall sc = new ServerCall(ServiceName.identity, ServiceOperation.GET_IDENTITIES, null, callback);
+		_client.sendRequest(sc);
+	}
+
+	/*
 	 * Retrieves identity status for given identity type for this profile.
 	 */
 	public void getIdentityStatus(AuthenticationType authenticationType, String externalAuthName,
