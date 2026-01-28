@@ -280,6 +280,16 @@ public class RelayComms {
      * @param callback The method to be invoked when the server response is received
      */
     public void connect(RelayConnectionType connectionType, JSONObject options, IRelayConnectCallback callback) {
+        if (!_client.isAuthenticated()) {
+            callback.relayConnectFailure("Invalid Session - Must be authenticated before connecting to Relay Server.");
+
+            if (_loggingEnabled) {
+                System.out.println("The user is not currently authenticated - cannot connect to Relay Server.");
+            }
+
+            return;
+        }
+        
         if (_isConnected) {
             disconnect();
         }

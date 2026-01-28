@@ -125,6 +125,14 @@ public class BrainCloudRestClient implements Runnable {
         }
     }
 
+    public boolean getKillSwitchEngaged(){
+        return _killSwitchEngaged;
+    }
+
+    public void setKillSwitchEngaged(boolean killSwitchEngaged){
+        _killSwitchEngaged = killSwitchEngaged;
+    }
+
     public BrainCloudRestClient(BrainCloudClient client) {
         _client = client;
         setPacketTimeoutsToDefault();
