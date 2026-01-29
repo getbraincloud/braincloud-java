@@ -233,7 +233,7 @@ public class BrainCloudWrapperTest extends TestFixtureNoAuth {
         userWrapper.getScriptService().runScript("LogoutSession", jsonScriptData, userTr);
         userTr.Run();
 
-        // Verify session retries via long session
+        // Verify session retries via long session (if long session isn't enabled, this should fail)
         _wrapper.getIdentityService().getIdentities(tr);
         tr.Run();
     }
