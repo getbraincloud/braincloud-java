@@ -228,11 +228,10 @@ public class RelayTest extends TestFixtureBase {
         fullFlow(RelayConnectionType.WEBSOCKET);
     }
 
-    // Disabled as of 29/01/2026
-    // @Test
-    // public void testFullFlowTCP() throws Exception {
-    //     fullFlow(RelayConnectionType.TCP);
-    // }
+    @Test
+    public void testFullFlowTCP() throws Exception {
+        fullFlow(RelayConnectionType.TCP);
+    }
 
     @Test
     public void testFullFlowUDP() throws Exception {
