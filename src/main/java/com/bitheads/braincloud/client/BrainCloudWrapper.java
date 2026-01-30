@@ -732,6 +732,13 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
         getClient().getAuthenticationService().authenticateAnonymous(false, this);
     }
 
+    @Override
+    public void enableLongSession(boolean longSessionEnabled){
+        initializeIdentity(true);
+        
+        getClient().getRestClient().setLongSessionEnabled(longSessionEnabled);
+    }
+
         /**
      * Authenticate the user with a custom Email and Password. Note that the
      * client app is responsible for collecting (and storing) the e-mail and

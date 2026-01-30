@@ -349,6 +349,12 @@ public interface IBrainCloudWrapper {
 	void reconnect(IServerCallback callback);
 
 	/**
+	 * When enabled, automatically attempt to reconnect and retry server calls in the event of an expired session.
+	 * @param enableLongSession Determines if Long Session should be enabled or not
+	 */
+	void enableLongSession(boolean enableLongSession);
+
+	/**
 	 * Authenticate the user with a custom Email and Password. Note that the
 	 * client app is responsible for collecting (and storing) the e-mail and
 	 * potentially password (for convenience) in the client data. For the
