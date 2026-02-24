@@ -13,6 +13,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.bitheads.braincloud.client.BrainCloudWrapper;
+import com.bitheads.braincloud.client.ILongSessionCallback;
 import com.bitheads.braincloud.client.ReasonCodes;
 import com.bitheads.braincloud.client.ServiceName;
 import com.bitheads.braincloud.client.ServiceOperation;
@@ -188,6 +189,22 @@ public class BrainCloudWrapperTest extends TestFixtureNoAuth {
 
     @Test
     public void LongSessionEnabled(){
+        ILongSessionCallback longSessionCallback = new ILongSessionCallback() {
+
+            @Override
+            public void longSessionCallbackSuccess(JSONObject jsonData) {
+
+                System.out.println("Long session reconnect SUCCESS");
+            }
+
+            @Override
+            public void longSessionCallbackFailure(JSONObject jsonData) {
+
+                System.out.println("Long session reconnect FAILURE");
+            }
+
+        };
+
         BrainCloudWrapper userWrapper = new BrainCloudWrapper();
         m_secretMap = new HashMap<String, String>();
         m_secretMap.put(m_appId, m_secret);
@@ -203,10 +220,11 @@ public class BrainCloudWrapperTest extends TestFixtureNoAuth {
         _wrapper.getClient().enableLogging(true);
         _wrapper.enableLongSession(true);
 
+        _wrapper.getClient().registerLongSessionCallback(longSessionCallback);
+
         TestResult tr = new TestResult(_wrapper);
         _wrapper.authenticateUniversal("secondaryUser", "secondaryUser", true, tr);
         tr.Run();
-
 
         // Save Profile and Session IDs so that the session can be ended with a Cloud Code Script
         JSONObject responseData = tr.m_response.optJSONObject("data");

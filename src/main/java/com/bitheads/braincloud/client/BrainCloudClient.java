@@ -481,6 +481,23 @@ public class BrainCloudClient {
         _restClient.deregisterEventCallback();
     }
 
+    /***
+     * Registers a method to be invoked when a long session re-authentication is
+     * called.
+     * 
+     * @param callback
+     */
+    public void registerLongSessionCallback(ILongSessionCallback callback) {
+        _restClient.registerLongSessionCallback(callback);
+    }
+
+    /***
+     * Deregisters the method to be invoked when a long session re-authentication is called.
+     */
+    public void deregisterLongSessionCallback(){
+        _restClient.deregisterLongSessionCallback();
+    }
+
     /**
      * Sets a reward handler for any api call results that return rewards.
      * See The brainCloud apidocs site for more information on the return JSON
