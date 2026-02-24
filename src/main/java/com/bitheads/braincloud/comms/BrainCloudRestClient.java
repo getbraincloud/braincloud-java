@@ -5,6 +5,7 @@ import com.bitheads.braincloud.client.BrainCloudClient;
 import com.bitheads.braincloud.client.IEventCallback;
 import com.bitheads.braincloud.client.IFileUploadCallback;
 import com.bitheads.braincloud.client.IGlobalErrorCallback;
+import com.bitheads.braincloud.client.ILongSessionCallback;
 import com.bitheads.braincloud.client.INetworkErrorCallback;
 import com.bitheads.braincloud.client.IRewardCallback;
 import com.bitheads.braincloud.client.IServerCallback;
@@ -83,6 +84,7 @@ public class BrainCloudRestClient implements Runnable {
     private boolean _networkErrorCallbackReadyToBeSent = false;
 
     private IEventCallback _eventCallback = null;
+    private ILongSessionCallback _longSessionCallback = null;
     private IRewardCallback _rewardCallback = null;
     private IFileUploadCallback _fileUploadCallback = null;
     private IGlobalErrorCallback _globalErrorCallback = null;
@@ -353,6 +355,18 @@ public class BrainCloudRestClient implements Runnable {
     public void deregisterEventCallback() {
         synchronized (_lock) {
             _eventCallback = null;
+        }
+    }
+
+    public void registerLongSessionCallback(ILongSessionCallback callback) {
+        synchronized (_lock) {
+            _longSessionCallback = callback;
+        }
+    }
+
+    public void deregisterLongSessionCallback() {
+        synchronized (_lock) {
+            _longSessionCallback = null;
         }
     }
 
@@ -1170,6 +1184,10 @@ public class BrainCloudRestClient implements Runnable {
                                         _waitingQueue.addAll(queuedServerCalls);
                                     }
 
+                                    if (_longSessionCallback != null) {
+                                        _longSessionCallback.longSessionCallbackSuccess(jsonData);
+                                    }
+
                                     return;
                                 }
 
@@ -1185,6 +1203,10 @@ public class BrainCloudRestClient implements Runnable {
                                     if (expiredServerCall != null && expiredServerCall.getCallback() != null) {
                                         expiredServerCall.getCallback().serverError(serviceName, serviceOperation,
                                                 statusCode, reasonCode, jsonError);
+                                    }
+
+                                    if (_longSessionCallback != null) {
+                                        _longSessionCallback.longSessionCallbackFailure(new JSONObject(jsonError));
                                     }
                                 }
 
