@@ -76,7 +76,7 @@ public class TournamentServiceTest extends TestFixtureBase {
                 "Invalid_Id",
                 tr);
 
-        tr.RunExpectFail(400, ReasonCodes.LEADERBOARD_NOT_DIVISION_SET_INSTANCE);
+        tr.RunExpectFail(500, ReasonCodes.NO_LEADERBOARD_FOUND);
     }
 
     @Test
