@@ -10,26 +10,21 @@ import com.bitheads.braincloud.comms.ServerCall;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Date;
-
-/**
- * Created by bradleyh on 1/9/2017.
- */
-
 public class TournamentService {
 
     public enum Parameter {
-        leaderboardId,
-        divSetId,
-        versionId,
-        tournamentCode,
-        initialScore,
+        afterCount,
+        beforeCount,
         data,
+        divSetId,
+        groupId,
+        initialScore,
+        leaderboardId,
         roundStartedEpoch,
         score,
         sort,
-        beforeCount,
-        afterCount,
+        tournamentCode,
+        versionId
     }
 
     private BrainCloudClient _client;
@@ -80,6 +75,89 @@ public class TournamentService {
             data.put(Parameter.divSetId.name(), divSetId);
 
             ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.GET_DIVISION_INFO, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Essentially the same as GetGroupTournamentStatus(), but takes a division set
+     * ID instead of a leaderboard ID as its parameter. Would generally be called
+     * before JoinGroupDivision() in the case that there are multiple tournaments,
+     * or if the group member is shown information to make an informed choice as to
+     * whether to join group in tournament.
+     *
+     * Service Name - tournament
+     * Service Operation - GET_GROUP_DIVISION_INFO
+     *
+     * @param divSetId The ID for the division.
+     * @param groupId  Member's group ID.
+     * @param callback The method to be invoked when the server response is
+     *                 received.
+     */
+    public void getGroupDivisionInfo(String divSetId, String groupId, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.divSetId.name(), divSetId);
+            data.put(Parameter.groupId.name(), groupId);
+
+            ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.GET_GROUP_DIVISION_INFO, data,
+                    callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Returns a list of the member's group's recently active divisions, organized
+     * by simplified tournament state: ACTIVE, PENDING, COMPLETE.
+     * 
+     * Service Name - tournament
+     * Service Name - GET_GROUP_DIVISIONS
+     * 
+     * @param groupId  Member's group id.
+     * @param callback The method to be invoked when the server response is
+     *                 received.
+     */
+    public void getGroupDivisions(String groupId, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.groupId.name(), groupId);
+
+            ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.GET_GROUP_DIVISIONS, data,
+                    callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Get tournament status associated with a leaderboard. Option parameter:
+     * leaderboard version id 'versionId'. If -1, defaults to current version.
+     * 
+     * Service Name - tournament
+     * Service Operation - GET_GROUP_TOURNAMENT_STATUS
+     * 
+     * @param leaderboardId The leaderboard for the group tournament.
+     * @param groupId       Member's group id.
+     * @param versionId     Version of the tournament, use -1 for the latest
+     *                      version.
+     * @param callback      The method to be invoked when the server response is
+     *                      received.
+     */
+    public void getGroupTournamentStatus(String leaderboardId, String groupId, int versionId,
+            IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+            data.put(Parameter.groupId.name(), groupId);
+            data.put(Parameter.versionId.name(), versionId);
+
+            ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.GET_GROUP_TOURNAMENT_STATUS, data,
+                    callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -156,6 +234,69 @@ public class TournamentService {
     }
 
     /**
+     * Similar to JoinGroupTournament(), except requires the division set id instead
+     * of the leaderboard id.
+     * 
+     * Service Name - tournament
+     * Service Operation - JOIN_GROUP_DIVISION
+     * 
+     * @param divSetId       Division set id.
+     * @param tournamentCode The code for the group tournament to join.
+     * @param groupId        Member's group id.
+     * @param initialScore   The initial score to give the group on the group
+     *                       leaderboard.
+     * @param callback       The method to be invoked when the server response is
+     *                       received.
+     */
+    public void joinGroupDivision(String divSetId, String tournamentCode, String groupId, long initialScore,
+            IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.divSetId.name(), divSetId);
+            data.put(Parameter.tournamentCode.name(), tournamentCode);
+            data.put(Parameter.groupId.name(), groupId);
+            data.put(Parameter.initialScore.name(), initialScore);
+
+            ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.JOIN_GROUP_DIVISION, data,
+                    callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Enrolls a member's group in the group tournament and assigns an initial
+     * score.
+     * 
+     * Service Name - tournament
+     * Service Operation - JOIN_GROUP_TOURNAMENT
+     * 
+     * @param leaderboardId  The leaderboard for the group tournament.
+     * @param tournamentCode Group tournament to join.
+     * @param groupId        Member's group id.
+     * @param initialScore   Initial score for the user.
+     * @param callback       The method to be invoked when the server response is
+     *                       received.
+     */
+    public void joinGroupTournament(String leaderboardId, String tournamentCode, String groupId, long initialScore,
+            IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+            data.put(Parameter.tournamentCode.name(), tournamentCode);
+            data.put(Parameter.groupId.name(), groupId);
+            data.put(Parameter.initialScore.name(), initialScore);
+
+            ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.JOIN_GROUP_TOURNAMENT, data,
+                    callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
      * Join the specified tournament.
      * Any entry fees will be automatically collected.
      *
@@ -211,6 +352,58 @@ public class TournamentService {
     }
 
     /**
+     * Similar to LeaveGroupTournament(), but removes member's group from division
+     * instance and also ensures that the division instance is removed from the
+     * group's division list.
+     * 
+     * Service Name - tournament
+     * Service Operation - LEAVE_GROUP_DIVISION_INSTANCE
+     * 
+     * @param leaderboardId Id of the division leaderboard the member's group is in.
+     * @param groupId       Member's group id.
+     * @param callback      The method to be invoked when the server response is
+     *                      received.
+     */
+    public void leaveGroupDivisionInstance(String leaderboardId, String groupId, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+            data.put(Parameter.groupId.name(), groupId);
+
+            ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.LEAVE_GROUP_DIVISION_INSTANCE, data,
+                    callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Allows a group member to remove the group's score from the tournament
+     * leaderboard.
+     * 
+     * Service Name - tournament
+     * Service Operation - LEAVE_GROUP_TOURNAMENT
+     * 
+     * @param leaderboardId The leaderboard for the tournament.
+     * @param groupId       Member's group id.
+     * @param callback
+     */
+    public void leaveGroupTournament(String leaderboardId, String groupId, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+            data.put(Parameter.groupId.name(), groupId);
+
+            ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.LEAVE_GROUP_TOURNAMENT, data,
+                    callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
      * Removes player's score from tournament leaderboard
      *
      * Service Name - tournament
@@ -227,6 +420,87 @@ public class TournamentService {
             data.put(Parameter.leaderboardId.name(), leaderboardId);
 
             ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.LEAVE_TOURNAMENT, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Posts the given score for member's group to the group leaderboard. Group's
+     * score is updated, if applicable, based on leaderboard type (best score,
+     * latest score, cumulative score).
+     * 
+     * Service Name - tournament
+     * Service Operation - POST_GROUP_TOURNAMENT_SCORE
+     * 
+     * @param leaderboardId     The leaderboard for the tournament.
+     * @param groupId           Member's group id.
+     * @param score             The score to post for group.
+     * @param jsonData          Optional data attached to the group leaderboard
+     *                          entry, if updated.
+     * @param roundStartedEpoch UTC timestamp the member started the match resulting
+     *                          in the score being posted. (date in millis.)
+     * @param callback          The method to be invoked when the server response is
+     *                          received.
+     */
+    public void postGroupTournamentScore(String leaderboardId, String groupId, long score, String jsonData,
+            long roundStartedEpoch, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+            data.put(Parameter.groupId.name(), groupId);
+            data.put(Parameter.score.name(), score);
+            if (StringUtil.IsOptionalParameterValid(jsonData)) {
+                JSONObject jsonObj = new JSONObject(jsonData);
+                data.put(Parameter.data.name(), jsonObj);
+            }
+            data.put(Parameter.roundStartedEpoch.name(), roundStartedEpoch);
+
+            ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.POST_GROUP_TOURNAMENT_SCORE, data,
+                    callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Posts the given score for member's group to the group leaderboard and returns leaderboard results. Group's score is updated, if applicable, based on leaderboard type (best score, latest score, cumulative score).
+     * 
+     * Service Name - tournament
+     * Service Name - POST_GROUP_TOURNAMENT_SCORE_WITH_RESULTS
+     * 
+     * @param leaderboardId The leaderboard for the tournament.
+     * @param groupId 	Member's group id.
+     * @param score The score to post for group.
+     * @param jsonData Optional data attached to the group leaderboard entry, if updated.
+     * @param roundStartedEpoch UTC timestamp the member started the match resulting in the score being posted. (date in millis.)
+     * @param sort Sort key for sort order of page. ("HIGH_TO_LOW" or "LOW_TO_HIGH")
+     * @param beforeCount The count of groups to include before the current group.
+     * @param afterCount 	The count of groups to include after the current group.
+     * @param initialScore 	The initial score for group on first joining a tournament, applicable to this call if auto-join supported. Usually 0, unless leaderboard is LOW_VALUE.
+     * @param callback The method to be invoked when the server response is received.
+     */
+    public void postGroupTournamentScoreWithResults(String leaderboardId, String groupId, long score, String jsonData,
+            long roundStartedEpoch, SocialLeaderboardService.SortOrder sort, int beforeCount, int afterCount, long initialScore, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.leaderboardId.name(), leaderboardId);
+            data.put(Parameter.groupId.name(), groupId);
+            data.put(Parameter.score.name(), score);
+            if (StringUtil.IsOptionalParameterValid(jsonData)) {
+                JSONObject jsonObj = new JSONObject(jsonData);
+                data.put(Parameter.data.name(), jsonObj);
+            }
+            data.put(Parameter.roundStartedEpoch.name(), roundStartedEpoch);
+            data.put(Parameter.sort.name(), sort);
+            data.put(Parameter.beforeCount.name(), beforeCount);
+            data.put(Parameter.afterCount.name(), afterCount);
+            data.put(Parameter.initialScore.name(), initialScore);
+
+            ServerCall sc = new ServerCall(ServiceName.tournament, ServiceOperation.POST_GROUP_TOURNAMENT_SCORE_WITH_RESULTS, data,
+                    callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();

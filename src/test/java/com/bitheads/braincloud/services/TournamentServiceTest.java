@@ -1,22 +1,34 @@
 package com.bitheads.braincloud.services;
 
+import static org.junit.Assert.fail;
+
 import java.util.Date;
 
+import org.json.JSONObject;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import com.bitheads.braincloud.client.ReasonCodes;
-
-/**
- * Created by bradleyh on 1/9/2017.
- */
 
 public class TournamentServiceTest extends TestFixtureBase {
 
     private String _tournamentCode = "testTournament";
     private String _leaderboardId = "testTournamentLeaderboard";
+    private String _groupLeaderboardId = "groupTournament";
     private boolean _didJoin;
+    private String _groupId;
+    private int _createGroupReasonCode;
+    private String _createGroupStatusMessage;
 
+    @Before
+    public void setUp() throws Exception {
+        super.setUp();
+        _groupId = null;
+        _createGroupReasonCode = 0;
+        _createGroupStatusMessage = "unknown";
+    }
+    
     @After
     public void Teardown() throws Exception {
         if (_didJoin) {
@@ -164,6 +176,144 @@ public class TournamentServiceTest extends TestFixtureBase {
         tr.RunExpectFail(400, ReasonCodes.PLAYER_NOT_ENROLLED_IN_TOURNAMENT);
     }
 
+    @Test
+    public void getGroupDivisionInfo() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        if (!createTestGroup()) {
+            fail("Failed to create group.\nReason Code: " + _createGroupReasonCode + "\nStatus Message: "
+                    + _createGroupStatusMessage + "\n");
+        }
+
+        try {
+            _wrapper.getTournamentService().getGroupDivisionInfo("bronzeGroup", _groupId, tr);
+            tr.Run();
+        } finally {
+            deleteTestGroup();
+        }
+    }
+
+    @Test
+    public void getGroupDivisions() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        if (!createTestGroup()) {
+            fail("Failed to create group.\nReason Code: " + _createGroupReasonCode + "\nStatus Message: "
+                    + _createGroupStatusMessage + "\n");
+        }
+
+        try {
+            _wrapper.getTournamentService().getGroupDivisions(_groupId, tr);
+            tr.Run();
+        } finally {
+            deleteTestGroup();
+        }
+    }
+
+    @Test
+    public void getGroupTournamentStatus() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        if (!createTestGroup()) {
+            fail("Failed to create group.\nReason Code: " + _createGroupReasonCode + "\nStatus Message: "
+                    + _createGroupStatusMessage + "\n");
+        }
+
+        try {
+            _wrapper.getTournamentService().getGroupTournamentStatus(_groupLeaderboardId, _groupId, -1, tr);
+            tr.Run();
+        } finally {
+            deleteTestGroup();
+        }
+    }
+
+    @Test
+    public void joinAndLeaveGroupDivision() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        if (!createTestGroup()) {
+            fail("Failed to create group.\nReason Code: " + _createGroupReasonCode + "\nStatus Message: "
+                    + _createGroupStatusMessage + "\n");
+        }
+
+        try {
+            _wrapper.getTournamentService().joinGroupDivision("bronzeGroup", "testGroupTournament", _groupId, 0, tr);
+            tr.Run();
+
+            String leaderboardId = tr.m_response.optJSONObject("data").optString("leaderboardId");
+            if (leaderboardId.isEmpty())
+                fail("Error reading JOIN_GROUP_DIVISION response...");
+
+            _wrapper.getTournamentService().leaveGroupDivisionInstance(leaderboardId, _groupId, tr);
+            tr.Run();
+        } finally {
+            deleteTestGroup();
+        }
+    }
+
+    @Test
+    public void joinPostLeaveGroupTournament() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        if (!createTestGroup()) {
+            fail("Failed to create group.\nReason Code: " + _createGroupReasonCode + "\nStatus Message: "
+                    + _createGroupStatusMessage + "\n");
+        }
+
+        try {
+            _wrapper.getTournamentService().joinGroupTournament(_groupLeaderboardId, "testGroupTournament", _groupId, 0,
+                    tr);
+            tr.Run();
+
+            _wrapper.getTournamentService().postGroupTournamentScore(_groupLeaderboardId, _groupId, 10, "{}", new Date().getTime(), tr);
+            tr.Run();
+
+            _wrapper.getTournamentService().postGroupTournamentScoreWithResults(_groupLeaderboardId, _groupId, 100, "{}", new Date().getTime(), SocialLeaderboardService.SortOrder.HIGH_TO_LOW, 10, 10, 0, tr);
+            tr.Run();
+
+            _wrapper.getTournamentService().leaveGroupTournament(_groupLeaderboardId, _groupId, tr);
+            tr.Run();
+        } finally {
+            deleteTestGroup();
+        }
+    }
+
+    private boolean createTestGroup() {
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().createGroup(
+                "JavaTestGroup",
+                "csharpTest",
+                true,
+                new GroupACL(GroupACL.Access.ReadWrite, GroupACL.Access.ReadWrite),
+                "{}",
+                Helpers.createJsonPair("testInc", 123),
+                Helpers.createJsonPair("test", "test"),
+                tr);
+        tr.Run(true);
+
+        if (!tr.m_result) {
+            _createGroupReasonCode = tr.m_reasonCode;
+            _createGroupStatusMessage = tr.m_statusMessage;
+            
+            return false;
+        }
+
+        JSONObject data = tr.m_response.optJSONObject("data");
+        if (data == null) return false;
+
+        _groupId = data.optString("groupId");
+        
+        return !_groupId.isEmpty();
+    }
+
+    private void deleteTestGroup() {
+        if (_groupId == null || _groupId.isEmpty()) return;
+        
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.getGroupService().deleteGroup(_groupId, -1, tr);
+        tr.Run();
+    }
+
     private int joinTestTournament() throws Exception {
         TestResult tr = new TestResult(_wrapper);
 
@@ -197,6 +347,4 @@ public class TournamentServiceTest extends TestFixtureBase {
 
         _didJoin = false;
     }
-
-
 }
