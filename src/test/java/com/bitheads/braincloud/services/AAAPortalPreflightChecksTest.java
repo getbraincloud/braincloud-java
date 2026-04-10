@@ -46,9 +46,7 @@ public class AAAPortalPreflightChecksTest extends TestFixtureBase {
             ArrayList<String> propertyNames = new ArrayList<>(Arrays.asList("prop1", "prop2", "prop3"));
             _wrapper.getGlobalAppService().readSelectedProperties(propertyNames, tr);
             if (tr.Run(true)) {
-                JSONObject response = tr.m_response.optJSONObject("data") != null
-                        ? tr.m_response.getJSONObject("data").optJSONObject("response")
-                        : null;
+                JSONObject response = tr.m_response.optJSONObject("data");
                 for (String name : new String[]{ "prop1", "prop2", "prop3" }) {
                     if (response == null || !response.has(name))
                         missing.add("global property: " + name);
@@ -113,9 +111,9 @@ public class AAAPortalPreflightChecksTest extends TestFixtureBase {
         // -----------------------------------------------------------------------
         {
             TestResult tr = new TestResult(_wrapper);
-            _wrapper.getVirtualCurrencyService().getCurrency("_invalid_id_", tr);
+            _wrapper.getVirtualCurrencyService().getCurrency(null, tr);
             if (tr.Run(true)) {
-                JSONObject currency = tr.m_response.getJSONObject("data").optJSONObject("currency");
+                JSONObject currency = tr.m_response.getJSONObject("data").optJSONObject("currencyMap");
                 if (currency == null || !currency.has("credits"))
                     missing.add("virtual currency type: credits");
             } else {
