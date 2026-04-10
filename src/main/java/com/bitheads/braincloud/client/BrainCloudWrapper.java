@@ -733,10 +733,10 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
     }
 
     @Override
-    public void enableLongSession(boolean longSessionEnabled){
+    public void enableAutoReconnect(boolean autoReconnectEnabled){
         initializeIdentity(true);
         
-        getClient().getRestClient().setLongSessionEnabled(longSessionEnabled);
+        getClient().getRestClient().setAutoReconnectEnabled(autoReconnectEnabled);
     }
 
         /**

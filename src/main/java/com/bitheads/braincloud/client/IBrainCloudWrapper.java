@@ -350,9 +350,9 @@ public interface IBrainCloudWrapper {
 
 	/**
 	 * When enabled, automatically attempt to reconnect and retry server calls in the event of an expired session.
-	 * @param enableLongSession Determines if Long Session should be enabled or not
+	 * @param enableAutoReconnect Determines if auto reconnect should be enabled or not
 	 */
-	void enableLongSession(boolean enableLongSession);
+	void enableAutoReconnect(boolean enableAutoReconnect);
 
 	/**
 	 * Authenticate the user with a custom Email and Password. Note that the
