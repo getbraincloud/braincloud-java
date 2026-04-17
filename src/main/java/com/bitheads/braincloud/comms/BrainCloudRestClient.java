@@ -5,7 +5,7 @@ import com.bitheads.braincloud.client.BrainCloudClient;
 import com.bitheads.braincloud.client.IEventCallback;
 import com.bitheads.braincloud.client.IFileUploadCallback;
 import com.bitheads.braincloud.client.IGlobalErrorCallback;
-import com.bitheads.braincloud.client.ILongSessionCallback;
+import com.bitheads.braincloud.client.IAutoReconnectCallback;
 import com.bitheads.braincloud.client.INetworkErrorCallback;
 import com.bitheads.braincloud.client.IRewardCallback;
 import com.bitheads.braincloud.client.IServerCallback;
@@ -72,7 +72,7 @@ public class BrainCloudRestClient implements Runnable {
     private long _lastReceivedPacket;
     private boolean _compressRequests = true;
     private int _compressionThreshold = 51200;
-    private boolean _longSessionEnabled = false;
+    private boolean _autoReconnectEnabled = false;
 
     private int _uploadLowTransferTimeoutSecs = 120;
     private int _uploadLowTransferThresholdSecs = 50;
@@ -84,7 +84,7 @@ public class BrainCloudRestClient implements Runnable {
     private boolean _networkErrorCallbackReadyToBeSent = false;
 
     private IEventCallback _eventCallback = null;
-    private ILongSessionCallback _longSessionCallback = null;
+    private IAutoReconnectCallback _autoReconnectCallback = null;
     private IRewardCallback _rewardCallback = null;
     private IFileUploadCallback _fileUploadCallback = null;
     private IGlobalErrorCallback _globalErrorCallback = null;
@@ -149,8 +149,8 @@ public class BrainCloudRestClient implements Runnable {
         _compressRequests = compressRequests;
     }
 
-    public void setLongSessionEnabled(boolean longSessionEnabled){
-        _longSessionEnabled = longSessionEnabled;
+    public void setAutoReconnectEnabled(boolean autoReconnectEnabled){
+        _autoReconnectEnabled = autoReconnectEnabled;
     }
 
     public void initialize(String serverUrl, String appId, String secretKey) {
@@ -358,15 +358,15 @@ public class BrainCloudRestClient implements Runnable {
         }
     }
 
-    public void registerLongSessionCallback(ILongSessionCallback callback) {
+    public void registerAutoReconnectCallback(IAutoReconnectCallback callback) {
         synchronized (_lock) {
-            _longSessionCallback = callback;
+            _autoReconnectCallback = callback;
         }
     }
 
-    public void deregisterLongSessionCallback() {
+    public void deregisterAutoReconnectCallback() {
         synchronized (_lock) {
-            _longSessionCallback = null;
+            _autoReconnectCallback = null;
         }
     }
 
@@ -1146,8 +1146,8 @@ public class BrainCloudRestClient implements Runnable {
                         }
                         String statusMessage = message.getString("status_message");
 
-                        // If the authenticated session has expired, and long session is enabled, attempt to re-authenticate and retry lost call(s)
-                        if (reasonCode == ReasonCodes.USER_SESSION_EXPIRED && _longSessionEnabled
+                        // If the authenticated session has expired, and auto reconnect is enabled, attempt to re-authenticate and retry lost call(s)
+                        if (reasonCode == ReasonCodes.USER_SESSION_EXPIRED && _autoReconnectEnabled
                                 && sc.getServiceOperation() != ServiceOperation.AUTHENTICATE && isAuthenticated()) {
 
                             // save the call that failed
@@ -1159,7 +1159,7 @@ public class BrainCloudRestClient implements Runnable {
 
                             if (_loggingEnabled) {
                                 System.out
-                                        .println("Session expired. Long Session enabled - Attempting reconnect . . .");
+                                        .println("Session expired. Auto reconnect enabled - Attempting reconnect . . .");
                             }
 
                             _packetId = 0;
@@ -1171,7 +1171,7 @@ public class BrainCloudRestClient implements Runnable {
                                 public void serverCallback(ServiceName serviceName, ServiceOperation serviceOperation,
                                         JSONObject jsonData) {
                                     if (_loggingEnabled) {
-                                        System.out.println("Long Session reconnect successful");
+                                        System.out.println("Auto reconnect successful");
                                     }
 
                                     // if any calls were in progress or failed, re-queue them
@@ -1184,8 +1184,8 @@ public class BrainCloudRestClient implements Runnable {
                                         _waitingQueue.addAll(queuedServerCalls);
                                     }
 
-                                    if (_longSessionCallback != null) {
-                                        _longSessionCallback.longSessionCallbackSuccess(jsonData);
+                                    if (_autoReconnectCallback != null) {
+                                        _autoReconnectCallback.autoReconnectCallbackSuccess(jsonData);
                                     }
 
                                     return;
@@ -1195,18 +1195,18 @@ public class BrainCloudRestClient implements Runnable {
                                 public void serverError(ServiceName serviceName, ServiceOperation serviceOperation,
                                         int statusCode, int reasonCode, String jsonError) {
                                     if (_loggingEnabled) {
-                                        System.out.println("Long Session reconnect failed");
+                                        System.out.println("Auto reconnect failed");
                                     }
 
-                                    setLongSessionEnabled(false);
+                                    setAutoReconnectEnabled(false);
 
                                     if (expiredServerCall != null && expiredServerCall.getCallback() != null) {
                                         expiredServerCall.getCallback().serverError(serviceName, serviceOperation,
                                                 statusCode, reasonCode, jsonError);
                                     }
 
-                                    if (_longSessionCallback != null) {
-                                        _longSessionCallback.longSessionCallbackFailure(new JSONObject(jsonError));
+                                    if (_autoReconnectCallback != null) {
+                                        _autoReconnectCallback.autoReconnectCallbackFailure(new JSONObject(jsonError));
                                     }
                                 }
 

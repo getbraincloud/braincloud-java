@@ -482,20 +482,20 @@ public class BrainCloudClient {
     }
 
     /***
-     * Registers a method to be invoked when a long session re-authentication is
+     * Registers a method to be invoked when a auto reconnect re-authentication is
      * called.
      * 
      * @param callback
      */
-    public void registerLongSessionCallback(ILongSessionCallback callback) {
-        _restClient.registerLongSessionCallback(callback);
+    public void registerAutoReconnectCallback(IAutoReconnectCallback callback) {
+        _restClient.registerAutoReconnectCallback(callback);
     }
 
     /***
-     * Deregisters the method to be invoked when a long session re-authentication is called.
+     * Deregisters the method to be invoked when an auto reconnect re-authentication is called.
      */
-    public void deregisterLongSessionCallback(){
-        _restClient.deregisterLongSessionCallback();
+    public void deregisterAutoReconnectCallback(){
+        _restClient.deregisterAutoReconnectCallback();
     }
 
     /**

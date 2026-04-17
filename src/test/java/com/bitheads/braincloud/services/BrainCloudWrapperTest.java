@@ -13,7 +13,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.bitheads.braincloud.client.BrainCloudWrapper;
-import com.bitheads.braincloud.client.ILongSessionCallback;
+import com.bitheads.braincloud.client.IAutoReconnectCallback;
 import com.bitheads.braincloud.client.ReasonCodes;
 import com.bitheads.braincloud.client.ServiceName;
 import com.bitheads.braincloud.client.ServiceOperation;
@@ -188,19 +188,19 @@ public class BrainCloudWrapperTest extends TestFixtureNoAuth {
     }
 
     @Test
-    public void LongSessionEnabled(){
-        ILongSessionCallback longSessionCallback = new ILongSessionCallback() {
+    public void AutoReconnectEnabled(){
+        IAutoReconnectCallback autoReconnectCallback = new IAutoReconnectCallback() {
 
             @Override
-            public void longSessionCallbackSuccess(JSONObject jsonData) {
+            public void autoReconnectCallbackSuccess(JSONObject jsonData) {
 
-                System.out.println("Long session reconnect SUCCESS");
+                System.out.println("Auto reconnect SUCCESS");
             }
 
             @Override
-            public void longSessionCallbackFailure(JSONObject jsonData) {
+            public void autoReconnectCallbackFailure(JSONObject jsonData) {
 
-                System.out.println("Long session reconnect FAILURE");
+                System.out.println("Auto reconnect FAILURE");
             }
 
         };
@@ -218,9 +218,9 @@ public class BrainCloudWrapperTest extends TestFixtureNoAuth {
         userTr.Run();
 
         _wrapper.getClient().enableLogging(true);
-        _wrapper.enableLongSession(true);
+        _wrapper.enableAutoReconnect(true);
 
-        _wrapper.getClient().registerLongSessionCallback(longSessionCallback);
+        _wrapper.getClient().registerAutoReconnectCallback(autoReconnectCallback);
 
         TestResult tr = new TestResult(_wrapper);
         _wrapper.authenticateUniversal("secondaryUser", "secondaryUser", true, tr);
@@ -251,7 +251,7 @@ public class BrainCloudWrapperTest extends TestFixtureNoAuth {
         userWrapper.getScriptService().runScript("LogoutSession", jsonScriptData, userTr);
         userTr.Run();
 
-        // Verify session retries via long session (if long session isn't enabled, this should fail)
+        // Verify session retries via auto reconnect (if auto reconnect isn't enabled, this should fail)
         _wrapper.getIdentityService().getIdentities(tr);
         tr.Run();
     }
