@@ -1,0 +1,48 @@
+{
+  // Pin VSCode's Java tooling to the same level the pom.xml targets (Java 8).
+  // Bumping these later won't change runtime behavior because maven-compiler-plugin
+  // still controls bytecode level - these settings only affect editor diagnostics.
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.compile.nullAnalysis.mode": "automatic",
+  "java.project.sourcePaths": [
+    "src/main/java",
+    "src/test/java"
+  ],
+  "java.project.outputPath": "target/classes",
+  "java.project.referencedLibraries": [
+    "lib/**/*.jar"
+  ],
+
+  // Maven integration
+  "java.import.maven.enabled": true,
+  "maven.executable.preferMavenWrapper": true,
+  "maven.terminal.useJavaHome": true,
+
+  // Editor quality-of-life
+  "editor.formatOnSave": false,
+  "java.saveActions.organizeImports": false,
+  "java.completion.importOrder": [
+    "java",
+    "javax",
+    "org",
+    "com"
+  ],
+
+  // Keep build noise out of the file explorer & search
+  "files.exclude": {
+    "**/target": true,
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true
+  },
+  "search.exclude": {
+    "**/target": true
+  },
+
+  // Test runner uses JUnit 4 (already a pom.xml dependency)
+  "java.test.config": {
+    "name": "braincloud-java-tests",
+    "workingDirectory": "${workspaceFolder}"
+  }
+}

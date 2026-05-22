@@ -9,6 +9,7 @@ public enum ServiceName {
     asyncMatch,
     authenticationV2,
     blockchain,
+    campaign,
     chat,
     dataStream,
     entity,

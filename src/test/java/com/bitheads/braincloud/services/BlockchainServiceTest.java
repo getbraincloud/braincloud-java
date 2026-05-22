@@ -17,7 +17,11 @@ public class BlockchainServiceTest extends TestFixtureBase {
         TestResult tr = new TestResult(_wrapper);
         _wrapper.getClient().getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id, getUser(Users.UserA).password, true, tr);
 
-        _wrapper.getClient().getBlockchainService().GetBlockchainItems(_defaultIntegrationId, _defaultContextJson, tr);
+        _wrapper.getBlockchainService().GetBlockchainItems(
+            _defaultIntegrationId,
+            _defaultContextJson,
+            tr);
+
         tr.Run();
 
         _wrapper.getPlayerStateService().logout(tr);
@@ -26,10 +30,15 @@ public class BlockchainServiceTest extends TestFixtureBase {
     @Test
     public void testGetUniqs() throws Exception {
         TestResult tr = new TestResult(_wrapper);
-        _wrapper.getClient().getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id, getUser(Users.UserA).password, true, tr);
+        _wrapper.getAuthenticationService().authenticateUniversal(getUser(Users.UserA).id, getUser(Users.UserA).password, true, tr);
 
-        _wrapper.getClient().getBlockchainService().GetUniqs(_defaultIntegrationId, _defaultContextJson, tr);
+        _wrapper.getBlockchainService().GetUniqs(
+            _defaultIntegrationId,
+            _defaultContextJson,
+            tr);
+            
         tr.Run();
+
         _wrapper.getPlayerStateService().logout(tr);
     }
     

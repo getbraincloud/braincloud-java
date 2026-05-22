@@ -6,6 +6,8 @@ import org.json.JSONObject;
 import com.bitheads.braincloud.services.AppStoreService;
 import com.bitheads.braincloud.services.AsyncMatchService;
 import com.bitheads.braincloud.services.AuthenticationService;
+import com.bitheads.braincloud.services.BlockchainService;
+import com.bitheads.braincloud.services.Campaign;
 import com.bitheads.braincloud.services.ChatService;
 import com.bitheads.braincloud.services.CustomEntityService;
 import com.bitheads.braincloud.services.DataStreamService;
@@ -599,6 +601,8 @@ public interface IBrainCloudWrapper {
 
 	MessagingService getMessagingService();
 
+	BlockchainService getBlockchainService();
+
 	MatchMakingService getMatchMakingService();
 
 	OneWayMatchService getOneWayMatchService();
@@ -644,5 +648,7 @@ public interface IBrainCloudWrapper {
 	ItemCatalogService getItemCatalogService();
 
 	UserItemsService getUserItemsService();
+
+	Campaign getCampaignService();
 
 }
