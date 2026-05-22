@@ -7,7 +7,7 @@ import com.bitheads.braincloud.services.AppStoreService;
 import com.bitheads.braincloud.services.AsyncMatchService;
 import com.bitheads.braincloud.services.AuthenticationService;
 import com.bitheads.braincloud.services.BlockchainService;
-import com.bitheads.braincloud.services.Campaign;
+import com.bitheads.braincloud.services.CampaignService;
 import com.bitheads.braincloud.services.ChatService;
 import com.bitheads.braincloud.services.CustomEntityService;
 import com.bitheads.braincloud.services.DataStreamService;
@@ -649,6 +649,6 @@ public interface IBrainCloudWrapper {
 
 	UserItemsService getUserItemsService();
 
-	Campaign getCampaignService();
+	CampaignService getCampaignService();
 
 }

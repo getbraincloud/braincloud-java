@@ -9,7 +9,7 @@ import com.bitheads.braincloud.client.ServiceName;
 import com.bitheads.braincloud.client.ServiceOperation;
 import com.bitheads.braincloud.comms.ServerCall;
 
-public class Campaign {
+public class CampaignService {
 
     private enum Parameter {
         optionsJson
@@ -17,7 +17,7 @@ public class Campaign {
 
     private BrainCloudClient _client;
 
-    public Campaign(BrainCloudClient client) {
+    public CampaignService(BrainCloudClient client) {
         _client = client;
     }
 
