@@ -1,4 +1,5 @@
 // Copyright 2026 bitHeads, Inc. All Rights Reserved.
+
 package com.bitheads.braincloud.client;
 
 import java.util.Map;
@@ -735,7 +736,7 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
     }
 
     @Override
-    public void enableAutoReconnect(boolean autoReconnectEnabled){
+    public void enableAutoReconnect(boolean autoReconnectEnabled) {
         initializeIdentity(true);
         
         getClient().getRestClient().setAutoReconnectEnabled(autoReconnectEnabled);
