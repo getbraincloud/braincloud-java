@@ -15,6 +15,7 @@ import com.bitheads.braincloud.services.AppStoreService;
 import com.bitheads.braincloud.services.AsyncMatchService;
 import com.bitheads.braincloud.services.AuthenticationService;
 import com.bitheads.braincloud.services.BlockchainService;
+import com.bitheads.braincloud.services.CampaignService;
 import com.bitheads.braincloud.services.ChatService;
 import com.bitheads.braincloud.services.CustomEntityService;
 import com.bitheads.braincloud.services.DataStreamService;
@@ -128,6 +129,7 @@ public class BrainCloudClient {
     private VirtualCurrencyService _virtualCurrencyService = new VirtualCurrencyService(this);
     private ItemCatalogService _itemCatalogService = new ItemCatalogService(this);
     private UserItemsService _userItemsService = new UserItemsService(this);
+    private CampaignService _campaign = new CampaignService(this);
 
 
     private static String DEFAULT_SERVER_URL = "https://api.braincloudservers.com/dispatcherv2";
@@ -906,7 +908,9 @@ public class BrainCloudClient {
         return _messagingService;
     }
 
-    public BlockchainService getBlockchainService(){return _blockchainService;}
+    public BlockchainService getBlockchainService() {
+        return _blockchainService;
+    }
 
     public MatchMakingService getMatchMakingService() {
         return _matchMakingService;
@@ -999,5 +1003,9 @@ public class BrainCloudClient {
 
     public UserItemsService getUserItemsService() {
         return _userItemsService;
+    }
+
+    public CampaignService getCampaignService() {
+        return _campaign;
     }
 }

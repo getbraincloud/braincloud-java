@@ -44,7 +44,8 @@ public class LobbyService implements IServerCallback {
         roomType,
         lobbyTypes,
         pingData,
-        criteriaJson
+        criteriaJson,
+        configOverrides
     }
 
     class ErrorCallbackEvent {
@@ -152,7 +153,7 @@ public class LobbyService implements IServerCallback {
      * @param isReady        Initial ready state of this user
      * @param extraJson      Initial extra data for this user
      * @param teamCode       Preferred team code, or empty for auto assignment
-     * @param jsonSettings   Configuration data for the lobby
+     * @param settings       Configuration data for the lobby
      * @param callback       The method to be invoked when the server response is
      *                       received
      */
@@ -183,6 +184,50 @@ public class LobbyService implements IServerCallback {
     }
 
     /**
+     * Creates a new lobby with server config overrides.
+     *
+     * Service Name - lobby
+     * Service Operation - CREATE_LOBBY_WITH_CONFIG
+     *
+     * @param lobbyType       The type of lobby to create
+     * @param rating          The skill rating used for matchmaking
+     * @param otherUserCxIds  Other users to add to the lobby
+     * @param isReady         Initial ready state of this user
+     * @param extraJson       Initial extra data for this user
+     * @param teamCode        Preferred team code, or empty for auto assignment
+     * @param settings        Configuration data for the lobby
+     * @param configOverrides Server config overrides for the lobby
+     * @param callback        The method to be invoked when the server response is
+     *                        received
+     */
+    public void createLobbyWithConfig(String lobbyType, int rating, ArrayList<String> otherUserCxIds, Boolean isReady,
+            String extraJson, String teamCode, String settings, String configOverrides, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.lobbyType.name(), lobbyType);
+            data.put(Parameter.rating.name(), rating);
+            if (otherUserCxIds != null) {
+                data.put(Parameter.otherUserCxIds.name(), new JSONArray(otherUserCxIds));
+            }
+            data.put(Parameter.isReady.name(), isReady);
+            if (StringUtil.IsOptionalParameterValid(extraJson)) {
+                data.put(Parameter.extraJson.name(), new JSONObject(extraJson));
+            }
+            data.put(Parameter.teamCode.name(), teamCode);
+            if (StringUtil.IsOptionalParameterValid(settings)) {
+                data.put(Parameter.settings.name(), new JSONObject(settings));
+            }
+            data.put(Parameter.configOverrides.name(), new JSONObject(configOverrides));
+
+            ServerCall sc = new ServerCall(ServiceName.lobby,
+                    ServiceOperation.CREATE_LOBBY_WITH_CONFIG, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
      * Creates a new lobby using collected ping data to select the best region.
      *
      * Service Name - lobby
@@ -194,7 +239,7 @@ public class LobbyService implements IServerCallback {
      * @param isReady        Initial ready state of this user
      * @param extraJson      Initial extra data for this user
      * @param teamCode       Preferred team code, or empty for auto assignment
-     * @param jsonSettings   Configuration data for the lobby
+     * @param settings       Configuration data for the lobby
      * @param callback       The method to be invoked when the server response is
      *                       received
      */
@@ -217,6 +262,49 @@ public class LobbyService implements IServerCallback {
             }
 
             attachPingDataAndSend(data, ServiceOperation.CREATE_LOBBY_WITH_PING_DATA, callback);
+
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    /**
+     * Creates a new lobby using collected ping data to select the best region.
+     *
+     * Service Name - lobby
+     * Service Operation - CREATE_LOBBY_WITH_CONFIG_AND_PING_DATA
+     *
+     * @param lobbyType       The type of lobby to create
+     * @param rating          The skill rating used for matchmaking
+     * @param otherUserCxIds  Other users to add to the lobby
+     * @param isReady         Initial ready state of this user
+     * @param extraJson       Initial extra data for this user
+     * @param teamCode        Preferred team code, or empty for auto assignment
+     * @param settings        Configuration data for the lobby
+     * @param configOverrides Server config overrides for the lobby
+     * @param callback        The method to be invoked when the server response is
+     *                        received
+     */
+    public void createLobbyWithConfigAndPingData(String lobbyType, int rating, ArrayList<String> otherUserCxIds, Boolean isReady,
+            String extraJson, String teamCode, String settings, String configOverrides, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.lobbyType.name(), lobbyType);
+            data.put(Parameter.rating.name(), rating);
+            if (otherUserCxIds != null) {
+                data.put(Parameter.otherUserCxIds.name(), new JSONArray(otherUserCxIds));
+            }
+            data.put(Parameter.isReady.name(), isReady);
+            if (StringUtil.IsOptionalParameterValid(extraJson)) {
+                data.put(Parameter.extraJson.name(), new JSONObject(extraJson));
+            }
+            data.put(Parameter.teamCode.name(), teamCode);
+            if (StringUtil.IsOptionalParameterValid(settings)) {
+                data.put(Parameter.settings.name(), new JSONObject(settings));
+            }
+            data.put(Parameter.configOverrides.name(), new JSONObject(configOverrides));
+
+            attachPingDataAndSend(data, ServiceOperation.CREATE_LOBBY_WITH_CONFIG_AND_PING_DATA, callback);
 
         } catch (JSONException je) {
             je.printStackTrace();
@@ -332,7 +420,7 @@ public class LobbyService implements IServerCallback {
      * @param jsonAlgo       Matchmaking algorithm configuration
      * @param jsonFilter     Matchmaking filter criteria
      * @param otherUserCxIds Other users to include in the lobby
-     * @param jsonSettings   Configuration data for the lobby
+     * @param settings       Configuration data for the lobby
      * @param isReady        Initial ready state of this user
      * @param extraJson      Initial extra data for this user
      * @param teamCode       Preferred team code, or empty for auto assignment
@@ -385,7 +473,7 @@ public class LobbyService implements IServerCallback {
      * @param jsonAlgo       Matchmaking algorithm configuration
      * @param jsonFilter     Matchmaking filter criteria
      * @param otherUserCxIds Other users to include in the lobby
-     * @param jsonSettings   Configuration data for the lobby
+     * @param settings       Configuration data for the lobby
      * @param isReady        Initial ready state of this user
      * @param extraJson      Initial extra data for this user
      * @param teamCode       Preferred team code, or empty for auto assignment
@@ -652,7 +740,7 @@ public class LobbyService implements IServerCallback {
      * Service Operation - UPDATE_SETTINGS
      *
      * @param lobbyId      The lobby identifier
-     * @param jsonSettings Updated lobby settings
+     * @param settings     Updated lobby settings
      * @param callback     The method to be invoked when the server response is
      *                     received
      */

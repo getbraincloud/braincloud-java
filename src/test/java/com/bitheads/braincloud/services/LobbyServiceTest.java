@@ -44,6 +44,16 @@ public class LobbyServiceTest extends TestFixtureBase
     }
 
     @Test
+    public void testLobbyWithConfig() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        String configOverrides = "{\"teams\":[{\"code\":\"reserved\",\"minUsers\":0,\"maxUsers\":1,\"autoAssign\":false},{\"code\":\"all\",\"minUsers\":6,\"maxUsers\":6,\"autoAssign\":true}]}";
+
+        _wrapper.getLobbyService().createLobbyWithConfig("MATCH_UNRANKED", 0, null, true, "{}", "all", "{}", configOverrides, tr);
+        tr.Run();
+    }
+
+    @Test
     public void testFindLobby() throws Exception {
         TestResult tr = new TestResult(_wrapper);
 
@@ -192,6 +202,10 @@ public class LobbyServiceTest extends TestFixtureBase
         tr.Run();
 
         _wrapper.getLobbyService().createLobbyWithPingData("MATCH_UNRANKED", 0, null, true, "{}", "all", "{}", tr);
+        tr.Run();
+        
+        String configOverrides = "{\"teams\":[{\"code\":\"reserved\",\"minUsers\":0,\"maxUsers\":1,\"autoAssign\":false},{\"code\":\"all\",\"minUsers\":6,\"maxUsers\":6,\"autoAssign\":true}]}";
+        _wrapper.getLobbyService().createLobbyWithConfigAndPingData("MATCH_UNRANKED", 0, null, true, "{}", "all", "{}", configOverrides, tr);
         tr.Run();
 
         _wrapper.getLobbyService().joinLobbyWithPingData("wrongLobbyId", true, "{}", "red", null, tr);

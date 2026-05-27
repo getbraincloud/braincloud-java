@@ -1,4 +1,5 @@
 // Copyright 2026 bitHeads, Inc. All Rights Reserved.
+
 package com.bitheads.braincloud.client;
 
 import java.util.Map;
@@ -10,6 +11,8 @@ import org.json.JSONObject;
 import com.bitheads.braincloud.services.AppStoreService;
 import com.bitheads.braincloud.services.AsyncMatchService;
 import com.bitheads.braincloud.services.AuthenticationService;
+import com.bitheads.braincloud.services.BlockchainService;
+import com.bitheads.braincloud.services.CampaignService;
 import com.bitheads.braincloud.services.ChatService;
 import com.bitheads.braincloud.services.CustomEntityService;
 import com.bitheads.braincloud.services.DataStreamService;
@@ -733,7 +736,7 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
     }
 
     @Override
-    public void enableAutoReconnect(boolean autoReconnectEnabled){
+    public void enableAutoReconnect(boolean autoReconnectEnabled) {
         initializeIdentity(true);
         
         getClient().getRestClient().setAutoReconnectEnabled(autoReconnectEnabled);
@@ -1375,6 +1378,11 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
     }
 
     @Override
+    public BlockchainService getBlockchainService() {
+        return _client.getBlockchainService();
+    }
+
+    @Override
 	public MatchMakingService getMatchMakingService() {
         return _client.getMatchMakingService();
     }
@@ -1488,5 +1496,10 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
     @Override
 	public UserItemsService getUserItemsService() {
         return _client.getUserItemsService();
+    }
+
+    @Override
+	public CampaignService getCampaignService() {
+        return _client.getCampaignService();
     }
 }
