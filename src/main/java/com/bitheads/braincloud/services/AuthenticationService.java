@@ -102,10 +102,8 @@ public class AuthenticationService {
      * Initialize - initializes the identity service with a saved
      * anonymous installation id and most recently used profile id
      *
-     * @param anonymousId The anonymous installation id that was generated for this
-     *                    device
-     * @param profileId   The id of the profile id that was most recently used by
-     *                    the app (on this device)
+     * @param anonymousId  The anonymous installation id that was generated for this device
+     * @param profileId The id of the profile id that was most recently used by the app (on this device)
      */
     public void initialize(String profileId, String anonymousId) {
         _anonymousId = anonymousId;
@@ -131,8 +129,6 @@ public class AuthenticationService {
 
     /**
      * Get server version.
-     * 
-     * @param callback The method to be invoked when the server response is received
      */
     public void getServerVersion(IServerCallback callback) {
         try {
@@ -148,17 +144,14 @@ public class AuthenticationService {
     }
 
     /**
-     * Authenticate a user anonymously with brainCloud - used for apps that don't
-     * want to bother
+     * Authenticate a user anonymously with brainCloud - used for apps that don't want to bother
      * the user to login, or for users who are sensitive to their privacy
      *
      * Service Name - authenticationV2
      * Service Operation - AUTHENTICATE
      *
-     * @param forceCreate Should a new profile be created if it does not exist?
-     * @param callback    The method to be invoked when the server response is
-     *                    received
-     *
+     * @param forceCreate  Should a new profile be created if it does not exist?
+     * @param callback The method to be invoked when the server response is received
      */
     public void authenticateAnonymous(boolean forceCreate, IServerCallback callback) {
         authenticate(_anonymousId, "", AuthenticationType.Anonymous, null, forceCreate, null, callback);
@@ -181,27 +174,21 @@ public class AuthenticationService {
     }
 
     /**
-     * Authenticate the user with a custom Email and Password. Note that the client
-     * app
-     * is responsible for collecting (and storing) the e-mail and potentially
-     * password
-     * (for convenience) in the client data. For the greatest security,
+     * Authenticate the user with a custom Email and Password.  Note that the client app
+     * is responsible for collecting (and storing) the e-mail and potentially password
+     * (for convenience) in the client data.  For the greatest security,
      * force the user to re-enter their * password at each login.
      * (Or at least give them that option).
      *
-     * Note that the password sent from the client to the server is protected via
-     * SSL.
+     * Note that the password sent from the client to the server is protected via SSL.
      *
      * Service Name - authenticationV2
      * Service Operation - AUTHENTICATE
      *
-     * @param email       The e-mail address of the user
-     * @param password    The password of the user
-     * @param forceCreate Should a new profile be created for this user if the
-     *                    account does not exist?
-     * @param callback    The method to be invoked when the server response is
-     *                    received
-     *
+     * @param email  The e-mail address of the user
+     * @param password  The password of the user
+     * @param forceCreate Should a new profile be created for this user if the account does not exist?
+     * @param callback The method to be invoked when the server response is received
      */
     public void authenticateEmailPassword(String email, String password, boolean forceCreate,
             IServerCallback callback) {
@@ -209,23 +196,18 @@ public class AuthenticationService {
     }
 
      /**
-     * Authenticate the user via cloud code (which in turn validates the supplied
-     * credentials against an external system).
-     * This allows the developer to extend brainCloud authentication to support
-     * other backend authentication systems.
-     * 
-     * Service Name - Authenticate
-     * Server Operation - Authenticate
-     *
-     * @param userId           The user id
-     * @param token            The user token (password etc)
-     * @param externalAuthName The name of the cloud script to call for external
-     *                         authentication
-     * @param forceCreate      Should a new profile be created for this user if the
-     *                         account
-     *                         does not exist?
-     * @param callback         The callback handler
-     */
+      * Authenticate the user via cloud code (which in turn validates the supplied credentials against an external system).
+      * This allows the developer to extend brainCloud authentication to support other backend authentication systems.
+      *
+      * Service Name - authenticationV2
+      * Server Operation - Authenticate
+      *
+      * @param userId The user id
+      * @param token The user token (password etc)
+      * @param externalAuthName The name of the cloud script to call for external authentication
+      * @param forceCreate Should a new profile be created for this user if the account does not exist?
+      * @param callback The method to be invoked when the server response is received
+      */
     public void authenticateExternal(
             String userId,
             String token,
@@ -241,15 +223,11 @@ public class AuthenticationService {
      * Service Name - authenticationV2
      * Service Operation - AUTHENTICATE
      *
-     * @param fbUserId    The facebook id of the user
+     * @param fbUserId The facebook id of the user
      * @param fbAuthToken The validated token from the Facebook SDK
-     *                    (that will be further validated when sent to the bC
-     *                    service)
-     * @param forceCreate Should a new profile be created for this user if the
-     *                    account does not exist?
-     * @param callback    The method to be invoked when the server response is
-     *                    received
-     *
+     *   (that will be further validated when sent to the bC service)
+     * @param forceCreate Should a new profile be created for this user if the account does not exist?
+     * @param callback The method to be invoked when the server response is received
      */
     public void authenticateFacebook(String fbUserId, String fbAuthToken, boolean forceCreate,
             IServerCallback callback) {
@@ -281,12 +259,9 @@ public class AuthenticationService {
      * Service Operation - AUTHENTICATE
      *
      * @param oculusUserId The oculus id of the user
-     * @param oculusNonce  Oculus token from the Oculus SDK
-     * @param forceCreate  Should a new profile be created for this user if the
-     *                     account does not exist?
-     * @param callback     The method to be invoked when the server response is
-     *                     received
-     *
+     * @param oculusNonce Oculus token from the Oculus SDK
+     * @param forceCreate Should a new profile be created for this user if the account does not exist?
+     * @param callback The method to be invoked when the server response is received
      */
     public void authenticateOculus(String oculusUserId, String oculusNonce, boolean forceCreate,
             IServerCallback callback) {
@@ -385,18 +360,16 @@ public class AuthenticationService {
     }
 
     /**
-     * Authenticate the user using a Twitter userid, authentication token, and
-     * secret from Twitter.
-     * 
-     * Service Name - Authenticate
-     * Service Operation - Authenticate
+     * Authenticate the user using a Twitter userid, authentication token, and secret from Twitter.
      *
-     * @param userId      String representation of Twitter userid
-     * @param token       The authentication token derived via the Twitter apis.
-     * @param secret      The secret given when attempting to link with Twitter
-     * @param forceCreate Should a new profile be created for this user if the
-     *                    account does not exist?
-     * @param callback    The callback handler
+     * Service Name - authenticationV2
+     * Service Operation - AUTHENTICATE
+     *
+     * @param userId  String representation of Twitter userid
+     * @param token  The authentication token derived via the Twitter apis.
+     * @param secret  The secret given when attempting to link with Twitter
+     * @param forceCreate Should a new profile be created for this user if the account does not exist?
+     * @param callback The method to be invoked when the server response is received
      */
     public void authenticateTwitter(String userId,
             String token,
@@ -411,15 +384,12 @@ public class AuthenticationService {
      * Authenticate the user for Ultra.
      *
      * Service Name - authenticationV2
-     * Service Operation - AUTHENTICATE
+     * Server Operation - Authenticate
      *
-     * @param ultraUsername it's what the user uses to log into the Ultra endpoint
-     *                      initially
-     * @param ultraIdToken  The "id_token" taken from Ultra's JWT.
-     * @param forceCreate   Should a new profile be created for this user if the
-     *                      account does not exist?
-     * @param callback      The method to be invoked when the server response is
-     *                      received
+     * @param ultraUsername it's what the user uses to log into the Ultra endpoint initially
+     * @param ultraIdToken The "id_token" taken from Ultra's JWT.
+     * @param forceCreate Should a new profile be created for this user if the account does not exist?
+     * @param callback The method to be invoked when the server response is received
      */
     public void authenticateUltra(String ultraUsername, String ultraIdToken, boolean forceCreate,
             IServerCallback callback) {
@@ -427,21 +397,17 @@ public class AuthenticationService {
     }
 
     /**
-     * Authenticate the user using a userid and password (without any validation on
-     * the userid).
-     * Similar to AuthenticateEmailPassword - except that that method has additional
-     * features to
+     * Authenticate the user using a userid and password (without any validation on the userid).
+     * Similar to AuthenticateEmailPassword - except that that method has additional features to
      * allow for e-mail validation, password resets, etc.
      *
      * Service Name - authenticationV2
      * Service Operation - AUTHENTICATE
      *
-     * @param email       The e-mail address of the user
-     * @param password    The password of the user
-     * @param forceCreate Should a new profile be created for this user if the
-     *                    account does not exist?
-     * @param callback    The method to be invoked when the server response is
-     *                    received
+     * @param email  The e-mail address of the user
+     * @param password  The password of the user
+     * @param forceCreate Should a new profile be created for this user if the account does not exist?
+     * @param callback The method to be invoked when the server response is received
      */
     public void authenticateUniversal(String userId, String userPassword, boolean forceCreate,
             IServerCallback callback) {
@@ -531,16 +497,14 @@ public class AuthenticationService {
      * Reset Email password - Sends a password reset email to the specified address
      *
      * Service Name - authenticationV2
-     * Service Operation - RESET_EMAIL_PASSWORD
+     * Operation - ResetEmailPassword
      *
      * @param externalId The email address to send the reset email to.
-     * @param callback   The method to be invoked when the server response is
-     *                   received
+     * @param callback The method to be invoked when the server response is received
      *
-     *                   Note the follow error reason codes:
+     * Note the follow error reason codes:
      *
-     *                   SECURITY_ERROR (40209) - If the email address cannot be
-     *                   found.
+     * SECURITY_ERROR (40209) - If the email address cannot be found.
      */
     public void resetEmailPassword(String email, IServerCallback callback) {
         try {
@@ -558,26 +522,21 @@ public class AuthenticationService {
     }
 
     /**
-     * Reset Email password with service parameters - Sends a password reset email
-     * to
+     * Reset Email password with service parameters - Sends a password reset email to
      * the specified address
      *
      * Service Name - authenticationV2
-     * Service Operation - RESET_EMAIL_PASSWORD_ADVANCED
+     * Operation - ResetEmailPasswordAdvanced
      *
-     * @param appId         the applicationId
-     * @param emailAddress  The email address to send the reset email to.
-     * @param serviceParams - parameters to send to the email service. See
-     *                      documentation for
-     *                      full list.
-     *                      http://getbraincloud.com/apidocs/apiref/#capi-mail
-     * @param callback      The method to be invoked when the server response is
-     *                      received
+     * @param appId the applicationId
+     * @param emailAddress The email address to send the reset email to.
+     * @param serviceParams - parameters to send to the email service. See documentation for
+     * full list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+     * @param callback The method to be invoked when the server response is received
      *
-     *                      Note the follow error reason codes:
+     * Note the follow error reason codes:
      *
-     *                      SECURITY_ERROR (40209) - If the email address cannot be
-     *                      found.
+     * SECURITY_ERROR (40209) - If the email address cannot be found.
      */
     public void resetEmailPasswordAdvanced(String email, String serviceParams, IServerCallback callback) {
         try {
@@ -601,16 +560,14 @@ public class AuthenticationService {
      * Reset Email password - Sends a password reset email to the specified address
      *
      * Service Name - authenticationV2
-     * Service Operation - RESET_EMAIL_PASSWORD_WITH_EXPIRY
+     * Operation - ResetEmailPassword
      *
      * @param externalId The email address to send the reset email to.
-     * @param callback   The method to be invoked when the server response is
-     *                   received
+     * @param callback The method to be invoked when the server response is received
      *
-     *                   Note the follow error reason codes:
+     * Note the follow error reason codes:
      *
-     *                   SECURITY_ERROR (40209) - If the email address cannot be
-     *                   found.
+     * SECURITY_ERROR (40209) - If the email address cannot be found.
      */
     public void resetEmailPasswordWithExpiry(String email, int tokenTtlInMinutes, IServerCallback callback) {
         try {
@@ -629,26 +586,21 @@ public class AuthenticationService {
     }
 
     /**
-     * Reset Email password with service parameters - Sends a password reset email
-     * to
+     * Reset Email password with service parameters - Sends a password reset email to
      * the specified address
      *
      * Service Name - authenticationV2
-     * Service Operation - RESET_EMAIL_PASSWORD_ADVANCED
+     * Operation - ResetEmailPasswordAdvanced
      *
-     * @param appId         the applicationId
-     * @param emailAddress  The email address to send the reset email to.
-     * @param serviceParams - parameters to send to the email service. See
-     *                      documentation for
-     *                      full list.
-     *                      http://getbraincloud.com/apidocs/apiref/#capi-mail
-     * @param callback      The method to be invoked when the server response is
-     *                      received
+     * @param appId the applicationId
+     * @param emailAddress The email address to send the reset email to.
+     * @param serviceParams - parameters to send to the email service. See documentation for
+     * full list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+     * @param callback The method to be invoked when the server response is received
      *
-     *                      Note the follow error reason codes:
+     * Note the follow error reason codes:
      *
-     *                      SECURITY_ERROR (40209) - If the email address cannot be
-     *                      found.
+     * SECURITY_ERROR (40209) - If the email address cannot be found.
      */
     public void resetEmailPasswordAdvancedWithExpiry(String email, String serviceParams, int tokenTtlInMinutes,
             IServerCallback callback) {
@@ -674,13 +626,11 @@ public class AuthenticationService {
      * Resets Universal ID password
      *
      * Service Name - authenticationV2
-     * Service Operation - RESET_UNIVERSAL_ID_PASSWORD
+     * Operation - ResetUniversalIdPassword
      *
-     * @param appId       the applicationId
+     * @param appId the applicationId
      * @param universalId the universal Id in question
-     * @param callback    The method to be invoked when the server response is
-     *                    received
-     *
+     * @param callback The method to be invoked when the server response is received
      */
     public void resetUniversalIdPassword(String universalId, IServerCallback callback) {
         try {
@@ -701,14 +651,12 @@ public class AuthenticationService {
      * Advanced Universal ID password reset using templates
      *
      * Service Name - authenticationV2
-     * Service Operation - RESET_UNIVERSAL_ID_PASSWORD_ADVANCED
+     * Operation - ResetUniversalIdPassword
      *
-     * @param appId         the applicationId
-     * @param universalId   the universal Id in question
+     * @param appId the applicationId
+     * @param universalId the universal Id in question
      * @param serviceParams - parameters to send to the email service.
-     * @param callback      The method to be invoked when the server response is
-     *                      received
-     *
+     * @param callback The method to be invoked when the server response is received
      */
     public void resetUniversalIdPasswordAdvanced(String universalId, String serviceParams, IServerCallback callback) {
         try {
@@ -732,13 +680,11 @@ public class AuthenticationService {
      * Resets Universal ID password
      *
      * Service Name - authenticationV2
-     * Service Operation - RESET_UNIVERSAL_ID_PASSWORD_WITH_EXPIRY
+     * Operation - ResetUniversalIdPassword
      *
-     * @param appId       the applicationId
+     * @param appId the applicationId
      * @param universalId the universal Id in question
-     * @param callback    The method to be invoked when the server response is
-     *                    received
-     *
+     * @param callback The method to be invoked when the server response is received
      */
     public void resetUniversalIdPasswordWithExpiry(String universalId, int tokenTtlInMinutes,
             IServerCallback callback) {
@@ -761,14 +707,12 @@ public class AuthenticationService {
      * Advanced Universal ID password reset using templates
      *
      * Service Name - authenticationV2
-     * Service Operation - RESET_UNIVERSAL_ID_PASSWORD_ADVANCED_WITH_EXPIRY
+     * Operation - ResetUniversalIdPassword
      *
-     * @param appId         the applicationId
-     * @param universalId   the universal Id in question
+     * @param appId the applicationId
+     * @param universalId the universal Id in question
      * @param serviceParams - parameters to send to the email service.
-     * @param callback      The method to be invoked when the server response is
-     *                      received
-     *
+     * @param callback The method to be invoked when the server response is received
      */
     public void resetUniversalIdPasswordAdvancedWithExpiry(String universalId, String serviceParams,
             int tokenTtlInMinutes, IServerCallback callback) {

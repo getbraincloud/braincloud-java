@@ -37,17 +37,16 @@ public class AppStoreService {
      * Service Name - appStore
      * Service Operation - VERIFY_PURCHASE
      *
-     * @param storeId         The store platform. Valid stores are:
-     *                        - itunes
-     *                        - facebook
-     *                        - appworld
-     *                        - steam
-     *                        - windows
-     *                        - windowsPhone
-     *                        - googlePlay
-     * @param jsonReceiptData The specific store data required
-     * @param callback        The method to be invoked when the server response is
-     *                        received
+     * @param storeId The store platform. Valid stores are:
+     * - itunes
+     * - facebook
+     * - appworld
+     * - steam
+     * - windows
+     * - windowsPhone
+     * - googlePlay
+     * @param receiptData the specific store data required
+     * @param callback The method to be invoked when the server response is received
      */
     public void verifyPurchase(String storeId, String jsonReceiptData, IServerCallback callback) {
         try {
@@ -84,17 +83,16 @@ public class AppStoreService {
      * Service Name - appStore
      * Service Operation - GET_INVENTORY
      *
-     * @param storeId      The store platform. Valid stores are:
-     *                     - itunes
-     *                     - facebook
-     *                     - appworld
-     *                     - steam
-     *                     - windows
-     *                     - windowsPhone
-     *                     - googlePlay
+     * @param platform The store platform. Valid stores are:
+     * - itunes
+     * - facebook
+     * - appworld
+     * - steam
+     * - windows
+     * - windowsPhone
+     * - googlePlay
      * @param userCurrency The currency type to retrieve the sales inventory for.
-     * @param callback     The method to be invoked when the server response is
-     *                     received
+     * @param callback The method to be invoked when the server response is received
      */
     public void getSalesInventory(String storeId, String userCurrency, IServerCallback callback) {
         getSalesInventoryByCategory(storeId, userCurrency, null, callback);
@@ -107,18 +105,17 @@ public class AppStoreService {
      * Service Name - appStore
      * Service Operation - GET_INVENTORY
      *
-     * @param storeId      The store platform. Valid stores are:
-     *                     - itunes
-     *                     - facebook
-     *                     - appworld
-     *                     - steam
-     *                     - windows
-     *                     - windowsPhone
-     *                     - googlePlay
+     * @param storeId The store platform. Valid stores are:
+     * - itunes
+     * - facebook
+     * - appworld
+     * - steam
+     * - windows
+     * - windowsPhone
+     * - googlePlay
      * @param userCurrency The currency type to retrieve the sales inventory for.
-     * @param category     The product category
-     * @param callback     The method to be invoked when the server response is
-     *                     received
+     * @param category The product category
+     * @param callback The method to be invoked when the server response is received
      */
     public void getSalesInventoryByCategory(String storeId, String userCurrency, String category,
             IServerCallback callback) {
@@ -146,17 +143,16 @@ public class AppStoreService {
      * Service Name - appStore
      * Service Operation - START_PURCHASE
      *
-     * @param storeId          The store platform. Valid stores are:
-     *                         - itunes
-     *                         - facebook
-     *                         - appworld
-     *                         - steam
-     *                         - windows
-     *                         - windowsPhone
-     *                         - googlePlay
-     * @param jsonPurchaseData Specific data for starting a two-stage purchase
-     * @param callback         The method to be invoked when the server response is
-     *                         received
+     * @param storeId The store platform. Valid stores are:
+     * - itunes
+     * - facebook
+     * - appworld
+     * - steam
+     * - windows
+     * - windowsPhone
+     * - googlePlay
+     * @param purchaseData specific data for purchasing 2 staged purchases
+     * @param callback The method to be invoked when the server response is received
      */
     public void startPurchase(String storeId, String jsonPurchaseData, IServerCallback callback) {
         try {
@@ -177,18 +173,17 @@ public class AppStoreService {
      * Service Name - appStore
      * Service Operation - FINALIZE_PURCHASE
      *
-     * @param storeId             The store platform. Valid stores are:
-     *                            - itunes
-     *                            - facebook
-     *                            - appworld
-     *                            - steam
-     *                            - windows
-     *                            - windowsPhone
-     *                            - googlePlay
-     * @param transactionId       The transaction id returned from startPurchase
-     * @param jsonTransactionData Specific transaction data for finalizing purchase
-     * @param callback            The method to be invoked when the server response
-     *                            is received
+     * @param storeId The store platform. Valid stores are:
+     * - itunes
+     * - facebook
+     * - appworld
+     * - steam
+     * - windows
+     * - windowsPhone
+     * - googlePlay
+     * @param transactionId the transactionId returned from start Purchase
+     * @param transactionData specific data for purchasing 2 staged purchases
+     * @param callback The method to be invoked when the server response is received
      */
     public void finalizePurchase(String storeId, String transactionId, String jsonTransactionData,
             IServerCallback callback) {
@@ -250,14 +245,10 @@ public class AppStoreService {
     }
 
     /**
-     * Returns up-to-date eligible 'promotions' for the user and a
-     * 'promotionsRefreshed' flag indicating whether the user's promotion info
-     * required refreshing.
+     * Returns up-to-date eligible 'promotions' for the user and a 'promotionsRefreshed' flag indicating whether the user's promotion info required refreshing.
      *
      * Service Name - appStore
      * Service Operation - REFRESH_PROMOTIONS
-     * 
-     * @param callback The method to be invoked when the server response is received
      */
     public void refreshPromotions(IServerCallback callback) {
         JSONObject data = new JSONObject();

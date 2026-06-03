@@ -110,8 +110,7 @@ public class PlayerStateService {
      * Service Operation - REMOVE_ATTRIBUTES
      *
      * @param attributeNames Collection of attribute names.
-     * @param callback       The method to be invoked when the server response is
-     *                       received
+     * @param callback The method to be invoked when the server response is received
      */
     public void removeAttributes(String[] attributeNames,
             IServerCallback callback) {
@@ -153,11 +152,9 @@ public class PlayerStateService {
      * Service Name - playerState
      * Service Operation - UPDATE_ATTRIBUTES
      *
-     * @param jsonAttributes Single layer json string that is a set of key-value
-     *                       pairs
-     * @param wipeExisting   Whether to wipe existing attributes prior to update.
-     * @param callback       The method to be invoked when the server response is
-     *                       received
+     * @param jsonAttributes Single layer json string that is a set of key-value pairs
+     * @param wipeExisting Whether to wipe existing attributes prior to update.
+     * @param callback The method to be invoked when the server response is received
      */
     public void updateAttributes(String jsonAttributes, boolean wipeExisting,
             IServerCallback callback) {
@@ -178,14 +175,13 @@ public class PlayerStateService {
     }
 
     /**
-     * Sets the user's timezone offset.
+     * Remove user's attributes.
      *
      * Service Name - playerState
-     * Service Operation - UPDATE_TIMEZONE_OFFSET
+     * Service Operation - REMOVE_ATTRIBUTES
      *
-     * @param timeZoneOffset The numeric timezone offset of the user
-     * @param callback       The method to be invoked when the server response is
-     *                       received
+     * @param attributeNames Collection of attribute names.
+     * @param callback The method to be invoked when the server response is received
      */
     public void updateTimeZoneOffset(int timeZoneOffset,
             IServerCallback callback) {
@@ -203,14 +199,13 @@ public class PlayerStateService {
     }
 
     /**
-     * Update user's language code preference on their profile.
+     * Remove user's attributes.
      *
      * Service Name - playerState
-     * Service Operation - UPDATE_LANGUAGE_CODE
+     * Service Operation - REMOVE_ATTRIBUTES
      *
-     * @param languageCode A string-based language code
-     * @param callback     The method to be invoked when the server response is
-     *                     received
+     * @param attributeNames Collection of attribute names.
+     * @param callback The method to be invoked when the server response is received
      */
     public void updateLanguageCode(String languageCode,
             IServerCallback callback) {
@@ -262,14 +257,13 @@ public class PlayerStateService {
      * Service Operation - UPDATE_SUMMARY
      *
      * @param jsonSummaryData A JSON string defining the summary data.
-     *                        For example:
-     *                        {
-     *                        "xp":123,
-     *                        "level":12,
-     *                        "highScore":45123
-     *                        }
-     * @param callback        Method to be invoked when the server response is
-     *                        received.
+     * For example:
+     * {
+     *   "xp":123,
+     *   "level":12,
+     *   "highScore":45123
+     * }
+     * @param callback Method to be invoked when the server response is received.
      */
     public void updateSummaryFriendData(String jsonFriendSummaryData, IServerCallback callback) {
 
@@ -292,8 +286,7 @@ public class PlayerStateService {
      * Service Operation - UPDATE_PICTURE_URL
      *
      * @param pictureUrl URL to apply
-     * @param callback   The method to be invoked when the server response is
-     *                   received
+     * @param callback The method to be invoked when the server response is received
      */
     public void updateUserPictureUrl(
             String pictureUrl,
@@ -318,8 +311,7 @@ public class PlayerStateService {
      * Service Operation - UPDATE_CONTACT_EMAIL
      *
      * @param contactEmail Updated email
-     * @param callback     The method to be invoked when the server response is
-     *                     received
+     * @param callback The method to be invoked when the server response is received
      */
     public void updateContactEmail(
             String contactEmail,
@@ -343,8 +335,7 @@ public class PlayerStateService {
      * Service Operation - CLEAR_USER_STATUS
      *
      * @param statusName Updated email
-     * @param callback   The method to be invoked when the server response is
-     *                   received
+     * @param callback The method to be invoked when the server response is received
      */
     public void clearUserStatus(
             String statusName,
@@ -367,11 +358,10 @@ public class PlayerStateService {
      * Service Name - playerState
      * Service Operation - EXTEND_USER_STATUS
      *
-     * @param statusName     Updated email
-     * @param additionalSecs Add time to existing expiry time.
-     * @param details        Json String to add additional details.
-     * @param callback       The method to be invoked when the server response is
-     *                       received
+     * @param statusName Updated email
+     * @param additionalSecs
+     * @param details
+     * @param callback The method to be invoked when the server response is received
      */
     public void extendUserStatus(
             String statusName,
@@ -400,8 +390,7 @@ public class PlayerStateService {
      * Service Operation - GET_USER_STATUS
      *
      * @param statusName Updated email
-     * @param callback   The method to be invoked when the server response is
-     *                   received
+     * @param callback The method to be invoked when the server response is received
      */
     public void getUserStatus(
             String statusName,
@@ -424,11 +413,10 @@ public class PlayerStateService {
      * Service Name - playerState
      * Service Operation - SET_USER_STATUS
      *
-     * @param statusName   Updated email
-     * @param durationSecs An active duration.
-     * @param details      Json String to add additional details.
-     * @param callback     The method to be invoked when the server response is
-     *                     received
+     * @param statusName Updated email
+     * @param durationSecs
+     * @param details
+     * @param callback The method to be invoked when the server response is received
      */
     public void setUserStatus(
             String statusName,

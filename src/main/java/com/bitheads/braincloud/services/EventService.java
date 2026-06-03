@@ -47,11 +47,10 @@ public class EventService {
      * Service Name - event
      * Service Operation - SEND
      *
-     * @param toProfileId   The id of the user who is being sent the event
-     * @param eventType     The user-defined type of the event.
+     * @param toProfileId The id of the user who is being sent the event
+     * @param eventType The user-defined type of the event.
      * @param jsonEventData The user-defined data for this event encoded in JSON.
-     * @param callback      The method to be invoked when the server response is
-     *                      received
+     * @param callback The method to be invoked when the server response is received
      */
     public void sendEvent(String toProfileId, String eventType, String jsonEventData, IServerCallback callback) {
         try {
@@ -76,11 +75,10 @@ public class EventService {
      * Service Name - event
      * Service Operation - SEND_EVENT_TO_PROFILES
      *
-     * @param toIds     The profile ids of the users to send the event
+     * @param toIds The profile ids of the users to send the event
      * @param eventType The user-defined type of the event
      * @param eventData The user-defined data for this event encoded in JSON
-     * @param callback  The method to be invoked when the server response is
-     *                  received
+     * @param callback The method to be invoked when the server response is received
      */
     public void sendEventToProfiles(String toIds, String eventType, String eventData, IServerCallback callback) {
         try {
@@ -104,10 +102,9 @@ public class EventService {
      * Service Name - event
      * Service Operation - UPDATE_EVENT_DATA
      *
-     * @param evId          The event id
+     * @param evId The event id
      * @param jsonEventData The user-defined data for this event encoded in JSON.
-     * @param callback      The method to be invoked when the server response is
-     *                      received
+     * @param callback The method to be invoked when the server response is received
      */
     public void updateIncomingEventData(String evId, String jsonEventData, IServerCallback callback) {
         try {
@@ -126,16 +123,14 @@ public class EventService {
 
     /**
      * Updates an event in the user's incoming event mailbox.
-     * Returns the same data as updateIncomingEventData, but returns null instead of
-     * an error if none exists.
+     * Returns the same data as updateIncomingEventData, but returns null instead of an error if none exists.
      *
      * Service Name - event
      * Service Operation - UPDATE_EVENT_DATA
      *
-     * @param evId          The event id
+     * @param evId The event id
      * @param jsonEventData The user-defined data for this event encoded in JSON.
-     * @param callback      The method to be invoked when the server response is
-     *                      received
+     * @param callback The method to be invoked when the server response is received
      */
     public void updateIncomingEventDataIfExists(String evId, String jsonEventData, IServerCallback callback) {
         try {
@@ -199,17 +194,14 @@ public class EventService {
     }
 
     /**
-     * Delete any events of the given type older than the given date out of the
-     * user's incoming mailbox.
+     * Delete any events of the given type older than the given date out of the user's incoming mailbox.
      *
      * Service Name - event
      * Service Operation - DELETE_INCOMING_EVENTS_BY_TYPE_OLDER_THAN
      *
-     * @param eventType  The user-defined type of the event
-     * @param dateMillis createdAt cut-off time whereby older events will be deleted
-     *                   (In UTC since Epoch)
-     * @param callback   The method to be invoked when the server response is
-     *                   received
+     * @param eventType The user-defined type of the event
+     * @param dateMillis createdAt cut-off time whereby older events will be deleted (In UTC since Epoch)
+     * @param callback The method to be invoked when the server response is received
      */
     public void deleteIncomingEventsByTypeOlderThan(String eventType, long dateMillis, IServerCallback callback) {
         try {
@@ -227,16 +219,13 @@ public class EventService {
     }
 
     /**
-     * Delete any events older than the given date out of the user's incoming
-     * mailbox.
+     * Delete any events older than the given date out of the user's incoming mailbox.
      *
      * Service Name - event
      * Service Operation - DELETE_INCOMING_EVENTS_OLDER_THAN
      *
-     * @param dateMillis createdAt cut-off time whereby older events will be deleted
-     *                   (In UTC since Epoch)
-     * @param callback   The method to be invoked when the server response is
-     *                   received
+     * @param dateMillis createdAt cut-off time whereby older events will be deleted (In UTC since Epoch)
+     * @param callback The method to be invoked when the server response is received
      */
     public void deleteIncomingEventsOlderThan(long dateMillis, IServerCallback callback) {
         try {

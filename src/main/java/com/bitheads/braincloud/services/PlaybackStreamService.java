@@ -35,10 +35,9 @@ public class PlaybackStreamService {
      * Service Name - playbackStream
      * Service Operation - START_STREAM
      *
-     * @param targetPlayerId    The player to start a stream with
+     * @param targetPlayerId The player to start a stream with
      * @param includeSharedData Whether to include shared data in the stream
-     * @param callback          The method to be invoked when the server response is
-     *                          received
+     * @param callback The method to be invoked when the server response is received
      */
     public void startStream(
             String targetPlayerId,
@@ -62,8 +61,7 @@ public class PlaybackStreamService {
      * Service Operation - READ_STREAM
      *
      * @param playbackStreamId Identifies the stream to read
-     * @param callback         The method to be invoked when the server response is
-     *                         received
+     * @param callback The method to be invoked when the server response is received
      */
     public void readStream(
             String playbackStreamId,
@@ -85,8 +83,7 @@ public class PlaybackStreamService {
      * Service Operation - END_STREAM
      *
      * @param playbackStreamId Identifies the stream to read
-     * @param callback         The method to be invoked when the server response is
-     *                         received
+     * @param callback The method to be invoked when the server response is received
      */
     public void endStream(
             String playbackStreamId,
@@ -108,8 +105,7 @@ public class PlaybackStreamService {
      * Service Operation - DELETE_STREAM
      *
      * @param playbackStreamId Identifies the stream to read
-     * @param callback         The method to be invoked when the server response is
-     *                         received
+     * @param callback The method to be invoked when the server response is received
      */
     public void deleteStream(
             String playbackStreamId,
@@ -131,10 +127,9 @@ public class PlaybackStreamService {
      * Service Operation - ADD_EVENT
      *
      * @param playbackStreamId Identifies the stream to read
-     * @param jsonEventData    Describes the event
-     * @param jsonSummary      Current summary data as of this event
-     * @param callback         The method to be invoked when the server response is
-     *                         received
+     * @param jsonEventData Describes the event
+     * @param jsonSummary Current summary data as of this event
+     * @param callback The method to be invoked when the server response is received
      */
     public void addEvent(
             String playbackStreamId,
@@ -206,20 +201,16 @@ public class PlaybackStreamService {
     }
 
     /**
-     * Protects a playback stream from being purged (but not deleted) for the given
-     * number of days (from now).
-     * If the number of days given is less than the normal purge interval days (from
-     * createdAt), the longer protection date is applied.
+     * Protects a playback stream from being purged (but not deleted) for the given number of days (from now).
+     * If the number of days given is less than the normal purge interval days (from createdAt), the longer protection date is applied.
      * Can only be called by users involved in the playback stream.
      *
      * Service Name - playbackStream
      * Service Operation - PROTECT_STREAM_UNTIL
      *
      * @param playbackStreamId Identifies the stream to protect
-     * @param numDays          The number of days the stream is to be protected
-     *                         (from now)
-     * @param callback         The method to be invoked when the server response is
-     *                         received
+     * @param numDays The number of days the stream is to be protected (from now)
+     * @param callback The method to be invoked when the server response is received
      */
     public void protectStreamUntil(String playbackStreamId, int numDays, IServerCallback callback) {
         try {

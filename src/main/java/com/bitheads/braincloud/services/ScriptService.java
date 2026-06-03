@@ -36,10 +36,9 @@ public class ScriptService {
      * Service Name - script
      * Service Operation - RUN
      *
-     * @param scriptName     The name of the script to be run
+     * @param scriptName The name of the script to be run
      * @param jsonScriptData Data to be sent to the script in json format
-     * @param callback       The method to be invoked when the server response is
-     *                       received
+     * @param callback The method to be invoked when the server response is received
      */
     public void runScript(String scriptName, String jsonScriptData, IServerCallback callback) {
 
@@ -65,11 +64,10 @@ public class ScriptService {
      * Service Name - script
      * Service Operation - SCHEDULE_CLOUD_SCRIPT
      *
-     * @param scriptName     The name of the script to be run
+     * @param scriptName The name of the script to be run
      * @param jsonScriptData Data to be sent to the script in json format
      * @param startDateInUTC The start date in UTC
-     * @param callback       The method to be invoked when the server response is
-     *                       received
+     * @param callback The method to be invoked when the server response is received
      */
     public void scheduleRunScriptMillisUTC(String scriptName, String jsonScriptData, long startTimeUTC,
             IServerCallback callback) {
@@ -97,11 +95,10 @@ public class ScriptService {
      * Service Name - script
      * Service Operation - SCHEDULE_CLOUD_SCRIPT
      *
-     * @param scriptName     The name of the script to be run
+     * @param scriptName The name of the script to be run
      * @param jsonScriptData Data to be sent to the script in json format
      * @param minutesFromNow Number of minutes from now to run script
-     * @param callback       The method to be invoked when the server response is
-     *                       received
+     * @param callback The method to be invoked when the server response is received
      */
     public void scheduleRunScriptMinutes(String scriptName, String jsonScriptData, int minutesFromNow,
             IServerCallback callback) {
@@ -130,11 +127,10 @@ public class ScriptService {
      * Service Name - script
      * Service Operation - RUN_PARENT_SCRIPT
      *
-     * @param scriptName  The name of the script to be run
-     * @param scriptData  Data to be sent to the script in json format
+     * @param scriptName The name of the script to be run
+     * @param scriptData Data to be sent to the script in json format
      * @param parentLevel The level name of the parent to run the script from
-     * @param callback    The method to be invoked when the server response is
-     *                    received
+     * @param callback The method to be invoked when the server response is received
      */
     public void runParentScript(String scriptName,
             String scriptData,
@@ -223,10 +219,9 @@ public class ScriptService {
      * Service Name - script
      * Service Operation - RUN_PEER_SCRIPT
      *
-     * @param scriptName     The name of the script to be run
+     * @param scriptName The name of the script to be run
      * @param jsonScriptData Data to be sent to the script in json format
-     * @param callback       The method to be invoked when the server response is
-     *                       received
+     * @param callback The method to be invoked when the server response is received
      */
     public void runPeerScript(String scriptName, String jsonScriptData, String peer, IServerCallback callback) {
         try {
@@ -253,10 +248,9 @@ public class ScriptService {
      * Service Name - script
      * Service Operation - RUN_PEER_SCRIPT_ASYNC
      *
-     * @param scriptName     The name of the script to be run
+     * @param scriptName The name of the script to be run
      * @param jsonScriptData Data to be sent to the script in json format
-     * @param callback       The method to be invoked when the server response is
-     *                       received
+     * @param callback The method to be invoked when the server response is received
      */
     public void runPeerScriptAsync(String scriptName, String jsonScriptData, String peer, IServerCallback callback) {
         try {

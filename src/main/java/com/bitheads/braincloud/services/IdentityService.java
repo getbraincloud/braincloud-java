@@ -54,22 +54,16 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - ATTACH
 	 *
-	 * @param facebookId          The facebook id of the user
+	 * @param facebookId The facebook id of the user
 	 * @param authenticationToken The validated token from the Facebook SDK
-	 *                            (that will be further validated when sent to the
-	 *                            bC service)
-	 * @param callback            The method to be invoked when the server response
-	 *                            is received
+	 *   (that will be further validated when sent to the bC service)
+	 * @param callback The method to be invoked when the server response is received
 	 *
-	 *                            Errors to watch for: SWITCHING_PROFILES - this
-	 *                            means that the Facebook identity you provided
-	 *                            already points to a different profile. You will
-	 *                            likely want to offer the user the
-	 *                            choice to *SWITCH* to that profile, or *MERGE* the
-	 *                            profiles.
+	 * Errors to watch for:  SWITCHING_PROFILES - this means that the Facebook identity you provided
+	 * already points to a different profile.  You will likely want to offer the user the
+	 * choice to *SWITCH* to that profile, or *MERGE* the profiles.
 	 *
-	 *                            To switch profiles, call ClearSavedProfileID() and
-	 *                            call AuthenticateFacebook().
+	 * To switch profiles, call ClearSavedProfileID() and call AuthenticateFacebook().
 	 */
 	public void attachFacebookIdentity(String facebookId, String authenticationToken, IServerCallback callback) {
 		attachIdentity(facebookId, authenticationToken, AuthenticationType.Facebook, callback);
@@ -82,13 +76,10 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - MERGE
 	 *
-	 * @param facebookId          The facebook id of the user
+	 * @param facebookId The facebook id of the user
 	 * @param authenticationToken The validated token from the Facebook SDK
-	 *                            (that will be further validated when sent to the
-	 *                            bC service)
-	 * @param callback            The method to be invoked when the server response
-	 *                            is received
-	 *
+	 *   (that will be further validated when sent to the bC service)
+	 * @param callback The method to be invoked when the server response is received
 	 */
 	public void mergeFacebookIdentity(String facebookId, String authenticationToken, IServerCallback callback) {
 		mergeIdentity(facebookId, authenticationToken, AuthenticationType.Facebook, callback);
@@ -100,17 +91,13 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - DETACH
 	 *
-	 * @param facebookId   The facebook id of the user
+	 * @param facebookId The facebook id of the user
 	 * @param continueAnon Proceed even if the profile will revert to anonymous?
-	 * @param callback     The method to be invoked when the server response is
-	 *                     received
+	 * @param callback The method to be invoked when the server response is received
 	 *
-	 *                     Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you
-	 *                     set continueAnon to false, and
-	 *                     disconnecting this identity would result in the profile
-	 *                     being anonymous (which means that
-	 *                     the profile wouldn't be retrievable if the user loses
-	 *                     their device)
+	 * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
+	 * disconnecting this identity would result in the profile being anonymous (which means that
+	 * the profile wouldn't be retrievable if the user loses their device)
 	 */
 	public void detachFacebookIdentity(String facebookId, boolean continueAnon, IServerCallback callback) {
 		detachIdentity(facebookId, AuthenticationType.Facebook, continueAnon, callback);
@@ -123,22 +110,15 @@ public class IdentityService {
 	 * Service Operation - ATTACH
 	 *
 	 * @param authenticationType Universal, Email, Facebook, etc
-	 * @param ids                Auth IDs structure
-	 * @param extraJson          Additional to piggyback along with the call, to be
-	 *                           picked up by pre- or post- hooks. Leave empty
-	 *                           string for no extraJson.
-	 * @param callback           The method to be invoked when the server response
-	 *                           is received
+	 * @param ids Auth IDs structure
+	 * @param extraJson Additional to piggyback along with the call, to be picked up by pre- or post- hooks. Leave empty string for no extraJson.
+	 * @param callback The method to be invoked when the server response is received
 	 *
-	 *                           Errors to watch for: SWITCHING_PROFILES - this
-	 *                           means that the identity you provided
-	 *                           already points to a different profile. You will
-	 *                           likely want to offer the user the
-	 *                           choice to *SWITCH* to that profile, or *MERGE* the
-	 *                           profiles.
+	 * Errors to watch for:  SWITCHING_PROFILES - this means that the identity you provided
+	 * already points to a different profile.  You will likely want to offer the user the
+	 * choice to *SWITCH* to that profile, or *MERGE* the profiles.
 	 *
-	 *                           To switch profiles, call ClearSavedProfileID() and
-	 *                           call AuthenticateAdvanced().
+	 * To switch profiles, call ClearSavedProfileID() and call AuthenticateAdvanced().
 	 */
 	public void attachAdvancedIdentity(AuthenticationType authenticationType, AuthenticationIds ids, String extraJson,
 			IServerCallback callback) {
@@ -171,13 +151,9 @@ public class IdentityService {
 	 * Service Operation - MERGE
 	 *
 	 * @param authenticationType Universal, Email, Facebook, etc
-	 * @param ids                Auth IDs structure
-	 * @param extraJson          Additional to piggyback along with the call, to be
-	 *                           picked up by pre- or post- hooks. Leave empty
-	 *                           string for no extraJson.
-	 * @param callback           The method to be invoked when the server response
-	 *                           is received
-	 *
+	 * @param ids Auth IDs structure
+	 * @param extraJson Additional to piggyback along with the call, to be picked up by pre- or post- hooks. Leave empty string for no extraJson.
+	 * @param callback The method to be invoked when the server response is received
 	 */
 	public void mergeAdvancedIdentity(AuthenticationType authenticationType, AuthenticationIds ids, String extraJson,
 			IServerCallback callback) {
@@ -209,21 +185,14 @@ public class IdentityService {
 	 * Service Operation - DETACH
 	 *
 	 * @param authenticationType Universal, Email, Facebook, etc
-	 * @param externalId         User ID
-	 * @param continueAnon       Proceed even if the profile will revert to
-	 *                           anonymous?
-	 * @param extraJson          Additional to piggyback along with the call, to be
-	 *                           picked up by pre- or post- hooks. Leave empty
-	 *                           string for no extraJson.
-	 * @param callback           The method to be invoked when the server response
-	 *                           is received
+	 * @param externalId User ID
+	 * @param continueAnon Proceed even if the profile will revert to anonymous?
+	 * @param extraJson Additional to piggyback along with the call, to be picked up by pre- or post- hooks. Leave empty string for no extraJson.
+	 * @param callback The method to be invoked when the server response is received
 	 *
-	 *                           Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs
-	 *                           if you set continueAnon to false, and
-	 *                           disconnecting this identity would result in the
-	 *                           profile being anonymous (which means that
-	 *                           the profile wouldn't be retrievable if the user
-	 *                           loses their device)
+	 * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
+	 * disconnecting this identity would result in the profile being anonymous (which means that
+	 * the profile wouldn't be retrievable if the user loses their device)
 	 */
 	public void detachAdvancedIdentity(AuthenticationType authenticationType, String externalId, boolean continueAnon,
 			String extraJson, IServerCallback callback) {
@@ -325,20 +294,15 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - ATTACH
 	 *
-	 * @param oculusId    The oculus id of the user
+	 * @param oculusId The oculus id of the user
 	 * @param oculusNonce The validated token from the Oculus SDK
-	 * @param callback    The method to be invoked when the server response is
-	 *                    received
+	 * @param callback The method to be invoked when the server response is received
 	 *
-	 *                    Errors to watch for: SWITCHING_PROFILES - this means that
-	 *                    the Oculus identity you provided
-	 *                    already points to a different profile. You will likely
-	 *                    want to offer the user the
-	 *                    choice to *SWITCH* to that profile, or *MERGE* the
-	 *                    profiles.
+	 * Errors to watch for:  SWITCHING_PROFILES - this means that the Oculus identity you provided
+	 * already points to a different profile.  You will likely want to offer the user the
+	 * choice to *SWITCH* to that profile, or *MERGE* the profiles.
 	 *
-	 *                    To switch profiles, call ClearSavedProfileID() and call
-	 *                    AuthenticateOculus().
+	 * To switch profiles, call ClearSavedProfileID() and call AuthenticateOculus().
 	 */
 	public void attachOculusIdentity(String oculusId, String oculusNonce, IServerCallback callback) {
 		attachIdentity(oculusId, oculusNonce, AuthenticationType.Oculus, callback);
@@ -351,11 +315,9 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - MERGE
 	 *
-	 * @param oculusId    The oculus id of the user
+	 * @param oculusId The oculus id of the user
 	 * @param oculusNonce The validated token from the Oculus SDK
-	 * @param callback    The method to be invoked when the server response is
-	 *                    received
-	 *
+	 * @param callback The method to be invoked when the server response is received
 	 */
 	public void mergeOculusIdentity(String oculusId, String oculusNonce, IServerCallback callback) {
 		mergeIdentity(oculusId, oculusNonce, AuthenticationType.Oculus, callback);
@@ -367,17 +329,13 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - DETACH
 	 *
-	 * @param oculusId     The oculus id of the user
+	 * @param oculusId The oculus id of the user
 	 * @param continueAnon Proceed even if the profile will revert to anonymous?
-	 * @param callback     The method to be invoked when the server response is
-	 *                     received
+	 * @param callback The method to be invoked when the server response is received
 	 *
-	 *                     Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you
-	 *                     set continueAnon to false, and
-	 *                     disconnecting this identity would result in the profile
-	 *                     being anonymous (which means that
-	 *                     the profile wouldn't be retrievable if the user loses
-	 *                     their device)
+	 * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
+	 * disconnecting this identity would result in the profile being anonymous (which means that
+	 * the profile wouldn't be retrievable if the user loses their device)
 	 */
 	public void detachOculusIdentity(String oculusId, boolean continueAnon, IServerCallback callback) {
 		detachIdentity(oculusId, AuthenticationType.Oculus, continueAnon, callback);
@@ -391,37 +349,27 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - ATTACH
 	 *
-	 * @param gameCenterId The player's game center id (use the playerID property
-	 *                     from the local GKPlayer object)
-	 * @param callback     The method to be invoked when the server response is
-	 *                     received
+	 * @param gameCenterId The player's game center id  (use the playerID property from the local GKPlayer object)
+	 * @param callback The method to be invoked when the server response is received
 	 *
-	 *                     Errors to watch for: SWITCHING_PROFILES - this means that
-	 *                     the Game Center identity you provided
-	 *                     already points to a different profile. You will likely
-	 *                     want to offer the player the
-	 *                     choice to *SWITCH* to that profile, or *MERGE* the
-	 *                     profiles.
+	 * Errors to watch for:  SWITCHING_PROFILES - this means that the Game Center identity you provided
+	 * already points to a different profile.  You will likely want to offer the player the
+	 * choice to *SWITCH* to that profile, or *MERGE* the profiles.
 	 *
-	 *                     To switch profiles, call ClearSavedProfileID() and call
-	 *                     this method again.
-	 *
+	 * To switch profiles, call ClearSavedProfileID() and call this method again.
 	 */
 	public void attachGameCenterIdentity(String gameCenterId, IServerCallback callback) {
 		attachIdentity(gameCenterId, "", AuthenticationType.GameCenter, callback);
 	}
 
 	/**
-	 * Merge the profile associated with the specified Game Center identity with the
-	 * current profile.
+	 * Merge the profile associated with the specified Game Center identity with the current profile.
 	 *
 	 * Service Name - identity
 	 * Service Operation - MERGE
 	 *
-	 * @param gameCenterId The player's game center id (use the playerID property
-	 *                     from the local GKPlayer object)
-	 * @param callback     The method to be invoked when the server response is
-	 *                     received
+	 * @param gameCenterId The player's game center id  (use the playerID property from the local GKPlayer object)
+	 * @param callback The method to be invoked when the server response is received
 	 */
 	public void mergeGameCenterIdentity(String gameCenterId, IServerCallback callback) {
 		mergeIdentity(gameCenterId, "", AuthenticationType.GameCenter, callback);
@@ -433,18 +381,13 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - DETACH
 	 *
-	 * @param gameCenterId The player's game center id (use the playerID property
-	 *                     from the local GKPlayer object)
+	 * @param gameCenterId The player's game center id  (use the playerID property from the local GKPlayer object)
 	 * @param continueAnon Proceed even if the profile will revert to anonymous?
-	 * @param callback     The method to be invoked when the server response is
-	 *                     received
+	 * @param callback The method to be invoked when the server response is received
 	 *
-	 *                     Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you
-	 *                     set continueAnon to false, and
-	 *                     disconnecting this identity would result in the profile
-	 *                     being anonymous (which means that
-	 *                     the profile wouldn't be retrievable if the user loses
-	 *                     their device)
+	 * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
+	 * disconnecting this identity would result in the profile being anonymous (which means that
+	 * the profile wouldn't be retrievable if the user loses their device)
 	 */
 	public void detachGameCenterIdentity(String gameCenterId, boolean continueAnon, IServerCallback callback) {
 		detachIdentity(gameCenterId, AuthenticationType.GameCenter, continueAnon, callback);
@@ -458,22 +401,16 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - ATTACH
 	 *
-	 * @param googleId            The Google id of the user
+	 * @param googleId The Google id of the user
 	 * @param authenticationToken The validated token from the Google SDK
-	 *                            (that will be further validated when sent to the
-	 *                            bC service)
-	 * @param callback            The method to be invoked when the server response
-	 *                            is received
+	 *   (that will be further validated when sent to the bC service)
+	 * @param callback The method to be invoked when the server response is received
 	 *
-	 *                            Errors to watch for: SWITCHING_PROFILES - this
-	 *                            means that the Google identity you provided
-	 *                            already points to a different profile. You will
-	 *                            likely want to offer the user the
-	 *                            choice to *SWITCH* to that profile, or *MERGE* the
-	 *                            profiles.
+	 * Errors to watch for:  SWITCHING_PROFILES - this means that the Google identity you provided
+	 * already points to a different profile.  You will likely want to offer the user the
+	 * choice to *SWITCH* to that profile, or *MERGE* the profiles.
 	 *
-	 *                            To switch profiles, call ClearSavedProfileID() and
-	 *                            call AuthenticateGoogle().
+	 * To switch profiles, call ClearSavedProfileID() and call AuthenticateGoogle().
 	 */
 	public void attachGoogleIdentity(String googleId, String authenticationToken, IServerCallback callback) {
 		attachIdentity(googleId, authenticationToken, AuthenticationType.Google, callback);
@@ -508,22 +445,16 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - ATTACH
 	 *
-	 * @param googleId            The Google id of the user
+	 * @param googleId The Google id of the user
 	 * @param authenticationToken The validated token from the Google SDK
-	 *                            (that will be further validated when sent to the
-	 *                            bC service)
-	 * @param callback            The method to be invoked when the server response
-	 *                            is received
+	 *   (that will be further validated when sent to the bC service)
+	 * @param callback The method to be invoked when the server response is received
 	 *
-	 *                            Errors to watch for: SWITCHING_PROFILES - this
-	 *                            means that the Google identity you provided
-	 *                            already points to a different profile. You will
-	 *                            likely want to offer the user the
-	 *                            choice to *SWITCH* to that profile, or *MERGE* the
-	 *                            profiles.
+	 * Errors to watch for:  SWITCHING_PROFILES - this means that the Google identity you provided
+	 * already points to a different profile.  You will likely want to offer the user the
+	 * choice to *SWITCH* to that profile, or *MERGE* the profiles.
 	 *
-	 *                            To switch profiles, call ClearSavedProfileID() and
-	 *                            call AuthenticateGoogle().
+	 * To switch profiles, call ClearSavedProfileID() and call AuthenticateGoogle().
 	 */
 	public void attachGoogleOpenIdIdentity(String googleOpenId, String authenticationToken, IServerCallback callback) {
 		attachIdentity(googleOpenId, authenticationToken, AuthenticationType.GoogleOpenId, callback);
@@ -558,22 +489,16 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - ATTACH
 	 *
-	 * @param appleId             The appleid of the user
+	 * @param appleId The appleid of the user
 	 * @param authenticationToken The validated token from the Apple SDK
-	 *                            (that will be further validated when sent to the
-	 *                            bC service)
-	 * @param callback            The method to be invoked when the server response
-	 *                            is received
+	 *   (that will be further validated when sent to the bC service)
+	 * @param callback The method to be invoked when the server response is received
 	 *
-	 *                            Errors to watch for: SWITCHING_PROFILES - this
-	 *                            means that the Apple identity you provided
-	 *                            already points to a different profile. You will
-	 *                            likely want to offer the user the
-	 *                            choice to *SWITCH* to that profile, or *MERGE* the
-	 *                            profiles.
+	 * Errors to watch for:  SWITCHING_PROFILES - this means that the Apple identity you provided
+	 * already points to a different profile.  You will likely want to offer the user the
+	 * choice to *SWITCH* to that profile, or *MERGE* the profiles.
 	 *
-	 *                            To switch profiles, call ClearSavedProfileID() and
-	 *                            call AuthenticateApple().
+	 * To switch profiles, call ClearSavedProfileID() and call AuthenticateApple().
 	 */
 	public void attachAppleIdentity(String appleId, String authenticationToken, IServerCallback callback) {
 		attachIdentity(appleId, authenticationToken, AuthenticationType.Apple, callback);
@@ -586,13 +511,10 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - MERGE
 	 *
-	 * @param appleId             The apple id of the user
+	 * @param appleId The apple id of the user
 	 * @param authenticationToken The validated token from the Apple SDK
-	 *                            (that will be further validated when sent to the
-	 *                            bC service)
-	 * @param callback            The method to be invoked when the server response
-	 *                            is received
-	 *
+	 *   (that will be further validated when sent to the bC service)
+	 * @param callback The method to be invoked when the server response is received
 	 */
 	public void mergeAppleIdentity(String appleId, String authenticationToken, IServerCallback callback) {
 		mergeIdentity(appleId, authenticationToken, AuthenticationType.Apple, callback);
@@ -604,17 +526,13 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - DETACH
 	 *
-	 * @param appleId      The apple id of the user
+	 * @param appleId The apple id of the user
 	 * @param continueAnon Proceed even if the profile will revert to anonymous?
-	 * @param callback     The method to be invoked when the server response is
-	 *                     received
+	 * @param callback The method to be invoked when the server response is received
 	 *
-	 *                     Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you
-	 *                     set continueAnon to false, and
-	 *                     disconnecting this identity would result in the profile
-	 *                     being anonymous (which means that
-	 *                     the profile wouldn't be retrievable if the user loses
-	 *                     their device)
+	 * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
+	 * disconnecting this identity would result in the profile being anonymous (which means that
+	 * the profile wouldn't be retrievable if the user loses their device)
 	 */
 	public void detachAppleIdentity(String appleId, boolean continueAnon, IServerCallback callback) {
 		detachIdentity(appleId, AuthenticationType.Apple, continueAnon, callback);
@@ -628,34 +546,29 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - ATTACH
 	 *
-	 * @param email    The user's e-mail address
+	 * @param email The user's e-mail address
 	 * @param password The user's password
 	 * @param callback The method to be invoked when the server response is received
 	 *
-	 *                 Errors to watch for: SWITCHING_PROFILES - this means that the
-	 *                 email address you provided
-	 *                 already points to a different profile. You will likely want
-	 *                 to offer the user the
-	 *                 choice to *SWITCH* to that profile, or *MERGE* the profiles.
+	 * Errors to watch for:  SWITCHING_PROFILES - this means that the email address you provided
+	 * already points to a different profile.  You will likely want to offer the user the
+	 * choice to *SWITCH* to that profile, or *MERGE* the profiles.
 	 *
-	 *                 To switch profiles, call ClearSavedProfileID() and then call
-	 *                 AuthenticateEmailPassword().
+	 * To switch profiles, call ClearSavedProfileID() and then call AuthenticateEmailPassword().
 	 */
 	public void attachEmailIdentity(String email, String password, IServerCallback callback) {
 		attachIdentity(email, password, AuthenticationType.Email, callback);
 	}
 
 	/**
-	 * Merge the profile associated with the provided e=mail with the current
-	 * profile.
+	 * Merge the profile associated with the provided e=mail with the current profile.
 	 *
 	 * Service Name - identity
 	 * Service Operation - MERGE
 	 *
-	 * @param email    The user's e-mail address
+	 * @param email The user's e-mail address
 	 * @param password The user's password
 	 * @param callback The method to be invoked when the server response is received
-	 *
 	 */
 	public void mergeEmailIdentity(String email, String password, IServerCallback callback) {
 		mergeIdentity(email, password, AuthenticationType.Email, callback);
@@ -667,17 +580,13 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - DETACH
 	 *
-	 * @param email        The user's e-mail address
+	 * @param email The user's e-mail address
 	 * @param continueAnon Proceed even if the profile will revert to anonymous?
-	 * @param callback     The method to be invoked when the server response is
-	 *                     received
+	 * @param callback The method to be invoked when the server response is received
 	 *
-	 *                     Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you
-	 *                     set continueAnon to false, and
-	 *                     disconnecting this identity would result in the profile
-	 *                     being anonymous (which means that
-	 *                     the profile wouldn't be retrievable if the user loses
-	 *                     their device)
+	 * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
+	 * disconnecting this identity would result in the profile being anonymous (which means that
+	 * the profile wouldn't be retrievable if the user loses their device)
 	 */
 	public void detachEmailIdentity(String email, boolean continueAnon, IServerCallback callback) {
 		detachIdentity(email, AuthenticationType.Email, continueAnon, callback);
@@ -691,31 +600,27 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - ATTACH
 	 *
-	 * @param userId   The user's userid
+	 * @param userId The user's userid
 	 * @param password The user's password
 	 * @param callback The method to be invoked when the server response is received
 	 *
-	 *                 Errors to watch for: SWITCHING_PROFILES - this means that the
-	 *                 email address you provided
-	 *                 already points to a different profile. You will likely want
-	 *                 to offer the user the
-	 *                 choice to *SWITCH* to that profile, or *MERGE* the profiles.
+	 * Errors to watch for:  SWITCHING_PROFILES - this means that the email address you provided
+	 * already points to a different profile.  You will likely want to offer the user the
+	 * choice to *SWITCH* to that profile, or *MERGE* the profiles.
 	 *
-	 *                 To switch profiles, call ClearSavedProfileID() and then call
-	 *                 AuthenticateEmailPassword().
+	 * To switch profiles, call ClearSavedProfileID() and then call AuthenticateEmailPassword().
 	 */
 	public void attachUniversalIdentity(String userId, String password, IServerCallback callback) {
 		attachIdentity(userId, password, AuthenticationType.Universal, callback);
 	}
 
 	/**
-	 * Merge the profile associated with the provided userId with the current
-	 * profile.
+	 * Merge the profile associated with the provided userId with the current profile.
 	 *
 	 * Service Name - identity
 	 * Service Operation - MERGE
 	 *
-	 * @param userId   The user's userid
+	 * @param userId The user's userid
 	 * @param password The user's password
 	 * @param callback The method to be invoked when the server response is received
 	 */
@@ -729,17 +634,13 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - DETACH
 	 *
-	 * @param userId       The user's userid
+	 * @param userId The user's userid
 	 * @param continueAnon Proceed even if the profile will revert to anonymous?
-	 * @param callback     The method to be invoked when the server response is
-	 *                     received
+	 * @param callback The method to be invoked when the server response is received
 	 *
-	 *                     Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you
-	 *                     set continueAnon to false, and
-	 *                     disconnecting this identity would result in the profile
-	 *                     being anonymous (which means that
-	 *                     the profile wouldn't be retrievable if the user loses
-	 *                     their device)
+	 * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
+	 * disconnecting this identity would result in the profile being anonymous (which means that
+	 * the profile wouldn't be retrievable if the user loses their device)
 	 */
 	public void detachUniversalIdentity(String userId, boolean continueAnon, IServerCallback callback) {
 		detachIdentity(userId, AuthenticationType.Universal, continueAnon, callback);
@@ -753,37 +654,29 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - ATTACH
 	 *
-	 * @param steamId       String representation of 64 bit steam id
+	 * @param steamId String representation of 64 bit steam id
 	 * @param sessionTicket The user's session ticket (hex encoded)
-	 * @param callback      The method to be invoked when the server response is
-	 *                      received
+	 * @param callback The method to be invoked when the server response is received
 	 *
-	 *                      Errors to watch for: SWITCHING_PROFILES - this means
-	 *                      that the email address you provided
-	 *                      already points to a different profile. You will likely
-	 *                      want to offer the user the
-	 *                      choice to *SWITCH* to that profile, or *MERGE* the
-	 *                      profiles.
+	 * Errors to watch for:  SWITCHING_PROFILES - this means that the email address you provided
+	 * already points to a different profile.  You will likely want to offer the user the
+	 * choice to *SWITCH* to that profile, or *MERGE* the profiles.
 	 *
-	 *                      To switch profiles, call ClearSavedProfileID() and then
-	 *                      call AuthenticateSteam().
+	 * To switch profiles, call ClearSavedProfileID() and then call AuthenticateSteam().
 	 */
 	public void attachSteamIdentity(String steamId, String sessionTicket, IServerCallback callback) {
 		attachIdentity(steamId, sessionTicket, AuthenticationType.Steam, callback);
 	}
 
 	/**
-	 * Merge the profile associated with the provided steam userid with the current
-	 * profile.
+	 * Merge the profile associated with the provided steam userid with the current profile.
 	 *
 	 * Service Name - identity
 	 * Service Operation - MERGE
 	 *
-	 * @param steamId       String representation of 64 bit steam id
+	 * @param steamId String representation of 64 bit steam id
 	 * @param sessionTicket The user's session ticket (hex encoded)
-	 * @param callback      The method to be invoked when the server response is
-	 *                      received
-	 *
+	 * @param callback The method to be invoked when the server response is received
 	 */
 	public void mergeSteamIdentity(String steamId, String sessionTicket, IServerCallback callback) {
 		mergeIdentity(steamId, sessionTicket, AuthenticationType.Steam, callback);
@@ -795,17 +688,13 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - DETACH
 	 *
-	 * @param steamId      String representation of 64 bit steam id
+	 * @param steamId String representation of 64 bit steam id
 	 * @param continueAnon Proceed even if the profile will revert to anonymous?
-	 * @param callback     The method to be invoked when the server response is
-	 *                     received
+	 * @param callback The method to be invoked when the server response is received
 	 *
-	 *                     Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you
-	 *                     set continueAnon to false, and
-	 *                     disconnecting this identity would result in the profile
-	 *                     being anonymous (which means that
-	 *                     the profile wouldn't be retrievable if the user loses
-	 *                     their device)
+	 * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
+	 * disconnecting this identity would result in the profile being anonymous (which means that
+	 * the profile wouldn't be retrievable if the user loses their device)
 	 */
 	public void detachSteamIdentity(String steamId, boolean continueAnon, IServerCallback callback) {
 		detachIdentity(steamId, AuthenticationType.Steam, continueAnon, callback);
@@ -817,21 +706,15 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - ATTACH
 	 *
-	 * @param ultraUsername it's what the user uses to log into the Ultra endpoint
-	 *                      initially
-	 * @param ultraIdToken  The "id_token" taken from Ultra's JWT.
-	 * @param callback      The method to be invoked when the server response is
-	 *                      received
+	 * @param ultraUsername it's what the user uses to log into the Ultra endpoint initially
+	 * @param ultraIdToken The "id_token" taken from Ultra's JWT.
+	 * @param callback The method to be invoked when the server response is received
 	 *
-	 *                      Errors to watch for: SWITCHING_PROFILES - this means
-	 *                      that the Ultra identity you provided
-	 *                      already points to a different profile. You will likely
-	 *                      want to offer the user the
-	 *                      choice to *SWITCH* to that profile, or *MERGE* the
-	 *                      profiles.
+	 * Errors to watch for:  SWITCHING_PROFILES - this means that the Ultra identity you provided
+	 * already points to a different profile.  You will likely want to offer the user the
+	 * choice to *SWITCH* to that profile, or *MERGE* the profiles.
 	 *
-	 *                      To switch profiles, call ClearSavedProfileID() and call
-	 *                      AuthenticateApple().
+	 * To switch profiles, call ClearSavedProfileID() and call AuthenticateApple().
 	 */
 	public void attachUltraIdentity(String ultraUsername, String ultraIdToken, IServerCallback callback) {
 		attachIdentity(ultraUsername, ultraIdToken, AuthenticationType.Ultra, callback);
@@ -844,12 +727,9 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - MERGE
 	 *
-	 * @param ultraUsername it's what the user uses to log into the Ultra endpoint
-	 *                      initially
-	 * @param ultraIdToken  The "id_token" taken from Ultra's JWT.
-	 * @param callback      The method to be invoked when the server response is
-	 *                      received
-	 *
+	 * @param ultraUsername it's what the user uses to log into the Ultra endpoint initially
+	 * @param ultraIdToken The "id_token" taken from Ultra's JWT.
+	 * @param callback The method to be invoked when the server response is received
 	 */
 	public void mergeUltraIdentity(String ultraUsername, String ultraIdToken, IServerCallback callback) {
 		mergeIdentity(ultraUsername, ultraIdToken, AuthenticationType.Ultra, callback);
@@ -861,18 +741,13 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - DETACH
 	 *
-	 * @param ultraUsername it's what the user uses to log into the Ultra endpoint
-	 *                      initially
-	 * @param continueAnon  Proceed even if the profile will revert to anonymous?
-	 * @param callback      The method to be invoked when the server response is
-	 *                      received
+	 * @param ultraUsername it's what the user uses to log into the Ultra endpoint initially
+	 * @param continueAnon Proceed even if the profile will revert to anonymous?
+	 * @param callback The method to be invoked when the server response is received
 	 *
-	 *                      Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you
-	 *                      set continueAnon to false, and
-	 *                      disconnecting this identity would result in the profile
-	 *                      being anonymous (which means that
-	 *                      the profile wouldn't be retrievable if the user loses
-	 *                      their device)
+	 * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
+	 * disconnecting this identity would result in the profile being anonymous (which means that
+	 * the profile wouldn't be retrievable if the user loses their device)
 	 */
 	public void detachUltraIdentity(String ultraUsername, boolean continueAnon, IServerCallback callback) {
 		detachIdentity(ultraUsername, AuthenticationType.Ultra, continueAnon, callback);
@@ -884,23 +759,16 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - ATTACH
 	 *
-	 * @param twitterId           The Twitter id of the user
-	 * @param authenticationToken The authentication token derived from the twitter
-	 *                            APIs
-	 * @param secret              The secret given when attempting to link with
-	 *                            Twitter
-	 * @param callback            The method to be invoked when the server response
-	 *                            is received
+	 * @param twitterId The Twitter id of the user
+	 * @param authenticationToken The authentication token derived from the twitter APIs
+	 * @param secret The secret given when attempting to link with Twitter
+	 * @param callback The method to be invoked when the server response is received
 	 *
-	 *                            Errors to watch for: SWITCHING_PROFILES - this
-	 *                            means that the Twitter identity you provided
-	 *                            already points to a different profile. You will
-	 *                            likely want to offer the user the
-	 *                            choice to *SWITCH* to that profile, or *MERGE* the
-	 *                            profiles.
+	 * Errors to watch for:  SWITCHING_PROFILES - this means that the Twitter identity you provided
+	 * already points to a different profile.  You will likely want to offer the user the
+	 * choice to *SWITCH* to that profile, or *MERGE* the profiles.
 	 *
-	 *                            To switch profiles, call ClearSavedProfileID() and
-	 *                            call AuthenticateTwitter().
+	 * To switch profiles, call ClearSavedProfileID() and call AuthenticateTwitter().
 	 */
 	public void attachTwitterIdentity(
 			String twitterId,
@@ -918,14 +786,10 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - MERGE
 	 *
-	 * @param twitterId           The Twitter id of the user
-	 * @param authenticationToken The authentication token derived from the twitter
-	 *                            APIs
-	 * @param secret              The secret given when attempting to link with
-	 *                            Twitter
-	 * @param callback            The method to be invoked when the server response
-	 *                            is received
-	 *
+	 * @param twitterId The Twitter id of the user
+	 * @param authenticationToken The authentication token derived from the twitter APIs
+	 * @param secret The secret given when attempting to link with Twitter
+	 * @param callback The method to be invoked when the server response is received
 	 */
 	public void mergeTwitterIdentity(
 			String twitterId,
@@ -942,17 +806,13 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - DETACH
 	 *
-	 * @param twitterId    The Twitter id of the user
+	 * @param twitterId The Twitter id of the user
 	 * @param continueAnon Proceed even if the profile will revert to anonymous?
-	 * @param callback     The method to be invoked when the server response is
-	 *                     received
+	 * @param callback The method to be invoked when the server response is received
 	 *
-	 *                     Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you
-	 *                     set continueAnon to false, and
-	 *                     disconnecting this identity would result in the profile
-	 *                     being anonymous (which means that
-	 *                     the profile wouldn't be retrievable if the user loses
-	 *                     their device)
+	 * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
+	 * disconnecting this identity would result in the profile being anonymous (which means that
+	 * the profile wouldn't be retrievable if the user loses their device)
 	 */
 	public void detachTwitterIdentity(String twitterId, boolean continueAnon, IServerCallback callback) {
 		detachIdentity(twitterId, AuthenticationType.Twitter, continueAnon, callback);
@@ -966,22 +826,16 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - ATTACH
 	 *
-	 * @param parseId             The Parse id of the user
+	 * @param parseId The Parse id of the user
 	 * @param authenticationToken The validated token from Parse
-	 *                            (that will be further validated when sent to the
-	 *                            bC service)
-	 * @param callback            The method to be invoked when the server response
-	 *                            is received
+	 *   (that will be further validated when sent to the bC service)
+	 * @param callback The method to be invoked when the server response is received
 	 *
-	 *                            Errors to watch for: SWITCHING_PROFILES - this
-	 *                            means that the Google identity you provided
-	 *                            already points to a different profile. You will
-	 *                            likely want to offer the user the
-	 *                            choice to *SWITCH* to that profile, or *MERGE* the
-	 *                            profiles.
+	 * Errors to watch for:  SWITCHING_PROFILES - this means that the Google identity you provided
+	 * already points to a different profile.  You will likely want to offer the user the
+	 * choice to *SWITCH* to that profile, or *MERGE* the profiles.
 	 *
-	 *                            To switch profiles, call ClearSavedProfileID() and
-	 *                            call AuthenticateParse().
+	 * To switch profiles, call ClearSavedProfileID() and call AuthenticateParse().
 	 */
 	public void attachParseIdentity(String parseId, String authenticationToken, IServerCallback callback) {
 		attachIdentity(parseId, authenticationToken, AuthenticationType.Parse, callback);
@@ -1017,12 +871,10 @@ public class IdentityService {
 	 * Service Operation - SWITCH_TO_CHILD_PROFILE
 	 *
 	 * @param childProfileId The profileId of the child profile to switch to
-	 *                       If null and forceCreate is true a new profile will be
-	 *                       created
-	 * @param childAppId     The appId of the child app to switch to
-	 * @param forceCreate    Should a new profile be created if it does not exist?
-	 * @param callback       The method to be invoked when the server response is
-	 *                       received
+	 * If null and forceCreate is true a new profile will be created
+	 * @param childAppId The appId of the child app to switch to
+	 * @param forceCreate Should a new profile be created if it does not exist?
+	 * @param callback The method to be invoked when the server response is received
 	 */
 	public void switchToChildProfile(String childProfileId, String childAppId, boolean forceCreate,
 			IServerCallback callback) {
@@ -1036,10 +888,9 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - SWITCH_TO_CHILD_PROFILE
 	 *
-	 * @param childAppId  The App ID of the child app to switch to
+	 * @param childAppId The App ID of the child app to switch to
 	 * @param forceCreate Should a new profile be created if it does not exist?
-	 * @param callback    The method to be invoked when the server response is
-	 *                    received
+	 * @param callback The method to be invoked when the server response is received
 	 */
 	public void switchToSingletonChildProfile(String childAppId, boolean forceCreate, IServerCallback callback) {
 		switchToChildProfile(null, childAppId, forceCreate, true, callback);
@@ -1052,8 +903,7 @@ public class IdentityService {
 	 * Service Operation - ATTACH_NONLOGIN_UNIVERSAL
 	 *
 	 * @param externalId the id that's been connected with
-	 * @param callback   The method to be invoked when the server response is
-	 *                   received
+	 * @param callback The method to be invoked when the server response is received
 	 */
 	public void attachNonLoginUniversalId(String externalId, IServerCallback callback) {
 		try {
@@ -1075,8 +925,7 @@ public class IdentityService {
 	 * Service Operation - UPDATE_UNIVERSAL_LOGIN
 	 *
 	 * @param externalId the id that's been connected with
-	 * @param callback   The method to be invoked when the server response is
-	 *                   received
+	 * @param callback The method to be invoked when the server response is received
 	 */
 	public void updateUniversalIdLogin(String externalId, IServerCallback callback) {
 		try {
@@ -1098,10 +947,8 @@ public class IdentityService {
 	 * Service Operation - SWITCH_TO_PARENT_PROFILE
 	 *
 	 * @param parentLevelName The level of the parent to switch to
-	 *                        If null and forceCreate is true a new profile will be
-	 *                        created
-	 * @param callback        The method to be invoked when the server response is
-	 *                        received
+	 * If null and forceCreate is true a new profile will be created
+	 * @param callback The method to be invoked when the server response is received
 	 */
 	public void switchToParentProfile(String parentLevelName, IServerCallback callback) {
 		try {
@@ -1122,10 +969,8 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - GET_CHILD_PROFILES
 	 *
-	 * @param includeSummaryData Whether to return the summary friend data along
-	 *                           with this call
-	 * @param callback           The method to be invoked when the server response
-	 *                           is received
+	 * @param includeSummaryData Whether to return the summary friend data along with this call
+	 * @param callback The method to be invoked when the server response is received
 	 */
 	public void getChildProfiles(boolean includeSummaryData, IServerCallback callback) {
 		try {
@@ -1142,7 +987,7 @@ public class IdentityService {
 	/**
 	 * Retrieve list of identities
 	 *
-	 * Service Name - Identity
+	 * Service Name - identity
 	 * Service Operation - GET_IDENTITIES
 	 *
 	 * @param callback The method to be invoked when the server response is received
@@ -1192,11 +1037,10 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - REFRESH_IDENTITY
 	 *
-	 * @param externalId          User ID
+	 * @param externalId User ID
 	 * @param authenticationToken Password or client side token
-	 * @param authenticationType  Type of authentication
-	 * @param callback            The method to be invoked when the server response
-	 *                            is received
+	 * @param authenticationType Type of authentication
+	 * @param callback The method to be invoked when the server response is received
 	 */
 	public void refreshIdentity(String externalId, String authenticationToken, AuthenticationType authenticationType,
 			IServerCallback callback) {
@@ -1219,13 +1063,11 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - CHANGE_EMAIL_IDENTITY
 	 *
-	 * @param oldEmailAddress    Old email address
-	 * @param password           Password for identity
-	 * @param newEmailAddress    New email address
+	 * @param oldEmailAddress Old email address
+	 * @param password Password for identity
+	 * @param newEmailAddress New email address
 	 * @param updateContactEmail Whether to update contact email in profile
-	 * @param callback           The method to be invoked when the server response
-	 *                           is received
-	 *
+	 * @param callback The method to be invoked when the server response is received
 	 */
 	public void changeEmailIdentity(String oldEmailAddress, String password, String newEmailAddress,
 			boolean updateContactEmail, IServerCallback callback) {
@@ -1250,15 +1092,14 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - ATTACH_PARENT_WITH_IDENTITY
 	 *
-	 * @param externalId          The users id for the new credentials
+	 * @param externalId The users id for the new credentials
 	 * @param authenticationToken The password/token
-	 * @param authenticationType  Type of identity
-	 * @param externalAuthName    Optional - if attaching an external identity
-	 * @param forceCreate         Should a new profile be created if it does not
-	 *                            exist?
-	 * @param successCallback     The success callback
-	 * @param errorCallback       The failure callback.
-	 * @param cbObject            The user object sent to the callback
+	 * @param authenticationType Type of identity
+	 * @param externalAuthName Optional - if attaching an external identity
+	 * @param forceCreate Should a new profile be created if it does not exist?
+	 * @param successCallback The success callback
+	 * @param errorCallback The failure callback.
+	 * @param cbObject The user object sent to the callback
 	 */
 	public void attachParentWithIdentity(String externalId, String authenticationToken,
 			AuthenticationType authenticationType,
@@ -1300,16 +1141,15 @@ public class IdentityService {
 	 * Service Name - identity
 	 * Service Operation - ATTACH_PEER_PROFILE
 	 *
-	 * @param peer                Name of the peer to connect to
-	 * @param externalId          The users id for the new credentials
+	 * @param peer Name of the peer to connect to
+	 * @param externalId The users id for the new credentials
 	 * @param authenticationToken The password/token
-	 * @param authenticationType  Type of identity
-	 * @param externalAuthName    Optional - if attaching an external identity
-	 * @param forceCreate         Should a new profile be created if it does not
-	 *                            exist?
-	 * @param successCallback     The success callback
-	 * @param errorCallback       The failure callback.
-	 * @param cbObject            The user object sent to the callback
+	 * @param authenticationType Type of identity
+	 * @param externalAuthName Optional - if attaching an external identity
+	 * @param forceCreate Should a new profile be created if it does not exist?
+	 * @param successCallback The success callback
+	 * @param errorCallback The failure callback.
+	 * @param cbObject The user object sent to the callback
 	 */
 	public void attachPeerProfile(String peer, String externalId, String authenticationToken,
 			AuthenticationType authenticationType,

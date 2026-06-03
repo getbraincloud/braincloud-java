@@ -42,8 +42,7 @@ public class MessagingService {
      * Service Name - messaging
      * Service Operation - DELETE_MESSAGES
      *
-     * @param msgbox   The message box to delete from.
-     * @param msgIds   Arrays of message ids to delete.
+     * @param msgIds Arrays of message ids to delete.
      * @param callback The method to be invoked when the server response is received
      */
     public void deleteMessages(String msgbox, ArrayList<String> msgIds, IServerCallback callback) {
@@ -100,11 +99,9 @@ public class MessagingService {
      * Service Name - messaging
      * Service Operation - GET_MESSAGES
      *
-     * @param msgbox     The message box to get messages from.
-     * @param msgIds     Arrays of message ids to get.
+     * @param msgIds Arrays of message ids to get.
      * @param markAsRead mark messages that are read
-     * @param callback   The method to be invoked when the server response is
-     *                   received
+     * @param callback The method to be invoked when the server response is received
      */
     public void getMessages(String msgbox, ArrayList<String> msgIds, Boolean markAsRead, IServerCallback callback) {
         try {
@@ -129,7 +126,7 @@ public class MessagingService {
      * Service Name - messaging
      * Service Operation - GET_MESSAGES_PAGE
      *
-     * @param context  The context for the page of messages.
+     * @param context
      * @param callback The method to be invoked when the server response is received
      */
     public void getMessagesPage(String context, IServerCallback callback) {
@@ -148,16 +145,14 @@ public class MessagingService {
     }
 
     /**
-     * Gets the page of messages from the server based on the encoded context and
-     * specified page offset.
+     * Gets the page of messages from the server based on the encoded context and specified page offset.
      *
      * Service Name - messaging
      * Service Operation - GET_MESSAGES_PAGE_OFFSET
      *
-     * @param context    The context for the page of messages.
-     * @param pageOffset The page offset.
-     * @param callback   The method to be invoked when the server response is
-     *                   received
+     * @param context
+     * @param pageOffset
+     * @param callback The method to be invoked when the server response is received
      */
     public void getMessagesPageOffset(String context, int pageOffset, IServerCallback callback) {
         try {
@@ -179,10 +174,9 @@ public class MessagingService {
      * Service Name - messaging
      * Service Operation - SEND_MESSAGE
      *
-     * @param toProfileIds The list of profile ids to send the message to.
-     * @param contentJson  The message you are sending
-     * @param callback     The method to be invoked when the server response is
-     *                     received
+     * @param toProfileIds
+     * @param contentJson the message you are sending
+     * @param callback The method to be invoked when the server response is received
      */
     public void sendMessage(ArrayList<String> toProfileIds, String contentJson, IServerCallback callback) {
         try {
@@ -206,10 +200,9 @@ public class MessagingService {
      * Service Name - messaging
      * Service Operation - SEND_MESSAGE_SIMPLE
      *
-     * @param toProfileIds The list of profile ids to send the message to.
-     * @param messageText  The message text you are sending
-     * @param callback     The method to be invoked when the server response is
-     *                     received
+     * @param toProfileIds
+     * @param messageText
+     * @param callback The method to be invoked when the server response is received
      */
     public void sendMessageSimple(ArrayList<String> toProfileIds, String messageText, IServerCallback callback) {
         try {
@@ -233,8 +226,8 @@ public class MessagingService {
      * Service Name - messaging
      * Service Operation - MARK_MESSAGES_READ
      *
-     * @param msgbox   The message box to mark as read.
-     * @param msgIds   Arrays of message ids to mark as read.
+     * @param msgbox
+     * @param msgIds
      * @param callback The method to be invoked when the server response is received
      */
     public void markMessagesRead(String msgbox, ArrayList<String> msgIds, IServerCallback callback) {

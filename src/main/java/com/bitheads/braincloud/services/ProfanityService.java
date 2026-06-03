@@ -36,21 +36,19 @@ public class ProfanityService {
      * Service Name - profanity
      * Service Operation - PROFANITY_CHECK
      *
-     * @param text      The text to check
-     * @param languages Optional comma delimited list of two character language
-     *                  codes
+     * @param text The text to check
+     * @param languages Optional comma delimited list of two character language codes
      * @param flagEmail Optional processing of email addresses
      * @param flagPhone Optional processing of phone numbers
-     * @param flagUrls  Optional processing of urls
-     * @param callback  The method to be invoked when the server response is
-     *                  received
+     * @param flagUrls Optional processing of urls
+     * @param callback The method to be invoked when the server response is received
      *
-     *                  Significant error codes:
+     * Significant error codes:
      *
-     *                  40421 - WebPurify not configured
-     *                  40422 - General exception occurred
-     *                  40423 - WebPurify returned an error (Http status != 200)
-     *                  40424 - WebPurify not enabled
+     * 40421 - WebPurify not configured
+     * 40422 - General exception occurred
+     * 40423 - WebPurify returned an error (Http status != 200)
+     * 40424 - WebPurify not enabled
      */
     public void profanityCheck(
             String text,
@@ -82,23 +80,20 @@ public class ProfanityService {
      * Service Name - profanity
      * Service Operation - PROFANITY_REPLACE_TEXT
      *
-     * @param text          The text to check
-     * @param replaceSymbol The text to replace individual characters of profanity
-     *                      text with
-     * @param languages     Optional comma delimited list of two character language
-     *                      codes
-     * @param flagEmail     Optional processing of email addresses
-     * @param flagPhone     Optional processing of phone numbers
-     * @param flagUrls      Optional processing of urls
-     * @param callback      The method to be invoked when the server response is
-     *                      received
+     * @param text The text to check
+     * @param replaceSymbol The text to replace individual characters of profanity text with
+     * @param languages Optional comma delimited list of two character language codes
+     * @param flagEmail Optional processing of email addresses
+     * @param flagPhone Optional processing of phone numbers
+     * @param flagUrls Optional processing of urls
+     * @param callback The method to be invoked when the server response is received
      *
-     *                      Significant error codes:
+     * Significant error codes:
      *
-     *                      40421 - WebPurify not configured
-     *                      40422 - General exception occurred
-     *                      40423 - WebPurify returned an error (Http status != 200)
-     *                      40424 - WebPurify not enabled
+     * 40421 - WebPurify not configured
+     * 40422 - General exception occurred
+     * 40423 - WebPurify returned an error (Http status != 200)
+     * 40424 - WebPurify not enabled
      */
     public void profanityReplaceText(
             String text,

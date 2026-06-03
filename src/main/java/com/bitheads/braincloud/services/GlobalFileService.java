@@ -31,7 +31,6 @@ public class GlobalFileService {
      * Service Name - globalFileV3
      * Service Operation - GET_FILE_INFO
      *
-     * @param fileId   The fileId of the global file
      * @param callback The method to be invoked when the server response is received
      */
     public void getFileInfo(String fileId, IServerCallback callback) {
@@ -49,16 +48,12 @@ public class GlobalFileService {
     }
 
     /**
-     * Returns the complete info for the specified file, without having to look up
-     * the fileId first.
+     * Returns the complete info for the specified file, without having to look up the fileId first.
      *
      * Service Name - globalFileV3
      * Service Operation - GET_FILE_INFO_SIMPLE
      *
-     * @param folderPath The folder path of the file
-     * @param filename   The name of the file
-     * @param callback   The method to be invoked when the server response is
-     *                   received
+     * @param callback The method to be invoked when the server response is received
      */
     public void getFileInfoSimple(String folderPath, String filename, IServerCallback callback) {
         try {
@@ -81,7 +76,6 @@ public class GlobalFileService {
      * Service Name - globalFileV3
      * Service Operation - GET_GLOBAL_CDN_URL
      *
-     * @param fileId   The fileId of the global file
      * @param callback The method to be invoked when the server response is received
      */
     public void getGlobalCDNUrl(String fileId, IServerCallback callback) {
@@ -104,10 +98,7 @@ public class GlobalFileService {
      * Service Name - globalFileV3
      * Service Operation - GET_GLOBAL_FILE_LIST
      *
-     * @param folderPath The folder path to list files from
-     * @param recurse    Whether to recurse into subfolders
-     * @param callback   The method to be invoked when the server response is
-     *                   received
+     * @param callback The method to be invoked when the server response is received
      */
     public void getGlobalFileList(String folderPath, boolean recurse, IServerCallback callback) {
         try {

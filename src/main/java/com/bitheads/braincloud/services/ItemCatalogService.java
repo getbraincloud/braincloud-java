@@ -26,13 +26,12 @@ public class ItemCatalogService {
 
     /**
      * Reads an existing item definition from the server, with language fields
-     * limited to the current or default language.
+     * limited to the current or default language
      *
      * Service Name - itemCatalog
      * Service Operation - GET_CATALOG_ITEM_DEFINITION
      *
-     * @param defId    The identifier of the catalog item definition to retrieve
-     * @param callback The method to be invoked when the server response is received
+     * @param defId
      */
     public void getCatalogItemDefinition(String defId, IServerCallback callback) {
         try {
@@ -47,15 +46,13 @@ public class ItemCatalogService {
     }
 
     /**
-     * Retrieve a page of catalog items from the server, with language fields
-     * limited to the text for the current or default language.
+     * Retrieve page of catalog items from the server, with language fields limited to the
+     * text for the current or default language.
      *
      * Service Name - itemCatalog
      * Service Operation - GET_CATALOG_ITEMS_PAGE
      *
-     * @param context  The pagination context returned from a previous catalog page
-     *                 request
-     * @param callback The method to be invoked when the server response is received
+     * @param context
      */
     public void getCatalogItemsPage(String context, IServerCallback callback) {
         try {
@@ -70,18 +67,15 @@ public class ItemCatalogService {
     }
 
     /**
-     * Gets a page of catalog items from the server based on the encoded
+     * Gets the page of catalog items from the server based ont he encoded
      * context and specified page offset, with language fields limited to the
-     * text for the current or default language.
+     * text fir the current or default language
      *
      * Service Name - itemCatalog
      * Service Operation - GET_CATALOG_ITEMS_PAGE_OFFSET
      *
-     * @param context    The pagination context returned from a previous catalog
-     *                   page request
-     * @param pageOffset The page offset relative to the current context
-     * @param callback   The method to be invoked when the server response is
-     *                   received
+     * @param context
+     * @param pageOffset
      */
     public void getCatalogItemsPageOffset(String context, int pageOffset, IServerCallback callback) {
         try {

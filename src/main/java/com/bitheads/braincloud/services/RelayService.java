@@ -33,16 +33,12 @@ public class RelayService {
      * brainClouds Relay Servers. Connect options come in
      * from ROOM_ASSIGNED lobby callback.
      *
-     * @param connectionType The connection type. WEBSOCKET, TCP, UDP
-     * @param options        {
-     *                       ssl: false,
-     *                       host: "168.0.1.192"
-     *                       port: 9000,
-     *                       passcode: "somePasscode",
-     *                       lobbyId: "55555:v5v:001"
-     *                       }
-     * @param callback       The method to be invoked when the server response is
-     *                       received
+     * @param connectionType
+     * @param host
+     * @param port
+     * @param passcode
+     * @param lobbyId
+     * @param callback Callback objects that report Success or Failure|Disconnect.
      *
      * @note SSL option will only work with WEBSOCKET connetion type.
      */
@@ -58,10 +54,7 @@ public class RelayService {
     }
 
     /**
-     * Terminate the match instance by the owner.
-     * 
-     * @param json Payload data sent in JSON format. It will be relayed to other
-     *             connnected players
+     * Requests to end the current match on the relay server
      */
     public void endMatch(JSONObject json) {
         _client.getRelayComms().endMatch(json);
@@ -229,13 +222,12 @@ public class RelayService {
     /**
      * Send a packet to peer(s)
      *
-     * @param data     Byte array for the data to send
-     * @param size     Size of data in bytes
-     * @param toNetId  The net id to send to, TO_ALL_PLAYERS to relay to all.
+     * @param data Byte array for the data to send
+     * @param size Size of data in bytes
+     * @param toNetId The net id to send to, TO_ALL_PLAYERS to relay to all.
      * @param reliable Send this reliable or not.
-     * @param ordered  Receive this ordered or not.
-     * @param channel  One of: (CHANNEL_HIGH_PRIORITY_1, CHANNEL_HIGH_PRIORITY_2,
-     *                 CHANNEL_NORMAL_PRIORITY, CHANNEL_LOW_PRIORITY)
+     * @param ordered Receive this ordered or not.
+     * @param channel One of: (CHANNEL_HIGH_PRIORITY_1, CHANNEL_HIGH_PRIORITY_2, CHANNEL_NORMAL_PRIORITY, CHANNEL_LOW_PRIORITY)
      */
     public void send(byte[] data, long toNetId, boolean reliable, boolean ordered, int channel) {
         if (toNetId == TO_ALL_PLAYERS) {
@@ -249,17 +241,12 @@ public class RelayService {
     /**
      * Send a packet to any players by using a mask
      *
-     * @param data       Byte array for the data to send
-     * @param size       Size of data in bytes
-     * @param playerMask Mask of the players to send to. 0001 = netId 0, 0010 =
-     *                   netId 1, etc. If you pass ALL_PLAYER_MASK you will be
-     *                   included and you will get an echo for your message. Use
-     *                   sendToAll instead, you will be filtered out. You can
-     *                   manually filter out by : ALL_PLAYER_MASK &= ~(1 << myNetId)
-     * @param reliable   Send this reliable or not.
-     * @param ordered    Receive this ordered or not.
-     * @param channel    One of: (CHANNEL_HIGH_PRIORITY_1, CHANNEL_HIGH_PRIORITY_2,
-     *                   CHANNEL_NORMAL_PRIORITY, CHANNEL_LOW_PRIORITY)
+     * @param data Byte array for the data to send
+     * @param size Size of data in bytes
+     * @param playerMask Mask of the players to send to. 0001 = netId 0, 0010 = netId 1, etc. If you pass ALL_PLAYER_MASK you will be included and you will get an echo for your message. Use sendToAll instead, you will be filtered out. You can manually filter out by : ALL_PLAYER_MASK &= ~(1 << myNetId)
+     * @param reliable Send this reliable or not.
+     * @param ordered Receive this ordered or not.
+     * @param channel One of: (CHANNEL_HIGH_PRIORITY_1, CHANNEL_HIGH_PRIORITY_2, CHANNEL_NORMAL_PRIORITY, CHANNEL_LOW_PRIORITY)
      */
     public void sendToPlayers(byte[] data, long playerMask, boolean reliable, boolean ordered, int channel) {
         _client.getRelayComms().sendRelay(data, playerMask, reliable, ordered, channel);
@@ -268,12 +255,11 @@ public class RelayService {
     /**
      * Send a packet to all except yourself
      *
-     * @param data     Byte array for the data to send
-     * @param size     Size of data in bytes
+     * @param data Byte array for the data to send
+     * @param size Size of data in bytes
      * @param reliable Send this reliable or not.
-     * @param ordered  Receive this ordered or not.
-     * @param channel  One of: (CHANNEL_HIGH_PRIORITY_1, CHANNEL_HIGH_PRIORITY_2,
-     *                 CHANNEL_NORMAL_PRIORITY, CHANNEL_LOW_PRIORITY)
+     * @param ordered Receive this ordered or not.
+     * @param channel One of: (CHANNEL_HIGH_PRIORITY_1, CHANNEL_HIGH_PRIORITY_2, CHANNEL_NORMAL_PRIORITY, CHANNEL_LOW_PRIORITY)
      */
     public void sendToAll(byte[] data, boolean reliable, boolean ordered, int channel) {
         String myProfileId = _client.getAuthenticationService().getProfileId();

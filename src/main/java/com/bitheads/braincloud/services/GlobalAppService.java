@@ -47,8 +47,7 @@ public class GlobalAppService {
      * Service Operation - READ_SELECTED_PROPERTIES
      *
      * @param propertyNames Specifies which properties to return
-     * @param callback      The method to be invoked when the server response is
-     *                      received
+     * @param callback The method to be invoked when the server response is received
      */
     public void readSelectedProperties(ArrayList<String> propertyNames, IServerCallback callback) {
         try {
@@ -71,8 +70,7 @@ public class GlobalAppService {
      * Service Operation - READ_PROPERTIES_CATEGORIES
      *
      * @param categories Specifies which category to return
-     * @param callback   The method to be invoked when the server response is
-     *                   received
+     * @param callback The method to be invoked when the server response is received
      */
     public void readPropertiesInCategories(ArrayList<String> categories, IServerCallback callback) {
         try {

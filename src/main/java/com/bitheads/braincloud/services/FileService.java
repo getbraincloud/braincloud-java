@@ -38,18 +38,20 @@ public class FileService {
      * to the brainCloud server. To be informed of success/failure of the upload
      * register an IFileUploadCallback with the BrainCloudClient class.
      *
-     * @param cloudPath       The desired cloud path of the file
-     * @param cloudFilename   The desired cloud filename of the file
-     * @param shareable       True if the file is shareable.
+     * Service Name - file
+     * Service Operation - PREPARE_USER_UPLOAD
+     *
+     * @param cloudPath The desired cloud path of the file
+     * @param cloudFilename The desired cloud filename of the file
+     * @param shareable True if the file is shareable.
      * @param replaceIfExists Whether to replace file if it exists
-     * @param localPath       The path and filename of the local file
-     * @param callback        The method to be invoked when the server response is
-     *                        received
+     * @param localPath The path and filename of the local file
+     * @param callback The method to be invoked when the server response is received
      *
-     *                        Significant error codes:
+     * Significant error codes:
      *
-     *                        40429 - File maximum file size exceeded
-     *                        40430 - File exists, replaceIfExists not set
+     * 40429 - File maximum file size exceeded
+     * 40430 - File exists, replaceIfExists not set
      */
     public boolean uploadFile(String cloudPath,
             String cloudFilename,
@@ -83,6 +85,9 @@ public class FileService {
     /**
      * List all user files
      *
+     * Service Name - file
+     * Service Operation - LIST_USER_FILES
+     *
      * @param callback The method to be invoked when the server response is received
      */
     public void listUserFiles(IServerCallback callback) {
@@ -114,16 +119,17 @@ public class FileService {
     /**
      * Deletes a single user file.
      *
-     * @param cloudPath     File path
+     * Service Name - file
+     * Service Operation - DELETE_USER_FILES
+     *
+     * @param cloudPath File path
      * @param cloudFilename name of file
-     * @param callback      The method to be invoked when the server response is
-     *                      received
+     * @param callback The method to be invoked when the server response is received
      *
-     *                      Significant error codes:
+     * Significant error codes:
      *
-     *                      40431 - Cloud storage service error
-     *                      40432 - File does not exist
-     *
+     * 40431 - Cloud storage service error
+     * 40432 - File does not exist
      */
     public void deleteUserFile(String cloudPath, String cloudFilename, IServerCallback callback) {
         try {
@@ -141,10 +147,12 @@ public class FileService {
     /**
      * Delete multiple user files
      *
+     * Service Name - file
+     * Service Operation - DELETE_USER_FILES
+     *
      * @param cloudPath File path
-     * @param recurse   Whether to recurse into sub-directories
-     * @param callback  The method to be invoked when the server response is
-     *                  received
+     * @param recurse Whether to recurse into sub-directories
+     * @param callback The method to be invoked when the server response is received
      */
     public void deleteUserFiles(String cloudPath, boolean recurse, IServerCallback callback) {
         try {
@@ -162,10 +170,12 @@ public class FileService {
     /**
      * Returns the CDN url for a file object
      *
-     * @param cloudPath     File path
+     * Service Name - file
+     * Service Operation - GET_CDN_URL
+     *
+     * @param cloudPath File path
      * @param cloudFileName File name
-     * @param callback      The method to be invoked when the server response is
-     *                      received
+     * @param callback The method to be invoked when the server response is received
      */
     public void getCDNUrl(String cloudPath, String cloudFileName, IServerCallback callback) {
         try {
@@ -181,10 +191,8 @@ public class FileService {
     }
 
     /**
-     * Method cancels an upload. If an IFileUploadCallback has been registered with
-     * the BrainCloudClient class,
-     * the fileUploadFailed callback method will be called once the upload has been
-     * canceled.
+     * Method cancels an upload. If an IFileUploadCallback has been registered with the BrainCloudClient class,
+     * the fileUploadFailed callback method will be called once the upload has been canceled.
      *
      * @param uploadId The id of the upload
      */

@@ -26,14 +26,12 @@ public class VirtualCurrencyService {
     }
 
     /**
-     * Retrieve the user's currency account. Optional parameter: `vcId` (if
-     * retrieving a specific currency).
+     * Retrieve the user's currency account. Optional parameters: vcId (if retrieving all currencies).
      *
      * Service Name - virtualCurrency
      * Service Operation - GET_PLAYER_VC
      *
-     * @param vcId     Optional currency id to retrieve (pass NULL to get all
-     *                 currencies)
+     * @param vcId
      * @param callback The method to be invoked when the server response is received
      */
     public void getCurrency(String vcId, IServerCallback callback) {
@@ -49,17 +47,14 @@ public class VirtualCurrencyService {
     }
 
     /**
-     * Retrieve the parent user's currency account. Optional parameter: `vcId` (if
-     * retrieving a specific currency).
+     * Retrieve the parent user's currency account. Optional parameters: vcId (if retrieving all currencies).
      *
      * Service Name - virtualCurrency
      * Service Operation - GET_PARENT_VC
      *
-     * @param vcId      Optional currency id to retrieve (pass NULL to get all
-     *                  currencies)
-     * @param levelName The parent level name
-     * @param callback  The method to be invoked when the server response is
-     *                  received
+     * @param vcId
+     * @param levelName
+     * @param callback The method to be invoked when the server response is received
      */
     public void getParentCurrency(String vcId, String levelName, IServerCallback callback) {
         try {
@@ -75,15 +70,13 @@ public class VirtualCurrencyService {
     }
 
     /**
-     * Retrieve the peer user's currency account. Optional parameter: `vcId` (if
-     * retrieving a specific currency).
+     * Retrieve the peer user's currency account. Optional parameters: vcId (if retrieving all currencies).
      *
      * Service Name - virtualCurrency
      * Service Operation - GET_PEER_VC
      *
-     * @param vcId     Optional currency id to retrieve (pass NULL to get all
-     *                 currencies)
-     * @param peerCode The peer code identifying the other user
+     * @param vcId
+     * @param peerCode
      * @param callback The method to be invoked when the server response is received
      */
     public void getPeerCurrency(String vcId, String peerCode, IServerCallback callback) {
@@ -115,12 +108,7 @@ public class VirtualCurrencyService {
 
     /**
      * @warning Method is recommended to be used in Cloud Code only for security
-     *          If you need to use it client side, enable 'Allow Currency Calls from
-     *          Client' on the brainCloud dashboard
-     * @param currencyType The currency type to award
-     * @param amount       The amount to award
-     * @param callback     The method to be invoked when the server response is
-     *                     received
+     * If you need to use it client side, enable 'Allow Currency Calls from Client' on the brainCloud dashboard
      */
     public void awardCurrency(String vcId, int vcAmount, IServerCallback callback) {
         try {
@@ -137,12 +125,7 @@ public class VirtualCurrencyService {
 
     /**
      * @warning Method is recommended to be used in Cloud Code only for security
-     *          If you need to use it client side, enable 'Allow Currency Calls from
-     *          Client' on the brainCloud dashboard
-     * @param currencyType The currency type to consume
-     * @param amount       The amount to consume
-     * @param callback     The method to be invoked when the server response is
-     *                     received
+     * If you need to use it client side, enable 'Allow Currency Calls from Client' on the brainCloud dashboard
      */
     public void consumeCurrency(String vcId, int vcAmount, IServerCallback callback) {
         try {

@@ -39,16 +39,11 @@ public class GlobalEntityService {
      * Service Name - globalEntity
      * Service Operation - CREATE
      *
-     * @param entityType     The entity type as defined by the user
-     * @param timeToLive     The duration of time, in milliseconds, the singleton
-     *                       custom entity should live
-     *                       before being expired. Null indicates never expires.
-     *                       Value of -1 indicates no change for updates.
-     * @param jsonEntityAcl  The entity's access control list as json. A null acl
-     *                       implies default
-     * @param jsonEntityData The entity's data as a json string
-     * @param callback       The method to be invoked when the server response is
-     *                       received
+     * @param entityType The entity type as defined by the user
+     * @param timeToLive Sets expiry time for entity in milliseconds if > 0
+     * @param jsonEntityAcl The entity's access control list as json. A null acl implies default
+     * @param jsonEntityData  The entity's data as a json string
+     * @param callback The callback object
      */
     public void createEntity(String entityType, long timeToLive,
             String jsonEntityAcl, String jsonEntityData,
@@ -80,17 +75,12 @@ public class GlobalEntityService {
      * Service Name - globalEntity
      * Service Operation - CREATE_WITH_INDEXED_ID
      *
-     * @param entityType     The entity type as defined by the user
-     * @param indexedId      A secondary ID that will be indexed
-     * @param timeToLive     The duration of time, in milliseconds, the singleton
-     *                       custom entity should live
-     *                       before being expired. Null indicates never expires.
-     *                       Value of -1 indicates no change for updates.
-     * @param jsonEntityAcl  The entity's access control list as json. A null acl
-     *                       implies default
-     * @param jsonEntityData The entity's data as a json string
-     * @param callback       The method to be invoked when the server response is
-     *                       received
+     * @param entityType The entity type as defined by the user
+     * @param indexedId A secondary ID that will be indexed
+     * @param timeToLive Sets expiry time for entity in milliseconds if > 0
+     * @param jsonEntityAcl The entity's access control list as json. A null acl implies default
+     * @param jsonEntityData  The entity's data as a json string
+     * @param callback The callback object
      */
     public void createEntityWithIndexedId(String entityType,
             String indexedId, long timeToLive, String jsonEntityAcl,
@@ -123,11 +113,10 @@ public class GlobalEntityService {
      * Service Name - globalEntity
      * Service Operation - UPDATE
      *
-     * @param entityId       The entity ID
-     * @param version        The version of the entity to update
-     * @param jsonEntityData The entity's data as a json string
-     * @param callback       The method to be invoked when the server response is
-     *                       received
+     * @param entityId The entity ID
+     * @param version The version of the entity to update
+     * @param jsonEntityData  The entity's data as a json string
+     * @param callback The callback object
      */
     public void updateEntity(String entityId, int version,
             String jsonEntityData, IServerCallback callback) {
@@ -154,11 +143,10 @@ public class GlobalEntityService {
      * Service Name - globalEntity
      * Service Operation - UPDATE_ACL
      *
-     * @param entityId      The entity ID
-     * @param version       The version of the entity to update
+     * @param entityId The entity ID
+     * @param version The version of the entity to update
      * @param jsonEntityAcl The entity's access control list as json.
-     * @param callback      The method to be invoked when the server response is
-     *                      received
+     * @param callback The callback object
      */
     public void updateEntityAcl(String entityId, int version,
             String jsonEntityAcl, IServerCallback callback) {
@@ -187,14 +175,10 @@ public class GlobalEntityService {
      * Service Name - globalEntity
      * Service Operation - UPDATE_TIME_TO_LIVE
      *
-     * @param entityId   The entity ID
-     * @param version    The version of the entity to update
-     * @param timeToLive The duration of time, in milliseconds, the singleton custom
-     *                   entity should live
-     *                   before being expired. Null indicates never expires. Value
-     *                   of -1 indicates no change for updates.
-     * @param callback   The method to be invoked when the server response is
-     *                   received
+     * @param entityId The entity ID
+     * @param version The version of the entity to update
+     * @param timeToLive Sets expiry time for entity in milliseconds if > 0
+     * @param callback The callback object
      */
     public void updateEntityTimeToLive(String entityId, int version,
             long timeToLive, IServerCallback callback) {
@@ -220,8 +204,8 @@ public class GlobalEntityService {
      * Service Operation - DELETE
      *
      * @param entityId The entity ID
-     * @param version  The version of the entity to delete
-     * @param callback The method to be invoked when the server response is received
+     * @param version The version of the entity to delete
+     * @param callback The callback object
      */
     public void deleteEntity(String entityId, int version,
             IServerCallback callback) {
@@ -246,7 +230,7 @@ public class GlobalEntityService {
      * Service Operation - READ
      *
      * @param entityId The entity ID
-     * @param callback The method to be invoked when the server response is received
+     * @param callback The callback object
      */
     public void readEntity(String entityId,
             IServerCallback callback) {
@@ -267,11 +251,10 @@ public class GlobalEntityService {
      * Service Name - globalEntity
      * Service Operation - GET_LIST
      *
-     * @param where     Mongo style query string
-     * @param orderBy   Sort order
+     * @param where Mongo style query string
+     * @param orderBy Sort order
      * @param maxReturn The maximum number of entities to return
-     * @param callback  The method to be invoked when the server response is
-     *                  received
+     * @param callback The callback object
      */
     public void getList(String where, String orderBy, int maxReturn,
             IServerCallback callback) {
@@ -303,9 +286,8 @@ public class GlobalEntityService {
      * Service Operation - GET_LIST_BY_INDEXED_ID
      *
      * @param entityIndexedId The entity indexed Id
-     * @param maxReturn       The maximum number of entities to return
-     * @param callback        The method to be invoked when the server response is
-     *                        received
+     * @param maxReturn The maximum number of entities to return
+     * @param callback The callback object
      */
     public void getListByIndexedId(String entityIndexedId, int maxReturn,
             IServerCallback callback) {
@@ -328,8 +310,8 @@ public class GlobalEntityService {
      * Service Name - globalEntity
      * Service Operation - GET_LIST_COUNT
      *
-     * @param where    Mongo style query string
-     * @param callback The method to be invoked when the server response is received
+     * @param where Mongo style query string
+     * @param callback The callback object
      */
     public void getListCount(String where,
             IServerCallback callback) {
@@ -357,9 +339,9 @@ public class GlobalEntityService {
      * Service Name - globalEntity
      * Service Operation - GET_PAGE
      *
-     * @param context  The json context for the page request.
-     *                 See the portal appendix documentation for format.
-     * @param callback The method to be invoked when the server response is received
+     * @param context The json context for the page request.
+     *                   See the portal appendix documentation for format.
+     * @param callback The callback object
      */
     public void getPage(String jsonContext, IServerCallback callback) {
         try {
@@ -375,20 +357,16 @@ public class GlobalEntityService {
     }
 
     /**
-     * Method to retrieve previous or next pages after having called the GetPage
-     * method.
+     * Method to retrieve previous or next pages after having called the GetPage method.
      *
      * Service Name - globalEntity
-     * Service Operation - GET_PAGE_OFFSET
+     * Service Operation - GET_PAGE_BY_OFFSET
      *
-     * @param context    The context string returned from the server from a
-     *                   previous call to GetPage or GetPageOffset
-     * @param pageOffset The positive or negative page offset to fetch. Uses the
-     *                   last page
-     *                   retrieved using the context string to determine a starting
-     *                   point.
-     * @param callback   The method to be invoked when the server response is
-     *                   received
+     * @param context The context string returned from the server from a
+     *      previous call to GetPage or GetPageOffset
+     * @param pageOffset The positive or negative page offset to fetch. Uses the last page
+     *      retrieved using the context string to determine a starting point.
+     * @param callback The callback object
      */
     public void getPageOffset(String context, int pageOffset, IServerCallback callback) {
         try {
@@ -404,15 +382,14 @@ public class GlobalEntityService {
     }
 
     /**
-     * Partial increment of global entity data field items. Partial set of items
-     * incremented as specified.
+     * Partial increment of global entity data field items. Partial set of items incremented as specified.
      *
      * Service Name - globalEntity
      * Service Operation - INCREMENT_GLOBAL_ENTITY_DATA
      *
      * @param entityId The id of the entity to update
      * @param jsonData The entity's data object
-     * @param callback The method to be invoked when the server response is received
+     * @param callback The callback object
      */
     public void incrementGlobalEntityData(String entityId, String jsonData, IServerCallback callback) {
         try {
@@ -430,16 +407,14 @@ public class GlobalEntityService {
     }
 
     /**
-     * Gets a list of up to randomCount randomly selected entities from the server
-     * based on the where condition and specified maximum return count.
+     * Gets a list of up to randomCount randomly selected entities from the server based on the where condition and specified maximum return count.
      *
      * Service Name - globalEntity
      * Service Operation - GET_RANDOM_ENTITIES_MATCHING
      *
-     * @param where     Mongo style query string
+     * @param where Mongo style query string
      * @param maxReturn The maximum number of entities to return
-     * @param callback  The method to be invoked when the server response is
-     *                  received
+     * @param callback The callback object
      */
     public void getRandomEntitiesMatching(String where, int maxReturn, IServerCallback callback) {
         try {
@@ -463,11 +438,10 @@ public class GlobalEntityService {
      * Service Name - globalEntity
      * Service Operation - UPDATE_ENTITY_OWNER_AND_ACL
      *
-     * @param entityId        The entity ID
-     * @param version         The version of the entity to update
+     * @param entityId The entity ID
+     * @param version The version of the entity to update
      * @param entityIndexedId the id index of the entity
-     * @param callback        The method to be invoked when the server response is
-     *                        received
+     * @param callback The callback object
      */
     public void updateEntityIndexedId(String entityId, int version, String entityIndexedId, IServerCallback callback) {
         try {
@@ -491,12 +465,11 @@ public class GlobalEntityService {
      * Service Name - globalEntity
      * Service Operation - UPDATE_ENTITY_OWNER_AND_ACL
      *
-     * @param entityId      The entity ID
-     * @param version       The version of the entity to update
-     * @param ownerId       The owner ID
+     * @param entityId The entity ID
+     * @param version The version of the entity to update
+     * @param ownerId The owner ID
      * @param jsonEntityAcl The entity's access control list as JSON.
-     * @param callback      The method to be invoked when the server response is
-     *                      received
+     * @param callback The callback object
      */
     public void updateEntityOwnerAndAcl(String entityId, int version, String ownerId, String jsonEntityAcl,
             IServerCallback callback) {
@@ -521,17 +494,15 @@ public class GlobalEntityService {
     }
 
     /**
-     * Method clears the owner id of an existing entity and sets the ACL on the
-     * server.
+     * Method clears the owner id of an existing entity and sets the ACL on the server.
      *
      * Service Name - globalEntity
      * Service Operation - MAKE_SYSTEM_ENTITY
      *
-     * @param entityId      The entity ID
-     * @param version       The version of the entity to update
+     * @param entityId The entity ID
+     * @param version The version of the entity to update
      * @param jsonEntityAcl The entity's access control list as JSON.
-     * @param callback      The method to be invoked when the server response is
-     *                      received
+     * @param callback The callback object
      */
     public void makeSystemEntity(String entityId, int version, String jsonEntityAcl, IServerCallback callback) {
         try {

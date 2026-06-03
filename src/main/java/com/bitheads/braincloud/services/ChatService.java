@@ -44,8 +44,7 @@ public class ChatService {
      *
      * @param channelId The id of the chat channel to return history from.
      * @param maxReturn Maximum number of messages to return.
-     * @param callback  The method to be invoked when the server response is
-     *                  received
+     * @param callback The method to be invoked when the server response is received
      */
     public void channelConnect(String channelId, int maxReturn, IServerCallback callback) {
         try {
@@ -68,8 +67,7 @@ public class ChatService {
      * Service Operation - CHANNEL_DISCONNECT
      *
      * @param channelId The id of the chat channel to unsubscribed from.
-     * @param callback  The method to be invoked when the server response is
-     *                  received
+     * @param callback The method to be invoked when the server response is received
      */
     public void channelDisconnect(String channelId, IServerCallback callback) {
         try {
@@ -85,19 +83,15 @@ public class ChatService {
     }
 
     /**
-     * Delete a chat message. <version> must match the latest or pass -1 to bypass
-     * version check.
+     * Delete a chat message. <version> must match the latest or pass -1 to bypass version check.
      *
      * Service Name - chat
      * Service Operation - DELETE_CHAT_MESSAGE
      *
-     * @param channelId The id of the chat channel that contains the message to
-     *                  delete.
-     * @param msgId     The message id to delete.
-     * @param version   Version of the message to delete. Must match latest or pass
-     *                  -1 to bypass version check.
-     * @param callback  The method to be invoked when the server response is
-     *                  received
+     * @param channelId The id of the chat channel that contains the message to delete.
+     * @param msgId The message id to delete.
+     * @param version Version of the message to delete. Must match latest or pass -1 to bypass version check.
+     * @param callback The method to be invoked when the server response is received
      */
     public void deleteChatMessage(String channelId, String msgId, int version, IServerCallback callback) {
         try {
@@ -115,17 +109,14 @@ public class ChatService {
     }
 
     /**
-     * Gets the channelId for the given <channelType> and <channelSubId>. Channel
-     * type must be one of "gl" or "gr".
+     * Gets the channelId for the given <channelType> and <channelSubId>. Channel type must be one of "gl" or "gr".
      *
      * Service Name - chat
      * Service Operation - GET_CHANNEL_ID
      *
-     * @param channelType  Channel type must be one of "gl" or "gr". For (global) or
-     *                     (group) respectively.
+     * @param channelType Channel type must be one of "gl" or "gr". For (global) or (group) respectively.
      * @param channelSubId The sub id of the channel.
-     * @param callback     The method to be invoked when the server response is
-     *                     received
+     * @param callback The method to be invoked when the server response is received
      */
     public void getChannelId(String channelType, String channelSubId, IServerCallback callback) {
         try {
@@ -150,8 +141,7 @@ public class ChatService {
      * Service Operation - GET_CHANNEL_INFO
      *
      * @param channelId Id of the channel to receive the info from.
-     * @param callback  The method to be invoked when the server response is
-     *                  received.
+     * @param callback The method to be invoked when the server response is received.
      */
     public void getChannelInfo(String channelId, IServerCallback callback) {
         try {
@@ -173,9 +163,8 @@ public class ChatService {
      * Service Operation - GET_CHAT_MESSAGE
      *
      * @param channelId Id of the channel to receive the message from.
-     * @param msgId     Id of the message to read.
-     * @param callback  The method to be invoked when the server response is
-     *                  received.
+     * @param msgId Id of the message to read.
+     * @param callback The method to be invoked when the server response is received.
      */
     public void getChatMessage(String channelId, String msgId, IServerCallback callback) {
         try {
@@ -199,8 +188,7 @@ public class ChatService {
      *
      * @param channelId Id of the channel to receive the info from.
      * @param maxReturn Maximum message count to return.
-     * @param callback  The method to be invoked when the server response is
-     *                  received.
+     * @param callback The method to be invoked when the server response is received.
      */
     public void getRecentChatMessages(String channelId, int maxReturn, IServerCallback callback) {
         try {
@@ -217,17 +205,14 @@ public class ChatService {
     }
 
     /**
-     * Gets a list of the channels of type <channelType> that the user has access
-     * to.
+     * Gets a list of the channels of type <channelType> that the user has access to.
      * Channel type must be one of "gl", "gr" or "all".
      *
      * Service Name - chat
      * Service Operation - GET_SUBSCRIBED_CHANNELS
      *
-     * @param channelType Type of channels to get back. "gl" for global, "gr" for
-     *                    group or "all" for both.
-     * @param callback    The method to be invoked when the server response is
-     *                    received.
+     * @param channelType Type of channels to get back. "gl" for global, "gr" for group or "all" for both.
+     * @param callback The method to be invoked when the server response is received.
      */
     public void getSubscribedChannels(String channelType, IServerCallback callback) {
         try {
@@ -250,10 +235,8 @@ public class ChatService {
      * Service Operation - POST_CHAT_MESSAGE
      *
      * @param channelId Channel id to post message to.
-     * @param content   Object containing "text" for the text message. Can also has
-     *                  rich content for custom data.
-     * @param callback  The method to be invoked when the server response is
-     *                  received.
+     * @param content Object containing "text" for the text message. Can also has rich content for custom data.
+     * @param callback The method to be invoked when the server response is received.
      */
     public void postChatMessage(String channelId, String text, String rich, Boolean recordInHistory,
             IServerCallback callback) {
@@ -283,9 +266,8 @@ public class ChatService {
      * Service Operation - POST_CHAT_MESSAGE
      *
      * @param channelId Channel id to post message to.
-     * @param text      The text message.
-     * @param callback  The method to be invoked when the server response is
-     *                  received.
+     * @param text The text message.
+     * @param callback The method to be invoked when the server response is received.
      */
     public void postChatMessageSimple(String channelId, String text, Boolean recordInHistory,
             IServerCallback callback) {
@@ -312,13 +294,10 @@ public class ChatService {
      * Service Operation - UPDATE_CHAT_MESSAGE
      *
      * @param channelId Channel id where the message to update is.
-     * @param msgId     Message id to update.
-     * @param version   Version of the message to update. Must match latest or pass
-     *                  -1 to bypass version check.
-     * @param content   Data to update. Object containing "text" for the text
-     *                  message. Can also has rich content for custom data.
-     * @param callback  The method to be invoked when the server response is
-     *                  received.
+     * @param msgId Message id to update.
+     * @param version Version of the message to update. Must match latest or pass -1 to bypass version check.
+     * @param content Data to update. Object containing "text" for the text message. Can also has rich content for custom data.
+     * @param callback The method to be invoked when the server response is received.
      */
     public void updateChatMessage(String channelId, String msgId, int version, String text, String rich,
             IServerCallback callback) {

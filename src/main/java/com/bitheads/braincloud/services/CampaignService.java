@@ -22,16 +22,15 @@ public class CampaignService {
     }
 
     /**
-	 * Returns the list of campaigns the current player is participating in,
+     * Returns the list of campaigns the current player is participating in,
      * providing campaign, campaign scenario, and participation details.
-	 *
-	 * Service Name - campaign
-	 * Service Operation - GET_MY_CAMPAIGNS
-	 *
-	 * @param optionsJson Optional parameters (reserved for future use).
-     * @param callback    The method to be invoked when the server response is
-     *                    received
-	 */
+     *
+     * Service Name - campaign
+     * Service Operation - GET_MY_CAMPAIGNS
+     *
+     * @param optionsJson Optional parameters as a JSON string (reserved for future use).
+     * @param callback The method to be invoked when the server response is received.
+     */
 	public void getMyCampaigns(String optionsJson, IServerCallback callback) {
 		try {
 			JSONObject data = new JSONObject();

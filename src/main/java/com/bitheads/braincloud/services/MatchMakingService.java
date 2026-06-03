@@ -48,8 +48,7 @@ public class MatchMakingService {
      * Service Operation - SET_PLAYER_RATING
      *
      * @param playerRating The new player rating.
-     * @param callback     The method to be invoked when the server response is
-     *                     received
+     * @param callback The method to be invoked when the server response is received
      */
     public void setPlayerRating(long playerRating, IServerCallback callback) {
 
@@ -83,8 +82,7 @@ public class MatchMakingService {
      * Service Operation - INCREMENT_PLAYER_RATING
      *
      * @param increment The increment amount
-     * @param callback  The method to be invoked when the server response is
-     *                  received
+     * @param callback The method to be invoked when the server response is received
      */
     public void incrementPlayerRating(long increment, IServerCallback callback) {
         try {
@@ -106,8 +104,7 @@ public class MatchMakingService {
      * Service Operation - DECREMENT_PLAYER_RATING
      *
      * @param decrement The decrement amount
-     * @param callback  The method to be invoked when the server response is
-     *                  received
+     * @param callback The method to be invoked when the server response is received
      */
     public void decrementPlayerRating(long decrement, IServerCallback callback) {
         try {
@@ -221,8 +218,7 @@ public class MatchMakingService {
      *
      * @param rangeDelta The range delta
      * @param numMatches The maximum number of matches to return
-     * @param callback   The method to be invoked when the server response is
-     *                   received
+     * @param callback The method to be invoked when the server response is received
      */
     public void findPlayers(long rangeDelta, long numMatches, IServerCallback callback) {
         findPlayersWithAttributes(rangeDelta, numMatches, null, callback);
@@ -234,11 +230,10 @@ public class MatchMakingService {
      * Service Name - matchMaking
      * Service Operation - FIND_PLAYERS
      *
-     * @param rangeDelta     The range delta
-     * @param numMatches     The maximum number of matches to return
+     * @param rangeDelta The range delta
+     * @param numMatches The maximum number of matches to return
      * @param jsonAttributes Attributes match criteria
-     * @param callback       The method to be invoked when the server response is
-     *                       received
+     * @param callback The method to be invoked when the server response is received
      */
     public void findPlayersWithAttributes(long rangeDelta, long numMatches, String jsonAttributes,
             IServerCallback callback) {
@@ -265,11 +260,10 @@ public class MatchMakingService {
      * Service Name - matchMaking
      * Service Operation - FIND_PLAYERS_USING_FILTER
      *
-     * @param rangeDelta     The range delta
-     * @param numMatches     The maximum number of matches to return
+     * @param rangeDelta The range delta
+     * @param numMatches The maximum number of matches to return
      * @param jsonExtraParms Parameters to pass to the CloudCode filter script
-     * @param callback       The method to be invoked when the server response is
-     *                       received
+     * @param callback The method to be invoked when the server response is received
      */
     public void findPlayersUsingFilter(long rangeDelta, long numMatches, String jsonExtraParms,
             IServerCallback callback) {
@@ -283,12 +277,11 @@ public class MatchMakingService {
      * Service Name - matchMaking
      * Service Operation - FIND_PLAYERS_USING_FILTER
      *
-     * @param rangeDelta     The range delta
-     * @param numMatches     The maximum number of matches to return
+     * @param rangeDelta The range delta
+     * @param numMatches The maximum number of matches to return
      * @param jsonAttributes Attributes match criteria
      * @param jsonExtraParms Parameters to pass to the CloudCode filter script
-     * @param callback       The method to be invoked when the server response is
-     *                       received
+     * @param callback The method to be invoked when the server response is received
      */
     public void findPlayersWithAttributesUsingFilter(long rangeDelta, long numMatches, String jsonAttributes,
             String jsonExtraParms, IServerCallback callback) {
@@ -319,7 +312,7 @@ public class MatchMakingService {
      * Enables Match Making for the Player
      *
      * Service Name - matchMaking
-     * Service Operation - ENABLE_MATCH_MAKING
+     * Service Operation - ENABLE_FOR_MATCH
      *
      * @param callback The method to be invoked when the server response is received
      */
@@ -332,7 +325,7 @@ public class MatchMakingService {
      * Disables Match Making for the Player
      *
      * Service Name - matchMaking
-     * Service Operation - ENABLE_MATCH_MAKING
+     * Service Operation - ENABLE_FOR_MATCH
      *
      * @param callback The method to be invoked when the server response is received
      */

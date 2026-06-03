@@ -40,14 +40,13 @@ public class GroupFileService {
     /**
      * Check if filename exists for provided path and name
      *
-     * Service Name GroupFile
-     * Service Operation CheckFilenameExists
+     * Service Name - groupFile
+     * Service Operation - CHECK_FILENAME_EXISTS
      *
-     * @param groupId    ID of the group.
+     * @param groupId ID of the group.
      * @param folderPath The path of the file
-     * @param filename   The filename of the file
-     * @param callback   The method to be invoked when the server response is
-     *                   received
+     * @param filename The filename of the file
+     * @param callback Block to call on return of  server response
      */
     public void checkFilenameExists(
             String groupId,
@@ -74,13 +73,12 @@ public class GroupFileService {
     /**
      * Check if filename exists for provided full path name
      *
-     * Service Name GroupFile
-     * Service Operation CheckFullpathFilenameExists
+     * Service Name - groupFile
+     * Service Operation - CHECK_FULLPATH_FILENAME_EXISTS
      *
-     * @param groupId          ID of the group.
+     * @param groupId ID of the group.
      * @param fullPathFilename The full path of the file
-     * @param callback         The method to be invoked when the server response is
-     *                         received
+     * @param callback Block to call on return of  server response
      */
     public void checkFullpathFilenameExists(
             String groupId,
@@ -103,21 +101,18 @@ public class GroupFileService {
     }
 
     /**
-     * Copy a file.
+     *  Copy a file.
      *
-     * Service Name GroupFile
-     * Service Operation CopyFile
+     * Service Name - groupFile
+     * Service Operation - COPY_FILE
      *
-     * @param groupId            ID of the group
-     * @param fileId             ID of the file
-     * @param version            Target version of the file
-     * @param newTreeId          ID of the destination folder
-     * @param treeVersion        Target version of the folder tree
-     * @param newFilename        Optional new file name
-     * @param overwriteIfPresent Whether to allow overwrite of an existing file if
-     *                           present
-     * @param callback           The method to be invoked when the server response
-     *                           is received
+     * @param groupId the groupId
+     * @param fileId the fileId
+     * @param version the version
+     * @param newTreeId thenewTreeId
+     * @param treeVersion the treeVersion
+     * @param newFilename the newFilename
+     * @param callback Block to call on return of  server response
      */
     public void copyFile(
             String groupId,
@@ -152,16 +147,14 @@ public class GroupFileService {
     /**
      * Delete a file.
      *
-     * Service Name GroupFile
-     * Service Operation DeleteFile
+     * Service Name - groupFile
+     * Service Operation - DELETE_FILE
      *
-     * @param groupId     the groupId
-     * @param fileId      the fileId
-     * @param version     the version
+     * @param groupId the groupId
+     * @param fileId the fileId
+     * @param version the version
      * @param newFilename the newFilename
-     * @param callback    The method to be invoked when the server response is
-     *                    received
-     * 
+     * @param callback Block to call on return of  server response
      */
     public void deleteFile(
             String groupId,
@@ -190,13 +183,12 @@ public class GroupFileService {
     /**
      * Return CDN url for file for clients that cannot handle redirect.
      *
-     * Service Name GroupFile
-     * Service Operation GetCdnUrl
+     * Service Name - groupFile
+     * Service Operation - GET_CDN_URL
      *
-     * @param groupId  the groupId
-     * @param fileId   the fileId
-     * @param callback The method to be invoked when the server response is received
-     * 
+     * @param groupId the groupId
+     * @param fileId the fileId
+     * @param callback Block to call on return of  server response
      */
     public void getCDNUrl(String groupId, String fileId, IServerCallback callback) {
         JSONObject data = new JSONObject();
@@ -218,12 +210,12 @@ public class GroupFileService {
     /**
      * Returns information on a file using fileId.
      *
-     * Service Name GroupFile
-     * Service Operation GetFileInfo
+     * Service Name - groupFile
+     * Service Operation - GET_FILE_INFO
      *
-     * @param groupId  the groupId
-     * @param fileId   the fileId
-     * @param callback The method to be invoked when the server response is received
+     * @param groupId the groupId
+     * @param fileId the fileId
+     * @param callback Block to call on return of  server response
      */
     public void getFileInfo(String groupId, String fileId, IServerCallback callback) {
         JSONObject data = new JSONObject();
@@ -245,14 +237,13 @@ public class GroupFileService {
     /**
      * Returns information on a file using path and name.
      *
-     * Service Name GroupFile
-     * Service Operation GetFileInfoSimple
+     * Service Name - groupFile
+     * Service Operation - GET_FILE_INFO_SIMPLE
      *
-     * @param groupId    the groupId
+     * @param groupId the groupId
      * @param folderPath the folderPath
-     * @param fileName   the fileName
-     * @param callback   The method to be invoked when the server response is
-     *                   received
+     * @param fileName the fileName
+     * @param callback Block to call on return of  server response
      */
     public void getFileInfoSimple(
             String groupId,
@@ -279,14 +270,13 @@ public class GroupFileService {
     /**
      * Returns a list of files.
      *
-     * Service Name GroupFile
-     * Service Operation GetFileList
+     * Service Name - groupFile
+     * Service Operation - GET_FILE_LIST
      *
-     * @param groupId    the groupId
+     * @param groupId the groupId
      * @param folderPath the folderPath
-     * @param recurse    true to recurse
-     * @param callback   The method to be invoked when the server response is
-     *                   received
+     * @param recurse true to recurse
+     * @param callback Block to call on return of  server response
      */
     public void getFileList(
             String groupId,
@@ -311,18 +301,17 @@ public class GroupFileService {
     }
 
     /**
-     * Move a file.
+     *  Move a file.
      *
-     * Service Name GroupFile
-     * Service Operation MoveFile
+     * Service Name - groupFile
+     * Service Operation - MOVE_FILE
      *
-     * @param groupId     the groupId
-     * @param fileId      the fileId
-     * @param version     the version
-     * @param newTreeId   the newTreeId
+     * @param groupId the groupId
+     * @param fileId the fileId
+     * @param version the version
+     * @param newTreeId the newTreeId
      * @param newFilename the newFilename
-     * @param callback    The method to be invoked when the server response is
-     *                    received
+     * @param callback Block to call on return of  server response
      */
     public void moveFile(
             String groupId,
@@ -357,20 +346,17 @@ public class GroupFileService {
     /**
      * Move a file from user space to group space.
      *
-     * Service Name GroupFile
-     * Service Operation MoveUserToGroupFile
+     * Service Name - groupFile
+     * Service Operation - MOVE_USER_TO_GROUP_FILE
      *
-     * @param userCloudPath      User file folder
-     * @param userCloudFilename  User file name
-     * @param groupId            ID of the group
-     * @param groupTreeId        ID of the destination folder
-     * @param groupFileName      Group file name
-     * @param groupFileAcl       Acl of the new group file
-     * @param overwriteIfPresent Whether to allow overwrite of an existing file if
-     *                           present
-     * @param callback           The method to be invoked when the server response
-     *                           is received @param callback The method to be
-     *                           invoked when the server response is received
+     * @param userCloudPath the userCloudPath
+     * @param userCloudFilename the userCloudFilename
+     * @param groupId the groupId
+     * @param groupTreeId the groupTreeId
+     * @param groupFilename the groupFilename
+     * @param groupFileAcl the groupFileAcl
+     * @param overwriteIfPresent the overwriteIfPresent
+     * @param callback Block to call on return of  server response
      */
     public void moveUserToGroupFile(
             String userCloudPath,
@@ -403,19 +389,17 @@ public class GroupFileService {
     }
 
     /**
-     * Rename or edit permissions of an uploaded file. Does not change the contents
-     * of the file.
+     * updates information on a file given fileId.
      *
-     * Service Name GroupFile
-     * Service Operation UpdateFileInfo
+     * Service Name - groupFile
+     * Service Operation - UPDATE_FILE_INFO
      *
-     * @param groupId     ID of the group
-     * @param fileId      ID of the file
-     * @param version     Target version of the file
-     * @param newFilename Optional new file name
-     * @param newACL      Optional new acl
-     * @param callback    The method to be invoked when the server response is
-     *                    received
+     * @param groupId the groupId
+     * @param fileId the fileId
+     * @param version the version
+     * @param newFilename the newFilename
+     * @param newAcl the newAcl
+     * @param callback Block to call on return of  server response
      */
     public void updateFileInfo(
             String groupId,

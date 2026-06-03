@@ -46,9 +46,8 @@ public class PlayerStatisticsService {
      * Service Operation - READ_SUBSET
      *
      * @param statistics A collection containing the subset of statistics to read:
-     *                   ex. [ "pantaloons", "minions" ]
-     * @param callback   The method to be invoked when the server response is
-     *                   received
+     * ex. [ "pantaloons", "minions" ]
+     * @param callback The method to be invoked when the server response is received
      */
     public void readUserStatsSubset(String[] statistics, IServerCallback callback) {
         try {
@@ -107,28 +106,25 @@ public class PlayerStatisticsService {
     /**
      * Atomically increment (or decrement) user statistics.
      * Any rewards that are triggered from user statistic increments
-     * will be considered. User statistics are defined through the brainCloud
-     * portal.
-     * Note also that the "xpCapped" property is returned (true/false depending on
-     * whether
+     * will be considered. User statistics are defined through the brainCloud portal.
+     * Note also that the "xpCapped" property is returned (true/false depending on whether
      * the xp cap is turned on and whether the user has hit it).
      *
      * Service Name - playerStatistics
      * Service Operation - UPDATE
      *
      * @param jsonData The JSON encoded data to be sent to the server as follows:
-     *                 {
-     *                 stat1: 10,
-     *                 stat2: -5.5,
-     *                 }
-     *                 would increment stat1 by 10 and decrement stat2 by 5.5.
-     *                 For the full statistics grammer see the
-     *                 api.braincloudservers.com site.
-     *                 There are many more complex operations supported such as:
-     *                 {
-     *                 stat1:INC_TO_LIMIT#9#30
-     *                 }
-     *                 which increments stat1 by 9 up to a limit of 30.
+     * {
+     *   stat1: 10,
+     *   stat2: -5.5,
+     * }
+     * would increment stat1 by 10 and decrement stat2 by 5.5.
+     * For the full statistics grammer see the api.braincloudservers.com site.
+     * There are many more complex operations supported such as:
+     * {
+     *   stat1:INC_TO_LIMIT#9#30
+     * }
+     * which increments stat1 by 9 up to a limit of 30.
      *
      * @param callback The method to be invoked when the server response is received
      */

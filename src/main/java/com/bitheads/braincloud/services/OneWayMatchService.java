@@ -31,9 +31,8 @@ public class OneWayMatchService {
      * Service Operation - START_MATCH
      *
      * @param otherPlayerId The player to start a match with
-     * @param rangeDelta    The range delta used for the initial match search
-     * @param callback      The method to be invoked when the server response is
-     *                      received
+     * @param rangeDelta The range delta used for the initial match search
+     * @param callback The method to be invoked when the server response is received
      */
     public void startMatch(String otherPlayerId, long rangeDelta, IServerCallback callback) {
         try {
@@ -54,8 +53,7 @@ public class OneWayMatchService {
      * Service Operation - CANCEL_MATCH
      *
      * @param playbackStreamId The playback stream id returned in the start match
-     * @param callback         The method to be invoked when the server response is
-     *                         received
+     * @param callback The method to be invoked when the server response is received
      */
     public void cancelMatch(String playbackStreamId, IServerCallback callback) {
         try {
@@ -74,10 +72,8 @@ public class OneWayMatchService {
      * Service Name - onewayMatch
      * Service Operation - COMPLETE_MATCH
      *
-     * @param playbackStreamId The playback stream id returned in the initial start
-     *                         match
-     * @param callback         The method to be invoked when the server response is
-     *                         received
+     * @param playbackStreamId The playback stream id returned in the initial start match
+     * @param callback The method to be invoked when the server response is received
      */
     public void completeMatch(String playbackStreamId, IServerCallback callback) {
         try {

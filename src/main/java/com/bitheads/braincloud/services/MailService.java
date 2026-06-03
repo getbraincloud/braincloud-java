@@ -34,10 +34,9 @@ public class MailService {
      * Service Operation - SEND_BASIC_EMAIL
      *
      * @param profileId The user to send the email to
-     * @param subject   The email subject
-     * @param body      The email body
-     * @param callback  The method to be invoked when the server response is
-     *                  received
+     * @param subject The email subject
+     * @param body The email body
+     * @param callback The method to be invoked when the server response is received
      */
     public void sendBasicEmail(String profileId, String subject, String body, IServerCallback callback) {
         try {
@@ -59,13 +58,10 @@ public class MailService {
      * Service Name - mail
      * Service Operation - SEND_ADVANCED_EMAIL
      *
-     * @param profileId         The user to send the email to
-     * @param jsonServiceParams Parameters to send to the email service. See the
-     *                          documentation for
-     *                          a full list.
-     *                          http://getbraincloud.com/apidocs/apiref/#capi-mail
-     * @param callback          The method to be invoked when the server response is
-     *                          received
+     * @param profileId The user to send the email to
+     * @param jsonServiceParams Parameters to send to the email service. See the documentation for
+     * a full list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+     * @param callback The method to be invoked when the server response is received
      */
     public void sendAdvancedEmail(String profileId, String jsonServiceParams, IServerCallback callback) {
         try {
@@ -88,13 +84,10 @@ public class MailService {
      * Service Name - mail
      * Service Operation - SEND_ADVANCED_EMAIL_BY_ADDRESS
      *
-     * @param emailAddress      The address to send the email to
-     * @param jsonServiceParams Parameters to send to the email service. See the
-     *                          documentation for
-     *                          a full list.
-     *                          http://getbraincloud.com/apidocs/apiref/#capi-mail
-     * @param callback          The method to be invoked when the server response is
-     *                          received
+     * @param emailAddress The address to send the email to
+     * @param jsonServiceParams Parameters to send to the email service. See the documentation for
+     * a full list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+     * @param callback The method to be invoked when the server response is received
      */
     public void sendAdvancedEmailByAddress(String emailAddress, String jsonServiceParams, IServerCallback callback) {
         try {
@@ -118,11 +111,9 @@ public class MailService {
      * Service Name - mail
      * Service Operation - SEND_ADVANCED_EMAIL_BY_ADDRESSES
      *
-     * @param emailAddress  The list of addresses to send the email to
-     * @param serviceParams Set of parameters dependant on the mail service
-     *                      configured
-     * @param callback      The method to be invoked when the server response is
-     *                      received
+     * @param emailAddress The list of addresses to send the email to
+     * @param serviceParams Set of parameters dependant on the mail service configured
+     * @param callback The method to be invoked when the server response is received
      */
     public void sendAdvancedEmailByAddresses(String[] emailAddresses, String serviceParams, IServerCallback callback) {
         try {
