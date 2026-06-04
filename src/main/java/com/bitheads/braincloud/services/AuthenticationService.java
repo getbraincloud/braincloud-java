@@ -268,68 +268,48 @@ public class AuthenticationService {
         authenticate(oculusUserId, oculusNonce, AuthenticationType.Oculus, null, forceCreate, null, callback);
     }
 
-    /*
-     * Authenticate the user using a google userid(email address) and google
-     * authentication token.
+    /**
+     * Authenticate the user using a google userid(email address) and google authentication token.
      *
-     * Service Name - Authenticate
-     * Service Operation - Authenticate
+     * Service Name - authenticationV2
+     * Service Operation - AUTHENTICATE
      *
-     * @param in_appleUserId String of the apple accounts user Id OR email
-     * 
-     * @param in_identityToken The authentication token confirming users identity
-     * 
-     * @param in_forceCreate Should a new profile be created for this user if the
-     * account does not exist?
-     * 
-     * @param in_callback The method to be invoked when the server response is
-     * received
+     * @param appleUserId  String of the apple accounts user Id OR email
+     * @param identityToken  The authentication token confirming users identity
+     * @param forceCreate Should a new profile be created for this user if the account does not exist?
+     * @param callback The method to be invoked when the server response is received
      */
     public void authenticateApple(String appleUserId, String identityToken, boolean forceCreate,
             IServerCallback callback) {
         authenticate(appleUserId, identityToken, AuthenticationType.Apple, null, forceCreate, null, callback);
     }
 
-    /*
-     * Authenticate the user using a google userid(email address) and google
-     * authentication token.
+    /**
+     * Authenticate the user using a google userid(email address) and google authentication token.
      *
-     * Service Name - Authenticate
-     * Service Operation - Authenticate
+     * Service Name - authenticationV2
+     * Service Operation - AUTHENTICATE
      *
-     * @param in_googleUserId String representation of google+ userid (email)
-     * 
-     * @param in_serverAuthCode The authentication token derived via the google
-     * apis.
-     * 
-     * @param in_forceCreate Should a new profile be created for this user if the
-     * account does not exist?
-     * 
-     * @param in_callback The method to be invoked when the server response is
-     * received
+     * @param googleUserId  String representation of google+ userid (email)
+     * @param serverAuthCode  The authentication token derived via the google apis.
+     * @param forceCreate Should a new profile be created for this user if the account does not exist?
+     * @param callback The method to be invoked when the server response is received
      */
     public void authenticateGoogle(String googleUserId, String serverAuthCode, boolean forceCreate,
             IServerCallback callback) {
         authenticate(googleUserId, serverAuthCode, AuthenticationType.Google, null, forceCreate, null, callback);
     }
 
-    /*
-     * Authenticate the user using a google userid(email address) and google
-     * authentication token.
+    /**
+     * Authenticate the user using a google userid(email address) and google authentication token.
      *
-     * Service Name - Authenticate
-     * Service Operation - Authenticate
+     * Service Name - authenticationV2
+     * Service Operation - AUTHENTICATE
      *
-     * @param in_googleUserAccountEmail String representation of google+ userid
-     * (email)
-     * 
-     * @param in_IdToken The authentication token derived via the google apis.
-     * 
-     * @param in_forceCreate Should a new profile be created for this user if the
-     * account does not exist?
-     * 
-     * @param in_callback The method to be invoked when the server response is
-     * received
+     * @param googleUserAccountEmail String representation of google+ userid (email)
+     * @param IdToken  The authentication token derived via the google apis.
+     * @param forceCreate Should a new profile be created for this user if the account does not exist?
+     * @param callback The method to be invoked when the server response is received
      */
     public void authenticateGoogleOpenId(String googleUserAccountEmail, String IdToken, boolean forceCreate,
             IServerCallback callback) {
@@ -337,22 +317,16 @@ public class AuthenticationService {
                 callback);
     }
 
-    /*
-     * Authenticate the user using a steam userid and session ticket (without any
-     * validation on the userid).
+    /**
+     * Authenticate the user using a steam userid and session ticket (without any validation on the userid).
      *
-     * Service Name - Authenticate
-     * Service Operation - Authenticate
+     * Service Name - authenticationV2
+     * Service Operation - AUTHENTICATE
      *
-     * @param in_userId String representation of 64 bit steam id
-     * 
-     * @param in_sessionticket The session ticket of the user (hex encoded)
-     * 
-     * @param in_forceCreate Should a new profile be created for this user if the
-     * account does not exist?
-     * 
-     * @param in_callback The method to be invoked when the server response is
-     * received
+     * @param userId  String representation of 64 bit steam id
+     * @param sessionticket  The session ticket of the user (hex encoded)
+     * @param forceCreate Should a new profile be created for this user if the account does not exist?
+     * @param callback The method to be invoked when the server response is received
      */
     public void authenticateSteam(String steamUserId, String steamSessionTicket, boolean forceCreate,
             IServerCallback callback) {
@@ -414,24 +388,17 @@ public class AuthenticationService {
         authenticate(userId, userPassword, AuthenticationType.Universal, null, forceCreate, null, callback);
     }
 
-    /*
-     * A generic Authenticate method that translates to the same as calling a
-     * specific one, except it takes an extraJson
+    /**
+     * A generic Authenticate method that translates to the same as calling a specific one, except it takes an extraJson
      * that will be passed along to pre- or post- hooks.
      *
-     * Service Name - Authenticate
-     * Service Operation - Authenticate
+     * Service Name - authenticationV2
+     * Service Operation - AUTHENTICATE
      *
      * @param authenticationType Universal, Email, Facebook, etc
-     * 
-     * @param ids Auth IDs object
-     * 
-     * @param forceCreate Should a new profile be created for this user if the
-     * account does not exist?
-     * 
-     * @param extraJson Additional to piggyback along with the call, to be picked up
-     * by pre- or post- hooks. Leave empty string for no extraJson.
-     * 
+     * @param ids Auth IDs structure
+     * @param forceCreate Should a new profile be created for this user if the account does not exist?
+     * @param extraJson Additional to piggyback along with the call, to be picked up by pre- or post- hooks. Leave empty string for no extraJson.
      * @param callback The method to be invoked when the server response is received
      */
     public void authenticateAdvanced(AuthenticationType authenticationType, AuthenticationIds ids, boolean forceCreate,
@@ -440,54 +407,44 @@ public class AuthenticationService {
                 forceCreate, extraJson, callback);
     }
 
-    /*
+    /**
      * Authenticate the user using a Pase userid and authentication token
      *
-     * Service Name - Authenticate
-     * Service Operation - Authenticate
+     * Service Name - authenticationV2
+     * Service Operation - AUTHENTICATE
      *
-     * @param in_userId String representation of Parse userid
-     * 
-     * @param in_token The authentication token
-     * 
-     * @param in_forceCreate Should a new profile be created for this user if the
-     * account does not exist?
-     * 
-     * @param in_callback The method to be invoked when the server response is
-     * received
+     * @param userId String representation of Parse userid
+     * @param token The authentication token
+     * @param forceCreate Should a new profile be created for this user if the account does not exist?
+     * @param callback The method to be invoked when the server response is received
      */
     public void authenticateParse(String userId, String authenticationToken, boolean forceCreate,
             IServerCallback callback) {
         authenticate(userId, authenticationToken, AuthenticationType.Parse, null, forceCreate, null, callback);
     }
 
-    /*
+    /**
      * Authenticate the user using a handoffId and authentication token
      *
-     * Service Name - Authenticate
-     * Service Operation - Authenticate
+     * Service Name - authenticationV2
+     * Service Operation - AUTHENTICATE
      *
-     * @param in_handoffId braincloud handoff id generated from cloud script
-     * 
-     * @param in_securityToken The authentication token
-     * 
-     * @param in_callback The method to be invoked when the server response is
-     * received
+     * @param handoffId braincloud handoff id generated from cloud script
+     * @param securityToken The authentication token
+     * @param callback The method to be invoked when the server response is received
      */
     public void authenticateHandoff(String handoffId, String securityToken, IServerCallback callback) {
         authenticate(handoffId, securityToken, AuthenticationType.Handoff, null, false, null, callback);
     }
 
-    /*
+    /**
      * Authenticate the user using a handoffCode
      *
-     * Service Name - Authenticate
-     * Service Operation - Authenticate
+     * Service Name - authenticationV2
+     * Service Operation - AUTHENTICATE
      *
-     * @param in_handoffCode the code we generate in cloudcode
-     * 
-     * @param in_callback The method to be invoked when the server response is
-     * received
+     * @param handoffCode the code we generate in cloudcode
+     * @param callback The method to be invoked when the server response is received
      */
     public void authenticateSettopHandoff(String handoffCode, IServerCallback callback) {
         authenticate(handoffCode, "", AuthenticationType.SettopHandoff, null, false, null, callback);

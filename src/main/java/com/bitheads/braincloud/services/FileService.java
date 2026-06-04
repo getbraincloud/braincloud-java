@@ -83,11 +83,13 @@ public class FileService {
     }
 
     /**
-     * List all user files
+     * List user files from the given cloud path
      *
      * Service Name - file
      * Service Operation - LIST_USER_FILES
      *
+     * @param cloudPath File path
+     * @param recurse Whether to recurse into sub-directories
      * @param callback The method to be invoked when the server response is received
      */
     public void listUserFiles(IServerCallback callback) {

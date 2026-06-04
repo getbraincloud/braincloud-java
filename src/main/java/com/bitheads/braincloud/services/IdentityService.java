@@ -416,23 +416,18 @@ public class IdentityService {
 		attachIdentity(googleId, authenticationToken, AuthenticationType.Google, callback);
 	}
 
-	/*
+	/**
 	 * Detach the Google identity from this profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Detach
+	 * Service Operation - DETACH
 	 *
-	 * @param in_googleId The Google id of the user
-	 * 
-	 * @param in_continueAnon Proceed even if the profile will revert to anonymous?
-	 * 
-	 * @param in_callback The method to be invoked when the server response is
-	 * received
+	 * @param googleId The Google id of the user
+	 * @param continueAnon Proceed even if the profile will revert to anonymous?
+	 * @param callback The method to be invoked when the server response is received
 	 *
-	 * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set in_continueAnon
-	 * to false, and
-	 * disconnecting this identity would result in the profile being anonymous
-	 * (which means that
+	 * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
+	 * disconnecting this identity would result in the profile being anonymous (which means that
 	 * the profile wouldn't be retrievable if the user loses their device)
 	 */
 	public void detachGoogleIdentity(String googleId, boolean continueAnon, IServerCallback callback) {
@@ -460,23 +455,18 @@ public class IdentityService {
 		attachIdentity(googleOpenId, authenticationToken, AuthenticationType.GoogleOpenId, callback);
 	}
 
-	/*
+	/**
 	 * Detach the Google identity from this profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Detach
+	 * Service Operation - DETACH
 	 *
-	 * @param in_googleId The Google id of the user
-	 * 
-	 * @param in_continueAnon Proceed even if the profile will revert to anonymous?
-	 * 
-	 * @param in_callback The method to be invoked when the server response is
-	 * received
+	 * @param googleId The Google id of the user
+	 * @param continueAnon Proceed even if the profile will revert to anonymous?
+	 * @param callback The method to be invoked when the server response is received
 	 *
-	 * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set in_continueAnon
-	 * to false, and
-	 * disconnecting this identity would result in the profile being anonymous
-	 * (which means that
+	 * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
+	 * disconnecting this identity would result in the profile being anonymous (which means that
 	 * the profile wouldn't be retrievable if the user loses their device)
 	 */
 	public void detachGoogleOpenIdIdentity(String googleOpenId, boolean continueAnon, IServerCallback callback) {
@@ -841,23 +831,18 @@ public class IdentityService {
 		attachIdentity(parseId, authenticationToken, AuthenticationType.Parse, callback);
 	}
 
-	/*
+	/**
 	 * Detach the Google identity from this profile.
 	 *
 	 * Service Name - identity
-	 * Service Operation - Detach
+	 * Service Operation - DETACH
 	 *
-	 * @param in_parseId The Parse id of the user
-	 * 
-	 * @param in_continueAnon Proceed even if the profile will revert to anonymous?
-	 * 
-	 * @param in_callback The method to be invoked when the server response is
-	 * received
+	 * @param parseId The Parse id of the user
+	 * @param continueAnon Proceed even if the profile will revert to anonymous?
+	 * @param callback The method to be invoked when the server response is received
 	 *
-	 * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set in_continueAnon
-	 * to false, and
-	 * disconnecting this identity would result in the profile being anonymous
-	 * (which means that
+	 * Watch for DOWNGRADING_TO_ANONYMOUS_ERROR - occurs if you set continueAnon to false, and
+	 * disconnecting this identity would result in the profile being anonymous (which means that
 	 * the profile wouldn't be retrievable if the user loses their device)
 	 */
 	public void detachParseIdentity(String parseId, boolean continueAnon, IServerCallback callback) {
@@ -997,7 +982,7 @@ public class IdentityService {
 		_client.sendRequest(sc);
 	}
 
-	/*
+	/**
 	 * Retrieves identity status for given identity type for this profile.
 	 */
 	public void getIdentityStatus(AuthenticationType authenticationType, String externalAuthName,

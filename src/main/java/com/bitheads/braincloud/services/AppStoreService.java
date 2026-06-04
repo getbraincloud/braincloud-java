@@ -201,17 +201,14 @@ public class AppStoreService {
         }
     }
 
-    /*
-     * Before making a purchase with the IAP store, you will need to store the
-     * purchase
-     * payload context on brainCloud so that the purchase can be verified for the
-     * proper IAP product.
+    /**
+     * Before making a purchase with the IAP store, you will need to store the purchase
+     * payload context on brainCloud so that the purchase can be verified for the proper IAP product.
      * This payload will be used during the VerifyPurchase method to ensure the
-     * user properly paid for the correct product before awarding them the IAP
-     * product.
+     * user properly paid for the correct product before awarding them the IAP product.
      *
-     * Service Name - AppStore
-     * Service Operation - CachePurchasePayloadContext
+     * Service Name - appStore
+     * Service Operation - CACHE_PURCHASE_PAYLOAD_CONTEXT
      *
      * @param storeId The store platform. Valid stores are:
      * - itunes
@@ -221,13 +218,9 @@ public class AppStoreService {
      * - windows
      * - windowsPhone
      * - googlePlay
-     * 
      * @param transactionId the transactionId returned from start Purchase
-     * 
      * @param transactionData specific data for purchasing 2 staged purchases
-     * 
-     * @param in_callback The method to be invoked when the server response is
-     * received
+     * @param callback The method to be invoked when the server response is received
      */
     public void cachePurchasePayloadContext(String storeId, String iapId, String payload, IServerCallback callback) {
         try {
