@@ -44,9 +44,9 @@ public class PresenceService {
 	}
 
 	/**
-	 * Gets the presence data for the given <platform>. Can be one of "all",
+	 * Gets the presence data for the given {@code platform}. Can be one of "all",
 	 * "brainCloud", or "facebook". Will not include offline profiles
-	 * unless <includeOffline> is set to true.
+	 * unless {@code includeOffline} is set to true.
 	 */
 	public void getPresenceOfFriends(String platform, boolean includeOffline, IServerCallback callback) {
 		try {
@@ -63,8 +63,8 @@ public class PresenceService {
 	}
 
 	/**
-	 * Gets the presence data for the given <groupId>. Will not include
-	 * offline profiles unless <includeOffline> is set to true.
+	 * Gets the presence data for the given {@code groupId}. Will not include
+	 * offline profiles unless {@code includeOffline} is set to true.
 	 */
 	public void getPresenceOfGroup(String groupId, boolean includeOffline, IServerCallback callback) {
 		try {
@@ -81,8 +81,8 @@ public class PresenceService {
 	}
 
 	/**
-	 * Gets the presence data for the given <profileIds>. Will not include
-	 * offline profiles unless <includeOffline> is set to true.
+	 * Gets the presence data for the given {@code profileIds}. Will not include
+	 * offline profiles unless {@code includeOffline} is set to true.
 	 */
 	public void getPresenceOfUsers(ArrayList<String> profileIds, boolean includeOffline, IServerCallback callback) {
 		try {
@@ -100,8 +100,8 @@ public class PresenceService {
 
 	/**
 	 * Registers the caller for RTT presence updates from friends for the
-	 * given <platform>. Can be one of "all", "brainCloud", or "facebook".
-	 * If <bidirectional> is set to true, then also registers the targeted
+	 * given {@code platform}. Can be one of "all", "brainCloud", or "facebook".
+	 * If {@code bidirectional} is set to true, then also registers the targeted
 	 * users for presence updates from the caller.
 	 */
 	public void registerListenersForFriends(String platform, boolean bidirectional, IServerCallback callback) {
@@ -120,8 +120,8 @@ public class PresenceService {
 
 	/**
 	 * Registers the caller for RTT presence updates from the members of
-	 * the given <groupId>. Caller must be a member of said group. If
-	 * <bidirectional> is set to true, then also registers the targeted
+	 * the given {@code groupId}. Caller must be a member of said group. If
+	 * {@code bidirectional} is set to true, then also registers the targeted
 	 * users for presence updates from the caller.
 	 */
 	public void registerListenersForGroup(String groupId, boolean bidirectional, IServerCallback callback) {
@@ -140,7 +140,7 @@ public class PresenceService {
 
 	/**
 	 * Registers the caller for RTT presence updates for the given
-	 * <profileIds>. If <bidirectional> is set to true, then also registers
+	 * {@code profileIds}. If {@code bidirectional} is set to true, then also registers
 	 * the targeted users for presence updates from the caller.
 	 */
 	public void registerListenersForProfiles(ArrayList<String> profileIds, boolean bidirectional,

@@ -40,7 +40,7 @@ public class RelayService {
      * @param lobbyId
      * @param callback Callback objects that report Success or Failure|Disconnect.
      *
-     * @note SSL option will only work with WEBSOCKET connetion type.
+     * Note: SSL option will only work with WEBSOCKET connetion type.
      */
     public void connect(RelayConnectionType connectionType, JSONObject options, IRelayConnectCallback callback) {
         _client.getRelayComms().connect(connectionType, options, callback);
@@ -243,7 +243,7 @@ public class RelayService {
      *
      * @param data Byte array for the data to send
      * @param size Size of data in bytes
-     * @param playerMask Mask of the players to send to. 0001 = netId 0, 0010 = netId 1, etc. If you pass ALL_PLAYER_MASK you will be included and you will get an echo for your message. Use sendToAll instead, you will be filtered out. You can manually filter out by : ALL_PLAYER_MASK &= ~(1 << myNetId)
+     * @param playerMask Mask of the players to send to. 0001 = netId 0, 0010 = netId 1, etc. If you pass ALL_PLAYER_MASK you will be included and you will get an echo for your message. Use sendToAll instead, you will be filtered out. You can manually filter out by : ALL_PLAYER_MASK &amp;= ~(1 &lt;&lt; myNetId)
      * @param reliable Send this reliable or not.
      * @param ordered Receive this ordered or not.
      * @param channel One of: (CHANNEL_HIGH_PRIORITY_1, CHANNEL_HIGH_PRIORITY_2, CHANNEL_NORMAL_PRIORITY, CHANNEL_LOW_PRIORITY)

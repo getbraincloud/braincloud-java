@@ -38,7 +38,7 @@ public class PlayerStatisticsEventService {
      * Service Name - playerStatisticsEvent
      * Service Operation - TRIGGER
      *
-     * @see BrainCloudPlayerStatistics
+     * See {@code BrainCloudPlayerStatistics}
      *
      * @param callback The method to be invoked when the server response is received
      */

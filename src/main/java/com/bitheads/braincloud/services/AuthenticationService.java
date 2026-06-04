@@ -121,7 +121,7 @@ public class AuthenticationService {
     /**
      * Used to create the anonymous installation id for the brainCloud profile.
      * 
-     * @returns A unique Anonymous ID
+     * @return A unique Anonymous ID
      */
     public String generateAnonymousId() {
         return java.util.UUID.randomUUID().toString();

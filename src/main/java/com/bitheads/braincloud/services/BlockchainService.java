@@ -24,7 +24,7 @@ public class BlockchainService {
     }
 
     /**
-     * @brief Retrieves the blockchain items owned by the caller.
+     * Retrieves the blockchain items owned by the caller.
      * Service Name - blockchain
      * Service Operation - GET_BLOCKCHAIN_ITEMS
      */
@@ -49,7 +49,7 @@ public class BlockchainService {
     }
 
     /**
-     * @brief Retrieves the uniqs owned by the caller.
+     * Retrieves the uniqs owned by the caller.
      *
      * Service Name - blockchain
      * Service Operation - GET_UNIQS

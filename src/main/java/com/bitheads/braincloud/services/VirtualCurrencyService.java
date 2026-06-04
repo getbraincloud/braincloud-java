@@ -107,7 +107,7 @@ public class VirtualCurrencyService {
     }
 
     /**
-     * @warning Method is recommended to be used in Cloud Code only for security
+     * Warning: Method is recommended to be used in Cloud Code only for security
      * If you need to use it client side, enable 'Allow Currency Calls from Client' on the brainCloud dashboard
      */
     public void awardCurrency(String vcId, int vcAmount, IServerCallback callback) {
@@ -124,7 +124,7 @@ public class VirtualCurrencyService {
     }
 
     /**
-     * @warning Method is recommended to be used in Cloud Code only for security
+     * Warning: Method is recommended to be used in Cloud Code only for security
      * If you need to use it client side, enable 'Allow Currency Calls from Client' on the brainCloud dashboard
      */
     public void consumeCurrency(String vcId, int vcAmount, IServerCallback callback) {
