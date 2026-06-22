@@ -13,6 +13,21 @@ import com.bitheads.braincloud.client.IRTTConnectCallback;
 public class RTTTest extends TestFixtureBase
 {
     @Test
+    public void testEnableRTTNoAuth() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        if(_wrapper.getClient().isAuthenticated()){
+            _wrapper.logout(false, tr);
+            tr.Run();
+        }
+
+        RTTConnectionTestResult rttTr = new RTTConnectionTestResult(_wrapper);
+
+        _wrapper.getRTTService().enableRTT(rttTr);
+        rttTr.RunExpectFail();
+    }
+    
+    @Test
     public void testRequestClientConnection() throws Exception {
         TestResult tr = new TestResult(_wrapper);
 
@@ -89,6 +104,7 @@ public class RTTTest extends TestFixtureBase
     public class RTTConnectionTestResult implements IRTTConnectCallback {
         private boolean m_result = false;
         private boolean m_done = false;
+        private boolean m_failureCallbackReceived = false;
         
         IBrainCloudWrapper _wrapper;
 
@@ -103,14 +119,23 @@ public class RTTTest extends TestFixtureBase
             return m_result;
         }
 
+        public boolean RunExpectFail(){
+            Spin();
+            Assert.assertTrue(m_failureCallbackReceived);
+            return m_result;
+        }
+
         public void rttConnectSuccess() {
             m_result = true;
             m_done = true;
         }
 
         public void rttConnectFailure(String errorMessage) {
+            System.out.println("RTT Connect Failure: " + errorMessage);
+            
             m_result = false;
             m_done = true;
+            m_failureCallbackReceived = true;
         }
 
         public boolean IsDone()

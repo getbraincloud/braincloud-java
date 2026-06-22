@@ -208,6 +208,16 @@ public class RTTComms implements IServerCallback {
             }
             case Disconnected:
             {
+                if (!_client.isAuthenticated() || _client.getRestClient().getKillSwitchEngaged()) {
+                    callback.rttConnectFailure("Invalid Session - Must be authenticated before enabling RTT.");
+
+                    if (_loggingEnabled) {
+                        System.out.println("The user is not currently authenticated - cannot enable RTT.");
+                    }
+
+                    break;
+                }
+
                 _rttConnectionStatus = RTTComms.RttConnectionStatus.RequestingConnectionInfo;
                 _connectCallback = callback;
                 _useWebSocket = useWebSocket;

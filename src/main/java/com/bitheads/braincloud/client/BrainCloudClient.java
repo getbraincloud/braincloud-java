@@ -15,6 +15,7 @@ import com.bitheads.braincloud.services.AppStoreService;
 import com.bitheads.braincloud.services.AsyncMatchService;
 import com.bitheads.braincloud.services.AuthenticationService;
 import com.bitheads.braincloud.services.BlockchainService;
+import com.bitheads.braincloud.services.CampaignService;
 import com.bitheads.braincloud.services.ChatService;
 import com.bitheads.braincloud.services.CustomEntityService;
 import com.bitheads.braincloud.services.DataStreamService;
@@ -80,7 +81,7 @@ public class BrainCloudClient {
 
 
 
-    private final static String BRAINCLOUD_VERSION = "5.9.0";
+    private final static String BRAINCLOUD_VERSION = "6.0.0";
 
     private BrainCloudRestClient _restClient;
     private RTTComms _rttComms;
@@ -128,6 +129,7 @@ public class BrainCloudClient {
     private VirtualCurrencyService _virtualCurrencyService = new VirtualCurrencyService(this);
     private ItemCatalogService _itemCatalogService = new ItemCatalogService(this);
     private UserItemsService _userItemsService = new UserItemsService(this);
+    private CampaignService _campaign = new CampaignService(this);
 
 
     private static String DEFAULT_SERVER_URL = "https://api.braincloudservers.com/dispatcherv2";
@@ -479,6 +481,23 @@ public class BrainCloudClient {
      */
     public void deregisterEventCallback() {
         _restClient.deregisterEventCallback();
+    }
+
+    /***
+     * Registers a method to be invoked when a auto reconnect re-authentication is
+     * called.
+     * 
+     * @param callback
+     */
+    public void registerAutoReconnectCallback(IAutoReconnectCallback callback) {
+        _restClient.registerAutoReconnectCallback(callback);
+    }
+
+    /***
+     * Deregisters the method to be invoked when an auto reconnect re-authentication is called.
+     */
+    public void deregisterAutoReconnectCallback(){
+        _restClient.deregisterAutoReconnectCallback();
     }
 
     /**
@@ -889,7 +908,9 @@ public class BrainCloudClient {
         return _messagingService;
     }
 
-    public BlockchainService getBlockchainService(){return _blockchainService;}
+    public BlockchainService getBlockchainService() {
+        return _blockchainService;
+    }
 
     public MatchMakingService getMatchMakingService() {
         return _matchMakingService;
@@ -982,5 +1003,9 @@ public class BrainCloudClient {
 
     public UserItemsService getUserItemsService() {
         return _userItemsService;
+    }
+
+    public CampaignService getCampaignService() {
+        return _campaign;
     }
 }

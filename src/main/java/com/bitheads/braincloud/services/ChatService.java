@@ -36,11 +36,11 @@ public class ChatService {
     }
 
     /**
-     * Registers a listener for incoming events from channelId.
-     * Also returns a list of maxReturn recent messages from history.
+     * Registers a listener for incoming events from {@code channelId}.
+     * Also returns a list of {@code maxReturn} recent messages from history.
      *
-     * Service Name - Chat
-     * Service Operation - ChannelConnect
+     * Service Name - chat
+     * Service Operation - CHANNEL_CONNECT
      *
      * @param channelId The id of the chat channel to return history from.
      * @param maxReturn Maximum number of messages to return.
@@ -61,10 +61,10 @@ public class ChatService {
     }
 
     /**
-     * Unregisters a listener for incoming events from channelId.
+     * Unregisters a listener for incoming events from {@code channelId}.
      *
-     * Service Name - Chat
-     * Service Operation - channelDisconnect
+     * Service Name - chat
+     * Service Operation - CHANNEL_DISCONNECT
      *
      * @param channelId The id of the chat channel to unsubscribed from.
      * @param callback The method to be invoked when the server response is received
@@ -83,10 +83,10 @@ public class ChatService {
     }
 
     /**
-     * Delete a chat message. Version must match the latest or pass -1 to bypass version check.
+     * Delete a chat message. {@code version} must match the latest or pass -1 to bypass version check.
      *
-     * Service Name - Chat
-     * Service Operation - deleteChatMessage
+     * Service Name - chat
+     * Service Operation - DELETE_CHAT_MESSAGE
      *
      * @param channelId The id of the chat channel that contains the message to delete.
      * @param msgId The message id to delete.
@@ -109,10 +109,10 @@ public class ChatService {
     }
 
     /**
-     * Gets the channelId for the given channelType and channelSubId. Channel type must be one of "gl" or "gr".
+     * Gets the channelId for the given {@code channelType} and {@code channelSubId}. Channel type must be one of "gl" or "gr".
      *
-     * Service Name - Chat
-     * Service Operation - getChannelId
+     * Service Name - chat
+     * Service Operation - GET_CHANNEL_ID
      *
      * @param channelType Channel type must be one of "gl" or "gr". For (global) or (group) respectively.
      * @param channelSubId The sub id of the channel.
@@ -133,12 +133,12 @@ public class ChatService {
     }
 
     /**
-     * Gets description info and activity stats for channel channelId.
+     * Gets description info and activity stats for channel {@code channelId}.
      * Note that numMsgs and listeners only returned for non-global groups.
      * Only callable for channels the user is a member of.
      *
-     * Service Name - Chat
-     * Service Operation - getChannelInfo
+     * Service Name - chat
+     * Service Operation - GET_CHANNEL_INFO
      *
      * @param channelId Id of the channel to receive the info from.
      * @param callback The method to be invoked when the server response is received.
@@ -159,8 +159,8 @@ public class ChatService {
     /**
      * Gets a populated chat object (normally for editing).
      *
-     * Service Name - Chat
-     * Service Operation - getChatMessage
+     * Service Name - chat
+     * Service Operation - GET_CHAT_MESSAGE
      *
      * @param channelId Id of the channel to receive the message from.
      * @param msgId Id of the message to read.
@@ -181,9 +181,9 @@ public class ChatService {
     }
 
     /**
-     * Get a list of maxReturn messages from history of channel channelId.
+     * Get a list of {@code maxReturn} messages from history of channel {@code channelId}.
      *
-     * Service Name - Chat
+     * Service Name - chat
      * Service Operation - GET_RECENT_CHAT_MESSAGES
      *
      * @param channelId Id of the channel to receive the info from.
@@ -205,11 +205,11 @@ public class ChatService {
     }
 
     /**
-     * Gets a list of the channels of type channelType that the user has access to.
+     * Gets a list of the channels of type {@code channelType} that the user has access to.
      * Channel type must be one of "gl", "gr" or "all".
      *
-     * Service Name - Chat
-     * Service Operation - getSubscribedChannels
+     * Service Name - chat
+     * Service Operation - GET_SUBSCRIBED_CHANNELS
      *
      * @param channelType Type of channels to get back. "gl" for global, "gr" for group or "all" for both.
      * @param callback The method to be invoked when the server response is received.
@@ -229,18 +229,17 @@ public class ChatService {
 
     /**
      * Send a potentially rich chat message.
-     * Content must contain at least a "plain" field for plain-text messaging.
+     * {@code content} must contain at least a "text" field for text messaging.
      *
-     * Service Name - Chat
-     * Service Operation - postChatMessage
+     * Service Name - chat
+     * Service Operation - POST_CHAT_MESSAGE
      *
      * @param channelId Channel id to post message to.
-     * @param text the text message.
-     * @param rich custom data.
-     * @param recordInHistory true if the message persist in history
+     * @param content Object containing "text" for the text message. Can also has rich content for custom data.
      * @param callback The method to be invoked when the server response is received.
      */
-    public void postChatMessage(String channelId, String text, String rich, Boolean recordInHistory, IServerCallback callback) {
+    public void postChatMessage(String channelId, String text, String rich, Boolean recordInHistory,
+            IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.channelId.name(), channelId);
@@ -261,17 +260,17 @@ public class ChatService {
     }
 
     /**
-     * Send a plaiin text message
+     * Send a chat message with text only
      *
-     * Service Name - Chat
-     * Service Operation - postChatMessageSimple
+     * Service Name - chat
+     * Service Operation - POST_CHAT_MESSAGE
      *
      * @param channelId Channel id to post message to.
-     * @param text the text message.
-     * @param recordInHistory true if the message persist in history
+     * @param text The text message.
      * @param callback The method to be invoked when the server response is received.
      */
-    public void postChatMessageSimple(String channelId, String text, Boolean recordInHistory, IServerCallback callback) {
+    public void postChatMessageSimple(String channelId, String text, Boolean recordInHistory,
+            IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.channelId.name(), channelId);
@@ -288,19 +287,20 @@ public class ChatService {
 
     /**
      * Update a chat message.
-     * content must contain at least a "plain" field for plain-text messaging.
+     * {@code content} must contain at least a "text" field for text-text messaging.
+     * {@code version} must match the latest or pass -1 to bypass version check.
      *
-     * Service Name - Chat
-     * Service Operation - updateChatMessage
+     * Service Name - chat
+     * Service Operation - UPDATE_CHAT_MESSAGE
      *
      * @param channelId Channel id where the message to update is.
      * @param msgId Message id to update.
      * @param version Version of the message to update. Must match latest or pass -1 to bypass version check.
-     * @param text the text message.
-     * @param rich custom data.
+     * @param content Data to update. Object containing "text" for the text message. Can also has rich content for custom data.
      * @param callback The method to be invoked when the server response is received.
      */
-    public void updateChatMessage(String channelId, String msgId, int version, String text, String rich, IServerCallback callback) {
+    public void updateChatMessage(String channelId, String msgId, int version, String text, String rich,
+            IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.channelId.name(), channelId);

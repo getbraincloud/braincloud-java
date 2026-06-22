@@ -44,6 +44,16 @@ public class LobbyServiceTest extends TestFixtureBase
     }
 
     @Test
+    public void testLobbyWithConfig() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        String configOverrides = "{\"teams\":[{\"code\":\"reserved\",\"minUsers\":0,\"maxUsers\":1,\"autoAssign\":false},{\"code\":\"all\",\"minUsers\":6,\"maxUsers\":6,\"autoAssign\":true}]}";
+
+        _wrapper.getLobbyService().createLobbyWithConfig("MATCH_UNRANKED", 0, null, true, "{}", "all", "{}", configOverrides, tr);
+        tr.Run();
+    }
+
+    @Test
     public void testFindLobby() throws Exception {
         TestResult tr = new TestResult(_wrapper);
 
@@ -122,17 +132,6 @@ public class LobbyServiceTest extends TestFixtureBase
         _wrapper.getLobbyService().updateSettings("wrongLobbyId", "{\"test\":\"me\"}", tr);
         tr.RunExpectFail(StatusCodes.BAD_REQUEST, ReasonCodes.LOBBY_NOT_FOUND);
     }
-
-    @Test
-    public void testDeprecatedCancelFindRequest() throws Exception {
-        TestResult tr = new TestResult(_wrapper);
-
-        _wrapper.getLobbyService().findOrCreateLobby("MATCH_UNRANKED", 0, 1, "{\"strategy\":\"ranged-absolute\",\"alignment\":\"center\",\"ranges\":[1000]}", "{}", null, "{}", true, "{}", "all", tr);
-        tr.Run();
-        
-        _wrapper.getLobbyService().cancelFindRequest("MATCH_UNRANKED", tr);
-        tr.Run();
-    }
   
     @Test
     public void testCancelFindRequest() throws Exception {
@@ -203,6 +202,10 @@ public class LobbyServiceTest extends TestFixtureBase
         tr.Run();
 
         _wrapper.getLobbyService().createLobbyWithPingData("MATCH_UNRANKED", 0, null, true, "{}", "all", "{}", tr);
+        tr.Run();
+        
+        String configOverrides = "{\"teams\":[{\"code\":\"reserved\",\"minUsers\":0,\"maxUsers\":1,\"autoAssign\":false},{\"code\":\"all\",\"minUsers\":6,\"maxUsers\":6,\"autoAssign\":true}]}";
+        _wrapper.getLobbyService().createLobbyWithConfigAndPingData("MATCH_UNRANKED", 0, null, true, "{}", "all", "{}", configOverrides, tr);
         tr.Run();
 
         _wrapper.getLobbyService().joinLobbyWithPingData("wrongLobbyId", true, "{}", "red", null, tr);

@@ -26,12 +26,11 @@ public class GlobalFileService {
     }
 
     /**
-     * Returns information on a file using fileId.
+     * Returns the complete info for the specified file given it’s fileId
      *
-     * Service Name - globalFile
-     * Service Operation - ACCEPT_GROUP_INVITATION
+     * Service Name - globalFileV3
+     * Service Operation - GET_FILE_INFO
      *
-     * @param fileId the file's ID.
      * @param callback The method to be invoked when the server response is received
      */
     public void getFileInfo(String fileId, IServerCallback callback) {
@@ -49,13 +48,11 @@ public class GlobalFileService {
     }
 
     /**
-     * Returns information on a file using path and name.
+     * Returns the complete info for the specified file, without having to look up the fileId first.
      *
-     * Service Name - globalFile
+     * Service Name - globalFileV3
      * Service Operation - GET_FILE_INFO_SIMPLE
      *
-     * @param folderPath the folder path the file is stored in.
-     * @param filename the name of the file beign sought
      * @param callback The method to be invoked when the server response is received
      */
     public void getFileInfoSimple(String folderPath, String filename, IServerCallback callback) {
@@ -74,12 +71,11 @@ public class GlobalFileService {
     }
 
     /**
-     * Return CDN url for file for clients that cannot handle redirect.
+     * Returns the CDN of the specified file.
      *
-     * Service Name - globalFile
+     * Service Name - globalFileV3
      * Service Operation - GET_GLOBAL_CDN_URL
      *
-     * @param fileId the file's ID.
      * @param callback The method to be invoked when the server response is received
      */
     public void getGlobalCDNUrl(String fileId, IServerCallback callback) {
@@ -96,14 +92,12 @@ public class GlobalFileService {
         }
     }
 
-        /**
-     * Return CDN url for file for clients that cannot handle redirect.
+    /**
+     * Returns files at the current path.
      *
-     * Service Name - globalFile
+     * Service Name - globalFileV3
      * Service Operation - GET_GLOBAL_FILE_LIST
      *
-     * @param folderPath the folder path the file is stored in.
-     * @param recurse does it recurse?
      * @param callback The method to be invoked when the server response is received
      */
     public void getGlobalFileList(String folderPath, boolean recurse, IServerCallback callback) {

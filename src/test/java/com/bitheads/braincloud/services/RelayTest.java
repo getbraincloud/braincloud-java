@@ -166,6 +166,64 @@ public class RelayTest extends TestFixtureBase {
     }
 
     @Test
+    public void testFullFlowNoAuth() throws Exception {
+        RTTLobbyResults lobbyTR = new RTTLobbyResults(_wrapper);
+        JSONObject server;
+
+        _wrapper.getClient().getRTTService().registerRTTLobbyCallback(lobbyTR);
+
+        // Enable RTT
+        {
+            System.out.println("Enable RTT...");
+            RTTConnectionTestResult tr = new RTTConnectionTestResult(_wrapper);
+            _wrapper.getClient().getRTTService().enableRTT(tr, true);
+            tr.Run();
+        }
+
+        // Find or create lobby
+        {
+            System.out.println("Find or create lobby...");
+            TestResult tr = new TestResult(_wrapper);
+            _wrapper.getLobbyService().findOrCreateLobby("READY_START_V2", 0, 1,
+                    "{\"strategy\":\"ranged-absolute\",\"alignment\":\"center\",\"ranges\":[1000]}", "{}", null, "{}",
+                    true, "{}", "all", tr);
+            tr.Run();
+            server = lobbyTR.Run();
+        }
+
+        // Register callbacks
+        System.out.println("Register callbacks...");
+        RelayConnectSystemCheck systemCallbackReceived = new RelayConnectSystemCheck(_wrapper);
+        _wrapper.getRelayService().registerSystemCallback(systemCallbackReceived);
+        RelayCheck relayCallbackReceived = new RelayCheck(_wrapper);
+        _wrapper.getRelayService().registerRelayCallback(relayCallbackReceived);
+
+        // Logout to verify connect will not be attempted when not authenticated
+        TestResult tr1 = new TestResult(_wrapper);
+
+        if (_wrapper.getClient().isAuthenticated()) {
+            _wrapper.logout(false, tr1);
+            tr1.Run();
+        }
+
+        // Connect to relay server
+        {
+            System.out.println("Connect to relay server...");
+            RelayConnectionTestResult tr = new RelayConnectionTestResult(_wrapper);
+            JSONObject options = new JSONObject();
+            options.put("ssl", false);
+            options.put("host", server.getJSONObject("connectData").getString("address"));
+
+            options.put("port", server.getJSONObject("connectData").getJSONObject("ports").getInt("ws"));
+
+            options.put("passcode", server.getString("passcode"));
+            options.put("lobbyId", server.getString("lobbyId"));
+            _wrapper.getRelayService().connect(RelayConnectionType.WEBSOCKET, options, tr);
+            tr.RunExpectFail();
+        }
+    }
+    
+    @Test
     public void testFullFlowWS() throws Exception {
         fullFlow(RelayConnectionType.WEBSOCKET);
     }

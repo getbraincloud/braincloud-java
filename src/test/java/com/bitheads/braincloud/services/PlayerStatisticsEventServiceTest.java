@@ -60,8 +60,6 @@ public class PlayerStatisticsEventServiceTest extends TestFixtureBase implements
     {
         m_rewardCallbackHitCount = 0;
         TestResult tr = new TestResult(_wrapper);
-        _wrapper.getPlayerStateService().resetUser(tr);
-        tr.Run();
 
         JSONObject event1 = new JSONObject();
         event1.put("eventName", "incQuest1Stat");
@@ -82,6 +80,9 @@ public class PlayerStatisticsEventServiceTest extends TestFixtureBase implements
                 tr);
         tr.Run();
 
+        _wrapper.getPlayerStateService().resetUser(tr);
+        tr.Run();
+
         Assert.assertEquals(m_rewardCallbackHitCount, 1);
     }
 
@@ -90,9 +91,7 @@ public class PlayerStatisticsEventServiceTest extends TestFixtureBase implements
     {
         m_rewardCallbackHitCount = 0;
         TestResult tr = new TestResult(_wrapper);
-        _wrapper.getPlayerStateService().resetUser(tr);
-        tr.Run();
-
+        
         JSONObject event1 = new JSONObject();
         event1.put("eventName", "incQuest1Stat");
         event1.put("eventMultiplier", 1);
@@ -114,6 +113,9 @@ public class PlayerStatisticsEventServiceTest extends TestFixtureBase implements
                 events2.toString(),
                 tr);
         tr.RunExpectCount(2);
+
+        _wrapper.getPlayerStateService().resetUser(tr);
+        tr.Run();
 
         Assert.assertEquals(m_rewardCallbackHitCount, 2);
     }

@@ -1,0 +1,11 @@
+{
+  // Extensions VSCode will offer to install when this workspace is opened.
+  "recommendations": [
+    "vscjava.vscode-java-pack",
+    "redhat.java",
+    "vscjava.vscode-maven",
+    "vscjava.vscode-java-debug",
+    "vscjava.vscode-java-test",
+    "vscjava.vscode-java-dependency"
+  ]
+}

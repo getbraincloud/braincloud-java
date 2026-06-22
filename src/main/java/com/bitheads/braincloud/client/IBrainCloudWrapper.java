@@ -6,6 +6,8 @@ import org.json.JSONObject;
 import com.bitheads.braincloud.services.AppStoreService;
 import com.bitheads.braincloud.services.AsyncMatchService;
 import com.bitheads.braincloud.services.AuthenticationService;
+import com.bitheads.braincloud.services.BlockchainService;
+import com.bitheads.braincloud.services.CampaignService;
 import com.bitheads.braincloud.services.ChatService;
 import com.bitheads.braincloud.services.CustomEntityService;
 import com.bitheads.braincloud.services.DataStreamService;
@@ -349,6 +351,12 @@ public interface IBrainCloudWrapper {
 	void reconnect(IServerCallback callback);
 
 	/**
+	 * When enabled, automatically attempt to reconnect and retry server calls in the event of an expired session.
+	 * @param enableAutoReconnect Determines if auto reconnect should be enabled or not
+	 */
+	void enableAutoReconnect(boolean enableAutoReconnect);
+
+	/**
 	 * Authenticate the user with a custom Email and Password. Note that the
 	 * client app is responsible for collecting (and storing) the e-mail and
 	 * potentially password (for convenience) in the client data. For the
@@ -593,6 +601,8 @@ public interface IBrainCloudWrapper {
 
 	MessagingService getMessagingService();
 
+	BlockchainService getBlockchainService();
+
 	MatchMakingService getMatchMakingService();
 
 	OneWayMatchService getOneWayMatchService();
@@ -638,5 +648,7 @@ public interface IBrainCloudWrapper {
 	ItemCatalogService getItemCatalogService();
 
 	UserItemsService getUserItemsService();
+
+	CampaignService getCampaignService();
 
 }

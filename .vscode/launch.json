@@ -1,0 +1,26 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      // Debug the currently focused JUnit test file/method.
+      // Use the "Run | Debug" code-lens that appears above @Test methods,
+      // or pick this config from the Run & Debug panel.
+      "type": "java",
+      "name": "Debug current JUnit test",
+      "request": "launch",
+      "mainClass": "",
+      "projectName": "braincloud-java"
+    },
+    {
+      // Attach to a JVM you started elsewhere with:
+      //   -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+      // Useful for debugging integration tests run via `mvn test` or a sample
+      // app that depends on this library.
+      "type": "java",
+      "name": "Attach to remote JVM (port 5005)",
+      "request": "attach",
+      "hostName": "localhost",
+      "port": 5005
+    }
+  ]
+}

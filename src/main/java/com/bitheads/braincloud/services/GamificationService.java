@@ -33,7 +33,7 @@ public class GamificationService {
      * Sets the achievement awarded delegate which is called anytime
      * an achievement is awarded
      *
-     * @param delegate  Achievement awarded delegate
+     * @param delegate Achievement awarded delegate
      */
     public void setAchievementAwardedDelegate(IAchievementsDelegate delegate) {
         m_achievementsDelegate = delegate;
@@ -42,11 +42,10 @@ public class GamificationService {
     /**
      * Method retrieves all gamification data for the player.
      *
-     * Service Name - Gamification
-     * Service Operation - Read
+     * Service Name - gamification
+     * Service Operation - READ
      *
-     * @param includeMetaData   Whether to return meta data as well
-     * @param callback  The callback handler
+     * @param callback Method to be invoked when the server response is received.
      */
     public void readAllGamification(
             boolean includeMetaData,
@@ -64,11 +63,10 @@ public class GamificationService {
     /**
      * Method retrieves all milestones defined for the game.
      *
-     * Service Name - Gamification
-     * Service Operation - ReadMilestones
+     * Service Name - gamification
+     * Service Operation - READ_MILESTONES
      *
-     * @param includeMetaData   Whether to return meta data as well
-     * @param callback  The callback handler
+     * @param callback Method to be invoked when the server response is received.
      */
     public void readMilestones(
             boolean includeMetaData,
@@ -86,11 +84,10 @@ public class GamificationService {
     /**
      * Read all of the achievements defined for the game.
      *
-     * Service Name - Gamification
-     * Service Operation - ReadAchievements
+     * Service Name - gamification
+     * Service Operation - READ_ACHIEVEMENTS
      *
-     * @param includeMetaData   Whether to return meta data as well
-     * @param callback  The callback handler
+     * @param callback Method to be invoked when the server response is received.
      */
     public void readAchievements(
             boolean includeMetaData,
@@ -100,7 +97,8 @@ public class GamificationService {
             JSONObject data = new JSONObject();
             data.put(Parameter.includeMetaData.name(), includeMetaData);
 
-            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.READ_ACHIEVEMENTS, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.READ_ACHIEVEMENTS, data,
+                    callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
         }
@@ -125,11 +123,10 @@ public class GamificationService {
     /**
      * Method retrives the list of achieved achievements.
      *
-     * Service Name - Gamification
-     * Service Operation - ReadAchievedAchievements
+     * Service Name - gamification
+     * Service Operation - READ_ACHIEVED_ACHIEVEMENTS
      *
-     * @param includeMetaData   Whether to return meta data as well
-     * @param callback Callback.
+     * @param callback Method to be invoked when the server response is received.
      */
     public void readAchievedAchievements(
             boolean includeMetaData,
@@ -139,22 +136,21 @@ public class GamificationService {
             JSONObject data = new JSONObject();
             data.put(Parameter.includeMetaData.name(), includeMetaData);
 
-            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.READ_ACHIEVED_ACHIEVEMENTS, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.READ_ACHIEVED_ACHIEVEMENTS, data,
+                    callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
         }
     }
 
-
     /**
      * Method retrieves the list of completed milestones.
      *
-     * Service Name - Gamification
-     * Service Operation - ReadCompleteMilestones
+     * Service Name - gamification
+     * Service Operation - READ_COMPLETED_MILESTONES
      *
-     * @param includeMetaData   Whether to return meta data as well
-     * @param callback Callback.
+     * @param callback Method to be invoked when the server response is received.
      */
     public void readCompletedMilestones(
             boolean includeMetaData,
@@ -164,7 +160,8 @@ public class GamificationService {
             JSONObject data = new JSONObject();
             data.put(Parameter.includeMetaData.name(), includeMetaData);
 
-            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.READ_COMPLETED_MILESTONES, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.READ_COMPLETED_MILESTONES, data,
+                    callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -174,11 +171,10 @@ public class GamificationService {
     /**
      * Method retrieves the list of in progress milestones
      *
-     * Service Name - Gamification
-     * Service Operation - ReadInProgressMilestones
+     * Service Name - gamification
+     * Service Operation - READ_IN_PROGRESS_MILESTONES
      *
-     * @param includeMetaData   Whether to return meta data as well
-     * @param callback Callback.
+     * @param callback Method to be invoked when the server response is received.
      */
     public void readInProgressMilestones(
             boolean includeMetaData,
@@ -187,7 +183,8 @@ public class GamificationService {
             JSONObject data = new JSONObject();
             data.put(Parameter.includeMetaData.name(), includeMetaData);
 
-            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.READ_IN_PROGRESS_MILESTONES, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.READ_IN_PROGRESS_MILESTONES, data,
+                    callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -197,12 +194,11 @@ public class GamificationService {
     /**
      * Method retrieves milestones of the given category.
      *
-     * Service Name - Gamification
-     * Service Operation - ReadMilestonesByCategory
+     * Service Name - gamification
+     * Service Operation - READ_MILESTONES_BY_CATEGORY
      *
      * @param category The milestone category
-     * @param includeMetaData   Whether to return meta data as well
-     * @param callback Callback.
+     * @param callback Method to be invoked when the server response is received.
      */
     public void readMilestonesByCategory(
             String category,
@@ -214,22 +210,21 @@ public class GamificationService {
             data.put(Parameter.category.name(), category);
             data.put(Parameter.includeMetaData.name(), includeMetaData);
 
-            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.READ_MILESTONES_BY_CATEGORY, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.READ_MILESTONES_BY_CATEGORY, data,
+                    callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
         }
     }
 
     /**
-     * Method will award the achievements specified. On success, this will
-     * call AwardThirdPartyAchievement to hook into the client-side Achievement
-     * service (ie GameCentre, Facebook etc).
+     * Method will award the achievements specified.
      *
-     * Service Name - Gamification
-     * Service Operation - AwardAchievements
+     * Service Name - gamification
+     * Service Operation - AWARD_ACHIEVEMENTS
      *
-     * @param achievementIds Array of achievement ids to award
-     * @param callback Callback.
+     * @param achievementIds Collection of achievement ids to award
+     * @param callback Method to be invoked when the server response is received.
      */
     public void awardAchievements(String[] achievementIds, IServerCallback callback) {
         try {
@@ -241,7 +236,8 @@ public class GamificationService {
             JSONObject data = new JSONObject();
             data.put(Parameter.achievements.name(), achievements);
 
-            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.AWARD_ACHIEVEMENTS, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.AWARD_ACHIEVEMENTS, data,
+                    callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -249,8 +245,8 @@ public class GamificationService {
         }
     }
 
-
-    // goes through JSON response to award achievements via third party (ie game centre, facebook etc).
+    // goes through JSON response to award achievements via third party (ie game
+    // centre, facebook etc).
     // notifies achievement delegate
     public void checkForAchievementsToAward(ServiceName serviceName, ServiceOperation serviceOperation, String data) {
         try {
@@ -258,7 +254,7 @@ public class GamificationService {
 
             if (!incomingData.isNull(Parameter.data.name())) {
 
-					@SuppressWarnings("unused")
+                @SuppressWarnings("unused")
                 JSONArray josnData = incomingData.optJSONArray(Parameter.data.name());
                 if (data != null) {
                     // TODO
@@ -276,19 +272,10 @@ public class GamificationService {
     /**
      * Method retrieves all of the quests defined for the game.
      *
-     * Service Name - Gamification
-     * Service Operation - ReadQuests
+     * Service Name - gamification
+     * Service Operation - READ_QUESTS
      *
-     * @param includeMetaData Whether to return meta data as well
-     * @param callback Callback.
-     *
-     *
-     *  {
-     *   "status": 200,
-     *   "data": {
-     *     "quests": []
-     *   }
-     * }
+     * @param callback Method to be invoked when the server response is received.
      */
     public void readQuests(
             boolean includeMetaData,
@@ -305,14 +292,13 @@ public class GamificationService {
         }
     }
 
-
     /**
      *
      * Service Name - Gamification
      * Service Operation - ReadCompletedQuests
      *
-     * @param includeMetaData   Whether to return meta data as well
-     * @param callback Callback.
+     * @param includeMetaData Whether to return meta data as well
+     * @param callback        Callback.
      */
     public void readQuestsCompleted(
             boolean includeMetaData,
@@ -322,7 +308,8 @@ public class GamificationService {
             JSONObject data = new JSONObject();
             data.put(Parameter.includeMetaData.name(), includeMetaData);
 
-            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.READ_COMPLETED_QUESTS, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.READ_COMPLETED_QUESTS, data,
+                    callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -334,8 +321,8 @@ public class GamificationService {
      * Service Name - Gamification
      * Service Operation - ReadInProgressQuests
      *
-     * @param includeMetaData   Whether to return meta data as well
-     * @param callback Callback.
+     * @param includeMetaData Whether to return meta data as well
+     * @param callback        Callback.
      */
     public void readQuestsInProgress(
             boolean includeMetaData,
@@ -345,7 +332,8 @@ public class GamificationService {
             JSONObject data = new JSONObject();
             data.put(Parameter.includeMetaData.name(), includeMetaData);
 
-            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.READ_IN_PROGRESS_QUESTS, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.READ_IN_PROGRESS_QUESTS, data,
+                    callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -357,19 +345,19 @@ public class GamificationService {
      * Service Name - Gamification
      * Service Operation - ReadNotStartedQuests
      *
-     * @param includeMetaData   Whether to return meta data as well
-     * @param callback Callback.
+     * @param includeMetaData Whether to return meta data as well
+     * @param callback        Callback.
      */
     public void readQuestsNotStarted(
             boolean includeMetaData,
             IServerCallback callback) {
         try {
 
-
             JSONObject data = new JSONObject();
             data.put(Parameter.includeMetaData.name(), includeMetaData);
 
-            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.READ_NOT_STARTED_QUESTS, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.READ_NOT_STARTED_QUESTS, data,
+                    callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -377,12 +365,12 @@ public class GamificationService {
     }
 
     /**
+     *  Method returns quests with a status.
      *
-     * Service Name - Gamification
-     * Service Operation - ReadQuestsWithStatus
+     * Service Name - gamification
+     * Service Operation - READ_QUESTS_WITH_STATUS
      *
-     * @param includeMetaData   Whether to return meta data as well
-     * @param callback Callback.
+     * @param callback Method to be invoked when the server response is received.
      */
     public void readQuestsWithStatus(
             boolean includeMetaData,
@@ -392,30 +380,31 @@ public class GamificationService {
             JSONObject data = new JSONObject();
             data.put(Parameter.includeMetaData.name(), includeMetaData);
 
-            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.READ_QUESTS_WITH_STATUS, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.READ_QUESTS_WITH_STATUS, data,
+                    callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
         }
     }
 
     /**
+     *  Method returns quests with a basic percentage.
      *
-     * Service Name - Gamification
-     * Service Operation - ReadQuestsWithBasicPercentage
+     * Service Name - gamification
+     * Service Operation - READ_QUESTS_WITH_BASIC_PERCENTAGE
      *
-     * @param includeMetaData   Whether to return meta data as well
-     * @param callback Callback.
+     * @param callback Method to be invoked when the server response is received.
      */
     public void readQuestsWithBasicPercentage(
             boolean includeMetaData,
             IServerCallback callback) {
         try {
 
-
             JSONObject data = new JSONObject();
             data.put(Parameter.includeMetaData.name(), includeMetaData);
 
-            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.READ_QUESTS_WITH_BASIC_PERCENTAGE, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.READ_QUESTS_WITH_BASIC_PERCENTAGE,
+                    data, callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {
@@ -423,12 +412,12 @@ public class GamificationService {
     }
 
     /**
+     *  Method returns quests with a complex percentage.
      *
-     * Service Name - Gamification
-     * Service Operation - ReadQuestsWithComplexPercentage
+     * Service Name - gamification
+     * Service Operation - READ_QUESTS_WITH_COMPLEX_PERCENTAGE
      *
-     * @param includeMetaData   Whether to return meta data as well
-     * @param callback Callback
+     * @param callback Method to be invoked when the server response is received.
      */
     public void readQuestsWithComplexPercentage(
             boolean includeMetaData,
@@ -438,22 +427,21 @@ public class GamificationService {
             JSONObject data = new JSONObject();
             data.put(Parameter.includeMetaData.name(), includeMetaData);
 
-            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.READ_QUESTS_WITH_COMPLEX_PERCENTAGE, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.gamification,
+                    ServiceOperation.READ_QUESTS_WITH_COMPLEX_PERCENTAGE, data, callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
         }
     }
 
     /**
-     * Method
+     * Method returns quests for the given category.
      *
-     * Service Name - Gamification
-     * Service Operation - ReadQuestsByCategory
-     *
+     * Service Name - gamification
+     * Service Operation - READ_QUESTS_BY_CATEGORY
      *
      * @param category The quest category
-     * @param includeMetaData   Whether to return meta data as well
-     * @param callback Callback.
+     * @param callback Method to be invoked when the server response is received.
      */
     public void readQuestsByCategory(
             String category,
@@ -465,7 +453,8 @@ public class GamificationService {
             data.put(Parameter.category.name(), category);
             data.put(Parameter.includeMetaData.name(), includeMetaData);
 
-            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.READ_QUESTS_BY_CATEGORY, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.gamification, ServiceOperation.READ_QUESTS_BY_CATEGORY, data,
+                    callback);
             _client.sendRequest(sc);
 
         } catch (JSONException je) {

@@ -26,7 +26,7 @@ public class PlayerStatisticsEventService {
     }
 
     /**
-     * Trigger an event server side that will increase the user statistics.
+     * Trigger an event server side that will increase the user's statistics.
      * This may cause one or more awards to be sent back to the user -
      * could be achievements, experience, etc. Achievements will be sent by this
      * client library to the appropriate awards service (Apple Game Center, etc).
@@ -35,14 +35,12 @@ public class PlayerStatisticsEventService {
      * PlayerStatisticsService API method only update the raw statistics without
      * triggering the rewards.
      *
-     * Service Name - PlayerStatisticsEvent
-     * Service Operation - Trigger
+     * Service Name - playerStatisticsEvent
+     * Service Operation - TRIGGER
      *
-     * @param eventName The name of the event configured through the brainCloud portal
-     * @param eventMultiplier  The multiplier to apply to the event 
-     * @param callback  The callback handler
+     * See {@code BrainCloudPlayerStatistics}
      *
-     * @see PlayerStatisticsService
+     * @param callback The method to be invoked when the server response is received
      */
     public void triggerStatsEvent(String eventName, int eventMultiplier, IServerCallback callback) {
         try {
@@ -58,11 +56,11 @@ public class PlayerStatisticsEventService {
     }
 
     /**
-     * See documentation for TriggerPlayerStatisticsEvent for more
+     * See documentation for TriggerStatisticsEvent for more
      * documentation.
      *
-     * Service Name - PlayerStatisticsEvent
-     * Service Operation - TriggerMultiple
+     * Service Name - playerStatisticsEvent
+     * Service Operation - TRIGGER_MULTIPLE
      *
      * @param jsonData
      *   [
@@ -75,7 +73,6 @@ public class PlayerStatisticsEventService {
      *       "eventMultiplier": 1
      *     }
      *   ]
-     * @param callback  The callback handler
      */
     public void triggerStatsEvents(String jsonData, IServerCallback callback) {
         try {
@@ -83,7 +80,8 @@ public class PlayerStatisticsEventService {
             JSONArray jsonArray = new JSONArray(jsonData);
             data.put(Parameter.events.name(), jsonArray);
 
-            ServerCall sc = new ServerCall(ServiceName.playerStatisticsEvent, ServiceOperation.TRIGGER_MULTIPLE, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.playerStatisticsEvent, ServiceOperation.TRIGGER_MULTIPLE, data,
+                    callback);
             _client.sendRequest(sc);
         } catch (JSONException ignored) {
         }

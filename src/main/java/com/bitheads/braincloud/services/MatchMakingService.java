@@ -31,10 +31,10 @@ public class MatchMakingService {
     /**
      * Read match making record
      *
-     * Service Name - MatchMaking
-     * Service Operation - Read
+     * Service Name - matchMaking
+     * Service Operation - READ
      *
-     * @param callback The callback.
+     * @param callback The method to be invoked when the server response is received
      */
     public void read(IServerCallback callback) {
         ServerCall sc = new ServerCall(ServiceName.matchMaking, ServiceOperation.READ, null, callback);
@@ -44,11 +44,11 @@ public class MatchMakingService {
     /**
      * Sets player rating
      *
-     * Service Name - MatchMaking
-     * Service Operation - SetPlayerRating
+     * Service Name - matchMaking
+     * Service Operation - SET_PLAYER_RATING
      *
      * @param playerRating The new player rating.
-     * @param callback The callback.
+     * @param callback The method to be invoked when the server response is received
      */
     public void setPlayerRating(long playerRating, IServerCallback callback) {
 
@@ -65,10 +65,10 @@ public class MatchMakingService {
     /**
      * Resets player rating
      *
-     * Service Name - MatchMaking
-     * Service Operation - ResetPlayerRating
+     * Service Name - matchMaking
+     * Service Operation - RESET_PLAYER_RATING
      *
-     * @param callback The callback.
+     * @param callback The method to be invoked when the server response is received
      */
     public void resetPlayerRating(IServerCallback callback) {
         ServerCall sc = new ServerCall(ServiceName.matchMaking, ServiceOperation.RESET_PLAYER_RATING, null, callback);
@@ -78,18 +78,19 @@ public class MatchMakingService {
     /**
      * Increments player rating
      *
-     * Service Name - MatchMaking
-     * Service Operation - IncrementPlayerRating
+     * Service Name - matchMaking
+     * Service Operation - INCREMENT_PLAYER_RATING
      *
      * @param increment The increment amount
-     * @param callback The callback.
+     * @param callback The method to be invoked when the server response is received
      */
     public void incrementPlayerRating(long increment, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.playerRating.name(), increment);
 
-            ServerCall sc = new ServerCall(ServiceName.matchMaking, ServiceOperation.INCREMENT_PLAYER_RATING, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.matchMaking, ServiceOperation.INCREMENT_PLAYER_RATING, data,
+                    callback);
             _client.sendRequest(sc);
 
         } catch (JSONException ignored) {
@@ -99,18 +100,19 @@ public class MatchMakingService {
     /**
      * Decrements player rating
      *
-     * Service Name - MatchMaking
-     * Service Operation - DecrementPlayerRating
+     * Service Name - matchMaking
+     * Service Operation - DECREMENT_PLAYER_RATING
      *
      * @param decrement The decrement amount
-     * @param callback The callback.
+     * @param callback The method to be invoked when the server response is received
      */
     public void decrementPlayerRating(long decrement, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.playerRating.name(), decrement);
 
-            ServerCall sc = new ServerCall(ServiceName.matchMaking, ServiceOperation.DECREMENT_PLAYER_RATING, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.matchMaking, ServiceOperation.DECREMENT_PLAYER_RATING, data,
+                    callback);
             _client.sendRequest(sc);
         } catch (JSONException ignored) {
         }
@@ -119,10 +121,10 @@ public class MatchMakingService {
     /**
      * Turns shield on
      *
-     * Service Name - MatchMaking
-     * Service Operation - ShieldOn
+     * Service Name - matchMaking
+     * Service Operation - SHIELD_ON
      *
-     * @param callback The callback.
+     * @param callback The method to be invoked when the server response is received
      */
     public void turnShieldOn(IServerCallback callback) {
         ServerCall sc = new ServerCall(ServiceName.matchMaking, ServiceOperation.SHIELD_ON, null, callback);
@@ -132,11 +134,11 @@ public class MatchMakingService {
     /**
      * Turns shield on for the specified number of minutes
      *
-     * Service Name - MatchMaking
-     * Service Operation - ShieldOnFor
+     * Service Name - matchMaking
+     * Service Operation - SHIELD_ON_FOR
      *
-     * @param minutes Number of minutes to turn the shield on for
-     * @param callback The callback.
+     * @param minutes  Number of minutes to turn the shield on for
+     * @param callback The method to be invoked when the server response is received
      */
     public void turnShieldOnFor(int minutes, IServerCallback callback) {
         try {
@@ -152,18 +154,19 @@ public class MatchMakingService {
     /**
      * Increases the shield on time by specified number of minutes
      *
-     * Service Name - MatchMaking
-     * Service Operation - ShieldOnFor
+     * Service Name - matchMaking
+     * Service Operation - INCREMENT_SHIELD_ON_FOR
      *
-     * @param minutes Number of minutes to increase the shield turn for
-     * @param callback The callback.
+     * @param minutes  Number of minutes to increase the shield time for
+     * @param callback The method to be invoked when the server response is received
      */
     public void incrementShieldOnFor(int minutes, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.minutes.name(), minutes);
 
-            ServerCall sc = new ServerCall(ServiceName.matchMaking, ServiceOperation.INCREMENT_SHIELD_ON_FOR, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.matchMaking, ServiceOperation.INCREMENT_SHIELD_ON_FOR, data,
+                    callback);
             _client.sendRequest(sc);
         } catch (JSONException ignored) {
         }
@@ -172,27 +175,26 @@ public class MatchMakingService {
     /**
      * Turns shield off
      *
-     * Service Name - MatchMaking
-     * Service Operation - ShieldOff
+     * Service Name - matchMaking
+     * Service Operation - SHIELD_OFF
      *
-     * @param callback The callback.
+     * @param callback The method to be invoked when the server response is received
      */
     public void turnShieldOff(IServerCallback callback) {
         ServerCall sc = new ServerCall(ServiceName.matchMaking, ServiceOperation.SHIELD_OFF, null, callback);
         _client.sendRequest(sc);
     }
 
-
     /**
      * Gets the shield expiry for the given player id. Passing in a null player id
      * will return the shield expiry for the current player. The value returned is
      * the time in UTC millis when the shield will expire.
      *
-     * Service Name - MatchMaking
-     * Service Operation - GetShieldExpiry
+     * Service Name - matchMaking
+     * Service Operation - GET_SHIELD_EXPIRY
      *
      * @param playerId The player id or use null to retrieve for the current player
-     * @param callback The callback.
+     * @param callback The method to be invoked when the server response is received
      */
     public void getShieldExpiry(String playerId, IServerCallback callback) {
         try {
@@ -211,12 +213,12 @@ public class MatchMakingService {
     /**
      * Finds matchmaking enabled players
      *
-     * Service Name - MatchMaking
+     * Service Name - matchMaking
      * Service Operation - FIND_PLAYERS
      *
      * @param rangeDelta The range delta
      * @param numMatches The maximum number of matches to return
-     * @param callback The callback.
+     * @param callback The method to be invoked when the server response is received
      */
     public void findPlayers(long rangeDelta, long numMatches, IServerCallback callback) {
         findPlayersWithAttributes(rangeDelta, numMatches, null, callback);
@@ -225,7 +227,7 @@ public class MatchMakingService {
     /**
      * Finds matchmaking enabled players with additional attributes
      *
-     * Service Name - MatchMaking
+     * Service Name - matchMaking
      * Service Operation - FIND_PLAYERS
      *
      * @param rangeDelta The range delta
@@ -233,7 +235,8 @@ public class MatchMakingService {
      * @param jsonAttributes Attributes match criteria
      * @param callback The method to be invoked when the server response is received
      */
-    public void findPlayersWithAttributes(long rangeDelta, long numMatches, String jsonAttributes, IServerCallback callback) {
+    public void findPlayersWithAttributes(long rangeDelta, long numMatches, String jsonAttributes,
+            IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.rangeDelta.name(), rangeDelta);
@@ -252,17 +255,18 @@ public class MatchMakingService {
     }
 
     /**
-     * Finds matchmaking enabled players using a cloud code filter
+     * Finds matchmaking enabled players
      *
-     * Service Name - MatchMaking
+     * Service Name - matchMaking
      * Service Operation - FIND_PLAYERS_USING_FILTER
      *
      * @param rangeDelta The range delta
      * @param numMatches The maximum number of matches to return
-     * @param jsonExtraParms Other parameters
-     * @param callback The callback.
+     * @param jsonExtraParms Parameters to pass to the CloudCode filter script
+     * @param callback The method to be invoked when the server response is received
      */
-    public void findPlayersUsingFilter(long rangeDelta, long numMatches, String jsonExtraParms, IServerCallback callback) {
+    public void findPlayersUsingFilter(long rangeDelta, long numMatches, String jsonExtraParms,
+            IServerCallback callback) {
         findPlayersWithAttributesUsingFilter(rangeDelta, numMatches, null, jsonExtraParms, callback);
     }
 
@@ -270,7 +274,7 @@ public class MatchMakingService {
      * Finds matchmaking enabled players using a cloud code filter
      * and additional attributes
      *
-     * Service Name - MatchMaking
+     * Service Name - matchMaking
      * Service Operation - FIND_PLAYERS_USING_FILTER
      *
      * @param rangeDelta The range delta
@@ -279,7 +283,8 @@ public class MatchMakingService {
      * @param jsonExtraParms Parameters to pass to the CloudCode filter script
      * @param callback The method to be invoked when the server response is received
      */
-    public void findPlayersWithAttributesUsingFilter(long rangeDelta, long numMatches, String jsonAttributes, String jsonExtraParms, IServerCallback callback) {
+    public void findPlayersWithAttributesUsingFilter(long rangeDelta, long numMatches, String jsonAttributes,
+            String jsonExtraParms, IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.rangeDelta.name(), rangeDelta);
@@ -295,7 +300,8 @@ public class MatchMakingService {
                 data.put(Parameter.attributes.name(), jsonData);
             }
 
-            ServerCall sc = new ServerCall(ServiceName.matchMaking, ServiceOperation.FIND_PLAYERS_USING_FILTER, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.matchMaking, ServiceOperation.FIND_PLAYERS_USING_FILTER, data,
+                    callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -305,10 +311,10 @@ public class MatchMakingService {
     /**
      * Enables Match Making for the Player
      *
-     * Service Name - MatchMaking
-     * Service Operation - EnableMatchMaking
+     * Service Name - matchMaking
+     * Service Operation - ENABLE_FOR_MATCH
      *
-     * @param callback The callback.
+     * @param callback The method to be invoked when the server response is received
      */
     public void enableMatchMaking(IServerCallback callback) {
         ServerCall sc = new ServerCall(ServiceName.matchMaking, ServiceOperation.ENABLE_FOR_MATCH, null, callback);
@@ -318,10 +324,10 @@ public class MatchMakingService {
     /**
      * Disables Match Making for the Player
      *
-     * Service Name - MatchMaking
-     * Service Operation - EnableMatchMaking
+     * Service Name - matchMaking
+     * Service Operation - ENABLE_FOR_MATCH
      *
-     * @param callback The callback.
+     * @param callback The method to be invoked when the server response is received
      */
     public void disableMatchMaking(IServerCallback callback) {
         ServerCall sc = new ServerCall(ServiceName.matchMaking, ServiceOperation.DISABLE_FOR_MATCH, null, callback);

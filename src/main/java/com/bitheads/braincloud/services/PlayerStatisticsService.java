@@ -28,8 +28,8 @@ public class PlayerStatisticsService {
     /**
      * Read all available user statistics.
      *
-     * Service Name - PlayerStatistics
-     * Service Operation - Read
+     * Service Name - playerStatistics
+     * Service Operation - READ
      *
      * @param callback The method to be invoked when the server response is received
      */
@@ -42,8 +42,8 @@ public class PlayerStatisticsService {
     /**
      * Reads a subset of user statistics as defined by the input collection.
      *
-     * Service Name - PlayerStatistics
-     * Service Operation - ReadSubset
+     * Service Name - playerStatistics
+     * Service Operation - READ_SUBSET
      *
      * @param statistics A collection containing the subset of statistics to read:
      * ex. [ "pantaloons", "minions" ]
@@ -70,7 +70,7 @@ public class PlayerStatisticsService {
     /**
      * Method retrieves the user statistics for the given category.
      *
-     * Service Name - PlayerStatistics
+     * Service Name - playerStatistics
      * Service Operation - READ_FOR_CATEGORY
      *
      * @param category The user statistics category
@@ -81,7 +81,8 @@ public class PlayerStatisticsService {
             JSONObject data = new JSONObject();
             data.put(Parameter.category.name(), category);
 
-            ServerCall sc = new ServerCall(ServiceName.playerStatistics, ServiceOperation.READ_FOR_CATEGORY, data, callback);
+            ServerCall sc = new ServerCall(ServiceName.playerStatistics, ServiceOperation.READ_FOR_CATEGORY, data,
+                    callback);
             _client.sendRequest(sc);
         } catch (JSONException je) {
             je.printStackTrace();
@@ -91,8 +92,8 @@ public class PlayerStatisticsService {
     /**
      * Reset all of the statistics for this user back to their initial value.
      *
-     * Service Name - PlayerStatistics
-     * Service Operation - Reset
+     * Service Name - playerStatistics
+     * Service Operation - RESET
      *
      * @param callback The method to be invoked when the server response is received
      */
@@ -109,8 +110,8 @@ public class PlayerStatisticsService {
      * Note also that the "xpCapped" property is returned (true/false depending on whether
      * the xp cap is turned on and whether the user has hit it).
      *
-     * Service Name - PlayerStatistics
-     * Service Operation - Update
+     * Service Name - playerStatistics
+     * Service Operation - UPDATE
      *
      * @param jsonData The JSON encoded data to be sent to the server as follows:
      * {
@@ -153,10 +154,10 @@ public class PlayerStatisticsService {
      * Increments the user's experience. If the user goes up a level,
      * the new level details will be returned along with a list of rewards.
      *
-     * Service Name - PlayerStatistics
-     * Service Operation - UpdateIncrement
+     * Service Name - playerStatistics
+     * Service Operation - UPDATE_INCREMENT
      *
-     * @param xpValue The amount to increase the user's experience by
+     * @param xpValue  The amount to increase the user's experience by
      * @param callback The method to be invoked when the server response is received
      */
     public void incrementExperiencePoints(
@@ -169,11 +170,13 @@ public class PlayerStatisticsService {
             je.printStackTrace();
         }
 
-        // TODO: 15-09-03 need to check for any achievements awarded and notify gamification service
-        //SuccessCallback successCallbacks = _client.getGamificationService().checkForAchievementsToAward;
-        //if (success != null)
-        //{
-        //     successCallbacks += success;
+        // TODO: 15-09-03 need to check for any achievements awarded and notify
+        // gamification service
+        // SuccessCallback successCallbacks =
+        // _client.getGamificationService().checkForAchievementsToAward;
+        // if (success != null)
+        // {
+        // successCallbacks += success;
         //
         // }
 
@@ -185,8 +188,8 @@ public class PlayerStatisticsService {
     /**
      * Returns JSON representing the next experience level for the user.
      *
-     * Service Name - PlayerStatistics
-     * Service Operation - ReadNextXpLevel
+     * Service Name - playerStatistics
+     * Service Operation - READ_NEXT_XPLEVEL
      *
      * @param callback The method to be invoked when the server response is received
      */
@@ -201,14 +204,14 @@ public class PlayerStatisticsService {
      * is simply a set and will not reward the user if their level changes
      * as a result.
      *
-     * Service Name - PlayerStatistics
-     * Service Operation - SetXpPoints
+     * Service Name - playerStatistics
+     * Service Operation - SET_XPPOINTS
      *
-     * @param xpValue The amount to set the the user's experience to
+     * @param xpValue  The amount to set the the user's experience to
      * @param callback The method to be invoked when the server response is received
      */
     public void setExperiencePoints(int xpValue,
-                                    IServerCallback callback) {
+            IServerCallback callback) {
         try {
             JSONObject data = new JSONObject();
             data.put(Parameter.xp_points.name(), xpValue);
@@ -224,17 +227,17 @@ public class PlayerStatisticsService {
     /**
      * Apply statistics grammar to a partial set of statistics.
      *
-     * Service Name - PlayerStatistics
+     * Service Name - playerStatistics
      * Service Operation - PROCESS_STATISTICS
      *
      * @param jsonData The JSON format is as follows:
-     * {
-     *     "DEAD_CATS": "RESET",
-     *     "LIVES_LEFT": "SET#9",
-     *     "MICE_KILLED": "INC#2",
-     *     "DOG_SCARE_BONUS_POINTS": "INC#10",
-     *     "TREES_CLIMBED": 1
-     * }
+     *                 {
+     *                 "DEAD_CATS": "RESET",
+     *                 "LIVES_LEFT": "SET#9",
+     *                 "MICE_KILLED": "INC#2",
+     *                 "DOG_SCARE_BONUS_POINTS": "INC#10",
+     *                 "TREES_CLIMBED": 1
+     *                 }
      * @param callback Method to be invoked when the server response is received.
      */
     public void processStatistics(String jsonData, IServerCallback callback) {
