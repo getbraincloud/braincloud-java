@@ -554,25 +554,45 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
     }
 
     /**
-     * Authenticate the user using an apple userid(email address) and apple
-     * authentication token.
+     * Authenticate the user using their Apple account and identityToken.
      *
-     * @param appleUserId    String representation of apple userid (email)
-     * @param token The authentication token derived via the apple apis.
-     * @param forceCreate     Should a new profile be created for this user if the account
-     *                        does not exist?
-     * @param callback        The callback handler
+     * @param appleUserId   String of the apple accounts user Id OR email
+     * @param identityToken The identityToken confirming users identity
+     * @param forceCreate   Should a new profile be created for this user if the account
+     *                      does not exist?
+     * @param callback      The callback handler
      */
     @Override
 	public void authenticateApple(String appleUserId,
-                                   String token,
-                                   boolean forceCreate,
-                                   IServerCallback callback) {
+                                  String identityToken,
+                                  boolean forceCreate,
+                                  IServerCallback callback) {
         _authenticateCallback = callback;
 
         initializeIdentity(false);
 
-        getClient().getAuthenticationService().authenticateApple(appleUserId, token, forceCreate, this);
+        getClient().getAuthenticationService().authenticateApple(appleUserId, identityToken, forceCreate, this);
+    }
+
+    /**
+     * Authenticate the user using an epicAccountId and their authIdToken.
+     *
+     * @param epicAccountId LocalUserId retrieved from the EOS AuthInterface's Login method.
+     * @param authIdToken   IdToken string from the EOS AuthInterface's CopyIdToken method.
+     * @param forceCreate   Should a new profile be created for this user if the account
+     *                      does not exist?
+     * @param callback      The callback handler
+     */
+    @Override
+	public void authenticateEpicGames(String epicAccountId,
+                                      String authIdToken,
+                                      boolean forceCreate,
+                                      IServerCallback callback) {
+        _authenticateCallback = callback;
+
+        initializeIdentity(false);
+
+        getClient().getAuthenticationService().authenticateEpicGames(epicAccountId, authIdToken, forceCreate, this);
     }
 
     /**
@@ -1036,7 +1056,7 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
     }
 
     @Override
-	public void smartSwitchAuthenticateApple(String appleUserId, String token, boolean forceCreate, IServerCallback callback)
+	public void smartSwitchAuthenticateApple(String appleUserId, String identityToken, boolean forceCreate, IServerCallback callback)
     {
         getIdentitiesCallback(new IServerCallback() {
             @Override
@@ -1047,7 +1067,29 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
                 resetStoredProfileId();
                 getClient().getAuthenticationService().clearSavedProfileId();
 
-                authenticateApple(appleUserId, token, forceCreate, callback);
+                authenticateApple(appleUserId, identityToken, forceCreate, callback);
+            }
+
+            @Override
+            public void serverError(ServiceName serviceName, ServiceOperation serviceOperation, int statusCode, int reasonCode, String jsonError) {
+                callback.serverError(serviceName, serviceOperation, statusCode, reasonCode, jsonError);
+            }
+        });
+    }
+
+    @Override
+	public void smartSwitchAuthenticateEpicGames(String epicAccountId, String authIdToken, boolean forceCreate, IServerCallback callback)
+    {
+        getIdentitiesCallback(new IServerCallback() {
+            @Override
+            public void serverCallback(ServiceName serviceName, ServiceOperation serviceOperation, JSONObject jsonData) {
+
+                // Clear IDs
+                resetStoredAnonymousId();
+                resetStoredProfileId();
+                getClient().getAuthenticationService().clearSavedProfileId();
+
+                authenticateEpicGames(epicAccountId, authIdToken, forceCreate, callback);
             }
 
             @Override
