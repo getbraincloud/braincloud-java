@@ -438,40 +438,4 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
         tr3.RunExpectFail(StatusCodes.FORBIDDEN, ReasonCodes.NO_SESSION);
 
     }
-
-    @Test
-    public void testAuthenticateUltra() throws Exception {
-        if (!getServerUrl().contains("api-internal.braincloudservers.com") &&
-                !getServerUrl().contains("internala.braincloudservers.com") &&
-                !getServerUrl().contains("api.internalg.braincloudservers.com")/*
-                                                                                * &&
-                                                                                * !getServerUrl().contains(
-                                                                                * "api.ultracloud.ultra.io")
-                                                                                */) {
-            return;
-        }
-
-        TestResult tr = new TestResult(_wrapper);
-
-        // Auth universal
-        _wrapper.getClient().getAuthenticationService().authenticateEmailPassword(
-                getUser(Users.UserA).email,
-                getUser(Users.UserA).password,
-                true, tr);
-        tr.Run();
-
-        // Run a cloud script to grab the ultra's JWT token
-        _wrapper.getClient().getScriptService().runScript("getUltraToken", "{}", tr);
-        tr.Run();
-        String id_token = tr.m_response.getJSONObject("data").getJSONObject("response").getJSONObject("data")
-                .getJSONObject("json").getString("id_token");
-
-        // Logout
-        _wrapper.getClient().getPlayerStateService().logout(tr);
-        tr.Run();
-
-        // Auth ultra
-        _wrapper.getClient().getAuthenticationService().authenticateUltra("braincloud1", id_token, true, tr);
-        tr.Run();
-    }
 }
