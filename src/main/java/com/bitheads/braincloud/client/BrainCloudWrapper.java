@@ -2,7 +2,14 @@
 
 package com.bitheads.braincloud.client;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.lang.reflect.Proxy;
+import java.lang.reflect.Method;
+import java.util.function.Function;
 import java.util.prefs.Preferences;
 
 import org.json.JSONException;
@@ -119,12 +126,38 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
     private class InitializeParams
     {
         public String appId = "";
-        public String secretKey = "";
         public String appVersion = "";
         public String serverUrl = "";
-        public Map<String, String> secretMap = null;
+        public boolean appMap = false;
     };
+
+    private static boolean s_configHintShown = false;
+
+    // One-time tip to use braincloud.cfg.
+    private static void showConfigHint()
+    {
+        if (!s_configHintShown) {
+            s_configHintShown = true;
+            System.out.println("brainCloud | Tip: use the brainCloud Java plugin and init() to keep the app secret out of your code.");
+        }
+    }
     private InitializeParams m_initializeParams = new InitializeParams();
+    private List<String> m_childAppIds = Collections.emptyList();
+
+    /** Child app ids from the last init, in config order (index 0 = first child). */
+    public List<String> getChildAppIdList() {
+        return m_childAppIds;
+    }
+
+    private static List<String> childIds(Collection<String> appIds, String defaultAppId) {
+        List<String> out = new ArrayList<>();
+        for (String id : appIds) {
+            if (!id.equals(defaultAppId)) {
+                out.add(id);
+            }
+        }
+        return Collections.unmodifiableList(out);
+    }
 
     /**
      * Method initializes the BrainCloudClient.
@@ -137,10 +170,11 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
 	public void initialize(String appId, String secretKey, String appVersion) {
         
         m_initializeParams.appId = appId;
-        m_initializeParams.secretKey = secretKey;
         m_initializeParams.appVersion = appVersion;
         m_initializeParams.serverUrl = _DEFAULT_URL;
-        m_initializeParams.secretMap = null;
+        m_initializeParams.appMap = false;
+        m_childAppIds = Collections.emptyList();
+        showConfigHint();
 
         if(_client == null)
         {
@@ -165,10 +199,11 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
 	public void initialize(String appId, String secretKey, String appVersion, String serverUrl) {
 
         m_initializeParams.appId = appId;
-        m_initializeParams.secretKey = secretKey;
         m_initializeParams.appVersion = appVersion;
         m_initializeParams.serverUrl = serverUrl;
-        m_initializeParams.secretMap = null;
+        m_initializeParams.appMap = false;
+        m_childAppIds = Collections.emptyList();
+        showConfigHint();
 
         if(_client == null)
         {
@@ -179,6 +214,120 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
         detectPlatform();
 
         getClient().initialize(serverUrl, appId, secretKey, appVersion);
+    }
+
+    /**
+     * Initializes with an app profile instead of the app secret.
+     *
+     * @param appId      The app id
+     * @param appProfile Signs a request body, returning the lowercase hex signature
+     * @param appVersion The app version
+     * @param serverUrl  The url to the brainCloud server
+     */
+    public void initialize(String appId, Function<byte[], String> appProfile, String appVersion, String serverUrl) {
+
+        m_initializeParams.appId = appId;
+        m_initializeParams.appVersion = appVersion;
+        m_initializeParams.serverUrl = serverUrl;
+        m_initializeParams.appMap = false;
+        m_childAppIds = Collections.emptyList();
+
+        if(_client == null)
+        {
+            _client = new BrainCloudClient();
+        }
+        detectPlatform();
+
+        getClient().initialize(serverUrl, appProfile, appId, appVersion);
+    }
+
+    /**
+     * Initializes with an app profile per app, for switching to child apps.
+     *
+     * @param appId       The app id to start with
+     * @param appProfiles The map of app id to app profile
+     * @param appVersion  The app version
+     * @param serverUrl   The url to the brainCloud server
+     */
+    public void initializeWithApps(String appId, Map<String, Function<byte[], String>> appProfiles, String appVersion, String serverUrl) {
+
+        m_initializeParams.appId = appId;
+        m_initializeParams.appVersion = appVersion;
+        m_initializeParams.serverUrl = serverUrl;
+        m_initializeParams.appMap = true;
+        m_childAppIds = appProfiles == null ? Collections.<String>emptyList() : childIds(appProfiles.keySet(), appId);
+
+        if(_client == null)
+        {
+            _client = new BrainCloudClient();
+        }
+        detectPlatform();
+
+        getClient().initializeWithApps(serverUrl, appProfiles, appId, appVersion);
+    }
+
+    /**
+     * Initializes from braincloud.cfg (brainCloud plugin), read from the classpath, then the
+     * working directory. Child apps in the config are loaded too, for switchToChildProfile.
+     *
+     * @return false if no config was found
+     */
+    public boolean init() {
+        final boolean[] used = { false };
+        try {
+            // Reflective so the SDK builds without the config reader.
+            Class<?> config = Class.forName("com.bitheads.braincloud.support.NativeConfig");
+            Class<?> callbackType;
+            String reader;
+            try {
+                callbackType = Class.forName("com.bitheads.braincloud.support.NativeConfig$AppsCallback");
+                reader = "useApps";
+            } catch (ClassNotFoundException e) {
+                // Older reader: main app only.
+                callbackType = Class.forName("com.bitheads.braincloud.support.NativeConfig$Callback");
+                reader = "useConfig";
+            }
+            final boolean apps = "useApps".equals(reader);
+            Object callback = Proxy.newProxyInstance(callbackType.getClassLoader(), new Class<?>[] { callbackType },
+                (proxy, method, args) -> {
+                    if ("use".equals(method.getName()) && args != null && args.length == 4) {
+                        String appId = (String) args[0];
+                        String serverUrl = (String) args[2];
+                        String appVersion = (String) args[3];
+                        if (apps) {
+                            @SuppressWarnings("unchecked")
+                            Map<String, Function<byte[], String>> appProfiles = (Map<String, Function<byte[], String>>) args[1];
+                            if (appProfiles.size() > 1) {
+                                initializeWithApps(appId, appProfiles, appVersion, serverUrl);
+                            } else {
+                                initialize(appId, appProfiles.get(appId), appVersion, serverUrl);
+                            }
+                        } else {
+                            @SuppressWarnings("unchecked")
+                            Function<byte[], String> appProfile = (Function<byte[], String>) args[1];
+                            initialize(appId, appProfile, appVersion, serverUrl);
+                        }
+                        used[0] = true;
+                        return null;
+                    }
+                    if ("toString".equals(method.getName())) return "brainCloudConfigCallback";
+                    if ("hashCode".equals(method.getName())) return System.identityHashCode(proxy);
+                    if ("equals".equals(method.getName())) return proxy == args[0];
+                    return null;
+                });
+            Method useConfig = config.getMethod(reader, callbackType);
+            useConfig.invoke(null, callback);
+        } catch (ClassNotFoundException e) {
+            System.out.println("ERROR | brainCloud init(): this SDK build has no braincloud.cfg reader.");
+            return false;
+        } catch (ReflectiveOperationException | RuntimeException e) {
+            System.out.println("ERROR | brainCloud init(): could not read braincloud.cfg - " + e);
+            return false;
+        }
+        if (!used[0]) {
+            System.out.println("ERROR | brainCloud init(): no braincloud.cfg found. Pick an app in the brainCloud tool window.");
+        }
+        return used[0];
     }
 
     /**
@@ -195,10 +344,10 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
     private void initializeWithApps(String url, String defaultAppId, Map<String, String> secretMap, String version, String companyName, String appName)
     {
         m_initializeParams.appId = defaultAppId;
-        m_initializeParams.secretKey = "";
         m_initializeParams.appVersion = version;
         m_initializeParams.serverUrl = url;
-        m_initializeParams.secretMap = secretMap;
+        m_initializeParams.appMap = true;
+        m_childAppIds = childIds(secretMap.keySet(), defaultAppId);
 
         if(_client == null)
         {
@@ -223,10 +372,10 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
     private void initializeWithApps(String url, String defaultAppId, Map<String, String> secretMap, String version)
     {
         m_initializeParams.appId = defaultAppId;
-        m_initializeParams.secretKey = "";
         m_initializeParams.appVersion = version;
         m_initializeParams.serverUrl = url;
-        m_initializeParams.secretMap = secretMap;
+        m_initializeParams.appMap = true;
+        m_childAppIds = childIds(secretMap.keySet(), defaultAppId);
 
         if(_client == null)
         {
@@ -1293,23 +1442,11 @@ public class BrainCloudWrapper implements IServerCallback, IBrainCloudWrapper {
             m_initializeParams.serverUrl = data.has("redirect_url") ? data.getString("redirect_url") : m_initializeParams.serverUrl;
             String newAppId = data.has("redirect_appid") ? data.getString("redirect_appid") : null;
 
-            // re-initialize the client with our app info
-            if (m_initializeParams.secretMap == null)
-            {
-                if (newAppId != null) m_initializeParams.appId = newAppId;
-                getClient().initialize(m_initializeParams.serverUrl, 
-                                       m_initializeParams.appId, 
-                                       m_initializeParams.secretKey, 
-                                       m_initializeParams.appVersion);
-            }
-            else
-            {
-                // For initialize with apps, we ignore the app id
-                getClient().initializeWithApps(m_initializeParams.serverUrl, 
-                                               m_initializeParams.appId, 
-                                               m_initializeParams.secretMap, 
-                                               m_initializeParams.appVersion);
-            }
+            // re-point at the redirect; initialize with apps ignores the new app id
+            if (!m_initializeParams.appMap && newAppId != null) m_initializeParams.appId = newAppId;
+            getClient().reinitialize(m_initializeParams.serverUrl,
+                                     m_initializeParams.appId,
+                                     m_initializeParams.appVersion);
 
             initializeIdentity(true);
             getClient().getAuthenticationService().retryPreviousAuthenticate(this);

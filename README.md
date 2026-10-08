@@ -55,7 +55,8 @@ Java/Android examples here: https://github.com/getbraincloud/examples-java
 
 Here are a few common errors that you may see on your first attempt to connect to brainCloud.
 
-- **App id not set**: Verify you've set up the app id and app secret correctly in the `initialize()` method.
+- **No braincloud.cfg found**: Pick an app in the brainCloud tool window and check `src/main/resources/braincloud.cfg` exists.
+- **App id not set**: If you initialize with the app ID and secret, check they're set correctly in `initialize()`.
 - **Platform not enabled**: Verify you've enabled your platform on the portal.
 
 If you're still having issues, log into the portal and give us a shout through the help system (bottom right icon with the question mark and chat bubble).
@@ -79,16 +80,35 @@ It is recommended to use the wrapper by default.
 ![wrapper](/Screenshots/bc-wrapper.png?raw=true)
 
 ## How do I initialize brainCloud?
-If using the wrapper use the following code.
+
+### With the brainCloud Java plugin (recommended)
+Keeps the app secret out of your code.
+
+1. Add the `braincloud-java` dependency. IntelliJ IDEA offers the **brainCloud Java** plugin, or install it from **Settings → Plugins → Marketplace** ([plugin page](https://plugins.jetbrains.com/plugin/34823-braincloud-java)).
+2. Open the **brainCloud** tool window, log in, and pick your team and app (or create one).
+3. The plugin writes `src/main/resources/braincloud.cfg` and gitignores it.
+4. Initialize:
 ```java
 _bc = new BrainCloudWrapper(); // optionally pass in a _wrapperName
-_bc.initialize(_appId, _secret, _appVersion); // optionally pass in an _applicationContext
+if (!_bc.init()) {
+    // no braincloud.cfg found
+}
 ```
-On Android, to use the wrapper serialization features, you also need to pass in or set the application context.
+
+To switch apps or pick up a new secret, pick the app again or use **Tools → brainCloud → Refresh Config**. For CI, keep `braincloud.cfg` as a secret file and copy it into `src/main/resources/` before building.
+
+If you minify with ProGuard/R8, keep the config reader:
+```
+-keep class com.bitheads.braincloud.support.NativeConfig { public *; }
+-keep interface com.bitheads.braincloud.support.NativeConfig$Callback { *; }
+```
+
+### With the app ID and secret
 ```java
-_bc.setContext(_applicationContext);
+_bc = new BrainCloudWrapper();
+_bc.initialize(_appId, _secret, _appVersion, _serverUrl);
 ```
-Your _appId, _secret, is set on the brainCloud dashboard. Under Design | Core App Info > Application IDs
+Your app ID and secret are in the portal under **Design | Core App Info > Application IDs**.
 
 ![wrapper](/Screenshots/bc-ids.png?raw=true)
 

@@ -3,7 +3,7 @@
   
   <groupId>com.bitheads</groupId>
   <artifactId>braincloud-java</artifactId>
-  <version>6.0.0</version>
+  <version>6.1.0</version>
 
   <name>brainCloud Java API</name>
   <description>The Java client library for brainCloud</description>
@@ -99,6 +99,35 @@
           </execution>
         </executions>
       </plugin>
+      <!-- Publishes a pom without build profiles, so the bundle-native profile never ships. -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>flatten-maven-plugin</artifactId>
+        <version>1.6.0</version>
+        <configuration>
+          <flattenMode>ossrh</flattenMode>
+          <outputDirectory>${project.build.directory}</outputDirectory>
+          <pomElements>
+            <profiles>remove</profiles>
+          </pomElements>
+        </configuration>
+        <executions>
+          <execution>
+            <id>flatten</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>flatten</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>flatten-clean</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>clean</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
       <!-- Deployment/Publishing -->
       <plugin>
         <groupId>org.sonatype.central</groupId>
@@ -112,6 +141,62 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <!-- Merges the obfuscated braincloud.cfg reader into the published jar when it is available
+         locally (release/dev machines); the published pom then lists no extra dependency. Without it
+         the SDK still builds, and BrainCloudWrapper.initialize() reports the reader is missing. -->
+    <profile>
+      <id>bundle-native</id>
+      <activation>
+        <file>
+          <exists>${user.home}/.m2/repository/com/bitheads/braincloud-native</exists>
+        </file>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>com.bitheads</groupId>
+          <artifactId>braincloud-native</artifactId>
+          <version>${project.version}</version>
+          <scope>runtime</scope>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <version>3.6.0</version>
+            <executions>
+              <execution>
+                <phase>package</phase>
+                <goals>
+                  <goal>shade</goal>
+                </goals>
+                <configuration>
+                  <artifactSet>
+                    <includes>
+                      <include>com.bitheads:braincloud-native</include>
+                    </includes>
+                  </artifactSet>
+                  <filters>
+                    <filter>
+                      <artifact>com.bitheads:braincloud-native</artifact>
+                      <excludes>
+                        <exclude>META-INF/**</exclude>
+                      </excludes>
+                    </filter>
+                  </filters>
+                  <!-- The flattened pom (below) is what's published; no reduced pom needed. -->
+                  <createDependencyReducedPom>false</createDependencyReducedPom>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
   <licenses>
     <license>
