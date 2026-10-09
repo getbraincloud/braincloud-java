@@ -95,7 +95,9 @@ if (!_bc.init()) {
 }
 ```
 
-To switch apps or pick up a new secret, pick the app again or use **Tools → brainCloud → Refresh Config**. For CI, keep `braincloud.cfg` as a secret file and copy it into `src/main/resources/` before building.
+To switch apps, pick the app again or use **Tools → brainCloud → Refresh Config**.
+
+**Parent apps:** add the child apps your client switches to in the plugin. `init()` loads them too, and `getChildAppIdList()` returns their ids (in plugin order) for `getIdentityService().switchToChildProfile`. For CI, keep `braincloud.cfg` as a secret file and copy it into `src/main/resources/` before building.
 
 If you minify with ProGuard/R8, keep the config reader:
 ```
