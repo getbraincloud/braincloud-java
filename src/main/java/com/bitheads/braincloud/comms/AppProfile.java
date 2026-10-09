@@ -7,7 +7,7 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.function.Function;
 
-// Signer that keeps the app value split, joining it only while signing.
+// Request signer for an app.
 final class AppProfile implements Function<byte[], String> {
 
     private static final SecureRandom RANDOM = new SecureRandom();
@@ -35,14 +35,14 @@ final class AppProfile implements Function<byte[], String> {
 
     @Override
     public String apply(byte[] payload) {
-        byte[] joined = new byte[a.length];
+        byte[] v = new byte[a.length];
         for (int i = 0; i < a.length; ++i) {
-            joined[i] = (byte) (a[i] ^ b[i]);
+            v[i] = (byte) (a[i] ^ b[i]);
         }
-        return sign(payload, joined);
+        return sign(payload, v);
     }
 
-    // Lowercase hex MD5(payload + value). Wipes value.
+    // Lowercase hex request signature; clears value.
     static String sign(byte[] payload, byte[] value) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
