@@ -247,4 +247,44 @@ public class AppStoreService {
         ServerCall sc = new ServerCall(ServiceName.appStore, ServiceOperation.REFRESH_PROMOTIONS, data, callback);
         _client.sendRequest(sc);
     }
+
+    /**
+     * Returns the store's client-side configuration for the given store.
+     *
+     * Service Name - appStore
+     * Service Operation - GET_STORE_INFO
+     *
+     * @param storeId The store platform. Valid stores are:
+     * - xsolla
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void getStoreInfo(String storeId, IServerCallback callback) {
+        sendStoreRequest(ServiceOperation.GET_STORE_INFO, storeId, callback);
+    }
+
+    /**
+     * Returns a store user token (JWT) for the current user, generated server-side.
+     *
+     * Service Name - appStore
+     * Service Operation - GET_USER_TOKEN
+     *
+     * @param storeId The store platform. Valid stores are:
+     * - xsolla
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void getUserToken(String storeId, IServerCallback callback) {
+        sendStoreRequest(ServiceOperation.GET_USER_TOKEN, storeId, callback);
+    }
+
+    private void sendStoreRequest(ServiceOperation operation, String storeId, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.storeId.name(), storeId);
+
+            ServerCall sc = new ServerCall(ServiceName.appStore, operation, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
 }
