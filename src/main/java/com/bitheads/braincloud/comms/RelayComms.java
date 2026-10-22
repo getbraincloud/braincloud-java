@@ -203,7 +203,7 @@ public class RelayComms {
             buffer = _buffer;
             ackId = _ackId;
             packetId = _packetId;
-            sendTimeMs = System.currentTimeMillis();
+            sendTimeMs = System.nanoTime() / 1000000L;
             resendTimeMs = sendTimeMs;
             waitTimeMs = channel <= 1 ? 50 : channel == 2 ? 150 : 250;
         }
@@ -381,7 +381,7 @@ public class RelayComms {
             }
             case UDP: {
                 try {
-                    _lastRecvTime = System.currentTimeMillis();
+                    _lastRecvTime = System.nanoTime() / 1000000L;
                     _udpAddr = InetAddress.getByName(host);
                     _udpSocket = new DatagramSocket();
                     _udpPort = port;
@@ -592,7 +592,7 @@ public class RelayComms {
         try {
             startUDPReceivingThread();
             _isConnecting = true;
-            _lastConnectTryTime = System.currentTimeMillis();
+            _lastConnectTryTime = System.nanoTime() / 1000000L;
             send(CL2RS_CONNECT, buildConnectionRequest());
         } catch(Exception e) {
             e.printStackTrace();
@@ -820,7 +820,7 @@ public class RelayComms {
                         buffer.put(packet.getData(), 0, packet.getLength());
                         buffer.rewind();
 
-                        _lastRecvTime = System.currentTimeMillis();
+                        _lastRecvTime = System.nanoTime() / 1000000L;
                         onRecv(buffer);
                     }
                 } catch (Exception e) {
@@ -849,7 +849,7 @@ public class RelayComms {
         buffer.putShort((short)_ping);
         send(buffer);
 
-        _lastPingTime = System.currentTimeMillis();
+        _lastPingTime = System.nanoTime() / 1000000L;
     }
 
     private void onRecv(ByteBuffer buffer) {
@@ -1098,7 +1098,7 @@ public class RelayComms {
         }
     }
     private void onPONG() {
-        _ping = (int)Math.min((long)999, System.currentTimeMillis() - _lastPingTime);
+        _ping = (int)Math.min((long)999, System.nanoTime() / 1000000L - _lastPingTime);
         if (_loggingEnabled && VERBOSE_LOG) {
             System.out.println("RELAY PONG: " + _ping);
         }
@@ -1161,7 +1161,7 @@ public class RelayComms {
                             if (!_isConnected) {
                                 _isConnected = true;
                                 _isConnecting = false;
-                                _lastPingTime = System.currentTimeMillis();
+                                _lastPingTime = System.nanoTime() / 1000000L;
                                 _netId = netId;
                                 _ownerCxId = json.getString("ownerCxId");
 
@@ -1288,7 +1288,7 @@ public class RelayComms {
         }
 
         if (_isConnecting) {
-            long timeMs = System.currentTimeMillis();
+            long timeMs = System.nanoTime() / 1000000L;
             if (timeMs - _lastConnectTryTime > CONNECT_RESEND_INTERVAL_MS) {
                 _lastConnectTryTime = timeMs;
                 try {
@@ -1305,7 +1305,7 @@ public class RelayComms {
         }
 
         // Resend reliable
-        long nowMs = System.currentTimeMillis();
+        long nowMs = System.nanoTime() / 1000000L;
         if (_connectionType == RelayConnectionType.UDP && _isConnected) {
             boolean resendTimedOut = false;
             synchronized(_lock) {
@@ -1354,7 +1354,7 @@ public class RelayComms {
 
         // Ping. Which also works as a heartbeat
         if (_isConnected) {
-            if (System.currentTimeMillis() - _lastPingTime >= _pingIntervalSeconds * 1000) {
+            if (System.nanoTime() / 1000000L - _lastPingTime >= _pingIntervalSeconds * 1000) {
                 sendPing();
             }
         }

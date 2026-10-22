@@ -327,8 +327,8 @@ public class RTTComms implements IServerCallback {
 
         // Heartbeat
         if (isRTTEnabled()) {
-            if (System.currentTimeMillis() - _lastHeartbeatTime >= _heartbeatSeconds * 1000) {
-                _lastHeartbeatTime = System.currentTimeMillis();
+            if (System.nanoTime() / 1000000L - _lastHeartbeatTime >= _heartbeatSeconds * 1000) {
+                _lastHeartbeatTime = System.nanoTime() / 1000000L;
                 try {
                     JSONObject json = new JSONObject();
                     json.put("operation", "HEARTBEAT");
@@ -427,7 +427,7 @@ public class RTTComms implements IServerCallback {
                     InetAddress serverIP = InetAddress.getByName(_endpoint.getString("host"));
                     int port = _endpoint.getInt("port");
                     _socket = new Socket(serverIP, port);
-                    _lastHeartbeatTime = System.currentTimeMillis();
+                    _lastHeartbeatTime = System.nanoTime() / 1000000L;
 
                     if (_loggingEnabled) {
                         System.out.println("RTT TCP: connected");
@@ -617,7 +617,7 @@ public class RTTComms implements IServerCallback {
             case "CONNECT": {
                 _rttConnectionStatus = RTTComms.RttConnectionStatus.Connected;
                 _heartbeatSeconds = json.getJSONObject("data").getInt("heartbeatSeconds");
-                _lastHeartbeatTime = System.currentTimeMillis();
+                _lastHeartbeatTime = System.nanoTime() / 1000000L;
                 _connectionId = json.getJSONObject("data").getString("cxId");
                 if (json.getString("service").equals("rtt")) {
                     synchronized(_callbackEventQueue) {

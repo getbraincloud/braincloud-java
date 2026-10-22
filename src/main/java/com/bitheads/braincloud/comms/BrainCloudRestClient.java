@@ -69,6 +69,10 @@ public class BrainCloudRestClient implements Runnable {
     private boolean _oldStyleStatusMessageErrorCallback = false;
     private boolean _cacheMessagesOnNetworkError = false;
     private long _lastSendTime;
+
+    // server time = monotonic ms + offset, synced from server_time so device clock changes can't skew it
+    private long _serverTimeOffsetMs = System.currentTimeMillis() - System.nanoTime() / 1000000L;
+    private boolean _isServerTimeSynced;
     private long _lastReceivedPacket;
     private boolean _compressRequests = true;
     private int _compressionThreshold = 51200;
@@ -656,14 +660,14 @@ public class BrainCloudRestClient implements Runnable {
                             _expectedPacketId = _packetId++;
                             for (; ; ) {
                                 long timeoutTimeMs = getRetryTimeoutMillis(_retryCount);
-                                long startTime = System.currentTimeMillis();
+                                long startTime = System.nanoTime() / 1000000L;
                                 if (sendBundle()) {
                                     break;
                                 }
 
                                 ++_retryCount;
 
-                                long endTime = System.currentTimeMillis();
+                                long endTime = System.nanoTime() / 1000000L;
                                 if (endTime < startTime + timeoutTimeMs) {
                                     try {
                                         Thread.sleep((startTime + timeoutTimeMs) - endTime);
@@ -724,11 +728,28 @@ public class BrainCloudRestClient implements Runnable {
         }
     }
 
+    long getServerTimeMs() {
+        return System.nanoTime() / 1000000L + _serverTimeOffsetMs;
+    }
+
+    boolean isServerTimeSynced() {
+        return _isServerTimeSynced;
+    }
+
+    private void syncServerTime(JSONObject data) {
+        long serverTime = data != null ? data.optLong("server_time", 0) : 0;
+        if (serverTime > 0) {
+            _serverTimeOffsetMs = serverTime - System.nanoTime() / 1000000L;
+            _isServerTimeSynced = true;
+        }
+    }
+
     private void fillBundle() {
         // we will wait here until the message queue has records
         long polltime = _heartbeatIntervalMillis;
         if (_isAuthenticated) {
-            polltime = System.currentTimeMillis() + _heartbeatIntervalMillis - _lastSendTime;
+            // time left until the next heartbeat
+            polltime = _lastSendTime + _heartbeatIntervalMillis - System.nanoTime() / 1000000L;
             if (polltime < 0) {
                 polltime = 500L;
             }
@@ -760,7 +781,7 @@ public class BrainCloudRestClient implements Runnable {
 
         //check for heartbeat if no data in queue
         if(!hasRecords) {
-            if (System.currentTimeMillis() - _lastSendTime > _heartbeatIntervalMillis && _isAuthenticated) {
+            if (System.nanoTime() / 1000000L - _lastSendTime > _heartbeatIntervalMillis && _isAuthenticated) {
                 ServerCall serverCall = new ServerCall(ServiceName.heartbeat, ServiceOperation.READ, null, null);
                 _bundleQueue.add(serverCall);
                 return;
@@ -892,7 +913,7 @@ public class BrainCloudRestClient implements Runnable {
                 }
             }
 
-            _lastSendTime = System.currentTimeMillis();
+            _lastSendTime = System.nanoTime() / 1000000L;
 
             connection.connect();
 
@@ -1093,6 +1114,7 @@ public class BrainCloudRestClient implements Runnable {
                             _sessionId = sessionId;
                             _isAuthenticated = true;
                             resetErrorCache();
+                            syncServerTime(data);
                             _client.getAuthenticationService().setProfileId(profileId);
 
                             long sessionExpiry = data.getLong("playerSessionExpiry");
@@ -1107,6 +1129,9 @@ public class BrainCloudRestClient implements Runnable {
                             }
                                 
 
+                        } else if (sc.getServiceName().equals(ServiceName.time)
+                                && sc.getServiceOperation().equals(ServiceOperation.READ)) {
+                            syncServerTime(message.optJSONObject("data"));
                         } else if (sc.getServiceName().equals(ServiceName.playerState)
                                 && sc.getServiceOperation().equals(ServiceOperation.LOGOUT)) {
                             _isAuthenticated = false;

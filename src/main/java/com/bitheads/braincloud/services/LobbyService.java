@@ -935,9 +935,9 @@ public class LobbyService implements IServerCallback {
                 return 999;
             }
 
-            long timeStart = System.currentTimeMillis();
+            long timeStart = System.nanoTime() / 1000000L;
             if (connection.getResponseCode() == 200) {
-                long timeEnd = System.currentTimeMillis();
+                long timeEnd = System.nanoTime() / 1000000L;
                 int resultPing = (int) (timeEnd - timeStart);
                 if (resultPing > 999) {
                     resultPing = 999;
