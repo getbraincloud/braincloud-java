@@ -1,5 +1,11 @@
 package com.bitheads.braincloud.services;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.function.Function;
+
 import org.junit.Test;
 
 import com.bitheads.braincloud.client.AuthenticationType;
@@ -39,6 +45,44 @@ public class IdentityServiceTest extends TestFixtureBase {
         TestResult tr = new TestResult(_wrapper);
         _wrapper.getIdentityService().switchToChildProfile(null, m_childAppId, true, tr);
         tr.Run();
+    }
+
+    @Test
+    public void testSwitchToChildProfileWithAppProfiles() throws Exception {
+        // Same switch, but initialized from app profiles instead of a secret map.
+        Map<String, Function<byte[], String>> appProfiles = new LinkedHashMap<>();
+        appProfiles.put(m_appId, payload -> sign(payload, m_secret));
+        appProfiles.put(m_childAppId, payload -> sign(payload, m_childSecret));
+        _wrapper.initializeWithApps(m_appId, appProfiles, m_appVersion, m_serverUrl);
+        org.junit.Assert.assertEquals(java.util.Collections.singletonList(m_childAppId), _wrapper.getChildAppIdList());
+
+        TestResult tr = new TestResult(_wrapper);
+        _wrapper.authenticateUniversal(getUser(Users.UserA).id, getUser(Users.UserA).password, true, tr);
+        tr.Run();
+
+        tr.Reset();
+        _wrapper.getIdentityService().switchToChildProfile(null, m_childAppId, true, tr);
+        tr.Run();
+
+        // Signed with the child profile after the switch.
+        tr.Reset();
+        _wrapper.getPlayerStateService().readUserState(tr);
+        tr.Run();
+    }
+
+    private static String sign(byte[] payload, String value) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(payload);
+            md.update(value.getBytes(StandardCharsets.UTF_8));
+            StringBuilder sb = new StringBuilder();
+            for (byte b : md.digest()) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Test

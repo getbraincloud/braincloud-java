@@ -24,16 +24,16 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.KeyManagementException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.Semaphore;
@@ -57,8 +57,8 @@ public class BrainCloudRestClient implements Runnable {
     private String _serverUrl;
     private String _uploadUrl;
     private String _appId;
-    private String _secretKey;
-    private Map<String, String> _secretMap = new HashMap<String, String>();
+    // App profile (signer) per app id.
+    private final Map<String, Function<byte[], String>> _appProfiles = new ConcurrentHashMap<>();
     private String _sessionId;
     private long _packetId;
     private long _expectedPacketId;
@@ -154,14 +154,67 @@ public class BrainCloudRestClient implements Runnable {
     }
 
     public void initialize(String serverUrl, String appId, String secretKey) {
+        _appProfiles.clear();
+        putProfile(appId, AppProfile.fromValue(secretKey));
+        start(serverUrl, appId);
+    }
+
+    public void initializeWithApps(String serverUrl, String appId, Map<String, String> secretMap) {
+        _appProfiles.clear();
+        for (Map.Entry<String, String> entry : secretMap.entrySet()) {
+            putProfile(entry.getKey(), AppProfile.fromValue(entry.getValue()));
+        }
+        start(serverUrl, appId);
+    }
+
+    // App profile per app id, for switching to child apps.
+    public void initializeWithApps(String serverUrl, Map<String, Function<byte[], String>> appProfiles, String appId) {
+        _appProfiles.clear();
+        for (Map.Entry<String, Function<byte[], String>> entry : appProfiles.entrySet()) {
+            putProfile(entry.getKey(), entry.getValue());
+        }
+        start(serverUrl, appId);
+    }
+
+    public void initialize(String serverUrl, String appId, Function<byte[], String> appProfile) {
+        _appProfiles.clear();
+        putProfile(appId, appProfile);
+        start(serverUrl, appId);
+    }
+
+    // Manual redirect: keep profiles; a single app carries its profile to the new id.
+    public void reinitialize(String serverUrl, String appId) {
+        if (!_appProfiles.containsKey(appId) && _appProfiles.size() == 1) {
+            putProfile(appId, _appProfiles.values().iterator().next());
+        }
+        start(serverUrl, appId);
+    }
+
+    private void putProfile(String appId, Function<byte[], String> appProfile) {
+        if (appId != null && appProfile != null) {
+            _appProfiles.put(appId, appProfile);
+        }
+    }
+
+    // Unknown app signs with "MISSING" so the server rejects it as usual.
+    void switchApp(String appId) {
+        _appId = appId;
+        if (!_appProfiles.containsKey(appId)) {
+            _appProfiles.put(appId, AppProfile.fromValue("MISSING"));
+        }
+    }
+
+    Function<byte[], String> currentProfile() {
+        return _appId == null ? null : _appProfiles.get(_appId);
+    }
+
+    private void start(String serverUrl, String appId) {
         resetCommunication();
         _expectedPacketId = NO_PACKET_EXPECTED;
         _serverUrl = serverUrl;
         _appId = appId;
-        _secretKey = secretKey;
         _retryCount = 0;
         _isInitialized = true;
-        _secretMap.put(appId, secretKey);
 
         String suffix = "/dispatcherv2";
         if (_serverUrl.endsWith(suffix))
@@ -180,16 +233,6 @@ public class BrainCloudRestClient implements Runnable {
             _thread = new Thread(this);
             _thread.start();
         }
-    }
-
-    public void initializeWithApps(String serverUrl, String appId, Map<String, String> secretMap) {
-
-        _secretMap = null; //clean up _secretMaps data
-
-        //update the map with new map passed in
-        _secretMap = secretMap;
-
-        initialize(serverUrl, appId, secretMap.get(appId));
     }
 
     public void addToQueue(ServerCall serverCall) {
@@ -819,8 +862,9 @@ public class BrainCloudRestClient implements Runnable {
 
             String body = getDataString();
 
-            if (_secretKey.length() > 0) {
-                connection.setRequestProperty("X-SIG", getSignature(body));
+            Function<byte[], String> profile = currentProfile();
+            if (profile != null) {
+                connection.setRequestProperty("X-SIG", getSignature(profile, body));
             }
 
             connection.setRequestProperty("X-APPID", _appId);
@@ -964,14 +1008,9 @@ public class BrainCloudRestClient implements Runnable {
         return allMessages.toString() + "\r\n\r\n";
     }
 
-    private String getSignature(String body) throws NoSuchAlgorithmException {
+    private String getSignature(Function<byte[], String> profile, String body) {
         try {
-            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-            messageDigest.reset();
-            messageDigest.update(body.getBytes("UTF-8"));
-            messageDigest.update(_secretKey.getBytes("UTF-8"));
-
-            return toHexString(messageDigest.digest());
+            return profile.apply(body.getBytes("UTF-8"));
         } catch (Exception e) {
             e.printStackTrace();
             return "";
@@ -1041,13 +1080,7 @@ public class BrainCloudRestClient implements Runnable {
                                 }
                                 if (data.has("switchToAppId"))
                                 {
-                                    _appId = data.getString("switchToAppId");
-
-                                    _secretKey = "MISSING";
-                                    if(_secretMap.containsKey(_appId))
-                                    {
-                                        _secretKey = _secretMap.get(_appId);
-                                    }
+                                    switchApp(data.getString("switchToAppId"));
                                 }
                             }
                         }
@@ -1254,28 +1287,6 @@ public class BrainCloudRestClient implements Runnable {
                 }
             }
         }
-    }
-
-    /**
-     * Converts the specified byte array into hexadecimal string representation.
-     *
-     * @param bytes Byte array.
-     * @return Hexadecimal string representation of the input argument.
-     */
-    private String toHexString(byte[] bytes) {
-        StringBuilder buffer = new StringBuilder();
-
-        for (byte aByte : bytes) {
-            String hex = Integer.toHexString(0xFF & aByte);
-
-            if (hex.length() == 1) {
-                buffer.append("0");
-            }
-
-            buffer.append(hex);
-        }
-
-        return buffer.toString();
     }
 
     /**

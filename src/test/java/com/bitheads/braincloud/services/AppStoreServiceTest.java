@@ -73,4 +73,36 @@ public class AppStoreServiceTest extends TestFixtureBase
         _wrapper.getAppStoreService().cachePurchasePayloadContext("_invalid_store_id_", "_invalid_transaction_id_", "{}", tr);
         tr.RunExpectFail(StatusCodes.BAD_REQUEST, ReasonCodes.INVALID_STORE_ID);
     }
+
+    @Test
+    public void testGetStoreInfo() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        _wrapper.getAppStoreService().getStoreInfo("xsolla", tr);
+        tr.Run();
+    }
+
+    @Test
+    public void testGetStoreInfoFail() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        _wrapper.getAppStoreService().getStoreInfo("_invalid_store_id_", tr);
+        tr.RunExpectFail(StatusCodes.BAD_REQUEST, ReasonCodes.INVALID_STORE_ID);
+    }
+
+    @Test
+    public void testGetUserToken() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        _wrapper.getAppStoreService().getUserToken("xsolla", tr);
+        tr.Run();
+    }
+
+    @Test
+    public void testGetUserTokenFail() throws Exception {
+        TestResult tr = new TestResult(_wrapper);
+
+        _wrapper.getAppStoreService().getUserToken("_invalid_store_id_", tr);
+        tr.RunExpectFail(StatusCodes.BAD_REQUEST, ReasonCodes.INVALID_STORE_ID);
+    }
 }

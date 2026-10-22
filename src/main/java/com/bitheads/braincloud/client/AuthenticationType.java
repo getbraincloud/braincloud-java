@@ -16,6 +16,7 @@ public class AuthenticationType {
     public static final AuthenticationType GameCenter = new AuthenticationType("GameCenter");
     public static final AuthenticationType Steam = new AuthenticationType("Steam");
     public static final AuthenticationType Apple = new AuthenticationType("Apple");
+    public static final AuthenticationType EpicGames = new AuthenticationType("EpicGames");
     public static final AuthenticationType Google = new AuthenticationType("Google");
     public static final AuthenticationType GoogleOpenId = new AuthenticationType("GoogleOpenId");
     public static final AuthenticationType Twitter = new AuthenticationType("Twitter");
@@ -62,6 +63,9 @@ public class AuthenticationType {
         }
         if (s.equals(Apple.toString())) {
             return Apple;
+        }
+        if (s.equals(EpicGames.toString())) {
+            return EpicGames;
         }
         if (s.equals(Google.toString())) {
             return Google;
