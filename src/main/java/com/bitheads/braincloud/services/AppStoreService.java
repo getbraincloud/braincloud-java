@@ -45,6 +45,9 @@ public class AppStoreService {
      * - windows
      * - windowsPhone
      * - googlePlay
+     * - metaHorizon
+     * - epicGames
+     * - xsolla
      * @param receiptData the specific store data required
      * @param callback The method to be invoked when the server response is received
      */
@@ -91,6 +94,9 @@ public class AppStoreService {
      * - windows
      * - windowsPhone
      * - googlePlay
+     * - metaHorizon
+     * - epicGames
+     * - xsolla
      * @param userCurrency The currency type to retrieve the sales inventory for.
      * @param callback The method to be invoked when the server response is received
      */
@@ -113,6 +119,9 @@ public class AppStoreService {
      * - windows
      * - windowsPhone
      * - googlePlay
+     * - metaHorizon
+     * - epicGames
+     * - xsolla
      * @param userCurrency The currency type to retrieve the sales inventory for.
      * @param category The product category
      * @param callback The method to be invoked when the server response is received
@@ -143,14 +152,7 @@ public class AppStoreService {
      * Service Name - appStore
      * Service Operation - START_PURCHASE
      *
-     * @param storeId The store platform. Valid stores are:
-     * - itunes
-     * - facebook
-     * - appworld
-     * - steam
-     * - windows
-     * - windowsPhone
-     * - googlePlay
+     * @param storeId The store id. Currently only accepts "steam".
      * @param purchaseData specific data for purchasing 2 staged purchases
      * @param callback The method to be invoked when the server response is received
      */
@@ -173,14 +175,7 @@ public class AppStoreService {
      * Service Name - appStore
      * Service Operation - FINALIZE_PURCHASE
      *
-     * @param storeId The store platform. Valid stores are:
-     * - itunes
-     * - facebook
-     * - appworld
-     * - steam
-     * - windows
-     * - windowsPhone
-     * - googlePlay
+     * @param storeId The store id. Currently only accepts "steam".
      * @param transactionId the transactionId returned from start Purchase
      * @param transactionData specific data for purchasing 2 staged purchases
      * @param callback The method to be invoked when the server response is received
@@ -218,6 +213,9 @@ public class AppStoreService {
      * - windows
      * - windowsPhone
      * - googlePlay
+     * - metaHorizon
+     * - epicGames
+     * - xsolla
      * @param transactionId the transactionId returned from start Purchase
      * @param transactionData specific data for purchasing 2 staged purchases
      * @param callback The method to be invoked when the server response is received
@@ -248,5 +246,45 @@ public class AppStoreService {
 
         ServerCall sc = new ServerCall(ServiceName.appStore, ServiceOperation.REFRESH_PROMOTIONS, data, callback);
         _client.sendRequest(sc);
+    }
+
+    /**
+     * Returns the store's client-side configuration for the given store.
+     *
+     * Service Name - appStore
+     * Service Operation - GET_STORE_INFO
+     *
+     * @param storeId The store platform. Valid stores are:
+     * - xsolla
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void getStoreInfo(String storeId, IServerCallback callback) {
+        sendStoreRequest(ServiceOperation.GET_STORE_INFO, storeId, callback);
+    }
+
+    /**
+     * Returns a store user token (JWT) for the current user, generated server-side.
+     *
+     * Service Name - appStore
+     * Service Operation - GET_USER_TOKEN
+     *
+     * @param storeId The store platform. Valid stores are:
+     * - xsolla
+     * @param callback The method to be invoked when the server response is received
+     */
+    public void getUserToken(String storeId, IServerCallback callback) {
+        sendStoreRequest(ServiceOperation.GET_USER_TOKEN, storeId, callback);
+    }
+
+    private void sendStoreRequest(ServiceOperation operation, String storeId, IServerCallback callback) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put(Parameter.storeId.name(), storeId);
+
+            ServerCall sc = new ServerCall(ServiceName.appStore, operation, data, callback);
+            _client.sendRequest(sc);
+        } catch (JSONException je) {
+            je.printStackTrace();
+        }
     }
 }

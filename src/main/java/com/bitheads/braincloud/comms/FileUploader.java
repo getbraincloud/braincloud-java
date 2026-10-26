@@ -119,7 +119,7 @@ public class FileUploader implements Runnable {
         _status = FileUploaderStatus.Uploading;
 
         //set timeout start
-        _prevTime = System.currentTimeMillis();
+        _prevTime = System.nanoTime() / 1000000L;
 
         Thread _thread = new Thread(this);
         _thread.start();
@@ -131,7 +131,7 @@ public class FileUploader implements Runnable {
             _progress = (double) _bytesTransferred / _totalBytesToTransfer;
         }
 
-        long elapsedTime = System.currentTimeMillis() - _prevTime;
+        long elapsedTime = System.nanoTime() / 1000000L - _prevTime;
         double rate = bytes / (elapsedTime / 1000.0);
 
         if (rate > _timeoutThreshold)
@@ -139,7 +139,7 @@ public class FileUploader implements Runnable {
         else
             _timeBelowThreshold += elapsedTime;
 
-        _prevTime = System.currentTimeMillis();
+        _prevTime = System.nanoTime() / 1000000L;
 
         if (_timeBelowThreshold > _timeout * 1000) {
             _isCanceled = true;

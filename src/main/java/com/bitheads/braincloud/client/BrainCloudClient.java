@@ -2,9 +2,9 @@
 package com.bitheads.braincloud.client;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.TimeZone;
 
 import com.bitheads.braincloud.comms.BrainCloudRestClient;
@@ -74,14 +74,13 @@ public class BrainCloudClient {
     private String _appId;
     private Platform _releasePlatform;
     private String _appVersion;
-    private Map<String, String> _secretMap = new HashMap<>();
     private String _countryCode;
     private String _languageCode;
     private double _timeZoneOffset;
 
 
 
-    private final static String BRAINCLOUD_VERSION = "6.0.0";
+    private final static String BRAINCLOUD_VERSION = "6.1.0";
 
     private BrainCloudRestClient _restClient;
     private RTTComms _rttComms;
@@ -204,8 +203,65 @@ public class BrainCloudClient {
 
         _appId = appId;
         _appVersion = appVersion;
-        _secretMap.put(_appId, secretKey);
+        prepareDeviceInfo();
 
+        _restClient.initialize(
+                serverURL.endsWith("/dispatcherv2") ? serverURL : serverURL + "/dispatcherv2",
+                appId, secretKey);
+    }
+
+    /**
+     * Initializes with an app profile instead of the app secret.
+     *
+     * @param serverURL
+     *            The server URL
+     * @param appProfile
+     *            Signs a request body, returning the lowercase hex signature
+     * @param appId
+     *            The app id
+     * @param appVersion
+     *            The app version (e.g. "1.0.0").
+     */
+    public void initialize(String serverURL, Function<byte[], String> appProfile, String appId, String appVersion)
+    {
+        resetCommunication();
+        String error = null;
+        if (isNullOrEmpty(serverURL))
+            error = "serverUrl was null or empty";
+        else if (appProfile == null)
+            error = "appProfile was null";
+        else if (isNullOrEmpty(appId))
+            error = "appId was null or empty";
+        else if (isNullOrEmpty(appVersion))
+            error = "appVersion was null or empty";
+
+        if (error != null) {
+            System.out.println("ERROR | Failed to initialize brainCloud - " + error);
+            return;
+        }
+
+        _appId = appId;
+        _appVersion = appVersion;
+        prepareDeviceInfo();
+
+        _restClient.initialize(
+                serverURL.endsWith("/dispatcherv2") ? serverURL : serverURL + "/dispatcherv2",
+                appId, appProfile);
+    }
+
+    // Manual redirect: re-point at a new server/app, keeping app profiles.
+    public void reinitialize(String serverURL, String appId, String appVersion)
+    {
+        resetCommunication();
+        _appId = appId;
+        _appVersion = appVersion;
+        _restClient.reinitialize(
+                serverURL.endsWith("/dispatcherv2") ? serverURL : serverURL + "/dispatcherv2",
+                appId);
+    }
+
+    private void prepareDeviceInfo()
+    {
         //the wrapper will always handle this, but in the case they do not go through the wrapper on Desktop the release platform will be null and it needs 
         //to go through the steps the wrapper would have. In the case they use android but don't use the wrapper, we will not be able to distinguish
         //between Google and Amazon android because of Javas incompatabilities between Java_desktop and Java_android. In this case it is safe to at least
@@ -237,10 +293,6 @@ public class BrainCloudClient {
 
         TimeZone timeZone = TimeZone.getDefault();
         _timeZoneOffset = ((double) timeZone.getRawOffset()) / (1000.0 * 60.0 * 60.0);
-
-        _restClient.initialize(
-                serverURL.endsWith("/dispatcherv2") ? serverURL : serverURL + "/dispatcherv2",
-                appId, secretKey);
     }
 
     /**
@@ -290,7 +342,6 @@ public class BrainCloudClient {
 
         _appId = appId;
         _appVersion = appVersion;
-        _secretMap = secretMap;
 
         //the wrapper will always handle this, but in the case they do not go through the wrapper on Desktop the release platform will be null and it needs 
         //to go through the steps the wrapper would have. In the case they use android but don't use the wrapper, we will not be able to distinguish
@@ -324,6 +375,45 @@ public class BrainCloudClient {
         _restClient.initializeWithApps(
                 serverUrl.endsWith("/dispatcherv2") ? serverUrl : serverUrl + "/dispatcherv2",
                 appId, secretMap);
+    }
+
+    /**
+     * Initializes with an app profile per app, for switching to child apps.
+     *
+     * @param serverUrl
+     *            The server URL
+     * @param appProfiles
+     *            The map of app id to app profile
+     * @param appId
+     *            The app id to start with
+     * @param appVersion
+     *            The app version (e.g. "1.0.0").
+     */
+    public void initializeWithApps(String serverUrl, Map<String, Function<byte[], String>> appProfiles, String appId, String appVersion)
+    {
+        resetCommunication();
+        String error = null;
+        if (isNullOrEmpty(serverUrl))
+            error = "serverUrl was null or empty";
+        else if (isNullOrEmpty(appId))
+            error = "appId was null or empty";
+        else if (appProfiles == null || appProfiles.get(appId) == null)
+            error = "no matching appProfile for appId";
+        else if (isNullOrEmpty(appVersion))
+            error = "appVersion was null or empty";
+
+        if (error != null) {
+            System.out.println("ERROR | Failed to initialize brainCloud - " + error);
+            return;
+        }
+
+        _appId = appId;
+        _appVersion = appVersion;
+        prepareDeviceInfo();
+
+        _restClient.initializeWithApps(
+                serverUrl.endsWith("/dispatcherv2") ? serverUrl : serverUrl + "/dispatcherv2",
+                appProfiles, appId);
     }
 
     private static boolean isNullOrEmpty(String param) {

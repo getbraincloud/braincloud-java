@@ -242,16 +242,26 @@ public interface IBrainCloudWrapper {
 			IServerCallback callback);
 
 	/**
-	 * Authenticate the user using an apple userid(email address) and apple
-	 * authentication token.
+	 * Authenticate the user using their Apple account and identityToken.
 	 *
-	 * @param appleUserId    String representation of apple userid (email)
-	 * @param token The authentication token derived via the apple apis.
-	 * @param forceCreate     Should a new profile be created for this user if the account
-	 *                        does not exist?
-	 * @param callback        The callback handler
+	 * @param appleUserId   String of the apple accounts user Id OR email
+	 * @param identityToken The identityToken confirming users identity
+	 * @param forceCreate   Should a new profile be created for this user if the account
+	 *                      does not exist?
+	 * @param callback      The callback handler
 	 */
-	void authenticateApple(String appleUserId, String token, boolean forceCreate, IServerCallback callback);
+	void authenticateApple(String appleUserId, String identityToken, boolean forceCreate, IServerCallback callback);
+
+	/**
+	 * Authenticate the user using an epicAccountId and their authIdToken.
+	 *
+	 * @param epicAccountId LocalUserId retrieved from the EOS AuthInterface's Login method.
+	 * @param authIdToken   IdToken string from the EOS AuthInterface's CopyIdToken method.
+	 * @param forceCreate   Should a new profile be created for this user if the account
+	 *                      does not exist?
+	 * @param callback      The callback handler
+	 */
+	void authenticateEpicGames(String epicAccountId, String authIdToken, boolean forceCreate, IServerCallback callback);
 
 	/**
 	 * Authenticate the user using a steam userid and session ticket (without
@@ -507,7 +517,9 @@ public interface IBrainCloudWrapper {
 	void smartSwitchAuthenticateGoogleOpenId(String googleUserAccountEmail, String IdToken, boolean forceCreate,
 			IServerCallback callback);
 
-	void smartSwitchAuthenticateApple(String appleUserId, String token, boolean forceCreate, IServerCallback callback);
+	void smartSwitchAuthenticateApple(String appleUserId, String identityToken, boolean forceCreate, IServerCallback callback);
+
+	void smartSwitchAuthenticateEpicGames(String epicAccountId, String authIdToken, boolean forceCreate, IServerCallback callback);
 
 	void smartSwitchAuthenticateSteam(String steamUserId, String sessionTicket, boolean forceCreate,
 			IServerCallback callback);
