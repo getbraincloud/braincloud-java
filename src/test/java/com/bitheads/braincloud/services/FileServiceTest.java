@@ -131,10 +131,8 @@ public class FileServiceTest extends TestFixtureBase implements IFileUploadCallb
     public void testUploadCancel() throws Exception {
         TestResult tr = new TestResult(_wrapper);
 
-        //works locally for 10mb
-        //String path = createFile(10);
-        //trying 11 mb for jenkins compatability
-        String path = createFile(1);
+        // Big enough that a fast link can't finish it before the cancel lands.
+        String path = createFile(10);
 
         _wrapper.getFileService().uploadFile(
                 "", "test.dat", true, true, path, tr);
@@ -167,7 +165,7 @@ public class FileServiceTest extends TestFixtureBase implements IFileUploadCallb
                     System.out.println(logStr);
                 }
 
-                if (cancelUpload && progress > 0.05)
+                if (cancelUpload && progress >= 0)
                     service.cancelUpload(id);
             }
 

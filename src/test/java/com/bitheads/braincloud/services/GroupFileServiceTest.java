@@ -22,7 +22,8 @@ import java.util.HashMap;
 public class GroupFileServiceTest extends TestFixtureNoAuth {
 
     private static String _tempFilename = "testfile-java.txt";
-    private static String _groupId = "a7ff751c-3251-407a-b2fd-2bd1e9bca64a";
+    // Created per run so the tests don't depend on a group that only exists in one env's app.
+    private static String _groupId = "";
     private static JSONObject acl = new JSONObject();
     private static boolean uploadSuccess;
     private static String fileId = "";
@@ -62,10 +63,15 @@ public class GroupFileServiceTest extends TestFixtureNoAuth {
                 tr);
         tr.Run();
 
-        /* Add user to test group */
-        System.out.println("Joining test group...");
-    	_wrapper.getGroupService().joinGroup(_groupId, tr);
-    	tr.Run();
+        /* Create the test group, owned by this user */
+        System.out.println("Creating test group...");
+        _wrapper.getGroupService().createGroup("test", "test", false, null, null, null, null, tr);
+        tr.Run();
+        try {
+            _groupId = tr.m_response.getJSONObject("data").getString("groupId");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
 
         _client.registerFileUploadCallback(new IFileUploadCallback() {
 
@@ -180,10 +186,12 @@ public class GroupFileServiceTest extends TestFixtureNoAuth {
                 tr);
         tr.Run();
 
-        /* Remove user from test group */
-        System.out.println("Leaving test group...");
-    	_wrapper.getGroupService().leaveGroup(_groupId, tr);
-    	tr.Run();
+        /* Delete the test group, which also removes its files */
+        if (!_groupId.isEmpty()) {
+            System.out.println("Deleting test group...");
+            _wrapper.getGroupService().deleteGroup(_groupId, -1, tr);
+            tr.Run();
+        }
         
         _client.deregisterFileUploadCallback();
     }
