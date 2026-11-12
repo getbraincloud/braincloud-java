@@ -30,3 +30,7 @@ bin/
 .settings/org.eclipse.jdt.core.prefs
 log.txt
 ids.txt
+# brainCloud app config (generated)
+/src/main/resources/braincloud.cfg
+/src/main/java/braincloud/BrainCloudTuning.java
+/.idea

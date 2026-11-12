@@ -3,7 +3,7 @@
   
   <groupId>com.bitheads</groupId>
   <artifactId>braincloud-java</artifactId>
-  <version>6.1.0</version>
+  <version>6.1.1</version>
 
   <name>brainCloud Java API</name>
   <description>The Java client library for brainCloud</description>

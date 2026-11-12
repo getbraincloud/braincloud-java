@@ -55,7 +55,7 @@ Java/Android examples here: https://github.com/getbraincloud/examples-java
 
 Here are a few common errors that you may see on your first attempt to connect to brainCloud.
 
-- **No braincloud.cfg found**: Pick an app in the brainCloud tool window and check `src/main/resources/braincloud.cfg` exists.
+- **braincloud.cfg is missing or can't be read**: Pick the app again in the brainCloud tool window.
 - **App id not set**: If you initialize with the app ID and secret, check they're set correctly in `initialize()`.
 - **Platform not enabled**: Verify you've enabled your platform on the portal.
 
@@ -86,24 +86,20 @@ Keeps the app secret out of your code.
 
 1. Add the `braincloud-java` dependency. IntelliJ IDEA offers the **brainCloud Java** plugin, or install it from **Settings → Plugins → Marketplace** ([plugin page](https://plugins.jetbrains.com/plugin/34823-braincloud-java)).
 2. Open the **brainCloud** tool window, log in, and pick your team and app (or create one).
-3. The plugin writes `src/main/resources/braincloud.cfg` and gitignores it.
+3. The plugin writes `src/main/resources/braincloud.cfg` and `src/main/java/braincloud/BrainCloudTuning.java`, and gitignores both. The config only reads in a build that compiles that class, so keep the two together.
 4. Initialize:
 ```java
 _bc = new BrainCloudWrapper(); // optionally pass in a _wrapperName
 if (!_bc.init()) {
-    // no braincloud.cfg found
+    // braincloud.cfg missing or unreadable
 }
 ```
 
 To switch apps, pick the app again or use **Tools → brainCloud → Refresh Config**.
 
-**Parent apps:** add the child apps your client switches to in the plugin. `init()` loads them too, and `getChildAppIdList()` returns their ids (in plugin order) for `getIdentityService().switchToChildProfile`. For CI, keep `braincloud.cfg` as a secret file and copy it into `src/main/resources/` before building.
+**Parent apps:** add the child apps your client switches to in the plugin. `init()` loads them too, and `getChildAppIdList()` returns their ids (in plugin order) for `getIdentityService().switchToChildProfile`.
 
-If you minify with ProGuard/R8, keep the config reader:
-```
--keep class com.bitheads.braincloud.support.NativeConfig { public *; }
--keep interface com.bitheads.braincloud.support.NativeConfig$Callback { *; }
-```
+ProGuard/R8 keep rules ship in the jar (`META-INF/proguard/braincloud-java.pro`).
 
 ### With the app ID and secret
 ```java
