@@ -13,7 +13,8 @@ import org.json.JSONObject;
  */
 public class ChatServiceTest extends TestFixtureBase
 {
-    static private String _channelId = "20001:gl:valid";
+    // The global "valid" channel of whichever test app this env uses.
+    static private String channelId() { return m_appId + ":gl:valid"; }
     static private String _msgId = "";
     static private int _msgVersion = 1;
 
@@ -24,7 +25,8 @@ public class ChatServiceTest extends TestFixtureBase
         _wrapper.getChatService().getChannelId("gl", "valid", tr);
         tr.Run();
 
-        _channelId = tr.m_response.getJSONObject("data").getString("channelId");
+        String id = tr.m_response.getJSONObject("data").getString("channelId");
+        if (!id.equals(channelId())) throw new Exception("Expected channel " + channelId() + ", got " + id);
     }
 
     @Test
@@ -39,7 +41,7 @@ public class ChatServiceTest extends TestFixtureBase
     public void getChannelInfo() throws Exception {
         TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getChatService().getChannelInfo(_channelId, tr);
+        _wrapper.getChatService().getChannelInfo(channelId(), tr);
         tr.Run();
     }
 
@@ -47,7 +49,7 @@ public class ChatServiceTest extends TestFixtureBase
     public void channelConnect() throws Exception {
         TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getChatService().channelConnect(_channelId, 50, tr);
+        _wrapper.getChatService().channelConnect(channelId(), 50, tr);
         tr.Run();
     }
 
@@ -63,18 +65,18 @@ public class ChatServiceTest extends TestFixtureBase
         int i = 0;
         for (; i < channels.length(); ++i) {
             JSONObject channel = channels.getJSONObject(i);
-            if (channel.getString("id").equals(_channelId)) {
+            if (channel.getString("id").equals(channelId())) {
                 break;
             }
         }
-        if (i == channels.length()) throw new Exception("Excepted to find " + _channelId);
+        if (i == channels.length()) throw new Exception("Excepted to find " + channelId());
     }
 
     @Test
     public void postChatMessage() throws Exception {
         TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getChatService().postChatMessage(_channelId, "Hello World!", null, true, tr);
+        _wrapper.getChatService().postChatMessage(channelId(), "Hello World!", null, true, tr);
         tr.Run();
 
         _msgId = tr.m_response.getJSONObject("data").getString("msgId");
@@ -84,7 +86,7 @@ public class ChatServiceTest extends TestFixtureBase
     public void postChatMessageSimple() throws Exception {
         TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getChatService().postChatMessageSimple(_channelId, "Hello World! SIMPLE", true, tr);
+        _wrapper.getChatService().postChatMessageSimple(channelId(), "Hello World! SIMPLE", true, tr);
         tr.Run();
 
         _msgId = tr.m_response.getJSONObject("data").getString("msgId");
@@ -94,11 +96,11 @@ public class ChatServiceTest extends TestFixtureBase
     public void getChatMessage() throws Exception {
         TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getChatService().postChatMessage(_channelId, "Hello World!", null, true, tr);
+        _wrapper.getChatService().postChatMessage(channelId(), "Hello World!", null, true, tr);
         tr.Run();
         String message = tr.m_response.getJSONObject("data").getString("msgId");
 
-        _wrapper.getChatService().getChatMessage(_channelId, message, tr);
+        _wrapper.getChatService().getChatMessage(channelId(), message, tr);
         tr.Run();
     }
 
@@ -106,15 +108,15 @@ public class ChatServiceTest extends TestFixtureBase
     public void updateChatMessage() throws Exception {
         TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getChatService().postChatMessage(_channelId, "Hello World!", null, true, tr);
+        _wrapper.getChatService().postChatMessage(channelId(), "Hello World!", null, true, tr);
         tr.Run();
         _msgId = tr.m_response.getJSONObject("data").getString("msgId");
         _msgVersion = 1;
 
-        _wrapper.getChatService().updateChatMessage(_channelId, _msgId, _msgVersion, "Hello World! edited", null, tr);
+        _wrapper.getChatService().updateChatMessage(channelId(), _msgId, _msgVersion, "Hello World! edited", null, tr);
         tr.Run();
 
-        _wrapper.getChatService().getChatMessage(_channelId, _msgId, tr);
+        _wrapper.getChatService().getChatMessage(channelId(), _msgId, tr);
         tr.Run();
 
         if (!tr.m_response.getJSONObject("data").getJSONObject("content").getString("text").equals("Hello World! edited")) throw new Exception("Wrong message");
@@ -126,7 +128,7 @@ public class ChatServiceTest extends TestFixtureBase
     public void getRecentChatMessages() throws Exception {
         TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getChatService().getRecentChatMessages(_channelId, 50, tr);
+        _wrapper.getChatService().getRecentChatMessages(channelId(), 50, tr);
         tr.Run();
 
         // Verify that our message is present in the history
@@ -145,11 +147,11 @@ public class ChatServiceTest extends TestFixtureBase
     public void deleteChatMessage() throws Exception {
         TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getChatService().postChatMessage(_channelId, "Hello World!", null, true, tr);
+        _wrapper.getChatService().postChatMessage(channelId(), "Hello World!", null, true, tr);
         tr.Run();
         String message = tr.m_response.getJSONObject("data").getString("msgId");
 
-        _wrapper.getChatService().deleteChatMessage(_channelId, message, _msgVersion, tr);
+        _wrapper.getChatService().deleteChatMessage(channelId(), message, _msgVersion, tr);
         tr.Run();
     }
 
@@ -157,7 +159,7 @@ public class ChatServiceTest extends TestFixtureBase
     public void channelDisconnect() throws Exception {
         TestResult tr = new TestResult(_wrapper);
 
-        _wrapper.getChatService().channelDisconnect(_channelId, tr);
+        _wrapper.getChatService().channelDisconnect(channelId(), tr);
         tr.Run();
     }
 }

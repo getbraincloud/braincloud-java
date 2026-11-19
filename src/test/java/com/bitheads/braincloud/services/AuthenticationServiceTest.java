@@ -21,6 +21,8 @@ public class AuthenticationServiceTest extends TestFixtureNoAuth {
 
     @Test
     public void testAuthManualRedirect() throws Exception {
+        // Needs an app set up to redirect; only some envs have one.
+        org.junit.Assume.assumeFalse("No redirectAppId for this env", m_redirectAppId == null || m_redirectAppId.isEmpty());
         _client.initialize(m_serverUrl, m_redirectAppId, m_secret, m_appVersion);
 
         TestResult tr = new TestResult(_wrapper);
