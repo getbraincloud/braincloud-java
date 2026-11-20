@@ -65,6 +65,10 @@ public class RelayTest extends TestFixtureBase {
     }
 
     private void fullFlow(RelayConnectionType connectionType) throws Exception {
+        fullFlow(connectionType, false);
+    }
+
+    private void fullFlow(RelayConnectionType connectionType, boolean secure) throws Exception {
         RTTLobbyResults lobbyTR = new RTTLobbyResults(_wrapper);
         JSONObject server;
 
@@ -103,7 +107,14 @@ public class RelayTest extends TestFixtureBase {
             JSONObject options = new JSONObject();
             options.put("ssl", false);
             options.put("host", server.getJSONObject("connectData").getString("address"));
-            if (connectionType == RelayConnectionType.WEBSOCKET)
+            if (secure) {
+                // wss uses the server-provided URL as-is; no port
+                assertTrue("connectData has no secureUrl", server.getJSONObject("connectData").has("secureUrl"));
+                options.put("ssl", true);
+                options.put("host", server.getJSONObject("connectData").getString("secureUrl"));
+                options.put("port", 0);
+            }
+            else if (connectionType == RelayConnectionType.WEBSOCKET)
                 options.put("port", server.getJSONObject("connectData").getJSONObject("ports").getInt("ws"));
             else if (connectionType == RelayConnectionType.TCP)
                 options.put("port", server.getJSONObject("connectData").getJSONObject("ports").getInt("tcp"));
@@ -226,6 +237,11 @@ public class RelayTest extends TestFixtureBase {
     @Test
     public void testFullFlowWS() throws Exception {
         fullFlow(RelayConnectionType.WEBSOCKET);
+    }
+
+    @Test
+    public void testFullFlowWSS() throws Exception {
+        fullFlow(RelayConnectionType.WEBSOCKET, true);
     }
 
     @Test

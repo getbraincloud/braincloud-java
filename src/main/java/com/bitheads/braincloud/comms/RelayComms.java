@@ -340,11 +340,14 @@ public class RelayComms {
         switch (_connectionType) {
             case WEBSOCKET: {
                 try {
-                    String uri = (ssl ? "wss://" : "ws://") + host + ":" + port;
+                    // A full URL (connectData.secureUrl) is used as given; port is ignored.
+                    boolean isUrl = host.contains("://");
+                    boolean useSsl = isUrl ? host.startsWith("wss://") : ssl;
+                    String uri = isUrl ? host : (useSsl ? "wss://" : "ws://") + host + ":" + port;
 
                     _webSocketClient = new WSClient(uri);
 
-                    if (ssl) {
+                    if (useSsl) {
                         setupSSL();
                     }
 
